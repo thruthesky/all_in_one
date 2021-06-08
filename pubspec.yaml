@@ -1,7 +1,7 @@
 name: all_in_one
 description: A new Flutter project.
 
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -11,7 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
 
   cupertino_icons: ^1.0.2
 
@@ -24,6 +23,4 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
 flutter:
-
   uses-material-design: true
-
