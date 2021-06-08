@@ -13,6 +13,14 @@
 - 플러터 최신 버전을 설치하고
 - 본 프로젝트를 clone 하면 됩니다.
 
+## 문서화
+
+- `$ dartdoc`
+  - 만약, 문서화에 에러가 있으면, 플러터 폴더에 들어 있는 `dartdoc` 명령을 실행한다.
+  - 예) `$HOME/bin/flutter/bin/cache/dart-sdk/bin/dartdoc --exclude 'dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:ffi,dart:html,dart:io,dart:isolate,dart:js,dart:js_util,dart:math,dart:typed_data,dart:ui'`
+- `$ npm i -g http-server`
+- `$ http-server doc/api`
+
 ## 백엔드 설치
 
 - 백엔드는 CenterX 를 사용합니다. CenterX 는 도커 기반에 Nginx + PHP + MariaDB 로 작성된 오픈 소스입니다.

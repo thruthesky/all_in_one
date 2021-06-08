@@ -30,8 +30,9 @@
 
 - 날짜: 6월 12일 오후 1시 예정.
 - 협업을 위한 Github 사용법.
-  - 2021년 3월 17일. 변화된 Github 에 대한 대응 및 rebase 와 merge origin/branch 에 대한 간략한 안내.
-  - main branch 는 보호 되어서 있어, 프로젝트 관리자에게 요청하는 방법 설명.
+  - 그냥 간단하게 `git config pull.rebase false` 옵션 사용.
+  - main branch 는 보호 되어서 있어, 본인의 branch 에서 commit & push 하고
+    - Github 프로젝트 페이지에서 Pull Requeest 후, 관리자에게 Merge 해 달라고 알려 줌.
 - 각 멤버가 업무를 맡은 경우, 진행하는 방법 설명.
 - 만능앱 개발 가이드라인 제시. 프로젝트에 대한 기본 설명과 설치 및 실행, 그리고 기본 코드 테스트.
   - 프로젝트 클론 및 설치, 실행
