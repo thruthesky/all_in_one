@@ -33,8 +33,8 @@
 
 - 본인이 작업 한 것은 반드시, 문서로 잘 남기셔야 합니다. 이것은 매우 중요합니다.
   - 문서화는 dartdoc 를 따릅니다.
-    참고: [Dart 문서화 툴](https://pub.dev/packages/dartdoc)
-    참고: [Dart 문서화를 잘하는 방법](https://dart.dev/guides/language/effective-dart/documentation)
+    - 참고: [Dart 문서화 툴](https://pub.dev/packages/dartdoc)
+    - 참고: [Dart 문서화를 잘하는 방법](https://dart.dev/guides/language/effective-dart/documentation)
 
 - Integration Test 를 하면 좋습니다. 필수 사항은 아니지만, 권장합니다.
 
