@@ -8,7 +8,8 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('end-to-end test', () {
-    testWidgets('tap on the floating action button; verify counter', (WidgetTester tester) async {
+    testWidgets('tap on the floating action button; verify counter',
+        (WidgetTester tester) async {
       app.main();
       await tester.pumpAndSettle();
 
