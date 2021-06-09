@@ -7,6 +7,7 @@
 
 - [프로젝트 Git Project 참고](https://github.com/thruthesky/all_in_one/projects/1)
 - [프로젝트 Git repo 참고](https://github.com/thruthesky/all_in_one)
+- [개발자 가이드 - 처음 스터디에 참여하시는 분들 필독](https://github.com/thruthesky/all_in_one/blob/main/DEVELOPER_GUIDE.md)
 
 ## 만능앱 개발자 가이드
 
