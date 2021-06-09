@@ -5,6 +5,9 @@
 
 # 참고 사항
 
+- [프로젝트 Git Project 참고](https://github.com/thruthesky/all_in_one/projects/1)
+- [프로젝트 Git repo 참고](https://github.com/thruthesky/all_in_one)
+
 ## 만능앱 개발자 가이드
 
 - 참고: DEVELOPER_GUIDE.md 문서를 참고합니다.
