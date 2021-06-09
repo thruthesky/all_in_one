@@ -13,6 +13,14 @@
 - 플러터 최신 버전을 설치하고
 - 본 프로젝트를 clone 하면 됩니다.
 
+## Flutter 코드 개발 편집기
+
+- 통일성 있게 `VSCode` 를 사용합니다.
+- VSCode Better comment 플러그인을 활용합니다.
+  사용하는 태그는 아래와 같습니다.
+  - `@attention` (json 설정에서 강조 표시 필요)
+  - `@todo`
+
 ## 문서화
 
 - `$ dartdoc`
