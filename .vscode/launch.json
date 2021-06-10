@@ -1,0 +1,32 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "all_in_one",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "all_in_one (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },       
+        {
+            "name": "JaeHo - Simulator 12 Pro Max - Macbook 16 - Remote",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define",
+                "CONFIG=remote",
+                "--dart-define",
+                "TEST_MODE=firebase=off&in_app_purchase=off"
+            ],
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "968EA58A-8C7D-4841-924E-BAF19E375CF1"
+        },
+    ]
+}

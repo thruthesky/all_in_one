@@ -2,6 +2,14 @@
 
 본 문서는 만능앱 개발을 위한 개발자 문서이며, 개발 멤버들이 보다 쉽게 프로젝트 참여를 하고 성공적인 결과를 만들어내기 위해서 따라야 할 가이드라인을 제사합니다.
 
+# 참여 인원 모집
+
+- 프로젝트에 참여하시려는 분은 [한국 플러터 개발자 그룹](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo) 단톡방에서 참여 신청을 해 주세요.
+- 프로젝트에 참여하시는 분은 github 멤버로 들어와서 git repo 에 바로 액세스 할 수 있습니다.
+- 문서화 작업을 도와 주실 분을 찾습니다.
+  - 다른 개발자가 작성한 코드를 보고, 해당 개발자에게 소스 코드 주석을 요청하고 부족한 부분을 dartdoc 에 맞추어 작업을 하는 것입니다.
+  - 특히, Restful Api 관련 코드를 문서화하는 경우 공부에 큰 도움이 되리라 생각합니다.
+
 # 스터디 공부해야 할 순서
 
 - 온라인 세미나 참여
@@ -35,6 +43,7 @@
 ## Flutter 코드 개발 편집기
 
 - 통일성 있게 `VSCode` 를 사용합니다.
+- dart line length 를 100 으로 해 주세요. 기본 80 인데, 100으로 늘려서 작업을 하겠습니다.
 - VSCode Better comment 플러그인을 활용합니다.
   사용하는 태그는 아래와 같습니다.
   - `@attention` (json 설정에서 강조 표시 필요)
@@ -47,6 +56,8 @@
   - 예) `$HOME/bin/flutter/bin/cache/dart-sdk/bin/dartdoc --exclude 'dart:async,dart:collection,dart:convert,dart:core,dart:developer,dart:ffi,dart:html,dart:io,dart:isolate,dart:js,dart:js_util,dart:math,dart:typed_data,dart:ui'`
 - `$ npm i -g http-server`
 - `$ http-server doc/api`
+
+
 
 ## 백엔드 설치
 
@@ -62,7 +73,66 @@
 - 테스트는 공식 문서의 Integration Test 를 진행합니다.
 
 
+# 폴더 및 파일
 
+- 당연히, 모든 경우에서, [다트 스타일 가이드](https://dart.dev/guides/language/effective-dart)와 [플러터 스타일 가이드](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo)가 우선합니다.
+- `lib/screens` 폴더에 각 기능별로 서브 폴더를 만들어 작업을 합니다.
+  - 예) 회원 관련 기능은 `lib/screens/user` 폴더 아래에 모두 들어갑니다.
+  - 개발 멤버가 본인이 맡은 기능을 작업하기 위해서 `lib/screens` 아래에 폴더를 만들면 됩니다.
+- 각 스크린(페이지)는 `lib/screens/**/*.dart` 와 같이 기록합니다.
+- 위젯은 반드시 `**/widgets` 라는 폴더 아래에 기록되어야 합니다.
+  - 예) `lib/screens/user/widgets/name_label.dart`
+- 공유 위젯은 `lib/widgets/**/*.dart` 형태로 저장되며, 여러곳에서 활용 할 수 있는 범용성이 위젯만 이곳에 저장됩니다.
+- `lib/controllers` 에는 각종 Getx 컨트롤러가 저장됩니다. 본 문서의 상태 관리를 참고하세요.
+- 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
+  - 예) `lib/tmp/json/user.json`
+
+
+# 실행 및 개발 설정
+
+- launch.json 에 실행 설정을 해야 한다면, 가능한 다음의 포멧을 따르세요.
+  - `name` 에는 "개발자이름 - 장치 타입 및 버전 - 개발컴퓨터(또는 위치) - 서버"
+  - `CONFIG` 는 앱의 설정을 하는 것입니다.
+  - `OPTIONS` 에는 앱을 실행 할 때, 어떤 옵션으로 실행 할지 지정하는 것입니다.
+
+```json
+{
+    "name": "JaeHo - Simulator 12 Pro Max - Macbook 16 - Remote",
+    "program": "lib/main.dart",
+    "args": [
+        "--dart-define",
+        "CONFIG=remote",
+        "--dart-define",
+        "OPTIONS=firebase=off&in_app_purchase=off"
+    ],
+    "request": "launch",
+    "type": "dart",
+    "deviceId": "00008030-000904C80290802E"
+},
+```
+
+# 상태 관리
+
+- Getx 로 합니다.
+- `lib/controllers` 폴더에 전역적인 컨트롤러를 저장합니다.
+- `lib/controllers/app.controller.dart` 가 앱의 전반적인 상태 관리를 합니다.
+- 지역적인 상태 관리가 필요하다면, `lib/screens/**/controllers/*.controller.dart` 와 같이 컨트롤러를 만들면 됩니다.
+  - 예를 들어, 회원 관리에만 필요한 컨트롤러가 있다면, `lib/screens/user/controllers/user.controller.dart` 와 같이 컨트롤러 파일을 만들면 됩니다.
+
+
+# 모델
+
+- `lib/models/**/*.model.dart` 와 같이 모델을 저장합니다.
+- 지역적인 모델은 `lib/screens/**/models/*.model.dart` 와 같이 저장합니다.
+- 모델 작성 형식은 [표준 문서: Serializing JSON inside model classes](https://flutter.dev/docs/development/data-and-backend/json#serializing-json-inside-model-classes)를 따릅니다.
+- JSON 으로 부터 Model 을 작성하기 위해서는 `JSON TO DART` VSCODE 플러그인 를 사용하길 권장합니다.
+  - `> JSON TO DART: Convert from Clipboard`
+  - `> Support for advance equality check? No`
+  - `> Immutable class? Yes`
+  - `> Equality operator? Yes`
+  - `> toString()? Yes`
+  - `> Copy with? Yes`
+  - `> Null safety? Yes`
 # 백엔드
 
 - CenterX 가 설치되어져 있는 서버 도메인: flutterkorea.com
