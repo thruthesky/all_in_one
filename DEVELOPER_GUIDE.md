@@ -73,6 +73,11 @@
   - 이 두 문서는 다트와 플러터를 개발한 팀에서 개발자들을 위해서 마련한 표준 코딩 가이드라인이라고 보시면 됩니다. 우리는 팀멤버간에 말로 소통을 하지 않고, 서로가 작성한 소스 코드를 공유해서 교감하고 소통합니다. 그래서 각 개발자의 개성이나 취향대로 코딩를 작성해 버리면, 다른 개발자가 그 코드를 읽기 매우 어려워 집니다. 그래서 개인의 코딩 스타일을 버리고 표준을 따라야합니다.
   이것은 필수 사항이 아니며, 서로가 매일 조금씩 노력해 가면 됩니다.
 
+- Null safety 에 많은 혼동과 올바르지 않은 사용이 예상됩니다.
+  - Null safety 의 목적은 null 을 안전하게 관리하자는 것입니다.
+  - 그런데 만약 변수 선언에서 `String? name` 와 같이 해 버리면, name 변수가 null 일 수 있다고 표시하는 것인데, 이렇게 하면 null safety 를 쓰는 효과가 전혀 없는 것입니다. 다시 말하면, null safety 를 사용하지도 않으면서, 억지로 null safety  적용해서 코드만 읽기 어렵게 만드는 역효과가 발생합니다.
+  - 그래서 null 값이 지정될 수 있다고 표시를 하는 `물음표(?)`는 정말 어쩔 수 없는 경우에만 써야합니다.
+
 
 ## 문서화
 
@@ -92,11 +97,11 @@
 
 ## 백엔드 설치
 
-- 백엔드는 CenterX 를 사용합니다. CenterX 는 도커 기반에 Nginx + PHP + MariaDB 로 작성된 오픈 소스입니다.
-- 백엔드 설치는 CenterX 문서를 사용하면 되며,
+- 백엔드는 Matrix 를 사용합니다. Matrix 는 도커 기반에 Nginx + PHP + MariaDB 로 작성된 오픈 소스입니다.
+- 백엔드 설치는 Matrix 문서를 사용하면 되며,
 - 직접 개발 컴퓨터에 설치해서 테스트를 해도 되고,
 - 본 프로젝트를 위해서 미리 준비한 실제 서버를 사용해도 됩니다.
-- 본 문서의 백엔드를 참고해 주세요.
+- Materix 에 값을 저장하고 가져오는 것, 회원, 게시판 등의 정보를 활용하는 것에 있어서 다양한 방법이 있으니, 꼭 백엔드 문서를 참고해 주세요.
 
 
 # 테스트
@@ -158,18 +163,26 @@
 - 지역적인 모델은 `lib/screens/**/models/*.model.dart` 와 같이 저장합니다.
 - 모델 작성 형식은 [표준 문서: Serializing JSON inside model classes](https://flutter.dev/docs/development/data-and-backend/json#serializing-json-inside-model-classes)를 따릅니다.
 - JSON 으로 부터 Model 을 작성하기 위해서는 `JSON TO DART` VSCODE 플러그인 를 사용하길 권장합니다.
+  다만, 생성된 Model 에 적용된 Null safety 가 원하는 대로 되지 않은 경우, 보정을 해 주어야 합니다.
   - `> JSON TO DART: Convert from Clipboard`
   - `> Support for advance equality check? No`
   - `> Immutable class? No`
   - `> Equality operator? No`
   - `> toString()? Yes`
-  - `> Copy with? Yes`
+  - `> Copy with? No`
   - `> Null safety? Yes`
 # 백엔드
 
 - pub.dev 에 x_flutter 패키지가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
-- CenterX 가 설치되어져 있는 서버 도메인: flutterkorea.com
+- Matrix 가 설치되어져 있는 서버 도메인: flutterkorea.com
 - 접속 설정은 service/config.dart 에 이미 되어져 있어 그대로 사용하면 됩니다.
+- 백엔드 관리자 사용법
+  - 게시판 생성 및 게시판 메뉴를 앱에서 보여주는 방법
+  - 백엔드 관리자가 푸시를 하는 방법
+    - 아이콘 설정
+    - 소리 설정
+
+
 
 # 파이어베이스
 
