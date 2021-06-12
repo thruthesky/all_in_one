@@ -121,7 +121,9 @@
 - `lib/screens` 폴더에 각 기능별로 서브 폴더를 만들어 작업을 합니다.
   - 예) 회원 관련 기능은 `lib/screens/user` 폴더 아래에 모두 들어갑니다.
   - 개발 멤버가 본인이 맡은 기능을 작업하기 위해서 `lib/screens` 아래에 폴더를 만들면 됩니다.
-- 각 스크린(페이지)는 `lib/screens/**/*.dart` 와 같이 기록합니다.
+- 각 스크린(페이지)는 `lib/screens/**/*.screen.dart` 와 같이 기록해야 하며,
+  - 스크린 위젯의 이름은 파일명과 일치해야 합니다.
+    - 예) 파일명이 `abc.def.screen.dart` 이면 위젯 이름은 `AbcDefScreen` 이어야 합니다.
 - 위젯은 반드시 `**/widgets` 라는 폴더 아래에 기록되어야 합니다.
   - 예) `lib/screens/user/widgets/name_label.dart`
 - 공유 위젯은 `lib/widgets/**/*.dart` 형태로 저장되며, 여러곳에서 활용 할 수 있는 범용성이 위젯만 이곳에 저장됩니다.
@@ -178,7 +180,7 @@
   - `> Null safety? Yes`
 # 백엔드
 
-- pub.dev 에 x_flutter 패키지가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
+- pub.dev 에 [x_flutter 패키지](https://pub.dev/packages/x_flutter)가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
 - Matrix 가 설치되어져 있는 서버 도메인: flutterkorea.com
 - 접속 설정은 service/config.dart 에 이미 되어져 있어 그대로 사용하면 됩니다.
 - 백엔드 관리자 사용법
