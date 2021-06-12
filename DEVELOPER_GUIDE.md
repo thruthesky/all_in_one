@@ -118,6 +118,7 @@
 # 폴더 및 파일
 
 - 당연히, 모든 경우에서, [다트 스타일 가이드](https://dart.dev/guides/language/effective-dart)와 [플러터 스타일 가이드](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo)가 우선합니다.
+- 위젯 또는 클래스 이름은 가능한 파일명과 일치하는 것이 좋습니다. 단, 예외가 있을 수는 있습니다.
 - `lib/screens` 폴더에 각 기능별로 서브 폴더를 만들어 작업을 합니다.
   - 예) 회원 관련 기능은 `lib/screens/user` 폴더 아래에 모두 들어갑니다.
   - 개발 멤버가 본인이 맡은 기능을 작업하기 위해서 `lib/screens` 아래에 폴더를 만들면 됩니다.
