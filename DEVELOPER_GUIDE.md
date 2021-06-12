@@ -189,7 +189,10 @@
     - 아이콘 설정
     - 소리 설정
 
+## x_flutter 패키지 개발 방법
 
+- .gitignore 에 x_flutter 가 등록되어져 있다.
+- 따라서, lib/x_flutter 에 clone 을 하고, pubspec.yaml 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pubspec.yaml 의 x_flutter 를 최신 버전으로 변경하면된다.
 
 # 파이어베이스
 
