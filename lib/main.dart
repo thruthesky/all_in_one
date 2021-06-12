@@ -1,72 +1,37 @@
+import 'package:all_in_one/screens/about/about.screen.dart';
+import 'package:all_in_one/screens/home/home.screen.dart';
+import 'package:all_in_one/screens/user/login.screen.dart';
+import 'package:all_in_one/screens/user/profile.screen.dart';
+import 'package:all_in_one/screens/user/register.screen.dart';
+import 'package:all_in_one/services/globals.dart';
+import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
-import 'package:x_flutter/x_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
-void main() {
-  runApp(MyApp());
+void main() async {
+  await GetStorage.init();
+  runApp(AioApp());
 }
 
-class MyApp extends StatelessWidget {
+class AioApp extends StatelessWidget {
+  final a = Get.put(app);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
+      title: '만능앱',
+      defaultTransition: Transition.noTransition,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Api.instance.time().then((value) => print(value));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
+      initialRoute: RouteNames.home,
+      getPages: [
+        GetPage(name: RouteNames.home, page: () => HomeScreen()),
+        GetPage(name: RouteNames.about, page: () => AboutScreen()),
+        GetPage(name: RouteNames.register, page: () => RegisterScreen()),
+        GetPage(name: RouteNames.login, page: () => LoginScreen()),
+        GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
+      ],
     );
   }
 }
