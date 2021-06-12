@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:x_flutter/x_flutter.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,6 +34,12 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Api.instance.time().then((value) => print(value));
   }
 
   @override
