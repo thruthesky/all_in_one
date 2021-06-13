@@ -14,7 +14,7 @@ class GameScreen extends StatelessWidget {
         children: [
           Center(
               child: Text(
-            'Play Game',
+            'Play Game!!',
             style: TextStyle(fontSize: 20),
           )),
         ],
