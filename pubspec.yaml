@@ -16,9 +16,9 @@ dependencies:
 
   get: ^4.1.4
   get_storage: ^2.0.2
-  x_flutter: ^0.0.6
-  # x_flutter:
-  #   path: lib/x_flutter
+  # x_flutter: ^0.0.6
+  x_flutter:
+    path: lib/x_flutter
 
 dev_dependencies:
   flutter_test:

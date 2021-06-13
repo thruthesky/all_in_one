@@ -307,9 +307,9 @@ packages:
   x_flutter:
     dependency: "direct main"
     description:
-      name: x_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "lib/x_flutter"
+      relative: true
+    source: path
     version: "0.0.6"
   xdg_directories:
     dependency: transitive
