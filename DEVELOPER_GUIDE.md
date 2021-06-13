@@ -154,6 +154,7 @@
 - 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
   - 예) `lib/tmp/json/user.json`
 
+- 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요. 
 
 # 실행 및 개발 설정
 
@@ -249,5 +250,47 @@
 - 특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
 
 
+## 스크린 생성
+
+스크린(페이지)를 생성하는 방법에 대해서 설명을 합니다.
+
+
+- screens 폴더안에 스크린 폴더를 만들고, **.screen.dart 와 같이 dart 파일을 만듭니다.
+  - 예를 들어, 스크린의 이름이 memo 라면, 아래와 같이 만들면 됩니다.
+    - 예: `screens/memo/memo.screen.dart`
+
+- 그리고, services/route_name.dart 에 memo 라는 변수를 만듭니다.
+
+```dart
+class RouteNames {
+  static final String memo = 'memo'; // <== 여기에 추가
+}
+```
+
+- 그리고, main.ts 에서 getPages: 속성에 memo screen 을 추가합니다.
+
+```dart
+class AioApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      // ...
+      getPages: [
+        // ...
+        GetPage(name: RouteNames.memo, page: () => MemoScreen()), // <== 여기에 추가
+      ],
+    );
+  }
+}
+```
+
+- 그리고, memo screen 으로 이동 할 수 있도록 메뉴(또는 특정 위치)에 버튼을 달고 클릭이 되면 `service.open(RouteNames.memo);` 를 실행해서 해당 페이지로 이동합니다.
+- 
+```dart
+ElevatedButton(
+  onPressed: () => service.open(RouteNames.memo), // 클릭하면, memo 스크린으로 이동
+  child: Text('메모장'),
+)
+```
 
 
