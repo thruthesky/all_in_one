@@ -13,7 +13,7 @@ void main() async {
   await GetStorage.init();
   runApp(AioApp());
 }
-
+var gyoeny = '수정 테스트';
 class AioApp extends StatelessWidget {
   final a = Get.put(app);
   @override
