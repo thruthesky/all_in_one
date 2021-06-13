@@ -30,6 +30,10 @@ class Service {
     open(RouteNames.about);
   }
 
+  openWangmaac() {
+    open(RouteNames.wangmaac);
+  }
+
   openRegister() {
     open(RouteNames.register);
   }
