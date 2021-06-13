@@ -1,5 +1,6 @@
 import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
+import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
@@ -15,6 +16,8 @@ void main() async {
   runApp(AioApp());
 }
 
+var gyoeny = '수정 테스트';
+
 class AioApp extends StatelessWidget {
   final a = Get.put(app);
   @override
@@ -26,6 +29,7 @@ class AioApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: RouteNames.home,
+      // Get.toNamed( RouteNames.about );
       getPages: [
         GetPage(name: RouteNames.home, page: () => HomeScreen()),
         GetPage(name: RouteNames.about, page: () => AboutScreen()),

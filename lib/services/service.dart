@@ -22,6 +22,9 @@ class Service {
   // ignore: close_sinks
   PublishSubject<String> screenChanges = PublishSubject();
 
+  /// 스크린(페이지) 이동
+  ///
+  /// [offAll] 에 true 가 지정되면, nav stack 의 중간에 있는 모든 페이지를 없애고 해당 페이지로 이동.
   Future open(String routeName, {offAll = false}) {
     screenChanges.add(routeName);
     if (offAll) {

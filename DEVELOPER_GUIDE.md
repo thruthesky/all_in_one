@@ -68,6 +68,14 @@
   - 작업이 완료되면 본인의 브랜치를 github 로 올립니다.
     이 때, 주의 할 점은 main branch 로는 merge 할 수 없도록 되어져 있으므로 프로젝트 매니저에게 main 으로 merge 해 달라고 요청하셔야 합니다.
 
+- 요약을 하면,
+  - git clone 후,
+  - 자신만의 branch 만들고,
+  - 수정하여 push 를 한 다음,
+  - github 의 all_in_one 사이트로 들어가서, pull request 버튼을 눌러, request 하면 됩니다.
+
+
+
 ## Flutter 코드 개발 편집기
 
 - 통일성 있게 `VSCode` 를 사용합니다.
@@ -140,6 +148,11 @@
 - 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
   - 예) `lib/tmp/json/user.json`
 
+<<<<<<< HEAD
+=======
+- 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요. 
+
+>>>>>>> thruthesky
 # 실행 및 개발 설정
 
 - launch.json 에 실행 설정을 해야 한다면, 가능한 다음의 포멧을 따르세요.
@@ -226,3 +239,49 @@
 - Layout 이라는 위젯들 만들어, 그 안에 Scaffold 를 두고 통일된 appbar, body 등의 디자인을 적용하는 것입니다.
 - 이렇게하면 모든 스크린에서 동일한 Scaffold 를 가지게 되어 일관성 있게 디장니을 유지할 수 있으며, Layout 을 수정하면 전체 스크린의 디자인이 모두 같이 변경되는 것입니다.
 - 특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
+
+
+## 스크린 생성
+
+스크린(페이지)를 생성하는 방법에 대해서 설명을 합니다.
+
+
+- screens 폴더안에 스크린 폴더를 만들고, **.screen.dart 와 같이 dart 파일을 만듭니다.
+  - 예를 들어, 스크린의 이름이 memo 라면, 아래와 같이 만들면 됩니다.
+    - 예: `screens/memo/memo.screen.dart`
+
+- 그리고, services/route_name.dart 에 memo 라는 변수를 만듭니다.
+
+```dart
+class RouteNames {
+  static final String memo = 'memo'; // <== 여기에 추가
+}
+```
+
+- 그리고, main.ts 에서 getPages: 속성에 memo screen 을 추가합니다.
+
+```dart
+class AioApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      // ...
+      getPages: [
+        // ...
+        GetPage(name: RouteNames.memo, page: () => MemoScreen()), // <== 여기에 추가
+      ],
+    );
+  }
+}
+```
+
+- 그리고, memo screen 으로 이동 할 수 있도록 메뉴(또는 특정 위치)에 버튼을 달고 클릭이 되면 `service.open(RouteNames.memo);` 를 실행해서 해당 페이지로 이동합니다.
+- 
+```dart
+ElevatedButton(
+  onPressed: () => service.open(RouteNames.memo), // 클릭하면, memo 스크린으로 이동
+  child: Text('메모장'),
+)
+```
+
+
