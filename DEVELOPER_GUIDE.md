@@ -68,6 +68,14 @@
   - 작업이 완료되면 본인의 브랜치를 github 로 올립니다.
     이 때, 주의 할 점은 main branch 로는 merge 할 수 없도록 되어져 있으므로 프로젝트 매니저에게 main 으로 merge 해 달라고 요청하셔야 합니다.
 
+- 요약을 하면,
+  - git clone 후,
+  - 자신만의 branch 만들고,
+  - 수정하여 push 를 한 다음,
+  - github 의 all_in_one 사이트로 들어가서, pull request 버튼을 눌러, request 하면 됩니다.
+
+
+
 ## Flutter 코드 개발 편집기
 
 - 통일성 있게 `VSCode` 를 사용합니다.
