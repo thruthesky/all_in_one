@@ -20,7 +20,9 @@
       "program": "lib/main.dart",
       "args": [
         "--dart-define",
-        "CONFIG=remote",
+        "APP_NAME=영자의 만능앱",
+        "--dart-define",
+        "SERVER_URL=https://www.flutterkorea.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
