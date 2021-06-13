@@ -20,6 +20,14 @@ dependencies:
   
   rxdart: ^0.27.1
 
+  # QR 생성기
+  qr_flutter: ^4.0.0
+
+  # QR 스캐너
+  qr_code_scanner: ^0.5.1
+  
+
+
   x_flutter: ^0.0.7
   # x_flutter:
   #   path: lib/x_flutter

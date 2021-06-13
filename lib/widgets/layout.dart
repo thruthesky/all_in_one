@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:all_in_one/services/defines.dart';
 import 'package:all_in_one/services/globals.dart';
-import 'package:all_in_one/widgets/aio.appbar.dart';
+import 'package:all_in_one/widgets/app.title.dart';
 import 'package:all_in_one/widgets/app.drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';

@@ -23,14 +23,30 @@ class _AppTitleState extends State<AppTitle> {
               onPressed: () {
                 Get.back();
               })
-          : IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {
-                ZoomDrawer.of(context)!.toggle();
-              },
-            ),
-      title: Text(widget.title, style: tsBlack),
+          : SizedBox.shrink(),
+      title: Text(widget.title, style: tsTitle),
+      shape: Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)),
       elevation: 0,
+      backgroundColor: Colors.white,
+      actions: [
+        SizedBox(
+          width: 52,
+          child: IconButton(
+            icon: Column(
+              children: [
+                Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                ),
+                Text('전체메뉴', style: tsXs)
+              ],
+            ),
+            onPressed: () {
+              ZoomDrawer.of(context)!.toggle();
+            },
+          ),
+        ),
+      ],
     );
   }
 }

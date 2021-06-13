@@ -5,6 +5,7 @@ import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -57,7 +58,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text('gyeony'),
                   ),
                 ],
-              )
+              ),
+              Text('기능별 메뉴'),
+              Divider(),
+              ElevatedButton(
+                  onPressed: () => service.open(RouteNames.qrCodeGenerate), child: Text('QR 코드 생성'))
             ],
           ),
         ),

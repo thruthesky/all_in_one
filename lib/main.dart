@@ -2,10 +2,12 @@ import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/gyeony/gyeony.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
+import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
 import 'package:all_in_one/screens/boni/boni.screen.dart';
+import 'package:all_in_one/services/defines.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +28,7 @@ class AioApp extends StatelessWidget {
     return GetMaterialApp(
       title: '만능앱',
       defaultTransition: Transition.noTransition,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        // .... ..
-      ),
+      theme: themeData,
       initialRoute: RouteNames.home,
       getPages: [
         GetPage(name: RouteNames.home, page: () => HomeScreen()),
@@ -40,6 +39,7 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
         GetPage(name: RouteNames.boni, page: () => BoniScreen()),
         GetPage(name: RouteNames.gyeony, page: () => GyeonyScreen()),
+        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen())
       ],
     );
   }
