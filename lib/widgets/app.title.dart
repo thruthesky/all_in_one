@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 
-class AioAppBar extends StatefulWidget with PreferredSizeWidget {
-  AioAppBar({Key? key, required this.title}) : super(key: key);
+class AppTitle extends StatefulWidget with PreferredSizeWidget {
+  AppTitle({Key? key, required this.title}) : super(key: key);
   final String title;
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
-  _AioAppBarState createState() => _AioAppBarState();
+  _AppTitleState createState() => _AppTitleState();
 }
 
-class _AioAppBarState extends State<AioAppBar> {
+class _AppTitleState extends State<AppTitle> {
   @override
   Widget build(BuildContext context) {
     return AppBar(

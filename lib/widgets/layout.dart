@@ -50,7 +50,7 @@ class _LayoutState extends State<Layout> {
         children: [
           Scaffold(
             backgroundColor: Colors.white,
-            appBar: AioAppBar(title: widget.title),
+            appBar: AppTitle(title: widget.title),
             body: Column(
               children: [
                 Expanded(
@@ -85,7 +85,7 @@ class _LayoutState extends State<Layout> {
     );
 
     // return Scaffold(
-    //   appBar: AioAppBar(
+    //   appBar: AppTitle(
     //     title: widget.title,
     //   ),
     //   body: widget.body,
