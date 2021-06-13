@@ -43,7 +43,6 @@
     - Submodule 로 해야할지?
       - 위젯, service, screen 등 등을 하나의 repo 에 보관하고, 별개의 프로젝트를 생성해서, submodule 로 추가해서 작업?
 
-
 # 참고해야 할 문서
 
 - 패키지 만들기
@@ -59,6 +58,7 @@
 ## 만능앱 프로젝트 설치
 
 - 프로젝트를 시작하기 위해서는 만능앱 플러터 소스 코드를 Git repo 에서 클론을 합니다.
+
   - 예: `% git clone https://github.com/thruthesky/all_in_one`
 
 - git clone 후, 본인의 이름 또는 기능별로 branch 를 생성하여, 작업을 합니다.
@@ -77,21 +77,20 @@
   - `@attention` (json 설정에서 강조 표시 필요)
   - `@todo`
 
-
 ## 스타일 가이드
 
-
 - 본 프로젝트는 다트/플러터 코딩 가이드라인을 따릅니다.
+
   - 참고: [다트 코딩 가이드](https://dart.dev/guides/language/effective-dart/style)
   - 참고: [플러터 코딩 가이드](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo)
   - 이 두 문서는 다트와 플러터를 개발한 팀에서 개발자들을 위해서 마련한 표준 코딩 가이드라인이라고 보시면 됩니다. 우리는 팀멤버간에 말로 소통을 하지 않고, 서로가 작성한 소스 코드를 공유해서 교감하고 소통합니다. 그래서 각 개발자의 개성이나 취향대로 코딩를 작성해 버리면, 다른 개발자가 그 코드를 읽기 매우 어려워 집니다. 그래서 개인의 코딩 스타일을 버리고 표준을 따라야합니다.
-  이것은 필수 사항이 아니며, 서로가 매일 조금씩 노력해 가면 됩니다.
+    이것은 필수 사항이 아니며, 서로가 매일 조금씩 노력해 가면 됩니다.
 
 - Null safety 에 많은 혼동과 올바르지 않은 사용이 예상됩니다.
-  - Null safety 의 목적은 null 을 안전하게 관리하자는 것입니다.
-  - 그런데 만약 변수 선언에서 `String? name` 와 같이 해 버리면, name 변수가 null 일 수 있다고 표시하는 것인데, 이렇게 하면 null safety 를 쓰는 효과가 전혀 없는 것입니다. 다시 말하면, null safety 를 사용하지도 않으면서, 억지로 null safety  적용해서 코드만 읽기 어렵게 만드는 역효과가 발생합니다.
-  - 그래서 null 값이 지정될 수 있다고 표시를 하는 `물음표(?)`는 정말 어쩔 수 없는 경우에만 써야합니다.
 
+  - Null safety 의 목적은 null 을 안전하게 관리하자는 것입니다.
+  - 그런데 만약 변수 선언에서 `String? name` 와 같이 해 버리면, name 변수가 null 일 수 있다고 표시하는 것인데, 이렇게 하면 null safety 를 쓰는 효과가 전혀 없는 것입니다. 다시 말하면, null safety 를 사용하지도 않으면서, 억지로 null safety 적용해서 코드만 읽기 어렵게 만드는 역효과가 발생합니다.
+  - 그래서 null 값이 지정될 수 있다고 표시를 하는 `물음표(?)`는 정말 어쩔 수 없는 경우에만 써야합니다.
 
 - 코드는 짧고 간단하게
   - 코드가 길어지면, 대부분의 경우 잘못된 코드이며, 버그가 많습니다.
@@ -106,13 +105,10 @@
 - `$ npm i -g http-server`
 - `$ http-server doc/api`
 
-
 - 본인이 작업 한 것은 반드시, 문서로 잘 남기셔야 합니다. 이것은 매우 중요합니다.
   - 문서화는 dartdoc 를 따릅니다.
     - 참고: [Dart 문서화 툴](https://pub.dev/packages/dartdoc)
     - 참고: [Dart 문서화를 잘하는 방법](https://dart.dev/guides/language/effective-dart/documentation)
-
-
 
 ## 백엔드 설치
 
@@ -122,12 +118,10 @@
 - 본 프로젝트를 위해서 미리 준비한 실제 서버를 사용해도 됩니다.
 - Materix 에 값을 저장하고 가져오는 것, 회원, 게시판 등의 정보를 활용하는 것에 있어서 다양한 방법이 있으니, 꼭 백엔드 문서를 참고해 주세요.
 
-
 # 테스트
 
 - 테스트는 공식 문서의 Integration Test 를 진행합니다.
 - 본인이 작업을 한 부분에 대해서 Integration Test 를 하면 좋습니다. 필수 사항은 아니지만, 권장합니다.
-
 
 # 폴더 및 파일
 
@@ -145,7 +139,6 @@
 - `lib/controllers` 에는 각종 Getx 컨트롤러가 저장됩니다. 본 문서의 상태 관리를 참고하세요.
 - 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
   - 예) `lib/tmp/json/user.json`
-
 
 # 실행 및 개발 설정
 
@@ -178,7 +171,6 @@
 - 지역적인 상태 관리가 필요하다면, `lib/screens/**/controllers/*.controller.dart` 와 같이 컨트롤러를 만들면 됩니다.
   - 예를 들어, 회원 관리에만 필요한 컨트롤러가 있다면, `lib/screens/user/controllers/user.controller.dart` 와 같이 컨트롤러 파일을 만들면 됩니다.
 
-
 # 모델
 
 - `lib/models/**/*.model.dart` 와 같이 모델을 저장합니다.
@@ -193,6 +185,7 @@
   - `> toString()? Yes`
   - `> Copy with? No`
   - `> Null safety? Yes`
+
 # 백엔드
 
 - pub.dev 에 [x_flutter 패키지](https://pub.dev/packages/x_flutter)가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
@@ -215,23 +208,17 @@
 
 - 파이어베이스는 본 프로젝트에 이미 설정되어져 있으며, 직접 본인의 파이어베이스 프로젝트에 연결하여도 됩니다.
 
-
-
 # 깃 브랜치
-
 
 ## base
 
 프로젝트 처음 시작시 매우 기본적인 구조가 들어가 있습니다.
 
-
-
 # 코드 설명
 
 ## 실행 및 설정
 
-- 
-
+-
 
 ## Layout
 
@@ -239,7 +226,3 @@
 - Layout 이라는 위젯들 만들어, 그 안에 Scaffold 를 두고 통일된 appbar, body 등의 디자인을 적용하는 것입니다.
 - 이렇게하면 모든 스크린에서 동일한 Scaffold 를 가지게 되어 일관성 있게 디장니을 유지할 수 있으며, Layout 을 수정하면 전체 스크린의 디자인이 모두 같이 변경되는 것입니다.
 - 특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
-
-
-
-
