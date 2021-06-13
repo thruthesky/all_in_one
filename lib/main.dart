@@ -31,7 +31,6 @@ class AioApp extends StatelessWidget {
         // .... ..
       ),
       initialRoute: RouteNames.home,
-      // Get.toNamed( RouteNames.about );
       getPages: [
         GetPage(name: RouteNames.home, page: () => HomeScreen()),
         GetPage(name: RouteNames.about, page: () => AboutScreen()),
