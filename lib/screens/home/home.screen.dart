@@ -1,6 +1,7 @@
 import 'package:all_in_one/controllers/app.controller.dart';
 import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
+import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,11 @@ class HomeScreen extends StatefulWidget {
 
 //임의수정
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<App>(
@@ -41,6 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: service.openProfile, child: Text('회원 정보')),
               ]),
               Divider(),
+              Wrap(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.memo),
+                    child: Text('메모장'),
+                  )
+                ],
+              )
             ],
           ),
         ),

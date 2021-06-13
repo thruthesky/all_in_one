@@ -1,5 +1,6 @@
 import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
+import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
@@ -25,12 +26,14 @@ class AioApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       initialRoute: RouteNames.home,
+      // Get.toNamed( RouteNames.about );
       getPages: [
         GetPage(name: RouteNames.home, page: () => HomeScreen()),
         GetPage(name: RouteNames.about, page: () => AboutScreen()),
         GetPage(name: RouteNames.register, page: () => RegisterScreen()),
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
+        GetPage(name: RouteNames.memo, page: () => MemoScreen()),
       ],
     );
   }
