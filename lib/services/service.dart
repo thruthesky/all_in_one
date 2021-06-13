@@ -1,6 +1,7 @@
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
 
 class Service {
   BuildContext get context => Get.context!;
@@ -18,12 +19,20 @@ class Service {
     }
   }
 
-  open(String routeName) {
-    Get.toNamed(routeName);
+  // ignore: close_sinks
+  PublishSubject<String> screenChanges = PublishSubject();
+
+  Future open(String routeName, {offAll = false}) {
+    screenChanges.add(routeName);
+    if (offAll) {
+      return Get.offAllNamed(routeName)!;
+    } else {
+      return Get.toNamed(routeName)!;
+    }
   }
 
   openHome() {
-    open(RouteNames.home);
+    open(RouteNames.home, offAll: true);
   }
 
   openAbout() {
