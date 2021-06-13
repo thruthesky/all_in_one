@@ -28,6 +28,7 @@ class AioApp extends StatelessWidget {
       defaultTransition: Transition.noTransition,
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        // .... ..
       ),
       initialRoute: RouteNames.home,
       // Get.toNamed( RouteNames.about );

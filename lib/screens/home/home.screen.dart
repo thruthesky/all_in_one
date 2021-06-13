@@ -51,7 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ElevatedButton(
                     onPressed: () => service.open(RouteNames.boni),
                     child: Text('9BONI'),
-                  )
+                  ),
+                  ElevatedButton(
                     onPressed: () => service.open(RouteNames.gyeony),
                     child: Text('gyeony'),
                   ),

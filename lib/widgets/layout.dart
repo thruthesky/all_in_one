@@ -8,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 
 class Layout extends StatefulWidget {
-  Layout({Key? key, this.title, required this.body}) : super(key: key);
+  Layout({Key? key, this.title = '', required this.body}) : super(key: key);
 
-  final String? title;
+  final String title;
   final Widget body;
 
   @override
