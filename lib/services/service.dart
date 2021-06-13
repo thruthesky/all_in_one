@@ -62,6 +62,10 @@ class Service {
     open(RouteNames.gyeony);
   }
 
+  openGame() {
+    open(RouteNames.game);
+  }
+
   error(e) {
     print('에러 발생: $e');
     if (!(e is String) && e.message is String) {
