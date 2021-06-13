@@ -1,9 +1,10 @@
 import 'package:all_in_one/controllers/app.controller.dart';
+import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
+import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -14,27 +15,22 @@ class HomeScreen extends StatefulWidget {
 
 //임의수정
 class _HomeScreenState extends State<HomeScreen> {
-  String version = '0.0.0';
-  String time = '';
-
   @override
   void initState() {
     super.initState();
-    Api.instance.version().then((res) => setState(() => version = res.version));
-    Api.instance.time().then((res) => setState(() => time = res.time));
   }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<App>(
       builder: (_) => Layout(
-        title: '홈',
+        title: Config.appName,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text('Matrix server version: $version'),
-              Text('Matrix server time: $time'),
+              Text('Matrix server version: ${_.version}'),
+              Text('Matrix server time: ${_.time}'),
               Divider(),
               if (_.loggedIn) Text('회원 이름: ${_.user.name}'),
               if (_.loggedIn) ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
@@ -49,6 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Wrap(alignment: WrapAlignment.spaceBetween, children: [
                 ElevatedButton(onPressed: service.openWangmaac, child: Text('왕마악 페이지')),
               ])
+              Wrap(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.memo),
+                    child: Text('메모장'),
+                  )
+                ],
+              )
             ],
           ),
         ),

@@ -6,4 +6,5 @@ class RouteNames {
   static final String login = 'login';
   static final String profile = 'profile';
   static final String wangmaac = 'wangmaac';
+  static final String memo = 'memo';
 }
