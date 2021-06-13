@@ -33,6 +33,16 @@
   - friend - 친구 관리. 블럭 사용자 관리. 블럭한 사용자의 글,코멘트,사진,추천,채팅 등을 블럭.
 - 작업 후, 프로젝트 매니저에게 main 브랜치로 merge 요청
 
+# 과제
+
+- 하나의 플러터 프로젝트(git repo)로 여러개의 앱 만들기
+  - 예) 만능앱 프로젝트의 하나의 Git repo 를 통해 "메모장 앱 개발 및 배포", "QR 스캔 앱 개발 및 배포" 등 여러개의 repo 를 만들지 않고, 하나의 repo 에서 개발하는 방법
+    - Flavor 로 해야할지?
+    - Mono repo 로 해야할지?
+      - 최상위 `lib` 폴더를 공유하는 하위 프로젝트를 `projects` 폴더에 여러개 생성?
+    - Submodule 로 해야할지?
+      - 위젯, service, screen 등 등을 하나의 repo 에 보관하고, 별개의 프로젝트를 생성해서, submodule 로 추가해서 작업?
+
 # 참고해야 할 문서
 
 - 패키지 만들기
@@ -47,13 +57,24 @@
 
 ## 만능앱 프로젝트 설치
 
-- 플러터 최신 버전을 설치하고
-- 본 프로젝트를 clone 하면 됩니다.
+- 프로젝트를 시작하기 위해서는 만능앱 플러터 소스 코드를 Git repo 에서 클론을 합니다.
 
-- git clonee 후, 본인의 이름 또는 기능별로 branch 를 생성하여, 작업을 합니다.
-  - 작업을 할 때에 수시로, main 브랜치를 자신의 브랜치로 merge 해야 합니다.
+  - 예: `% git clone https://github.com/thruthesky/all_in_one`
+
+- git clone 후, 본인의 이름 또는 기능별로 branch 를 생성하여, 작업을 합니다.
+  - 예: `% git checkout -b thruthesky`
+    - 위에서 `thruthesky` 라는 이름으로 브랜치를 만들었습니다. 그리고 앞으로 이 브랜치에서 작업을 하면 됩니다.
+  - 작업을 할 때에 main 브랜치가 불시에 변경될 수 있으니, 수시로, main 브랜치를 자신의 브랜치로 merge 해야 합니다.
   - 작업이 완료되면 본인의 브랜치를 github 로 올립니다.
     이 때, 주의 할 점은 main branch 로는 merge 할 수 없도록 되어져 있으므로 프로젝트 매니저에게 main 으로 merge 해 달라고 요청하셔야 합니다.
+
+- 요약을 하면,
+  - git clone 후,
+  - 자신만의 branch 만들고,
+  - 수정하여 push 를 한 다음,
+  - github 의 all_in_one 사이트로 들어가서, pull request 버튼을 눌러, request 하면 됩니다.
+
+
 
 ## Flutter 코드 개발 편집기
 
@@ -64,21 +85,20 @@
   - `@attention` (json 설정에서 강조 표시 필요)
   - `@todo`
 
-
 ## 스타일 가이드
 
-
 - 본 프로젝트는 다트/플러터 코딩 가이드라인을 따릅니다.
+
   - 참고: [다트 코딩 가이드](https://dart.dev/guides/language/effective-dart/style)
   - 참고: [플러터 코딩 가이드](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo)
   - 이 두 문서는 다트와 플러터를 개발한 팀에서 개발자들을 위해서 마련한 표준 코딩 가이드라인이라고 보시면 됩니다. 우리는 팀멤버간에 말로 소통을 하지 않고, 서로가 작성한 소스 코드를 공유해서 교감하고 소통합니다. 그래서 각 개발자의 개성이나 취향대로 코딩를 작성해 버리면, 다른 개발자가 그 코드를 읽기 매우 어려워 집니다. 그래서 개인의 코딩 스타일을 버리고 표준을 따라야합니다.
-  이것은 필수 사항이 아니며, 서로가 매일 조금씩 노력해 가면 됩니다.
+    이것은 필수 사항이 아니며, 서로가 매일 조금씩 노력해 가면 됩니다.
 
 - Null safety 에 많은 혼동과 올바르지 않은 사용이 예상됩니다.
-  - Null safety 의 목적은 null 을 안전하게 관리하자는 것입니다.
-  - 그런데 만약 변수 선언에서 `String? name` 와 같이 해 버리면, name 변수가 null 일 수 있다고 표시하는 것인데, 이렇게 하면 null safety 를 쓰는 효과가 전혀 없는 것입니다. 다시 말하면, null safety 를 사용하지도 않으면서, 억지로 null safety  적용해서 코드만 읽기 어렵게 만드는 역효과가 발생합니다.
-  - 그래서 null 값이 지정될 수 있다고 표시를 하는 `물음표(?)`는 정말 어쩔 수 없는 경우에만 써야합니다.
 
+  - Null safety 의 목적은 null 을 안전하게 관리하자는 것입니다.
+  - 그런데 만약 변수 선언에서 `String? name` 와 같이 해 버리면, name 변수가 null 일 수 있다고 표시하는 것인데, 이렇게 하면 null safety 를 쓰는 효과가 전혀 없는 것입니다. 다시 말하면, null safety 를 사용하지도 않으면서, 억지로 null safety 적용해서 코드만 읽기 어렵게 만드는 역효과가 발생합니다.
+  - 그래서 null 값이 지정될 수 있다고 표시를 하는 `물음표(?)`는 정말 어쩔 수 없는 경우에만 써야합니다.
 
 - 코드는 짧고 간단하게
   - 코드가 길어지면, 대부분의 경우 잘못된 코드이며, 버그가 많습니다.
@@ -93,13 +113,10 @@
 - `$ npm i -g http-server`
 - `$ http-server doc/api`
 
-
 - 본인이 작업 한 것은 반드시, 문서로 잘 남기셔야 합니다. 이것은 매우 중요합니다.
   - 문서화는 dartdoc 를 따릅니다.
     - 참고: [Dart 문서화 툴](https://pub.dev/packages/dartdoc)
     - 참고: [Dart 문서화를 잘하는 방법](https://dart.dev/guides/language/effective-dart/documentation)
-
-
 
 ## 백엔드 설치
 
@@ -109,12 +126,10 @@
 - 본 프로젝트를 위해서 미리 준비한 실제 서버를 사용해도 됩니다.
 - Materix 에 값을 저장하고 가져오는 것, 회원, 게시판 등의 정보를 활용하는 것에 있어서 다양한 방법이 있으니, 꼭 백엔드 문서를 참고해 주세요.
 
-
 # 테스트
 
 - 테스트는 공식 문서의 Integration Test 를 진행합니다.
 - 본인이 작업을 한 부분에 대해서 Integration Test 를 하면 좋습니다. 필수 사항은 아니지만, 권장합니다.
-
 
 # 폴더 및 파일
 
@@ -133,7 +148,11 @@
 - 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
   - 예) `lib/tmp/json/user.json`
 
+<<<<<<< HEAD
+=======
+- 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요. 
 
+>>>>>>> thruthesky
 # 실행 및 개발 설정
 
 - launch.json 에 실행 설정을 해야 한다면, 가능한 다음의 포멧을 따르세요.
@@ -165,7 +184,6 @@
 - 지역적인 상태 관리가 필요하다면, `lib/screens/**/controllers/*.controller.dart` 와 같이 컨트롤러를 만들면 됩니다.
   - 예를 들어, 회원 관리에만 필요한 컨트롤러가 있다면, `lib/screens/user/controllers/user.controller.dart` 와 같이 컨트롤러 파일을 만들면 됩니다.
 
-
 # 모델
 
 - `lib/models/**/*.model.dart` 와 같이 모델을 저장합니다.
@@ -180,6 +198,7 @@
   - `> toString()? Yes`
   - `> Copy with? No`
   - `> Null safety? Yes`
+
 # 백엔드
 
 - pub.dev 에 [x_flutter 패키지](https://pub.dev/packages/x_flutter)가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
@@ -195,8 +214,74 @@
 
 - .gitignore 에 x_flutter 가 등록되어져 있다.
 - 따라서, lib/x_flutter 에 clone 을 하고, pubspec.yaml 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pubspec.yaml 의 x_flutter 를 최신 버전으로 변경하면된다.
+- 주의 할 점은, pub.dev 의 패키지를 사용하는 경우, x_flutter 를 수정하면, github 에 적용이 안된다.
+  - 반드시, pubspec.yaml 에 github 에 있는 소스를 클론 후 path 로 지정 후, 그 x_flutter 를 수정해야지, github 에 업데이트하고, pub.dev 에 publish 할 수 있다. 이 부분이 혼동되는 경우가 있을 수 있으니 유의한다.
 
 # 파이어베이스
 
 - 파이어베이스는 본 프로젝트에 이미 설정되어져 있으며, 직접 본인의 파이어베이스 프로젝트에 연결하여도 됩니다.
+
+# 깃 브랜치
+
+## base
+
+프로젝트 처음 시작시 매우 기본적인 구조가 들어가 있습니다.
+
+# 코드 설명
+
+## 실행 및 설정
+
+-
+
+## Layout
+
+- 일반적으로 각 스크린(페이지)은 Scaffold 를 바탕으로 appbar, body 등을 구성하는데, 각 스크린 별로 통일된 디자인을 하기가 쉽지 않은데,
+- Layout 이라는 위젯들 만들어, 그 안에 Scaffold 를 두고 통일된 appbar, body 등의 디자인을 적용하는 것입니다.
+- 이렇게하면 모든 스크린에서 동일한 Scaffold 를 가지게 되어 일관성 있게 디장니을 유지할 수 있으며, Layout 을 수정하면 전체 스크린의 디자인이 모두 같이 변경되는 것입니다.
+- 특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
+
+
+## 스크린 생성
+
+스크린(페이지)를 생성하는 방법에 대해서 설명을 합니다.
+
+
+- screens 폴더안에 스크린 폴더를 만들고, **.screen.dart 와 같이 dart 파일을 만듭니다.
+  - 예를 들어, 스크린의 이름이 memo 라면, 아래와 같이 만들면 됩니다.
+    - 예: `screens/memo/memo.screen.dart`
+
+- 그리고, services/route_name.dart 에 memo 라는 변수를 만듭니다.
+
+```dart
+class RouteNames {
+  static final String memo = 'memo'; // <== 여기에 추가
+}
+```
+
+- 그리고, main.ts 에서 getPages: 속성에 memo screen 을 추가합니다.
+
+```dart
+class AioApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      // ...
+      getPages: [
+        // ...
+        GetPage(name: RouteNames.memo, page: () => MemoScreen()), // <== 여기에 추가
+      ],
+    );
+  }
+}
+```
+
+- 그리고, memo screen 으로 이동 할 수 있도록 메뉴(또는 특정 위치)에 버튼을 달고 클릭이 되면 `service.open(RouteNames.memo);` 를 실행해서 해당 페이지로 이동합니다.
+- 
+```dart
+ElevatedButton(
+  onPressed: () => service.open(RouteNames.memo), // 클릭하면, memo 스크린으로 이동
+  child: Text('메모장'),
+)
+```
+
 
