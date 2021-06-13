@@ -13,7 +13,7 @@
   - 이름: 송재호
   - 카카오톡: thruthesky2
 
-
+## 컨트리뷰터
 ## 만능앱 개발자 가이드
 
 - 참고: [DEVELOPER_GUIDE.md](https://github.com/thruthesky/all_in_one/blob/main/DEVELOPER_GUIDE.md) 문서를 참고합니다.
