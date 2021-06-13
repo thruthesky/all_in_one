@@ -51,6 +51,10 @@ class Service {
     open(RouteNames.profile);
   }
 
+  openYoutube() {
+    open(RouteNames.youtube);
+  }
+
   error(e) {
     print('에러 발생: $e');
     if (!(e is String) && e.message is String) {

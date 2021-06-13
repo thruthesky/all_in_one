@@ -3,6 +3,7 @@ import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
+import 'package:all_in_one/screens/youtube/youtube.screen.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.register, page: () => RegisterScreen()),
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
+        GetPage(name: RouteNames.youtube, page: () => YoutubeScreen()),
       ],
     );
   }
