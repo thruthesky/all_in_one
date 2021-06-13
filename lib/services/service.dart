@@ -56,6 +56,9 @@ class Service {
 
   openBoni() {
     open(RouteNames.boni);
+
+  openGyeony() {
+    open(RouteNames.gyeony);
   }
 
   error(e) {

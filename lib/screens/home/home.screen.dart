@@ -52,6 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () => service.open(RouteNames.boni),
                     child: Text('9BONI'),
                   )
+                    onPressed: () => service.open(RouteNames.gyeony),
+                    child: Text('gyeony'),
+                  ),
                 ],
               )
             ],
