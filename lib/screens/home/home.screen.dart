@@ -34,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
                 ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
               ]),
+              OutlinedButton(onPressed: service.openChanWoo, child: Text('ChanWoo\'s page')),
+
               Divider(),
             ],
           ),
