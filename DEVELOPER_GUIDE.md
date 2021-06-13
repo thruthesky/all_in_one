@@ -59,9 +59,11 @@
 ## 만능앱 프로젝트 설치
 
 - 프로젝트를 시작하기 위해서는 만능앱 플러터 소스 코드를 Git repo 에서 클론을 합니다.
-  - `% git clone https://github.com/thruthesky/all_in_one`
+  - 예: `% git clone https://github.com/thruthesky/all_in_one`
 
-- git clonee 후, 본인의 이름 또는 기능별로 branch 를 생성하여, 작업을 합니다.
+- git clone 후, 본인의 이름 또는 기능별로 branch 를 생성하여, 작업을 합니다.
+  - 예: `% git checkout -b thruthesky`
+    - 위에서 `thruthesky` 라는 이름으로 브랜치를 만들었습니다. 그리고 앞으로 이 브랜치에서 작업을 하면 됩니다.
   - 작업을 할 때에 수시로, main 브랜치를 자신의 브랜치로 merge 해야 합니다.
   - 작업이 완료되면 본인의 브랜치를 github 로 올립니다.
     이 때, 주의 할 점은 main branch 로는 merge 할 수 없도록 되어져 있으므로 프로젝트 매니저에게 main 으로 merge 해 달라고 요청하셔야 합니다.
