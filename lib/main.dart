@@ -37,6 +37,7 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
         GetPage(name: RouteNames.youtube, page: () => YoutubeScreen()),
+        GetPage(name: RouteNames.memo, page: () => MemoScreen()),
       ],
     );
   }
