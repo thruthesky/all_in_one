@@ -18,7 +18,7 @@ class App extends GetxController {
   @override
   onInit() {
     super.onInit();
-    api.init(serverUrl: Config.serverUrl);
+    api.init(url: Config.serverUrl);
 
     /// 캐시된 사용자 정보를 읽어 초기화
     final re = box.read('user');

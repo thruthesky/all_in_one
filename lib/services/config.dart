@@ -4,5 +4,5 @@
 class Config {
   static const appName = String.fromEnvironment('APP_NAME', defaultValue: '앱 이름 없음');
   static const serverUrl =
-      String.fromEnvironment('BACKEND_URL', defaultValue: 'https://www.flutterkorea.com/index.php');
+      String.fromEnvironment('SERVER_URL', defaultValue: 'https://www.flutterkorea.com/index.php');
 }
