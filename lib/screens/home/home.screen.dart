@@ -52,7 +52,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   ElevatedButton(
                     onPressed: () => service.open(RouteNames.memo),
                     child: Text('메모장'),
-                  )
+                  ),
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.gyeony),
+                    child: Text('gyeony'),
+                  ),
                 ],
               )
             ],
