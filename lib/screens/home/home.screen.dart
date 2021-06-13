@@ -12,6 +12,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+//임의수정
 class _HomeScreenState extends State<HomeScreen> {
   String version = '0.0.0';
   String time = '';
@@ -36,13 +37,18 @@ class _HomeScreenState extends State<HomeScreen> {
               Text('Matrix server time: $time'),
               Divider(),
               if (_.loggedIn) Text('회원 이름: ${_.user.name}'),
-              if (_.loggedIn) ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
+              if (_.loggedIn)
+                ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
               Divider(),
               Wrap(alignment: WrapAlignment.spaceBetween, children: [
-                ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
-                ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
-                ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
-                ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
+                ElevatedButton(
+                    onPressed: service.openAbout, child: Text('어바웃 페이지')),
+                ElevatedButton(
+                    onPressed: service.openRegister, child: Text('회원가입')),
+                ElevatedButton(
+                    onPressed: service.openLogin, child: Text('로그인')),
+                ElevatedButton(
+                    onPressed: service.openProfile, child: Text('회원 정보')),
               ]),
               Divider(),
             ],
