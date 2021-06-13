@@ -1,3 +1,4 @@
+import 'package:all_in_one/services/config.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:x_flutter/x_flutter.dart';
@@ -11,10 +12,13 @@ class App extends GetxController {
   bool get loggedIn => user.idx > 0;
   bool get notLoggedIn => !loggedIn;
 
+  String version = '0.0.0';
+  String time = '';
+
   @override
   onInit() {
     super.onInit();
-    api.init(host: 'https://www.flutterkorea.com');
+    api.init(url: Config.serverUrl);
 
     /// 캐시된 사용자 정보를 읽어 초기화
     final re = box.read('user');
@@ -27,6 +31,13 @@ class App extends GetxController {
       /// 백엔드에서 최신 정보로 업데이트.
       profile();
     }
+
+    /// 아래의 코드를 적당한 곳으로 이동.
+    /// Matrix 백엔드 기본 정보.
+    Future.wait([
+      api.version().then((res) => version = res.version),
+      api.time().then((res) => time = res.time),
+    ]).then((value) => update());
   }
 
   register(Map<String, dynamic> data) async {
