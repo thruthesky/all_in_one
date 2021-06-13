@@ -54,6 +54,10 @@ class Service {
     open(RouteNames.profile);
   }
 
+  openGyeony() {
+    open(RouteNames.gyeony);
+  }
+
   error(e) {
     print('에러 발생: $e');
     if (!(e is String) && e.message is String) {
