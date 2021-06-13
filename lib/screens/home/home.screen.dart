@@ -33,18 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
               Text('Matrix server time: ${_.time}'),
               Divider(),
               if (_.loggedIn) Text('회원 이름: ${_.user.name}'),
-              if (_.loggedIn)
-                ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
+              if (_.loggedIn) ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
               Divider(),
               Wrap(alignment: WrapAlignment.spaceBetween, children: [
-                ElevatedButton(
-                    onPressed: service.openAbout, child: Text('어바웃 페이지')),
-                ElevatedButton(
-                    onPressed: service.openRegister, child: Text('회원가입')),
-                ElevatedButton(
-                    onPressed: service.openLogin, child: Text('로그인')),
-                ElevatedButton(
-                    onPressed: service.openProfile, child: Text('회원 정보')),
+                ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
+                ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
+                ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
+                ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
               ]),
               Divider(),
               Wrap(
@@ -52,6 +47,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ElevatedButton(
                     onPressed: () => service.open(RouteNames.memo),
                     child: Text('메모장'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.boni),
+                    child: Text('9BONI'),
                   )
                 ],
               )

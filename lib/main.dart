@@ -4,6 +4,7 @@ import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
+import 'package:all_in_one/screens/boni/boni.screen.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,9 @@ void main() async {
   await GetStorage.init();
   runApp(AioApp());
 }
+
 var gyoeny = '수정 테스트';
+
 class AioApp extends StatelessWidget {
   final a = Get.put(app);
   @override
@@ -34,6 +37,7 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
+        GetPage(name: RouteNames.boni, page: () => BoniScreen()),
       ],
     );
   }
