@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
-  final name = TextEditingController(text: app.user.name);
-  final address = TextEditingController(text: app.user.address);
+  final name = TextEditingController(text: app.user.my.name);
+  final address = TextEditingController(text: app.user.my.address);
   @override
   Widget build(BuildContext context) {
     return Layout(
@@ -28,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('로그인 이메일'),
-                  Text(app.user.email),
+                  Text(app.user.my.email),
                   SizedBox(height: 16),
                   Text('사용자 이름'),
                   TextField(controller: name),
@@ -39,7 +39,8 @@ class ProfileScreen extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () async {
                         try {
-                          await app.profileUpdate({'name': name.text, 'address': address.text});
+                          await app.user
+                              .profileUpdate({'name': name.text, 'address': address.text});
                           service.alert('회원 정보 수정', '회원 정보를 수정하였습니다.');
                         } catch (e) {
                           service.error(e);

@@ -218,10 +218,16 @@
 
 ## x_flutter 패키지 개발 방법
 
-- .gitignore 에 x_flutter 가 등록되어져 있다.
-- 따라서, lib/x_flutter 에 clone 을 하고, pubspec.yaml 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pubspec.yaml 의 x_flutter 를 최신 버전으로 변경하면된다.
-- 주의 할 점은, pub.dev 의 패키지를 사용하는 경우, x_flutter 를 수정하면, github 에 적용이 안된다.
-  - 반드시, pubspec.yaml 에 github 에 있는 소스를 클론 후 path 로 지정 후, 그 x_flutter 를 수정해야지, github 에 업데이트하고, pub.dev 에 publish 할 수 있다. 이 부분이 혼동되는 경우가 있을 수 있으니 유의한다.
+- x_flutter 를 직접 코딩하지 않는다면, 일반적인 사용은 pub.dev 의 최신 버전을 사용하면 된다.
+
+- 만약, x_flutter 를 직접 개발(코딩) 할 것이라면,
+  - `% git submodule update --init` 으로 추가하면 된다.
+    - 참고로, 아래와 같이 서브 모듈로 추가되어져 있으므로, 다시 `submodule add` 는 할 필요 없다.
+      - `% git submodule add https://github.com/withcenter/x_flutter packages/x_flutter`
+
+  - 그리고 `pubspec.yaml` 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pub.dev 에 publish 하고,
+    pubspec.yaml 의 x_flutter 를 pub.dev 의 최신 버전으로 변경하면된다.
+  - 주의 할 점은, pub.dev 의 패키지를 사용하는 경우, x_flutter 를 수정하면, github 에 적용이 안된다.
 
 # 파이어베이스
 
