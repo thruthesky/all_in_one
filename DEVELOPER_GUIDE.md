@@ -21,27 +21,22 @@
   - launch.json
   - launch.json 에서 옵션 별로 실행하는 방법
 - 개발 문서 및 dartdoc 문서 읽고, dartdoc 으로 문서화 하는 방법 확인
-- 깃 브랜치를 아래의 순서로 checkout 해서 소스 코드 확인하며 익혀나가기
-  - integration_test - 플러터 테스트
-  - layout - 개발작업에 사용할 기본 레이아웃. 메뉴, 타이틀 바 등을 포함.
-  - firebase - Android 와 iOS 에서 firebase 연동.
+- 깃 브랜치의 소스코드를 보며 아래의 순서대로 공부
+  - Git clone 하고 앱을 실행하는 방법
+  - .launch.json 에 실행 설정 등록
+  - 기본 페이지 이동, 테마, Layout 등
   - matrix - 오픈소스 백엔드 Materix 와 연동
+  - 플러터 테스트 - Integration Test
+  - Android 와 iOS 에서 firebase 연동.
   - user - 회원 가입 및 관리. 백엔드로 로그인을 하고 동시에 파이어베이스로 로그인.
-  - social-login - 파이어베이스를 통한 구글, 페이스북, 애플 로그인. 그리고 카카오톡과 네이버 로그인
-  - pass-login - 패스로그인을 통한 본인(성인 실명) 인증.
-  - forum - 게시판 기능 일체. 일반적인 게시판의 모든 기능.
-  - friend - 친구 관리. 블럭 사용자 관리. 블럭한 사용자의 글,코멘트,사진,추천,채팅 등을 블럭.
+  - 소셜 로그인 - 파이어베이스를 통한 구글, 페이스북, 애플 로그인. 그리고 카카오톡과 네이버 로그인
+  - 패스로그인을 통한 본인(성인 실명) 인증.
+  - 게시판 기능 일체. 일반적인 게시판의 모든 기능.
+  - 친구 관리. 블럭 사용자 관리. 블럭한 사용자의 글,코멘트,사진,추천,채팅 등을 블럭.
+  - 1:1 채팅 기능
 - 작업 후, 프로젝트 매니저에게 main 브랜치로 merge 요청
-
-# 과제
-
-- 하나의 플러터 프로젝트(git repo)로 여러개의 앱 만들기
-  - 예) 만능앱 프로젝트의 하나의 Git repo 를 통해 "메모장 앱 개발 및 배포", "QR 스캔 앱 개발 및 배포" 등 여러개의 repo 를 만들지 않고, 하나의 repo 에서 개발하는 방법
-    - Flavor 로 해야할지?
-    - Mono repo 로 해야할지?
-      - 최상위 `lib` 폴더를 공유하는 하위 프로젝트를 `projects` 폴더에 여러개 생성?
-    - Submodule 로 해야할지?
-      - 위젯, service, screen 등 등을 하나의 repo 에 보관하고, 별개의 프로젝트를 생성해서, submodule 로 추가해서 작업?
+- 자기만의 브랜치에서 맡은 기능 개발
+- Mono repo 를 통한 자기만의 앱 개발
 
 # 참고해야 할 문서
 
@@ -105,6 +100,14 @@
   - 코드가 짧아지면 짧아질수록 좋은 코드이며 버그가 적습니다.
   - 짧고 간결하게, 그리고 원하는 것을 충분히 표현하도록하는 연습을 해야 합니다.
 
+### 개발 방향
+
+- 플러터의 정체성(기본)을 헤치지 않는 범위에서 3rd party 라이브러리 또는 패키지를 사용한다.
+  - 예를 들어, 디자인 시스템을 사용하는데 기존의 플러터 코딩 또는 Material Design 방식의 코딩과 매우 동떨어진다면, 사용하기 어렵다.
+    - Velocity X 나 Flutter Hooks 가 그러한 예이다. 비록 좋은 기능들이긴 하지만, 기존의 플러터 코딩 방식과 차이가 있어 채택하지 않는다.
+
+
+
 ## 문서화
 
 - `$ dartdoc`
@@ -153,7 +156,7 @@
 # 실행 및 개발 설정
 
 - launch.json 에 실행 설정을 해야 한다면, 가능한 다음의 포멧을 따르세요.
-  - `name` 에는 "개발자이름 - 장치 타입 및 버전 - 개발컴퓨터(또는 위치) - 서버"
+  - `name` 에는 "개발자이름(또는 앱 이름) - 장치 타입 및 버전 - 개발컴퓨터(또는 위치) - 서버"
   - `CONFIG` 는 앱의 설정을 하는 것입니다.
   - `OPTIONS` 에는 앱을 실행 할 때, 어떤 옵션으로 실행 할지 지정하는 것입니다.
 
@@ -294,6 +297,59 @@ ElevatedButton(
   onPressed: () => service.open(RouteNames.memo), // 클릭하면, memo 스크린으로 이동
   child: Text('메모장'),
 )
+```
+
+
+# Mono repo
+
+- Mono repo 란, 하나의 Git repo 에 여러개의 프로젝트가 관리되고 개발되는 것을 말합니다.
+
+- 만능앱은 굉장히 많은 기능들을 포함하고, 또 여러가지 형태로 파생되어 서브 프로젝트 개발 및 앱 스토어에 배포가 이루어 질 것입니다.
+  - 이와 같은 경우, 어떻게 하면 효율적으로 만능앱에서 필요한 기능만 쏙 빼서 나만의 앱을 만들 수 있을까요?
+  - 만능앱에서 서브 프로젝트를 생성 할 때 마다, 새로운 플러터 프로젝트를 만들고 원하는 기능의 소스 코드만 가져와서 개발할까요? 그런데 원본 소스가 계속 업데이트가 된다면요?
+  - 만능앱의 주요 요소를 패키지화하거나 서브 git repo 로 만들어 submodule 로 사용하면 조금 낫겠지만, 번거롭습니다.
+  - 플러터의 Flavor 도 만이 번거롭습니다.
+  - 이 문제의 핵심은 바로 코드 공유입니다.
+
+- Flavor 도 쓰지 않고, git submodule 방식으로 하지 않고, pub.dev 에 패키지를 올리지 않고, 더 간단하게 코드 공유를 할 수 있 방법?
+  - 그래서 Mono repo 를 선택 했습니다.
+
+
+## 각자의 프로젝트 생성
+
+- 먼저 아래와 같이 여러분들의 프로젝트를 생성합니다.
+  - `$ cd projects`
+  - `$ flutter create project-name`
+
+- 프로젝트 생성 후, pubspec.yaml 설정을 통해서 x_flutter 를 비롯한 필요한 패키지를 추가합니다.
+  예를 들면 아래와 같습니다.
+  여러분들이 개발할 앱의 요구 사항에 맞게 수정하여 사용하시면 됩니다.
+
+예제) pubspec.yaml
+```yaml
+name: youngja
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  get: ^4.1.4
+  get_storage: ^2.0.2
+  x_flutter: 0.0.7
+  user:
+    path: ../../packages/user
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
 ```
 
 
