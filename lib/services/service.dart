@@ -63,7 +63,7 @@ class Service {
   }
 
   error(e) {
-    print('에러 발생: $e');
+    print('service.dart > 에러 발생: $e');
     if (!(e is String) && e.message is String) {
       alert('Assertion 에러 발생', e.message);
     } else {

@@ -14,6 +14,7 @@ class AppController extends GetxController {
   onInit() {
     super.onInit();
     api.init(url: Config.serverUrl);
+    Get.put(user);
 
     /// 아래의 코드를 적당한 곳으로 이동.
     /// Matrix 백엔드 기본 정보.
