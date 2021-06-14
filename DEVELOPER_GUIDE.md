@@ -318,6 +318,8 @@ ElevatedButton(
   - 그래서 Mono repo 를 선택 했습니다.
 
 - 흩어져 있는 repo 들은 `git subtree` 기능으로 모았으며, `/packages` 폴더에 재 사용가능한 코드를 모아 놓았습니다.
+  - 참고로 `git subtree` 는
+    - `$ git subtree --prefix=packages/subtrees/x_flutter x_flutter main` 으로 지정되어져 있습니다.
 
 - `/projects` 폴더에 서브 프로젝트를 생성하면 됩니다.
 
