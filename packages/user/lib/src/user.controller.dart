@@ -3,6 +3,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class UserController extends GetxController {
+  static UserController get to => Get.find();
+  static UserController get of => Get.find();
   final box = GetStorage();
 
   final Api api = Api.instance;

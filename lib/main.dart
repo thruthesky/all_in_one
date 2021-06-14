@@ -19,8 +19,6 @@ void main() async {
   runApp(AioApp());
 }
 
-var gyoeny = '수정 테스트';
-
 class AioApp extends StatelessWidget {
   final a = Get.put(app);
   @override

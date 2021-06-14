@@ -5,6 +5,7 @@ import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:user/user.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -26,8 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Text('Matrix server version: ${_.version}'),
               Text('Matrix server time: ${_.time}'),
               Divider(),
-              if (_.user.loggedIn) Text('회원 이름: ${_.user.my.name}'),
-              if (_.user.loggedIn) ElevatedButton(onPressed: _.user.logout, child: Text('로그아웃')),
+              GetBuilder<UserController>(
+                builder: (user) => Column(
+                  children: [
+                    if (user.loggedIn) Text('회원 이름: ${user.my.name}'),
+                    if (user.loggedIn) Text('회원 주소: ${user.my.address}'),
+                    if (user.loggedIn) ElevatedButton(onPressed: user.logout, child: Text('로그아웃')),
+                  ],
+                ),
+              ),
               Divider(),
               Wrap(alignment: WrapAlignment.spaceBetween, children: [
                 ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),

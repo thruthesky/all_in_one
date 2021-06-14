@@ -20,7 +20,9 @@ class RegisterScreen extends StatelessWidget {
               '회원 가입',
               style: TextStyle(fontSize: 20.0),
             ),
-            Expanded(child: UserRegisterForm(success: service.openHome, error: service.error)),
+            Expanded(
+                child:
+                    UserRegisterForm(success: (user) => service.openHome(), error: service.error)),
           ],
         ),
       ),
