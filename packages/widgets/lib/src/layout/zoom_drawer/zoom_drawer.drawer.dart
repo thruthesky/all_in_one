@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AppDrawer extends StatelessWidget {
-  const AppDrawer({
+class ZoomDrawerDrawer extends StatelessWidget {
+  const ZoomDrawerDrawer({
     Key? key,
   }) : super(key: key);
 

@@ -29,10 +29,14 @@ dependencies:
 
   # x_flutter: ^0.0.7
   x_flutter:
-    path: packages/x_flutter
+    path: packages/subtrees/x_flutter
 
   user:
     path: packages/user
+
+  widgets:
+    path: packages/widgets
+
     
 
 dev_dependencies:

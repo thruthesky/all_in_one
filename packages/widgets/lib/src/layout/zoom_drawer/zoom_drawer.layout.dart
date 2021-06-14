@@ -2,35 +2,32 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
-import 'zoom_drawer.drawer.dart';
-import 'zoom_drawer.title.dart';
 
-class Layout extends StatefulWidget {
-  Layout({Key? key, this.title = '', required this.body, this.backgroundColor = Colors.blue})
+class ZoomDrawerLayout extends StatefulWidget {
+  ZoomDrawerLayout(
+      {Key? key,
+      required this.titleBar,
+      required this.drawer,
+      required this.body,
+      this.backgroundColor = Colors.blue})
       : super(key: key);
 
-  final String title;
+  final PreferredSizeWidget titleBar;
+  final Widget drawer;
   final Widget body;
   final Color backgroundColor;
 
   @override
-  _LayoutState createState() => _LayoutState();
+  _ZoomDrawerLayoutState createState() => _ZoomDrawerLayoutState();
 }
 
-class _LayoutState extends State<Layout> {
+class _ZoomDrawerLayoutState extends State<ZoomDrawerLayout> {
   late final ZoomDrawerController drawerController;
 
-  late final StreamSubscription screenChanges;
   @override
   void initState() {
     super.initState();
     drawerController = ZoomDrawerController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    screenChanges.cancel();
   }
 
   @override
@@ -43,12 +40,12 @@ class _LayoutState extends State<Layout> {
       backgroundColor: Colors.grey[300]!,
       slideWidth: MediaQuery.of(context).size.width * .6,
       menuScreen:
-          Scaffold(backgroundColor: widget.backgroundColor, body: SafeArea(child: AppDrawer())),
+          Scaffold(backgroundColor: widget.backgroundColor, body: SafeArea(child: widget.drawer)),
       mainScreen: Stack(
         children: [
           Scaffold(
             backgroundColor: Colors.white,
-            appBar: AppTitle(title: widget.title),
+            appBar: widget.titleBar,
             body: Column(
               children: [
                 Expanded(
@@ -81,12 +78,5 @@ class _LayoutState extends State<Layout> {
       ),
       borderRadius: 24.0,
     );
-
-    // return Scaffold(
-    //   appBar: AppTitle(
-    //     title: widget.title,
-    //   ),
-    //   body: widget.body,
-    // );
   }
 }

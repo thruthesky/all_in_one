@@ -106,6 +106,9 @@
   - 예를 들어, 디자인 시스템을 사용하는데 기존의 플러터 코딩 또는 Material Design 방식의 코딩과 매우 동떨어진다면, 사용하기 어렵다.
     - Velocity X 나 Flutter Hooks 가 그러한 예이다. 비록 좋은 기능들이긴 하지만, 기존의 플러터 코딩 방식과 차이가 있어 채택하지 않는다.
 
+### Mono repo
+
+- 본 페이지의 mono repo 항목을 참고해 주세요.
 
 
 ## 문서화
@@ -314,6 +317,9 @@ ElevatedButton(
 - Flavor 도 쓰지 않고, git submodule 방식으로 하지 않고, pub.dev 에 패키지를 올리지 않고, 더 간단하게 코드 공유를 할 수 있 방법?
   - 그래서 Mono repo 를 선택 했습니다.
 
+- 흩어져 있는 repo 들은 `git subtree` 기능으로 모았으며, `/packages` 폴더에 재 사용가능한 코드를 모아 놓았습니다.
+
+- `/projects` 폴더에 서브 프로젝트를 생성하면 됩니다.
 
 ## 각자의 프로젝트 생성
 

@@ -1,5 +1,5 @@
-name: user
-description: User packages
+name: widgets
+description: Widgets packages
 version: 0.0.1
 homepage: https://github.com/thruthesky/all_in_one
 repository: https://github.com/thruthesky/all_in_one
@@ -17,6 +17,7 @@ dependencies:
 
   get: ^4.1.4
   flutter_zoom_drawer: ^2.0.2+4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

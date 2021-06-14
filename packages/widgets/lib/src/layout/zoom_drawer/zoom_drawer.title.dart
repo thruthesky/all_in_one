@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:get/get.dart';
 
-class AppTitle extends StatefulWidget with PreferredSizeWidget {
-  AppTitle({
+class ZoomDrawerTitle extends StatefulWidget with PreferredSizeWidget {
+  ZoomDrawerTitle({
     Key? key,
     required this.title,
     this.titleStyle = const TextStyle(fontSize: 16),
@@ -16,10 +16,10 @@ class AppTitle extends StatefulWidget with PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 
   @override
-  _AppTitleState createState() => _AppTitleState();
+  _ZoomDrawerTitleState createState() => _ZoomDrawerTitleState();
 }
 
-class _AppTitleState extends State<AppTitle> {
+class _ZoomDrawerTitleState extends State<ZoomDrawerTitle> {
   @override
   Widget build(BuildContext context) {
     return AppBar(

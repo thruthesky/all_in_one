@@ -264,7 +264,7 @@ packages:
   x_flutter:
     dependency: "direct main"
     description:
-      path: "../../packages/x_flutter"
+      path: "../../packages/subtrees/x_flutter"
       relative: true
     source: path
     version: "0.0.7"

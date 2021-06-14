@@ -19,7 +19,7 @@ dependencies:
 
   # publish_to: none 이어야 path 사용 가능.
   x_flutter:
-    path: ../x_flutter
+    path: ../subtrees/x_flutter
 
 dev_dependencies:
   flutter_test:
