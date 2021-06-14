@@ -38,7 +38,7 @@ class _AppTitleState extends State<AppTitle> {
                   Icons.menu,
                   color: Colors.black,
                 ),
-                Text('전체메뉴', style: tsXs)
+                Text('ALL', style: tsXs)
               ],
             ),
             onPressed: () {
