@@ -34,13 +34,18 @@ class _HomeScreenState extends State<HomeScreen> {
               Text('Matrix server time: ${_.time}'),
               Divider(),
               if (_.loggedIn) Text('회원 이름: ${_.user.name}'),
-              if (_.loggedIn) ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
+              if (_.loggedIn)
+                ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
               Divider(),
               Wrap(alignment: WrapAlignment.spaceBetween, children: [
-                ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
-                ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
-                ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
-                ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
+                ElevatedButton(
+                    onPressed: service.openAbout, child: Text('어바웃 페이지')),
+                ElevatedButton(
+                    onPressed: service.openRegister, child: Text('회원가입')),
+                ElevatedButton(
+                    onPressed: service.openLogin, child: Text('로그인')),
+                ElevatedButton(
+                    onPressed: service.openProfile, child: Text('회원 정보')),
               ]),
               Divider(),
               Wrap(
@@ -57,12 +62,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () => service.open(RouteNames.gyeony),
                     child: Text('gyeony'),
                   ),
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.wangmaac),
+                    child: Text('Wangmaac'),
+                  ),
                 ],
               ),
               Text('기능별 메뉴'),
               Divider(),
               ElevatedButton(
-                  onPressed: () => service.open(RouteNames.qrCodeGenerate), child: Text('QR 코드 생성'))
+                  onPressed: () => service.open(RouteNames.qrCodeGenerate),
+                  child: Text('QR 코드 생성'))
             ],
           ),
         ),

@@ -7,6 +7,7 @@ import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
 import 'package:all_in_one/screens/boni/boni.screen.dart';
+import 'package:all_in_one/screens/wangmaac/wangmaac.screen.dart';
 import 'package:all_in_one/services/defines.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
@@ -38,8 +39,10 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
         GetPage(name: RouteNames.boni, page: () => BoniScreen()),
+        GetPage(name: RouteNames.wangmaac, page: () => WangmaacScreen()),
         GetPage(name: RouteNames.gyeony, page: () => GyeonyScreen()),
-        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen())
+        GetPage(
+            name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen())
       ],
     );
   }

@@ -7,6 +7,7 @@ class RouteNames {
   static final String profile = 'profile';
   static final String memo = 'memo';
   static final String boni = 'boni';
+  static final String wangmaac = 'wangmaac';
   static final String gyeony = 'gyeony';
   static final String qrCodeGenerate = 'qrCodeGenerate';
 }
