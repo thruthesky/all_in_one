@@ -102,6 +102,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_phone_direct_caller:
+    dependency: "direct main"
+    description:
+      name: flutter_phone_direct_caller
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -249,14 +256,14 @@ packages:
     source: hosted
     version: "2.0.0"
   qr_code_scanner:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: qr_code_scanner
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.5.1"
   qr_flutter:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: qr_flutter
       url: "https://pub.dartlang.org"
@@ -269,8 +276,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
-  share_plus:
+  services:
     dependency: "direct main"
+    description:
+      path: "packages/services"
+      relative: true
+    source: path
+    version: "0.0.1"
+  share_plus:
+    dependency: transitive
     description:
       name: share_plus
       url: "https://pub.dartlang.org"
