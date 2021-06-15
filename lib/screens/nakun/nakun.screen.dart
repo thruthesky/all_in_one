@@ -8,7 +8,7 @@ class NakunScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Layout(
       title: 'nakun',
-      body: Text('nakun'),
+      body: Center(child: Text('nakun')),
     );
   }
 }
