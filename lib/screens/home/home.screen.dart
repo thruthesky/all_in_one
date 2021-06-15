@@ -64,6 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     onPressed: () => service.open(RouteNames.gyeony),
                     child: Text('gyeony'),
                   ),
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.nakun),
+                    child: Text('nakun'),
+                  ),
                 ],
               ),
               Text('잡다한 메뉴'),

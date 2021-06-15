@@ -65,6 +65,10 @@ class Service {
     open(RouteNames.gyeony);
   }
 
+  openNakun() {
+    open(RouteNames.nakun);
+  }
+
   error(e) {
     s.error(e);
   }
