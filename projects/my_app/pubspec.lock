@@ -98,7 +98,7 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.0"
+    version: "6.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -118,18 +118,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.1"
-  flutter_driver:
-    dependency: "direct dev"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  flutter_phone_direct_caller:
-    dependency: "direct main"
-    description:
-      name: flutter_phone_direct_caller
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -141,26 +129,21 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_zoom_drawer:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_zoom_drawer
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2+4"
-  fuchsia_remote_debug_protocol:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   get:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.4"
   get_storage:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: get_storage
       url: "https://pub.dartlang.org"
@@ -187,11 +170,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.2"
-  integration_test:
-    dependency: "direct dev"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   js:
     dependency: transitive
     description:
@@ -326,19 +304,12 @@ packages:
     source: hosted
     version: "4.0.0"
   rxdart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
-  services:
-    dependency: "direct main"
-    description:
-      path: "packages/services"
-      relative: true
-    source: path
-    version: "0.0.1"
   share_plus:
     dependency: transitive
     description:
@@ -428,13 +399,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  sync_http:
-    dependency: transitive
-    description:
-      name: sync_http
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.0"
   synchronized:
     dependency: transitive
     description:
@@ -519,24 +483,10 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  vm_service:
-    dependency: transitive
-    description:
-      name: vm_service
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.2.0"
-  webdriver:
-    dependency: transitive
-    description:
-      name: webdriver
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
   widgets:
     dependency: "direct main"
     description:
-      path: "packages/widgets"
+      path: "../../packages/widgets"
       relative: true
     source: path
     version: "0.0.1"
@@ -550,7 +500,7 @@ packages:
   x_flutter:
     dependency: "direct main"
     description:
-      path: "packages/subtrees/x_flutter"
+      path: "../../packages/subtrees/x_flutter"
       relative: true
     source: path
     version: "0.0.7"
