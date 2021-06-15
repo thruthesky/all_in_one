@@ -323,6 +323,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
+  user:
+    dependency: "direct main"
+    description:
+      path: "packages/user"
+      relative: true
+    source: path
+    version: "0.0.1"
   vector_math:
     dependency: transitive
     description:
@@ -344,6 +351,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  widgets:
+    dependency: "direct main"
+    description:
+      path: "packages/widgets"
+      relative: true
+    source: path
+    version: "0.0.1"
   win32:
     dependency: transitive
     description:
@@ -354,9 +368,9 @@ packages:
   x_flutter:
     dependency: "direct main"
     description:
-      name: x_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/subtrees/x_flutter"
+      relative: true
+    source: path
     version: "0.0.7"
   xdg_directories:
     dependency: transitive

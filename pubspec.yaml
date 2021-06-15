@@ -27,10 +27,17 @@ dependencies:
   qr_code_scanner: ^0.5.1
   
 
+  # x_flutter: ^0.0.7
+  x_flutter:
+    path: packages/subtrees/x_flutter
 
-  x_flutter: ^0.0.7
-  # x_flutter:
-  #   path: lib/x_flutter
+  user:
+    path: packages/user
+
+  widgets:
+    path: packages/widgets
+
+    
 
 dev_dependencies:
   flutter_test:

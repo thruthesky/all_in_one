@@ -5,7 +5,7 @@ import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:user/user.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -14,16 +14,10 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-//임의수정
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return GetBuilder<App>(
+    return GetBuilder<AppController>(
       builder: (_) => Layout(
         title: Config.appName,
         body: Center(
@@ -33,9 +27,15 @@ class _HomeScreenState extends State<HomeScreen> {
               Text('Matrix server version: ${_.version}'),
               Text('Matrix server time: ${_.time}'),
               Divider(),
-              if (_.loggedIn) Text('회원 이름: ${_.user.name}'),
-              if (_.loggedIn)
-                ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
+              GetBuilder<UserController>(
+                builder: (user) => Column(
+                  children: [
+                    if (user.loggedIn) Text('회원 이름: ${user.my.name}'),
+                    if (user.loggedIn) Text('회원 주소: ${user.my.address}'),
+                    if (user.loggedIn) ElevatedButton(onPressed: user.logout, child: Text('로그아웃')),
+                  ],
+                ),
+              ),
               Divider(),
               Wrap(alignment: WrapAlignment.spaceBetween, children: [
                 ElevatedButton(
@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ElevatedButton(
                     onPressed: service.openProfile, child: Text('회원 정보')),
               ]),
+              Divider(),
               Divider(),
               Wrap(
                 children: [
