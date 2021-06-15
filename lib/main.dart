@@ -2,13 +2,9 @@ import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/gyeony/gyeony.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
-<<<<<<< HEAD
-import 'package:all_in_one/screens/game/game.screen.dart';
-=======
 import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.result.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.scan.dart';
->>>>>>> 3b8a9a3b1f95acca94c37c1788dac29f3a09a83c
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
@@ -41,7 +37,6 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
-        GetPage(name: RouteNames.game, page: () => GameScreen()),
         GetPage(name: RouteNames.boni, page: () => BoniScreen()),
         GetPage(name: RouteNames.gyeony, page: () => GyeonyScreen()),
         GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),

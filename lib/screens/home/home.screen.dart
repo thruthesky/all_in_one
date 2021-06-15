@@ -48,22 +48,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Text('기능별 메뉴'),
               Divider(),
-<<<<<<< HEAD
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-=======
-              Wrap(
-                spacing: xs,
->>>>>>> 3b8a9a3b1f95acca94c37c1788dac29f3a09a83c
                 children: [
                   ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
                   ElevatedButton(
                     onPressed: () => service.open(RouteNames.memo),
                     child: Text('메모장'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => service.open(RouteNames.game),
-                    child: Text('게임'),
                   ),
                   ElevatedButton(
                     onPressed: () => service.open(RouteNames.boni),

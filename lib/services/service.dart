@@ -65,10 +65,6 @@ class Service {
     open(RouteNames.gyeony);
   }
 
-  openGame() {
-    open(RouteNames.game);
-  }
-
   error(e) {
     s.error(e);
   }
