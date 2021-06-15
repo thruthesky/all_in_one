@@ -48,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Text('기능별 메뉴'),
               Divider(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Wrap(
+                spacing: xs,
                 children: [
                   ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
                   ElevatedButton(
