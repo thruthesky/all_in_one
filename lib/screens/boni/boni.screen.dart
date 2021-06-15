@@ -1,3 +1,4 @@
+import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 
 class BoniScreen extends StatelessWidget {
@@ -5,10 +6,8 @@ class BoniScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('boni'),
-      ),
+    return Layout(
+      title: 'boni',
       body: Text('Hello boni!!'),
     );
   }

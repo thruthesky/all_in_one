@@ -20,9 +20,23 @@ dependencies:
   
   rxdart: ^0.27.1
 
-  x_flutter: ^0.0.7
-  # x_flutter:
-  #   path: lib/x_flutter
+
+  # 전화걸기
+  flutter_phone_direct_caller: ^2.0.0
+  
+  
+
+  # x_flutter: ^0.0.7
+  x_flutter:
+    path: packages/subtrees/x_flutter
+
+  widgets:
+    path: packages/widgets
+
+  services:
+    path: packages/services
+    
+    
 
 dev_dependencies:
   flutter_test:

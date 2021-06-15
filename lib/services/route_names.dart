@@ -9,4 +9,7 @@ class RouteNames {
   static final String game = 'game';
   static final String boni = 'boni';
   static final String gyeony = 'gyeony';
+  static final String qrCodeGenerate = 'qrCodeGenerate';
+  static final String qrCodeScan = 'qrCodeScan';
+  static final String qrCodeResult = 'qrCodeResult';
 }

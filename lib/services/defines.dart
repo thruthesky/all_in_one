@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-const Color primaryColor = Colors.blue;
+final Color primaryColor = Colors.yellow[700]!;
 
 const Color white = Colors.white;
 final Color light = Colors.grey[200]!;
@@ -28,9 +28,6 @@ const TextStyle tsSm = TextStyle(fontSize: 12);
 const TextStyle tsMd = TextStyle(fontSize: 16);
 const TextStyle tsLg = TextStyle(fontSize: 24);
 const TextStyle tsXl = TextStyle(fontSize: 32);
-
-const TextStyle tsWhite = TextStyle(color: Colors.white);
-const TextStyle tsBlack = TextStyle(color: Colors.black);
 
 const double pagePadding = xsm;
 
@@ -59,3 +56,28 @@ TextStyle get bodyText2 => Theme.of(Get.context!).textTheme.bodyText2!; //16.0,
 TextStyle bodyText3 = TextStyle(fontSize: 14);
 TextStyle bodyText4 = TextStyle(fontSize: 12);
 TextStyle bodyText5 = TextStyle(fontSize: 10);
+
+const TextStyle tsWhite = TextStyle(color: Colors.white);
+const TextStyle tsBlack = TextStyle(color: Colors.black);
+
+// 스크린(페이지) appbar 타이틀
+const TextStyle tsTitle = TextStyle(color: Colors.black, fontSize: 18);
+
+final themeData = ThemeData(
+  primarySwatch: Colors.grey,
+  // Define the default brightness and colors.
+  brightness: Brightness.light,
+  primaryColor: Colors.lightBlue[200],
+  accentColor: Colors.cyan[600],
+
+  // Define the default font family.
+  fontFamily: 'Roboto',
+
+  // Define the default TextTheme. Use this to specify the default
+  // text styling for headlines, titles, bodies of text, and more.
+  textTheme: TextTheme(
+    headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+    headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+    bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
+  ),
+);

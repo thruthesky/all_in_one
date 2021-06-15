@@ -2,6 +2,7 @@ import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:services/services.dart' as s;
 
 class Service {
   BuildContext get context => Get.context!;
@@ -25,12 +26,14 @@ class Service {
   /// 스크린(페이지) 이동
   ///
   /// [offAll] 에 true 가 지정되면, nav stack 의 중간에 있는 모든 페이지를 없애고 해당 페이지로 이동.
-  Future open(String routeName, {offAll = false}) {
+  Future open(String routeName, {arguments = const {}, offAll = false, off = false}) {
     screenChanges.add(routeName);
     if (offAll) {
-      return Get.offAllNamed(routeName)!;
+      return Get.offAllNamed(routeName, arguments: arguments)!;
+    } else if (off) {
+      return Get.offNamed(routeName, arguments: arguments)!;
     } else {
-      return Get.toNamed(routeName)!;
+      return Get.toNamed(routeName, arguments: arguments)!;
     }
   }
 
@@ -67,25 +70,13 @@ class Service {
   }
 
   error(e) {
-    print('에러 발생: $e');
-    if (!(e is String) && e.message is String) {
-      alert('Assertion 에러 발생', e.message);
-    } else {
-      alert('에러', e);
-    }
+    s.error(e);
   }
 
   // 알림창을 띄운다
   //
   // 알림창은 예/아니오의 선택이 없다. 그래서 리턴값이 필요없다.
   Future<void> alert(String title, String content) async {
-    return showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(title),
-        content: Text(content),
-        actions: [TextButton(onPressed: () => Get.back(result: true), child: Text('확인'))],
-      ),
-    );
+    return s.alert(title, content);
   }
 }
