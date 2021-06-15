@@ -17,11 +17,13 @@ class ShareButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () {
+    return GestureDetector(
+      child: Container(
+        child: child,
+      ),
+      onTap: () {
         Share.share(text, subject: subject);
       },
-      child: child,
     );
   }
 }

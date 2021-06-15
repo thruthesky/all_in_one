@@ -24,6 +24,9 @@ dependencies:
   flutter_zoom_drawer: ^2.0.2+4
   share_plus: ^2.1.2
 
+  
+
+  cached_network_image: ^3.0.0
 
   # QR 생성기
   qr_flutter: ^4.0.0

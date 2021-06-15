@@ -6,8 +6,14 @@ class UserAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Avatar(
-      child: Text('Yo'),
+    return SizedBox(
+      height: 80,
+      child: Avatar(
+        child: Text(
+          'Yo',
+          style: TextStyle(fontSize: 50),
+        ),
+      ),
     );
   }
 }

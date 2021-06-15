@@ -9,7 +9,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Layout(
-      title: '회원 가입',
+      title: '회원 로그인',
       body: Container(
         padding: EdgeInsets.all(16.0),
         color: Colors.orange[200],
