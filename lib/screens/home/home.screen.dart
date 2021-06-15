@@ -1,11 +1,13 @@
 import 'package:all_in_one/controllers/app.controller.dart';
 import 'package:all_in_one/services/config.dart';
+import 'package:all_in_one/services/defines.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:user/user.dart';
+import 'package:widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -32,25 +34,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     if (user.loggedIn) Text('회원 이름: ${user.my.name}'),
                     if (user.loggedIn) Text('회원 주소: ${user.my.address}'),
-                    if (user.loggedIn) ElevatedButton(onPressed: user.logout, child: Text('로그아웃')),
+                    Wrap(spacing: sm, alignment: WrapAlignment.spaceBetween, children: [
+                      if (user.loggedIn) ...[
+                        ElevatedButton(onPressed: user.logout, child: Text('로그아웃')),
+                        ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
+                      ],
+                      if (user.notLoggedIn) ...[
+                        ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
+                        ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
+                      ],
+                    ]),
                   ],
                 ),
               ),
-              Divider(),
-              Wrap(alignment: WrapAlignment.spaceBetween, children: [
-                ElevatedButton(
-                    onPressed: service.openAbout, child: Text('어바웃 페이지')),
-                ElevatedButton(
-                    onPressed: service.openRegister, child: Text('회원가입')),
-                ElevatedButton(
-                    onPressed: service.openLogin, child: Text('로그인')),
-                ElevatedButton(
-                    onPressed: service.openProfile, child: Text('회원 정보')),
-              ]),
-              Divider(),
+              Text('기능별 메뉴'),
               Divider(),
               Wrap(
+                spacing: xs,
                 children: [
+                  ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
                   ElevatedButton(
                     onPressed: () => service.open(RouteNames.memo),
                     child: Text('메모장'),
@@ -69,11 +71,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              Text('기능별 메뉴'),
+              Text('잡다한 메뉴'),
               Divider(),
-              ElevatedButton(
-                  onPressed: () => service.open(RouteNames.qrCodeGenerate),
-                  child: Text('QR 코드 생성'))
+              ShareButton(
+                text: "환상의 나라 필리핀에 오신 것을 환영합니다. https://www.philgo.com",
+                child: Text('필고 사이트를 친구에게 공유 해 주세요 ^^;'),
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.qrCodeGenerate),
+                    child: Text('QR 코드 생성'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => service.open(RouteNames.qrCodeScan),
+                    child: Text('QR 코드 스캔'),
+                  )
+                ],
+              )
             ],
           ),
         ),

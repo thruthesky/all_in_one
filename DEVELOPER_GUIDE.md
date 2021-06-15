@@ -2,6 +2,11 @@
 
 본 문서는 만능앱 개발을 위한 개발자 문서이며, 개발 멤버들이 보다 쉽게 프로젝트 참여를 하고 성공적인 결과를 만들어내기 위해서 따라야 할 가이드라인을 제사합니다.
 
+# 참고해야 할 문서
+
+- 패키지 만들기
+  - [공식문서: Flutter CLI - Developing Dart Packages](https://flutter.dev/docs/development/packages-and-plugins/developing-packages)
+  - [공식문서: Creating Packages](https://dart.dev/guides/libraries/create-library-packages)
 # 참여 인원 모집
 
 - 프로젝트에 참여하시려는 분은 [한국 플러터 개발자 그룹](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo) 단톡방에서 참여 신청을 해 주세요.
@@ -38,13 +43,12 @@
 - 자기만의 브랜치에서 맡은 기능 개발
 - Mono repo 를 통한 자기만의 앱 개발
 
-# 참고해야 할 문서
-
-- 패키지 만들기
-  - [공식문서: Flutter CLI - Developing Dart Packages](https://flutter.dev/docs/development/packages-and-plugins/developing-packages)
-  - [공식문서: Creating Packages](https://dart.dev/guides/libraries/create-library-packages)
 
 # 이슈 및 개발 작업 공간
+
+- [Git Projects 참고](https://github.com/thruthesky/all_in_one/projects/1)
+
+# 과제
 
 - [Git Projects 참고](https://github.com/thruthesky/all_in_one/projects/1)
 
@@ -68,8 +72,6 @@
   - 자신만의 branch 만들고,
   - 수정하여 push 를 한 다음,
   - github 의 all_in_one 사이트로 들어가서, pull request 버튼을 눌러, request 하면 됩니다.
-
-
 
 ## Flutter 코드 개발 편집기
 
@@ -154,7 +156,13 @@
 - 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
   - 예) `lib/tmp/json/user.json`
 
-- 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요. 
+- `/packages` 에는 프로젝트 별로 공유 가능한 디자인 UI, 비지니스 로직, 또는 여러가지 리소스가 들어가 있습니다.
+  - `/packages/subtrees` 에는 다른 git repo 가 subtree 로 추가되어져 있습니다.
+
+- `/projects` 에는 개별 플러터 앱(프로젝트)를 생성하고 개발하는 곳입니다.
+  각 프로젝트에서는 `/packages` 에 있는 리소스를 가져다 개발을 하면 되며, 최 상위 프로젝트의 여러가지 기능을 보고 마음에 드는 것만 골라서 쓰면 됩니다.
+
+- 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요.
 
 # 실행 및 개발 설정
 
@@ -253,11 +261,12 @@
 
 ## Layout
 
-- 일반적으로 각 스크린(페이지)은 Scaffold 를 바탕으로 appbar, body 등을 구성하는데, 각 스크린 별로 통일된 디자인을 하기가 쉽지 않은데,
-- Layout 이라는 위젯들 만들어, 그 안에 Scaffold 를 두고 통일된 appbar, body 등의 디자인을 적용하는 것입니다.
-- 이렇게하면 모든 스크린에서 동일한 Scaffold 를 가지게 되어 일관성 있게 디장니을 유지할 수 있으며, Layout 을 수정하면 전체 스크린의 디자인이 모두 같이 변경되는 것입니다.
-- 특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
+- 일반적으로 각 스크린(페이지)은 Scaffold 를 바탕으로 appbar, body 등을 구성하는데, 각 스크린 별로 통일된 디자인을 하기가 쉽지 않은데, Layout 이라는 위젯들 만들어, 그 안에 Scaffold 를 두고 통일된 appbar, body 등의 디자인을 적용하는 것입니다.
+  이렇게하면 모든 스크린에서 동일한 Scaffold 를 가지게 되어 일관성 있게 디장니을 유지할 수 있으며, Layout 을 수정하면 전체 스크린의 디자인이 모두 같이 변경되는 것입니다.
+  특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
 
+- Layout 위젯은 각 프로젝트의 공유 widgets 폴더에 넣으면 됩니다.
+  그리고 이 위젯 안에서 packages/widgets/layout 에 있는 여러가지 위젯 중 하나를 선택해서 사용하면 됩니다.
 
 ## 스크린 생성
 
