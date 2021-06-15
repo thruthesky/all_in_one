@@ -38,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Divider(),
               Wrap(alignment: WrapAlignment.spaceBetween, children: [
-                ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
                 ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
                 ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
                 ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
@@ -47,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Divider(),
               Wrap(
                 children: [
+                  ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
                   ElevatedButton(
                     onPressed: () => service.open(RouteNames.memo),
                     child: Text('메모장'),
