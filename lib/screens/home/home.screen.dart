@@ -6,7 +6,6 @@ import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user/user.dart';
 import 'package:widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {

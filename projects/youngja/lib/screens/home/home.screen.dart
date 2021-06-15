@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:user/user.dart';
+import 'package:widgets/widgets.dart';
 import 'package:youngja/services/globals.dart';
 import 'package:youngja/widgets/layout.dart';
 

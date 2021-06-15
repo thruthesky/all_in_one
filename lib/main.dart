@@ -27,7 +27,7 @@ class AioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: '만능앱',
-      defaultTransition: Transition.noTransition,
+      // defaultTransition: Transition.noTransition,
       theme: themeData,
       initialRoute: RouteNames.home,
       getPages: [

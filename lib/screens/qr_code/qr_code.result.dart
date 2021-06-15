@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:services/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
+
 /// [code] 에 스캔 값이 넘어오면,
 /// - 전화번호 이면, 전화를 걸 수 있도록 알림 창이 뜬다.
 /// - 그 외 실행 가능(launch 가능)한 코드(예: URL)이면 실행한다.

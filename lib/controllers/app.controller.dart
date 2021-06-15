@@ -1,6 +1,6 @@
 import 'package:all_in_one/services/config.dart';
 import 'package:get/get.dart';
-import 'package:user/user.dart';
+import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class AppController extends GetxController {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:user/src/user.controller.dart';
+
+import '../user.controller.dart';
 
 class UserRegisterForm extends StatelessWidget {
   UserRegisterForm({Key? key, required this.success, required this.error}) : super(key: key);

@@ -1,7 +1,7 @@
+import 'package:widgets/widgets.dart';
 import 'package:youngja/services/globals.dart';
 import 'package:youngja/widgets/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:user/user.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);

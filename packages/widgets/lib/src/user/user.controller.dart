@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+/// todo 이 controller 는 x_flutter 로 들어가야 하지 않나?
 class UserController extends GetxController {
   static UserController get to => Get.find();
   static UserController get of => Get.find();

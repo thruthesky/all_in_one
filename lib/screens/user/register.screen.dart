@@ -1,7 +1,7 @@
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:user/user.dart';
+import 'package:widgets/widgets.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);

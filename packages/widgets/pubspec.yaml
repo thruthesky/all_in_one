@@ -16,7 +16,11 @@ dependencies:
     sdk: flutter
 
   path_provider: ^2.0.2
+  
+
   get: ^4.1.4
+  get_storage: ^2.0.2
+  
   flutter_zoom_drawer: ^2.0.2+4
   share_plus: ^2.1.2
 
@@ -29,7 +33,9 @@ dependencies:
   qr_code_scanner: ^0.5.1
   
   url_launcher: ^6.0.6
-
+  # publish_to: none 이어야 path 사용 가능.
+  x_flutter:
+    path: ../subtrees/x_flutter
   
 dev_dependencies:
   flutter_test:

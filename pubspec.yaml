@@ -30,9 +30,6 @@ dependencies:
   x_flutter:
     path: packages/subtrees/x_flutter
 
-  user:
-    path: packages/user
-
   widgets:
     path: packages/widgets
 
