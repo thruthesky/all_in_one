@@ -7,6 +7,8 @@ export 'src/api.dart';
 export 'src/user.api.dart';
 export 'src/widgets/user/user.change.dart';
 
+export 'src/widgets/file/upload_image.dart';
+
 export 'src/widgets/user/forms/user.register.form.dart';
 export 'src/widgets/user/forms/user.profile.form.dart';
 export 'src/widgets/user/forms/user.login.form.dart';

@@ -40,18 +40,12 @@ final spaceLg = SizedBox(width: lg, height: lg);
 final spaceXl = SizedBox(width: xl, height: xl);
 final spaceXxl = SizedBox(width: xxl, height: xxl);
 
-TextStyle get headline1 =>
-    Theme.of(Get.context!).textTheme.headline1!; //112.0  bold,
-TextStyle get headline2 =>
-    Theme.of(Get.context!).textTheme.headline2!; //56.0   normal
-TextStyle get headline3 =>
-    Theme.of(Get.context!).textTheme.headline3!; //45.0   normal
-TextStyle get headline4 =>
-    Theme.of(Get.context!).textTheme.headline4!; //34.0   normal
-TextStyle get headline5 =>
-    Theme.of(Get.context!).textTheme.headline5!; //24.0   normal
-TextStyle get headline6 =>
-    Theme.of(Get.context!).textTheme.headline6!; //20.0   normal
+TextStyle get headline1 => Theme.of(Get.context!).textTheme.headline1!; //112.0  bold,
+TextStyle get headline2 => Theme.of(Get.context!).textTheme.headline2!; //56.0   normal
+TextStyle get headline3 => Theme.of(Get.context!).textTheme.headline3!; //45.0   normal
+TextStyle get headline4 => Theme.of(Get.context!).textTheme.headline4!; //34.0   normal
+TextStyle get headline5 => Theme.of(Get.context!).textTheme.headline5!; //24.0   normal
+TextStyle get headline6 => Theme.of(Get.context!).textTheme.headline6!; //20.0   normal
 
 TextStyle get subtitle1 => Theme.of(Get.context!).textTheme.subtitle1!; //16.0
 TextStyle get subtitle2 => Theme.of(Get.context!).textTheme.subtitle2!; //14.0

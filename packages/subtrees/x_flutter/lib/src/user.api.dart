@@ -9,7 +9,7 @@ class UserApi {
   late final Api api;
 
   /// 사용자 정보
-  UserModel model = UserModel.init();
+  UserModel model = UserModel();
 
   bool get loggedIn => model.loggedIn;
   bool get notLoggedIn => !loggedIn;
@@ -22,6 +22,7 @@ class UserApi {
   /// UserApi.instance.name // UserApi.instance 를 통한 참조
   /// ```
   String get name => model.name;
+  int get idx => model.idx;
   String get sessionId => model.sessionId;
   String get email => model.email;
   String get address => model.address;
@@ -29,7 +30,7 @@ class UserApi {
   /// [changes] 이벤트는 회원 정보의 변경에 따라 발생
   ///
   /// 회원 가입, 로그인, 로그아웃, 서버로 부터 프로필 읽기, 프로필 수정 등, 회원 정보 상태의 변경이 있으면 이벤트가 발생한다.
-  BehaviorSubject<UserModel> changes = BehaviorSubject.seeded(UserModel.init());
+  BehaviorSubject<UserModel> changes = BehaviorSubject.seeded(UserModel());
   UserApi() {
     print("UserApi::constructor");
     _initUserLogin();
@@ -60,16 +61,16 @@ class UserApi {
     }
   }
 
-  /// Returns null if the user has not logged in.
+  /// 로그인을 하지 않은 상태이면, 빈 UserModel 을 리턴한다.
   Future<UserModel> _loadUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? user = prefs.getString('user');
-    if (user == null) return UserModel.init();
+    if (user == null) return UserModel();
     Map<String, dynamic> json = jsonDecode(user);
     return UserModel.fromJson(json);
   }
 
-  /// Save profile only without notifications.
+  /// 회원 정보를 앱내에 저장하고, [changes] 이벤트를 발생한다.
   Future<UserModel> _saveUser(dynamic res) async {
     model = UserModel.fromJson(res);
     changes.add(model);
@@ -117,7 +118,7 @@ class UserApi {
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('user');
-    model = UserModel.init();
+    model = UserModel();
     changes.add(model);
   }
 }

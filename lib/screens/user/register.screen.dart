@@ -21,8 +21,9 @@ class RegisterScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20.0),
             ),
             Expanded(
-                child:
-                    UserRegisterForm(success: (user) => service.openHome(), error: service.error)),
+                child: UserRegisterForm(
+                    success: (user) => service.openHome(),
+                    error: service.error)),
           ],
         ),
       ),

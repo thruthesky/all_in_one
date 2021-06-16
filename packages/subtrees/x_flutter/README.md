@@ -81,3 +81,34 @@ UserChange(
   ),
 ),
 ```
+
+## 사진 업로드
+
+```dart
+Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: <Widget>[
+    UploadImage(
+      taxonomy: 'users',
+      entity: UserApi.instance.idx,
+      code: 'photoUrl',
+      quality: 70,
+      deletePreviousUpload: true,
+      defaultChild: Text("프로필 사진 업로드"),
+      imageBuilder: (image) => UserAvatar(),
+      choiceBuilder: (c) async {
+        print('choiceBuilder');
+        return ImageSource.gallery;
+      },
+      uploaded: (file) {
+        // [code]의 값이 `photoUrl` 이면, 사용자 프로필 사진을 업로드하는 것으로, 프로필 사진을 업로드 했으면, 사용자 정보를 다시 읽는다.
+        UserApi.instance.profile();
+        setState(() => p = 0);
+      },
+      progress: (p) => setState(() => this.p = p),
+      error: service.error,
+    ),
+    LinearProgressIndicator(value: p),
+  ]
+);
+```

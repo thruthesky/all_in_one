@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:x_flutter/src/file.api.dart';
 import 'package:x_flutter/src/models/time.model.dart';
 import 'package:x_flutter/src/models/version.model.dart';
 import 'package:x_flutter/src/user.api.dart';
@@ -11,6 +12,8 @@ class Api {
   late final String url;
   UserApi user = UserApi.instance;
   String get sessionId => user.sessionId;
+
+  FileApi file = FileApi();
 
   // Api Singleton
   // Null safety 를 위해서, 물음표(?)를 쓰지 않고, 사용하기 위해 _ready 변수 추가.
@@ -33,8 +36,17 @@ class Api {
     }
   }
 
-  init({required String url}) {
+  /// [anonymousIconUrl] 은 사용자가 로그인을 하지 않았을 때, 또는 회원 사진이 없을 때, 보여주는 기본 사진이다.
+  /// init() 에서 이 값을 다르게 지정 할 수 있다.
+  late final String anonymousIconUrl;
+
+  init({
+    required String url,
+    anonymousIconUrl =
+        'https://flutterkorea.com/view/flutterkorea/assets/icon/anonymous/anonymous.png',
+  }) {
     this.url = url;
+    this.anonymousIconUrl = anonymousIconUrl;
   }
 
   // 백엔드에 요청

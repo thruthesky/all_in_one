@@ -4,6 +4,7 @@ class UserModel {
   String firebaseUid;
   String name;
   String nickname;
+  int photoIdx;
   String photoUrl;
   int point;
   String block;
@@ -24,32 +25,34 @@ class UserModel {
   String admin;
 
   UserModel({
-    required this.idx,
-    required this.email,
-    required this.firebaseUid,
-    required this.name,
-    required this.nickname,
-    required this.photoUrl,
-    required this.point,
-    required this.block,
-    required this.phoneNo,
-    required this.gender,
-    required this.birthdate,
-    required this.domain,
-    required this.countryCode,
-    required this.province,
-    required this.city,
-    required this.address,
-    required this.zipcode,
-    required this.provider,
-    required this.verifier,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.sessionId,
-    required this.admin,
+    this.idx = 0,
+    this.email = '',
+    this.firebaseUid = '',
+    this.name = '',
+    this.nickname = '',
+    this.photoIdx = 0,
+    this.photoUrl = '',
+    this.point = 0,
+    this.block = '',
+    this.phoneNo = '',
+    this.gender = '',
+    this.birthdate = 0,
+    this.domain = '',
+    this.countryCode = '',
+    this.province = '',
+    this.city = '',
+    this.address = '',
+    this.zipcode = '',
+    this.provider = '',
+    this.verifier = '',
+    this.createdAt = 0,
+    this.updatedAt = 0,
+    this.sessionId = '',
+    this.admin = '',
   });
 
   bool get loggedIn => idx > 0;
+  bool get hasPhoto => photoIdx > 0;
 
   /// JSON 을 문자열로 변환한 것으로, JSON encode 용도로 사용하지 않도록 주의 한다.
   /// 즉, encode 가 필요한 경우는 jsonEncode(user.toJson()) 와 같이 한다.
@@ -66,6 +69,7 @@ class UserModel {
   /// ```dart
   /// UserModel user = UserModel.init();
   /// ```
+  @Deprecated('UserModel() 을 사용 할 것')
   factory UserModel.init() {
     return UserModel.fromJson({'idx': 0});
   }
@@ -76,6 +80,7 @@ class UserModel {
       firebaseUid: json['firebaseUid'] ?? '',
       name: json['name'] ?? '',
       nickname: json['nickname'] ?? '',
+      photoIdx: json['photoIdx'] ?? 0,
       photoUrl: json['photoUrl'] ?? '',
       point: json['point'] ?? 0,
       block: json['block'] ?? '',
@@ -104,6 +109,7 @@ class UserModel {
       'firebaseUid': firebaseUid,
       'name': name,
       'nickname': nickname,
+      'photoIdx': photoIdx,
       'photoUrl': photoUrl,
       'point': point,
       'block': block,

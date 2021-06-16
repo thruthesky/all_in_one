@@ -55,7 +55,8 @@ class _QrCodeResultState extends State<QrCodeResult> {
           children: [
             Text('스캔 결과: $code'),
             ElevatedButton(
-                onPressed: () => service.open(RouteNames.qrCodeScan), child: Text('다시 스캔하기'))
+                onPressed: () => service.open(RouteNames.qrCodeScan),
+                child: Text('다시 스캔하기'))
           ],
         ));
   }

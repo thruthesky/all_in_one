@@ -24,7 +24,8 @@ class ProfileScreen extends StatelessWidget {
               padding: EdgeInsets.all(16.0),
               color: Colors.grey[50],
               child: UserProfileForm(
-                  success: (user) => service.alert('회원 정보 수정', '회원 정보를 수정하였습니다.'),
+                  success: (user) =>
+                      service.alert('회원 정보 수정', '회원 정보를 수정하였습니다.'),
                   error: service.error),
             ),
           ],
