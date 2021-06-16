@@ -77,20 +77,26 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
             onTap: () => service.openHome(),
           ),
           ListTile(title: Text('회원 로그인'), onTap: () => open(RouteNames.login)),
-          ListTile(title: Text('회원 가입'), onTap: () => open(RouteNames.register)),
+          ListTile(
+              title: Text('회원 가입'), onTap: () => open(RouteNames.register)),
           ListTile(title: Text('QR 코드')),
           ListTile(
               leading: spaceXs,
               title: Text('QR 코드 생성'),
               onTap: () => open(RouteNames.qrCodeGenerate)),
           ListTile(
-              leading: spaceXs, title: Text('QR 코드 스캔'), onTap: () => open(RouteNames.qrCodeScan)),
+              leading: spaceXs,
+              title: Text('QR 코드 스캔'),
+              onTap: () => open(RouteNames.qrCodeScan)),
           ListTile(
               title: ShareButton(
-            text: Platform.isIOS ? Config.iOSAppDownloadUrl : Config.androidAppDownloadUrl,
+            text: Platform.isIOS
+                ? Config.iOSAppDownloadUrl
+                : Config.androidAppDownloadUrl,
             child: Text('우리앱을 친구에게 알려주기'),
           )),
-          ListTile(title: Text('만능앱에 대해서'), onTap: () => open(RouteNames.about)),
+          ListTile(
+              title: Text('만능앱에 대해서'), onTap: () => open(RouteNames.about)),
         ],
       ),
     );

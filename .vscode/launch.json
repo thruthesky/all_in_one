@@ -16,6 +16,13 @@
       "flutterMode": "profile"
     },
     {
+      "name": "x_flutter example - Simulator 12 Pro Max - iMac - Remote",
+      "program": "projects/x_flutter_example/lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
+    },
+    {
       "name": "메인(영자) - Simulator 12 Pro Max - iMac - Remote",
       "program": "lib/main.dart",
       "args": [

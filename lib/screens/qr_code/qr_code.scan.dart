@@ -15,7 +15,8 @@ class QrCodeScanScreen extends StatelessWidget {
       body: QrCodeScanner(
         success: (result) {
           print('포멧: ${result.format}, 코드 데이터: ${result.code}');
-          service.open(RouteNames.qrCodeResult, arguments: {'code': result.code}, off: true);
+          service.open(RouteNames.qrCodeResult,
+              arguments: {'code': result.code}, off: true);
         },
       ),
     );

@@ -7,6 +7,8 @@ import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
+import 'package:x_flutter/x_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  double p = 0;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AppController>(
@@ -25,24 +28,42 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              UploadImage(
+                taxonomy: 'users',
+                entity: UserApi.instance.idx,
+                code: 'photoUrl',
+                quality: 70,
+                deletePreviousUpload: true,
+                defaultChild: Text("프로필 사진 업로드"),
+                imageBuilder: (image) => UserAvatar(),
+                choiceBuilder: (c) async {
+                  print('choiceBuilder');
+                  return ImageSource.gallery;
+                },
+                uploaded: (file) {
+                  // [code]의 값이 `photoUrl` 이면, 사용자 프로필 사진을 업로드하는 것으로, 프로필 사진을 업로드 했으면, 사용자 정보를 다시 읽는다.
+                  UserApi.instance.profile();
+                  setState(() => p = 0);
+                },
+                progress: (p) => setState(() => this.p = p),
+                error: service.error,
+              ),
+              LinearProgressIndicator(value: p),
+              Divider(),
               Text('Matrix server version: ${_.version}'),
               Text('Matrix server time: ${_.time}'),
               Divider(),
-              GetBuilder<UserController>(
-                builder: (user) => Column(
+              UserChange(
+                loginBuilder: (UserModel user) => Column(children: [
+                  Text('회원 이름: ${user.name}'),
+                  Text('회원 주소: ${user.address}'),
+                  ElevatedButton(onPressed: UserApi.instance.logout, child: Text('로그아웃')),
+                  ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
+                ]),
+                logoutBuilder: (_) => Column(
                   children: [
-                    if (user.loggedIn) Text('회원 이름: ${user.my.name}'),
-                    if (user.loggedIn) Text('회원 주소: ${user.my.address}'),
-                    Wrap(spacing: sm, alignment: WrapAlignment.spaceBetween, children: [
-                      if (user.loggedIn) ...[
-                        ElevatedButton(onPressed: user.logout, child: Text('로그아웃')),
-                        ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
-                      ],
-                      if (user.notLoggedIn) ...[
-                        ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
-                        ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
-                      ],
-                    ]),
+                    ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
+                    ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
                   ],
                 ),
               ),

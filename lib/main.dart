@@ -39,7 +39,9 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
         GetPage(name: RouteNames.boni, page: () => BoniScreen()),
         GetPage(name: RouteNames.gyeony, page: () => GyeonyScreen()),
-        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),
+        GetPage(
+            name: RouteNames.qrCodeGenerate,
+            page: () => QrCodeGenerateScreen()),
         GetPage(name: RouteNames.qrCodeScan, page: () => QrCodeScanScreen()),
         GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
         GetPage(name: RouteNames.ebut, page: () => EbutScreen()),

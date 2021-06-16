@@ -21,7 +21,7 @@ dependencies:
   get: ^4.1.4
   get_storage: ^2.0.2
   
-  flutter_zoom_drawer: ^2.0.2+4
+  # flutter_zoom_drawer: ^2.0.2+4
   share_plus: ^2.1.2
 
   
