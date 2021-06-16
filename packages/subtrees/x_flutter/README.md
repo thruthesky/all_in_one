@@ -84,6 +84,8 @@ UserChange(
 
 ## 사진 업로드
 
+- taxonomy, entity, code 별로 사진을 업로드합니다. 보다 자세한 사항은 소스코드에 주석이 있으므로, 주석을 참고하거나 dartdoc 으로 참고합니다.
+
 ```dart
 Column(
   mainAxisAlignment: MainAxisAlignment.center,

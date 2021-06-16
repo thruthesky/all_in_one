@@ -311,6 +311,14 @@ ElevatedButton(
 )
 ```
 
+## 사용자 정보 표시
+
+- 회원 가입, 로그인, 로그아웃, 회원 정보 수정 등에서 회원 정보가 변할 때 적절히 표시 할 수 있어야 합니다. [x_flutter 프로젝트 문서](https://github.com/withcenter/x_flutter)를 참고 해 주세요.
+
+## 사진 업로드
+
+- 특정 위치에 원하는 사진을 표시하고 싶을 때, `UploadImage` 위젯을 통해서 이미지를 업로드 할 수 있습니다. [x_flutter 프로젝트 문서](https://github.com/withcenter/x_flutter)를 참고 해 주세요.
+
 
 
 # Mono repo
