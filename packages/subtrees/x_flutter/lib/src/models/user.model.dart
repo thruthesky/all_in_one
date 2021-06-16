@@ -49,9 +49,13 @@ class UserModel {
     required this.admin,
   });
 
+  bool get loggedIn => idx > 0;
+
+  /// JSON 을 문자열로 변환한 것으로, JSON encode 용도로 사용하지 않도록 주의 한다.
+  /// 즉, encode 가 필요한 경우는 jsonEncode(user.toJson()) 와 같이 한다.
   @override
   String toString() {
-    return 'User(idx: $idx, email: $email, firebaseUid: $firebaseUid, name: $name, nickname: $nickname, photoUrl: $photoUrl, point: $point, block: $block, phoneNo: $phoneNo, gender: $gender, birthdate: $birthdate, domain: $domain, countryCode: $countryCode, province: $province, city: $city, address: $address, zipcode: $zipcode, provider: $provider, verifier: $verifier, createdAt: $createdAt, updatedAt: $updatedAt, sessionId: $sessionId, admin: $admin)';
+    return toJson().toString();
   }
 
   /// 빈 값으로 사용자 모델 초기화

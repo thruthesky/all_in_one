@@ -1,4 +1,4 @@
-import 'package:widgets/widgets.dart';
+import 'package:x_flutter/x_flutter.dart';
 import 'package:youngja/services/globals.dart';
 import 'package:youngja/widgets/layout.dart';
 import 'package:flutter/material.dart';

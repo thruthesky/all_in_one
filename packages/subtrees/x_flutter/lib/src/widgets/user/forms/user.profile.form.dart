@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../user.controller.dart';
+import 'package:x_flutter/x_flutter.dart';
 
 class UserProfileForm extends StatelessWidget {
   UserProfileForm({Key? key, required this.success, required this.error}) : super(key: key);
@@ -8,8 +7,8 @@ class UserProfileForm extends StatelessWidget {
   final Function success;
   final Function error;
 
-  final name = TextEditingController(text: UserController.of.my.name);
-  final address = TextEditingController(text: UserController.of.my.address);
+  final name = TextEditingController(text: UserApi.instance.name);
+  final address = TextEditingController(text: UserApi.instance.address);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +16,7 @@ class UserProfileForm extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text('로그인 이메일'),
-        Text(UserController.of.my.email),
+        Text(UserApi.instance.email),
         SizedBox(height: 16),
         Text('사용자 이름'),
         TextField(controller: name),
@@ -28,8 +27,8 @@ class UserProfileForm extends StatelessWidget {
         ElevatedButton(
             onPressed: () async {
               try {
-                final user = await UserController.to
-                    .profileUpdate({'name': name.text, 'address': address.text});
+                final user =
+                    await UserApi.instance.update({'name': name.text, 'address': address.text});
                 success(user);
               } catch (e) {
                 error(e);

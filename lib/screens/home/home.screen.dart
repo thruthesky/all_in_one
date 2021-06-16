@@ -7,6 +7,7 @@ import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
+import 'package:x_flutter/x_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -28,21 +29,17 @@ class _HomeScreenState extends State<HomeScreen> {
               Text('Matrix server version: ${_.version}'),
               Text('Matrix server time: ${_.time}'),
               Divider(),
-              GetBuilder<UserController>(
-                builder: (user) => Column(
+              UserChange(
+                loginBuilder: (user) => Column(children: [
+                  Text('회원 이름: ${user.my.name}'),
+                  Text('회원 주소: ${user.my.address}'),
+                  ElevatedButton(onPressed: user.logout, child: Text('로그아웃')),
+                  ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
+                ]),
+                logoutBuilder: (_) => Column(
                   children: [
-                    if (user.loggedIn) Text('회원 이름: ${user.my.name}'),
-                    if (user.loggedIn) Text('회원 주소: ${user.my.address}'),
-                    Wrap(spacing: sm, alignment: WrapAlignment.spaceBetween, children: [
-                      if (user.loggedIn) ...[
-                        ElevatedButton(onPressed: user.logout, child: Text('로그아웃')),
-                        ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
-                      ],
-                      if (user.notLoggedIn) ...[
-                        ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
-                        ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
-                      ],
-                    ]),
+                    ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
+                    ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
                   ],
                 ),
               ),

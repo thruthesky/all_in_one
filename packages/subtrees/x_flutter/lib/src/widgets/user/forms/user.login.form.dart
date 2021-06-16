@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../user.controller.dart';
+import 'package:x_flutter/x_flutter.dart';
 
 class UserLoginForm extends StatelessWidget {
   UserLoginForm({
@@ -31,7 +30,7 @@ class UserLoginForm extends StatelessWidget {
           ElevatedButton(
               onPressed: () async {
                 try {
-                  final user = await UserController.to
+                  final user = await UserApi.instance
                       .login({'email': email.text, 'password': password.text});
                   success(user);
                   // service.openHome();

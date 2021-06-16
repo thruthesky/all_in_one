@@ -1,17 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:x_flutter/models/time.model.dart';
-import 'package:x_flutter/models/version.model.dart';
-import 'package:x_flutter/src/user.dart';
+import 'package:x_flutter/src/models/time.model.dart';
+import 'package:x_flutter/src/models/version.model.dart';
+import 'package:x_flutter/src/user.api.dart';
 
 class Api {
   final dio = Dio();
 
   /// [url] 은 [init] 함수에서 초기화 되어야 한다.
   late final String url;
-
-  String sessionId = '';
-  User user = User();
+  UserApi user = UserApi.instance;
+  String get sessionId => user.sessionId;
 
   // Api Singleton
   // Null safety 를 위해서, 물음표(?)를 쓰지 않고, 사용하기 위해 _ready 변수 추가.
@@ -81,8 +80,7 @@ class Api {
       // 백엔드로 접속이 되었으나 2xx 또는 304 가 아닌 다른 응답 코드가 발생한 경우.
       if (e.response != null) {
         final res = e.response as Response;
-        print(
-            "경고: Dio 에서 이 부분에 에러가 발생하는 경우를 찾지 못하겠다. 에러가 이 부분으로 떨어지면, 디버깅을 해서 처리를 할 것.");
+        print("경고: Dio 에서 이 부분에 에러가 발생하는 경우를 찾지 못하겠다. 에러가 이 부분으로 떨어지면, 디버깅을 해서 처리를 할 것.");
         throw (res.data);
       } else {
         // Something happened in setting up or sending the request that triggered an Error
@@ -115,8 +113,7 @@ class Api {
 
     try {
       String queryString = Uri(queryParameters: params).query;
-      debugPrint("Restful Api Error URL ==>> $url?$queryString",
-          wrapWidth: 1024);
+      debugPrint("Restful Api Error URL ==>> $url?$queryString", wrapWidth: 1024);
     } catch (e) {
       print("==> Caught error on _printDebug() with data: ");
       print(data);
