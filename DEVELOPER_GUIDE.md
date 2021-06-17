@@ -378,6 +378,11 @@ flutter:
   uses-material-design: true
 ```
 
+## 각자의 프로젝트 설정
+
+- 루트 프로젝트의 `lib/main.dart` 에 있는 코드를 복사를 해서 쓰거나 비슷하게 쓰면 됩니다.
+
+
 
 
 # 문제점, 버그

@@ -11,4 +11,5 @@ class RouteNames {
   static final String qrCodeGenerate = 'qrCodeGenerate';
   static final String qrCodeScan = 'qrCodeScan';
   static final String qrCodeResult = 'qrCodeResult';
+  static final String forum = 'forum';
 }
