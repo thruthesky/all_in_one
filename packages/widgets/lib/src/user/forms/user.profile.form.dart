@@ -30,7 +30,13 @@ class _UserProfileFormState extends State<UserProfileForm> {
           code: 'photoUrl',
           quality: 70,
           deletePreviousUpload: true,
-          defaultChild: Text("프로필 사진 업로드"), // 업로드를 위한 기본 표시 위젯
+          defaultChild: Column(
+            children: [
+              UserAvatar(size: 100),
+              spaceXs,
+              Text("프로필 사진 업로드"),
+            ],
+          ), // 업로드를 위한 기본 표시 위젯
           imageBuilder: (image) => UserAvatar(size: 100),
           // 카메라로 사진 찍어 올리기? 또는 갤러리에서 가져오기?
           choiceBuilder: (c) {
