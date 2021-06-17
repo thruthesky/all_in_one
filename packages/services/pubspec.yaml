@@ -18,6 +18,9 @@ dependencies:
   path_provider: ^2.0.2
   get: ^4.1.4
 
+  x_flutter:
+    path: ../subtrees/x_flutter
+
 
 dev_dependencies:
   flutter_test:

@@ -31,7 +31,7 @@ class FileApi {
 
     final pickedFile = await picker.getImage(source: source);
     print('pickedFile; $pickedFile');
-    if (pickedFile == null) throw ERROR_IMAGE_NOT_SELECTED;
+    if (pickedFile == null) throw IMAGE_NOT_SELECTED;
 
     print('compress with: ${pickedFile.path}');
     File file = await imageCompressor(pickedFile.path, quality);

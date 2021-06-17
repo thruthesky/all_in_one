@@ -88,10 +88,7 @@ class _UploadImageState extends State<UploadImage> {
           setState(() {});
           if (widget.uploaded != null) widget.uploaded!(fileModel);
         } catch (e) {
-          if (e is String) {
-            widget.error(e);
-          } else
-            widget.error(e.toString());
+          widget.error(e);
         }
       },
       child: fileModel != null ? widget.imageBuilder(fileModel) : defaultChild(),

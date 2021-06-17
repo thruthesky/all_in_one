@@ -48,5 +48,3 @@ dev_dependencies:
     sdk: flutter
 flutter:
   uses-material-design: true
-  assets:
-    - packages/assets/icon/anonymous/anonymous.png
