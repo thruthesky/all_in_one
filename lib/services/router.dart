@@ -1,12 +1,12 @@
-//
-// 이 클래스는 .generate() 를 통해 페이지(스크린)가 변경 될 때 마다 원하는 작업을 한다.
-// 그리고 didPop() 을 통해서 back 버튼을 누르거나 현재 페이지를 벗어 날 때, 원하는 작업을 한다.
+/// 중복 라우트 제거 및 에러 핸드링
+///
 import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.result.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.scan.dart';
+import 'package:all_in_one/screens/screen_not_found/screen_not_found.screen.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
@@ -20,6 +20,7 @@ class AppRouter extends NavigatorObserver {
   /// 라우트 경로에 맞는 스크린 위젯
   static final Map<String, Widget> screens = {
     RouteNames.home: HomeScreen(),
+    RouteNames.screenNotFound: ScreenNotFoundScreen(),
     RouteNames.about: AboutScreen(),
     RouteNames.login: LoginScreen(),
     RouteNames.register: RegisterScreen(),
@@ -28,13 +29,27 @@ class AppRouter extends NavigatorObserver {
     RouteNames.qrCodeGenerate: QrCodeGenerateScreen(),
     RouteNames.qrCodeScan: QrCodeScanScreen(),
     RouteNames.qrCodeResult: QrCodeResult(),
+    RouteNames.qrCodeResult: QrCodeResult(),
   };
 
   /// GetMaterialApp( onGenerateRoute: AppRouter.generate ) 에 사용되는 함수.
   /// 새로운 스크린으로 이동 할 때 마다 실행.
   static GetPageRoute generate(RouteSettings routeSettings) {
     /// 새로운 페이지의 라우트 이름
-    final routeName = _getRouteName(routeSettings);
+    String? routeName = _getRouteName(routeSettings);
+
+    /// routeName 이 없는 경우?
+    if (routeName == null) routeName = RouteNames.home;
+
+    /// routeName 에 해당하는 스크린 위젯이 없는 경우, 홈으로 이동
+    if (screens[routeSettings.name] == null) {
+      navStack[RouteNames.screenNotFound] = GetPageRoute(
+        settings: routeSettings,
+        routeName: RouteNames.screenNotFound,
+        page: () => screens[RouteNames.screenNotFound]!,
+      );
+      return navStack[RouteNames.screenNotFound]!;
+    }
 
     // 특정 라우트(또는 게시판)이 nav stack 에 존재하면 뺀다.
     // 즉, 요점은 nav stack 에 페이지(스크린)가 이미 들어가 있으면, 즉, 이미 방문한 페이지이면, 빼는 것이다.
@@ -43,8 +58,8 @@ class AppRouter extends NavigatorObserver {
     }
 
     /// 라우트 경로에 맞는 스크린(페이지)를 nav stack 에 보관하는데,
-    /// 요점은, 게시판인 경우, 카테고리가 합쳐져 유일한 route 경로로 nav stack 에 보관한다.
-    navStack[routeName!] = GetPageRoute(
+    /// 게시판인 경우, 카테고리가 합쳐져 유일한 route 경로로 nav stack 에 보관한다.
+    navStack[routeName] = GetPageRoute(
       settings: routeSettings,
       routeName: routeSettings.name,
       page: () => screens[routeSettings.name]!,
@@ -60,6 +75,7 @@ class AppRouter extends NavigatorObserver {
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     final routeName = _getRouteName(route.settings);
+    // 동일한 페이지가 열려 있으면 뺀다.
     navStack.remove(routeName);
   }
 

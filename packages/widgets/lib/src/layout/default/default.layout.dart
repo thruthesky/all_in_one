@@ -6,6 +6,7 @@ class DefaultLayout extends StatefulWidget {
     Key? key,
     required this.title,
     required this.body,
+    this.backgroundColor = Colors.grey,
     this.titleStyle = const TextStyle(fontSize: 16),
     this.menuTextStyle = const TextStyle(fontSize: 10),
     required this.drawer,
@@ -16,6 +17,7 @@ class DefaultLayout extends StatefulWidget {
 
   final TextStyle titleStyle;
   final TextStyle menuTextStyle;
+  final Color backgroundColor;
 
   final Widget drawer;
   @override
@@ -28,6 +30,7 @@ class _DefaultLayoutState extends State<DefaultLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
         key: _key, // Assign the key to Scaffold.
+        backgroundColor: widget.backgroundColor,
         appBar: AppBar(
           title: Text(widget.title, style: widget.titleStyle),
           leading: navigator!.canPop()

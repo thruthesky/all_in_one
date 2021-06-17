@@ -1,6 +1,5 @@
 import 'package:all_in_one/controllers/app.controller.dart';
 import 'package:all_in_one/services/config.dart';
-import 'package:all_in_one/services/defines.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';

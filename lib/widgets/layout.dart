@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:all_in_one/services/config.dart';
-import 'package:all_in_one/services/defines.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,9 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
+      backgroundColor: Colors.grey[200]!,
       title: this.title,
+      titleStyle: TextStyle(color: Colors.black87),
       body: this.body,
       drawer: LayoutDrawer(),
     );
@@ -65,8 +66,9 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
                     UserChange(
                       loginBuilder: (user) => Row(
                         children: [
-                          TextButton(onPressed: () {}, child: Text('프로필')),
-                          TextButton(onPressed: () {}, child: Text('로그아웃')),
+                          TextButton(onPressed: () => open(RouteNames.profile), child: Text('프로필')),
+                          TextButton(
+                              onPressed: () => UserApi.instance.logout(), child: Text('로그아웃')),
                         ],
                       ),
                       logoutBuilder: (_) => Row(

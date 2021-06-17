@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:x_flutter/src/defines.dart';
-import 'package:x_flutter/src/models/file.model.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 /// 특정 taxonomy, entity, code 에 맞춰서 사진을 올린다. 기존의 업로드된 사진을 덮어 쓸 수 있다.
@@ -56,6 +54,7 @@ class _UploadImageState extends State<UploadImage> {
     super.initState();
     () async {
       try {
+        /// 주의: 회원 로그인이 필요한 경우, Api 에서 sessionId 가 초기화 된 후 호출 되어야 함. 그렇지 않으면 entity_not_found 에러 발생.
         fileModel = await Api.instance.file
             .get(taxonomy: widget.taxonomy, entity: widget.entity, code: widget.code);
         setState(() {});

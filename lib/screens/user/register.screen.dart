@@ -1,7 +1,7 @@
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:x_flutter/x_flutter.dart';
+import 'package:widgets/widgets.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({Key? key}) : super(key: key);
@@ -21,9 +21,8 @@ class RegisterScreen extends StatelessWidget {
               style: TextStyle(fontSize: 20.0),
             ),
             Expanded(
-                child: UserRegisterForm(
-                    success: (user) => service.openHome(),
-                    error: service.error)),
+                child:
+                    UserRegisterForm(success: (user) => service.openHome(), error: service.error)),
           ],
         ),
       ),

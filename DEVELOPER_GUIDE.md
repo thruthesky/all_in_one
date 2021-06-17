@@ -187,6 +187,11 @@
 },
 ```
 
+# x_flutter 패키지
+
+- x_flutter 패키지는 Matrix 백엔드와 연동을 위한 것으로 Restful Api 호출이나 그에 필요한 Model 정보를 가지고 있습니다.
+- 예외적으로 `UserChange` 와 같은 몇 몇 위젯을 제공합니다.
+
 # 상태 관리
 
 - Getx 로 합니다.

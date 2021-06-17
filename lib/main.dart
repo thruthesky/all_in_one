@@ -7,12 +7,12 @@ import 'package:all_in_one/screens/qr_code/qr_code.scan.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
-import 'package:all_in_one/services/defines.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:widgets/widgets.dart';
 
 void main() async {
   await GetStorage.init();
