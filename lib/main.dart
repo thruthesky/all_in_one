@@ -7,6 +7,7 @@ import 'package:all_in_one/screens/qr_code/qr_code.scan.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
+import 'package:all_in_one/screens/widget_collection/widget_collection.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),
         GetPage(name: RouteNames.qrCodeScan, page: () => QrCodeScanScreen()),
         GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
+        GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
       ],
     );
   }

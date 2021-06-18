@@ -109,6 +109,7 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
             text: Platform.isIOS ? Config.iOSAppDownloadUrl : Config.androidAppDownloadUrl,
             child: Text('우리앱을 친구에게 알려주기'),
           )),
+          ListTile(title: Text('재 사용 가능한 위젯 보기'), onTap: () => open(RouteNames.widgetCollection)),
           ListTile(title: Text('만능앱에 대해서'), onTap: () => open(RouteNames.about)),
         ],
       ),
