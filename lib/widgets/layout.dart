@@ -57,11 +57,11 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                UserAvatar(),
+                UserAvatar(onTap: () => open(RouteNames.profile)),
                 Spacer(),
                 Row(
                   children: [
-                    UserName(),
+                    UserName(defaultName: '로그인을 해 주세요.', onTap: () => open(RouteNames.profile)),
                     Spacer(),
                     UserChange(
                       loginBuilder: (user) => Row(
@@ -88,8 +88,15 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
             title: Text('홈'),
             onTap: () => service.openHome(),
           ),
-          ListTile(title: Text('회원 로그인'), onTap: () => open(RouteNames.login)),
-          ListTile(title: Text('회원 가입'), onTap: () => open(RouteNames.register)),
+          UserChange(
+            loginBuilder: (_) => SizedBox.shrink(),
+            logoutBuilder: (_) => Column(
+              children: [
+                ListTile(title: Text('회원 로그인'), onTap: () => open(RouteNames.login)),
+                ListTile(title: Text('회원 가입'), onTap: () => open(RouteNames.register)),
+              ],
+            ),
+          ),
           ListTile(title: Text('QR 코드')),
           ListTile(
               leading: spaceXs,

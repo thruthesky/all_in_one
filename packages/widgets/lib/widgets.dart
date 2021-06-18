@@ -13,3 +13,6 @@ export 'src/user/forms/user.profile.form.dart';
 export 'src/user/forms/user.register.form.dart';
 
 export 'src/file/upload_image.dart';
+
+export 'src/button/button.dart';
+export 'src/widget_collection/widget_collection.dart';
