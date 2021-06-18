@@ -1,3 +1,4 @@
+import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 
 class MemoScreen extends StatelessWidget {
@@ -5,11 +6,9 @@ class MemoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('메모장'),
-      ),
-      body: Text('Yo'),
+    return Layout(
+      title: '메모장',
+      body: Text('메모장'),
     );
   }
 }

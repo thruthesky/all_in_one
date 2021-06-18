@@ -148,11 +148,8 @@
 - 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
   - 예) `lib/tmp/json/user.json`
 
-<<<<<<< HEAD
-=======
 - 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요. 
 
->>>>>>> thruthesky
 # 실행 및 개발 설정
 
 - launch.json 에 실행 설정을 해야 한다면, 가능한 다음의 포멧을 따르세요.
@@ -181,8 +178,17 @@
 - Getx 로 합니다.
 - `lib/controllers` 폴더에 전역적인 컨트롤러를 저장합니다.
 - `lib/controllers/app.controller.dart` 가 앱의 전반적인 상태 관리를 합니다.
+  - 예를 들어 회원 로그인/로그아웃에 따른 상태 관리는 앱의 전반적인 영역에 걸쳐서 사용됩니다.
+  - 또는 게시판 기능을 만들 때, 앱이 부팅 될 때, 게시판 카테고리를 서버로 부터 읽어 들이고, 또한 게시판이 쇼핑몰이나 기타 기능을 커스터마이징 되어 앱의 전역에서 사용된다면 이 엮시 `app.controller.dart` 에서 상태 관리를 해야 합니다.
+  - 또 다른 예로, 채팅방 기능이 있는 경우, 새로운 채팅 메세지가 있으면 뱃지로 표시하거나 기타 여러 곳에 새로운 메시지가 도착했음을 표시해야 한다면 `app.controller.dart`에서 상태 관리가 되어야 합니다. 
+  이와 같이 앱의 전체 영역에서 사용되는 경우, `app.controller.dart` 를 사용합니다.
+- 하나의 스크린(또는 위젯)내에서 상태 관리가 필요하면 그냥 StatefulWidget 을 사용합니다.
 - 지역적인 상태 관리가 필요하다면, `lib/screens/**/controllers/*.controller.dart` 와 같이 컨트롤러를 만들면 됩니다.
-  - 예를 들어, 회원 관리에만 필요한 컨트롤러가 있다면, `lib/screens/user/controllers/user.controller.dart` 와 같이 컨트롤러 파일을 만들면 됩니다.
+  - 예를 들어, 메모장 기능에만 필요한 컨트롤러가 있다면, `lib/screens/memo/controllers/memo.controller.dart` 와 같이 컨트롤러 파일을 만들면 됩니다.
+    - 그런데 메모장 기능의 상태가 앱의 전반적인 영역에 걸쳐서 적용되면, `app.controller.dart` 에 상태 관리가 되어야 할 것입니다.
+
+
+
 
 # 모델
 
@@ -284,4 +290,9 @@ ElevatedButton(
 )
 ```
 
+
+
+# 문제점, 버그
+
+- KNOWN_PROBLEMS.md 문서 참고
 
