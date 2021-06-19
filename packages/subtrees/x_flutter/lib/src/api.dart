@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:x_flutter/src/category.api.dart';
 import 'package:x_flutter/src/file.api.dart';
 import 'package:x_flutter/src/models/time.model.dart';
 import 'package:x_flutter/src/models/version.model.dart';
+import 'package:x_flutter/src/post.api.dart';
 import 'package:x_flutter/src/user.api.dart';
 
 class Api {
@@ -14,11 +16,11 @@ class Api {
   String get sessionId => user.sessionId;
 
   FileApi file = FileApi();
+  CategoryApi category = CategoryApi();
+  PostApi post = PostApi();
 
   // Api Singleton
-  // Null safety 를 위해서, 물음표(?)를 쓰지 않고, 사용하기 위해 _ready 변수 추가.
-  static late Api _instance;
-  static bool _ready = false;
+  static Api? _instance;
   // Api instance 를 리턴
   // ```dart
   // print('user: ${Api.instance.user.runtimeType}');
@@ -26,14 +28,10 @@ class Api {
   // print('user: ${Api.instance.user.runtimeType}');
   // ```
   static Api get instance {
-    if (_ready) {
-      return _instance;
-    } else {
+    if (_instance == null) {
       _instance = Api();
-      _instance.user.api = _instance;
-      _ready = true;
-      return _instance;
     }
+    return _instance!;
   }
 
   /// [anonymousIconUrl] 은 사용자가 로그인을 하지 않았을 때, 또는 회원 사진이 없을 때, 보여주는 기본 사진이다.
@@ -85,7 +83,7 @@ class Api {
       }
 
       // 성공
-      return res.data['response'] as Map<String, dynamic>;
+      return res.data['response'];
     } on DioError catch (e) {
       // 백엔드에서 에러 발생.
       //
