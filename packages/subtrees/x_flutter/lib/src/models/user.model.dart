@@ -23,6 +23,9 @@ class UserModel {
   int updatedAt;
   String sessionId;
   String admin;
+  String nicknameOrName;
+  int age;
+  String verified;
 
   UserModel({
     this.idx = 0,
@@ -49,6 +52,9 @@ class UserModel {
     this.updatedAt = 0,
     this.sessionId = '',
     this.admin = '',
+    this.nicknameOrName = '',
+    this.age = 0,
+    this.verified = '',
   });
 
   bool get loggedIn => idx > 0;
@@ -99,6 +105,9 @@ class UserModel {
       updatedAt: json['updatedAt'] ?? 0,
       sessionId: json['sessionId'] ?? '',
       admin: json['admin'] ?? '',
+      nicknameOrName: json['nicknameOrName'] ?? '',
+      age: json['age'] ?? 0,
+      verified: json['verified'] ?? '',
     );
   }
 
@@ -128,6 +137,9 @@ class UserModel {
       'updatedAt': updatedAt,
       'sessionId': sessionId,
       'admin': admin,
+      'nicknameOrName': nicknameOrName,
+      'age': age,
+      'verified': verified,
     };
   }
 }

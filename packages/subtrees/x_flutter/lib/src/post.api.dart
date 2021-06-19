@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:x_flutter/x_flutter.dart';
 
-class PostApi {
-  Api get api => Api.instance;
-
+class PostApi extends ForumApi {
   /// 백엔드로 부터 글 1개를 가져와서 리턴한다.
   ///
   /// [idx] 는 글 번호 또는 글 path 이다.
@@ -21,18 +17,23 @@ class PostApi {
     } else if (idx is String) {
       data['path'] = idx;
     }
-    final res = await Api.instance.request('post.get', data);
+    final res = await api.request('post.get', data);
     return PostModel.fromJson(res);
   }
 
   /// 문자열 또는 문자와 숫자를 가지는 배열을 입력 받아 백엔드로 부터 여러 카테고리 정보를 가져옵니다.
   ///
   /// [data] 는 백엔드 컨트롤러 참고
+  /// ```dart
+  /// final res = await api.post.search({});
+  /// for (final p in res) print(p);
+  /// ```
   Future<List<PostModel>> search(Map<String, dynamic> data) async {
-    final res = await Api.instance.request('post.search', data);
+    final res = await api.request('post.search', data);
     List<PostModel> posts = [];
     for (final j in res) {
-      print(jsonEncode(j));
+      /// 게시글을 배열로 가져올 때에는 각 글에 읽기 포인트 등, 글 읽기 제한이 있는 경우, error_not_logged_in 또는 permission 에러가 있을 수 있다.
+      if (j is String) throw j;
       posts.add(PostModel.fromJson(j));
     }
     return posts;

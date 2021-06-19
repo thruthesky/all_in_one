@@ -1,6 +1,7 @@
 import 'package:x_flutter/x_flutter.dart';
 
 class ForumModel {
+  Api api = Api.instance;
   int idx;
   int rootIdx;
   int parentIdx;
@@ -114,5 +115,23 @@ class ForumModel {
       'idx': idx,
       'name': name,
     };
+  }
+
+  /// 추천을 하고, 현재 객체에 반영.
+  Future<Map<String, int>> like() async {
+    final Map<String, int> re = await api.post.like(idx);
+    this.Y = re['Y'] ?? 0;
+    this.N = re['N'] ?? 0;
+
+    return re;
+  }
+
+  /// 비추천을 하고, 현재 객체에 반영.
+  Future<Map<String, int>> dislike() async {
+    final Map<String, int> re = await api.post.dislike(idx);
+    this.Y = re['Y'] ?? 0;
+    this.N = re['N'] ?? 0;
+
+    return re;
   }
 }

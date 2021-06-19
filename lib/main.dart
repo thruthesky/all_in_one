@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/forum/forum.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
@@ -21,8 +23,28 @@ void main() async {
   runApp(AioApp());
 }
 
-class AioApp extends StatelessWidget {
+class AioApp extends StatefulWidget {
+  @override
+  _AioAppState createState() => _AioAppState();
+}
+
+class _AioAppState extends State<AioApp> {
   final a = Get.put(app);
+
+  @override
+  void initState() {
+    super.initState();
+    // Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
+    // final post = PostModel.fromJson(m);
+    // print(post);
+//     () async {
+// final res = await Api.instance.post.search({});
+// for (final p in res) print(p);
+//     }();
+    Timer(Duration(milliseconds: 100),
+        () => service.open(RouteNames.forum, arguments: {'categoryId': 'qna'}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -37,14 +59,10 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
-        GetPage(
-            name: RouteNames.qrCodeGenerate,
-            page: () => QrCodeGenerateScreen()),
+        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),
         GetPage(name: RouteNames.qrCodeScan, page: () => QrCodeScanScreen()),
         GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
-        GetPage(
-            name: RouteNames.widgetCollection,
-            page: () => WidgetCollectionScreen()),
+        GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
         GetPage(name: RouteNames.forum, page: () => ForumScreen()),
       ],
     );

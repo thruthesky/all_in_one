@@ -12,11 +12,11 @@ class UserAvatar extends StatelessWidget {
       onTap: onTap,
       child: UserChange(
         loginBuilder: (user) => Avatar(
-          avatarUrl: user.hasPhoto ? user.photoUrl : Api.instance.anonymousIconUrl,
+          url: user.hasPhoto ? user.photoUrl : Api.instance.anonymousIconUrl,
           size: size,
         ),
         logoutBuilder: (_) => Avatar(
-          avatarUrl: Api.instance.anonymousIconUrl,
+          url: Api.instance.anonymousIconUrl,
           size: size,
         ),
       ),

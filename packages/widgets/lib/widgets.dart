@@ -6,6 +6,7 @@ export 'src/share/share_button.dart';
 export 'src/qr_code/qr_code.generator.dart';
 export 'src/qr_code/qr_code.scanner.dart';
 
+export 'src/avatar/avatar.dart';
 export 'src/user/user.avatar.dart';
 export 'src/user/user.name.dart';
 export 'src/user/forms/user.login.form.dart';
