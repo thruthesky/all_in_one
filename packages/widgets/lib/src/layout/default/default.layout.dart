@@ -55,7 +55,7 @@ class _DefaultLayoutState extends State<DefaultLayout> {
                       Icons.menu,
                       color: Colors.black,
                     ),
-                    Text('전체메뉴', style: widget.menuTextStyle)
+                    Text('메뉴', style: widget.menuTextStyle)
                   ],
                 ),
                 onPressed: () {

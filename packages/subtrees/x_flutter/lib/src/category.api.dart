@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:x_flutter/src/models/category.model.dart';
 import 'package:x_flutter/x_flutter.dart';
 

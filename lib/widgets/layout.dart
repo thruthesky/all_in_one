@@ -61,29 +61,21 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
                 Spacer(),
                 Row(
                   children: [
-                    UserName(
-                        defaultName: '로그인을 해 주세요.',
-                        onTap: () => open(RouteNames.profile)),
+                    UserName(defaultName: '로그인을 해 주세요.', onTap: () => open(RouteNames.profile)),
                     Spacer(),
                     UserChange(
                       loginBuilder: (user) => Row(
                         children: [
+                          TextButton(onPressed: () => open(RouteNames.profile), child: Text('프로필')),
                           TextButton(
-                              onPressed: () => open(RouteNames.profile),
-                              child: Text('프로필')),
-                          TextButton(
-                              onPressed: () => UserApi.instance.logout(),
-                              child: Text('로그아웃')),
+                              onPressed: () => UserApi.instance.logout(), child: Text('로그아웃')),
                         ],
                       ),
                       logoutBuilder: (_) => Row(
                         children: [
+                          TextButton(onPressed: () => open(RouteNames.login), child: Text('로그인')),
                           TextButton(
-                              onPressed: () => open(RouteNames.login),
-                              child: Text('로그인')),
-                          TextButton(
-                              onPressed: () => open(RouteNames.register),
-                              child: Text('회원가입')),
+                              onPressed: () => open(RouteNames.register), child: Text('회원가입')),
                         ],
                       ),
                     ),
@@ -100,11 +92,8 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
             loginBuilder: (_) => SizedBox.shrink(),
             logoutBuilder: (_) => Column(
               children: [
-                ListTile(
-                    title: Text('회원 로그인'), onTap: () => open(RouteNames.login)),
-                ListTile(
-                    title: Text('회원 가입'),
-                    onTap: () => open(RouteNames.register)),
+                ListTile(title: Text('회원 로그인'), onTap: () => open(RouteNames.login)),
+                ListTile(title: Text('회원 가입'), onTap: () => open(RouteNames.register)),
               ],
             ),
           ),
@@ -114,21 +103,14 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
               title: Text('QR 코드 생성'),
               onTap: () => open(RouteNames.qrCodeGenerate)),
           ListTile(
-              leading: spaceXs,
-              title: Text('QR 코드 스캔'),
-              onTap: () => open(RouteNames.qrCodeScan)),
+              leading: spaceXs, title: Text('QR 코드 스캔'), onTap: () => open(RouteNames.qrCodeScan)),
           ListTile(
               title: ShareButton(
-            text: Platform.isIOS
-                ? Config.iOSAppDownloadUrl
-                : Config.androidAppDownloadUrl,
+            text: Platform.isIOS ? Config.iOSAppDownloadUrl : Config.androidAppDownloadUrl,
             child: Text('우리앱을 친구에게 알려주기'),
           )),
-          ListTile(
-              title: Text('재 사용 가능한 위젯 보기'),
-              onTap: () => open(RouteNames.widgetCollection)),
-          ListTile(
-              title: Text('만능앱에 대해서'), onTap: () => open(RouteNames.about)),
+          ListTile(title: Text('재 사용 가능한 위젯 보기'), onTap: () => open(RouteNames.widgetCollection)),
+          ListTile(title: Text('만능앱에 대해서'), onTap: () => open(RouteNames.about)),
         ],
       ),
     );
