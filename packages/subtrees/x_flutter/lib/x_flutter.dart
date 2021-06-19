@@ -7,6 +7,7 @@ export 'src/models/user.model.dart';
 export 'src/models/category.model.dart';
 export 'src/models/forum.model.dart';
 export 'src/models/post.model.dart';
+export 'src/models/comment.model.dart';
 export 'src/defines.dart';
 export 'src/api.dart';
 export 'src/user.api.dart';

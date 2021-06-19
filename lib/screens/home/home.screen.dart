@@ -20,9 +20,15 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
-    final post = PostModel.fromJson(m);
-    print(post);
+    // Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
+    // final post = PostModel.fromJson(m);
+    // print(post);
+    () async {
+      final res = await Api.instance.post.search({});
+      for (final p in res) {
+        print(p);
+      }
+    }();
   }
 
   @override

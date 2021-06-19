@@ -23,7 +23,7 @@
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
     },
     {
-      "name": "메인(영자) - Simulator 12 Pro Max - iMac - Remote",
+      "name": "영자 - 메인 - Simulator 12 Pro Max - iMac - 원격",
       "program": "lib/main.dart",
       "args": [
         "--dart-define",
@@ -38,7 +38,22 @@
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
     },
     {
-      "name": "메인(영자) - 아이폰11 - iMac - Remote",
+      "name": "영자 - 메인 - Simulator 12 Pro Max - iMac - 로컬",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=만능 메인앱",
+        "--dart-define",
+        "SERVER_URL=https://local.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=off&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
+    },
+    {
+      "name": "영자 - 메인 - 아이폰11 - iMac - Remote",
       "program": "lib/main.dart",
       "args": [
         "--dart-define",
@@ -68,7 +83,7 @@
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
     },
     {
-      "name": "영자 QR Code- Simulator 12 Pro Max - Macbook 16 - Remote",
+      "name": "영자 - QR Code - Simulator 12 Pro Max - Macbook 16 - Remote",
       "program": "projects/qrcode/lib/main.dart",
       "args": [
         "--dart-define",
