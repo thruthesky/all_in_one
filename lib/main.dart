@@ -1,29 +1,24 @@
 import 'package:all_in_one/screens/about/about.screen.dart';
-<<<<<<< HEAD
-import 'package:all_in_one/screens/chanwoo/chanwoo_screen.dart';
-=======
-import 'package:all_in_one/screens/gyeony/gyeony.screen.dart';
->>>>>>> origin/main
 import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
+import 'package:all_in_one/screens/qr_code/qr_code.result.dart';
+import 'package:all_in_one/screens/qr_code/qr_code.scan.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
-import 'package:all_in_one/screens/boni/boni.screen.dart';
-import 'package:all_in_one/services/defines.dart';
+import 'package:all_in_one/screens/widget_collection/widget_collection.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:widgets/widgets.dart';
 
 void main() async {
   await GetStorage.init();
   runApp(AioApp());
 }
-
-var gyoeny = '수정 테스트';
 
 class AioApp extends StatelessWidget {
   final a = Get.put(app);
@@ -31,7 +26,7 @@ class AioApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: '만능앱',
-      defaultTransition: Transition.noTransition,
+      // defaultTransition: Transition.noTransition,
       theme: themeData,
       initialRoute: RouteNames.home,
       getPages: [
@@ -40,11 +35,11 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.register, page: () => RegisterScreen()),
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
-        GetPage(name: RouteNames.chanwoo, page: () => ChanWooScreen()),
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
-        GetPage(name: RouteNames.boni, page: () => BoniScreen()),
-        GetPage(name: RouteNames.gyeony, page: () => GyeonyScreen()),
-        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen())
+        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),
+        GetPage(name: RouteNames.qrCodeScan, page: () => QrCodeScanScreen()),
+        GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
+        GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
       ],
     );
   }

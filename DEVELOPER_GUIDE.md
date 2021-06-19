@@ -2,6 +2,49 @@
 
 본 문서는 만능앱 개발을 위한 개발자 문서이며, 개발 멤버들이 보다 쉽게 프로젝트 참여를 하고 성공적인 결과를 만들어내기 위해서 따라야 할 가이드라인을 제사합니다.
 
+- [만능앱 개발자 가이드](#만능앱-개발자-가이드)
+- [참고해야 할 문서](#참고해야-할-문서)
+- [참여 인원 모집](#참여-인원-모집)
+- [본 프로젝트(스터디) 공부해야 할 순서](#본-프로젝트스터디-공부해야-할-순서)
+  - [각 개발자가 반드시 따라야하는 부분](#각-개발자가-반드시-따라야하는-부분)
+- [이슈 및 개발 작업 공간](#이슈-및-개발-작업-공간)
+- [과제](#과제)
+- [설치](#설치)
+  - [만능앱 프로젝트 설치](#만능앱-프로젝트-설치)
+  - [Flutter 코드 개발 편집기](#flutter-코드-개발-편집기)
+- [스타일 가이드](#스타일-가이드)
+- [개발 방향](#개발-방향)
+    - [Mono repo](#mono-repo)
+- [문서화](#문서화)
+- [백엔드 설치](#백엔드-설치)
+- [테스트](#테스트)
+- [폴더 및 파일](#폴더-및-파일)
+- [실행 및 개발 설정](#실행-및-개발-설정)
+- [x_flutter 패키지](#x_flutter-패키지)
+- [상태 관리](#상태-관리)
+- [모델](#모델)
+- [백엔드](#백엔드)
+  - [x_flutter 패키지 개발 방법](#x_flutter-패키지-개발-방법)
+- [파이어베이스](#파이어베이스)
+- [코드 설명](#코드-설명)
+  - [실행 및 설정](#실행-및-설정)
+  - [스크린 생성](#스크린-생성)
+  - [Layout](#layout)
+  - [widgets 패키지와 services 패키지 안내](#widgets-패키지와-services-패키지-안내)
+  - [재사용 가능한 위젯 모음](#재사용-가능한-위젯-모음)
+  - [사용자 정보 표시](#사용자-정보-표시)
+  - [사진 업로드](#사진-업로드)
+- [Mono repo](#mono-repo-1)
+  - [각자의 프로젝트 생성](#각자의-프로젝트-생성)
+  - [각자의 프로젝트 설정](#각자의-프로젝트-설정)
+- [문제점, 버그](#문제점-버그)
+
+
+# 참고해야 할 문서
+
+- 패키지 만들기
+  - [공식문서: Flutter CLI - Developing Dart Packages](https://flutter.dev/docs/development/packages-and-plugins/developing-packages)
+  - [공식문서: Creating Packages](https://dart.dev/guides/libraries/create-library-packages)
 # 참여 인원 모집
 
 - 프로젝트에 참여하시려는 분은 [한국 플러터 개발자 그룹](https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo) 단톡방에서 참여 신청을 해 주세요.
@@ -21,35 +64,35 @@
   - launch.json
   - launch.json 에서 옵션 별로 실행하는 방법
 - 개발 문서 및 dartdoc 문서 읽고, dartdoc 으로 문서화 하는 방법 확인
-- 깃 브랜치를 아래의 순서로 checkout 해서 소스 코드 확인하며 익혀나가기
-  - integration_test - 플러터 테스트
-  - layout - 개발작업에 사용할 기본 레이아웃. 메뉴, 타이틀 바 등을 포함.
-  - firebase - Android 와 iOS 에서 firebase 연동.
+- 깃 브랜치의 소스코드를 보며 아래의 순서대로 공부
+  - Git clone 하고 앱을 실행하는 방법
+  - .launch.json 에 실행 설정 등록
+  - 기본 페이지 이동, 테마, Layout 등
   - matrix - 오픈소스 백엔드 Materix 와 연동
+  - 플러터 테스트 - Integration Test
+  - Android 와 iOS 에서 firebase 연동.
   - user - 회원 가입 및 관리. 백엔드로 로그인을 하고 동시에 파이어베이스로 로그인.
-  - social-login - 파이어베이스를 통한 구글, 페이스북, 애플 로그인. 그리고 카카오톡과 네이버 로그인
-  - pass-login - 패스로그인을 통한 본인(성인 실명) 인증.
-  - forum - 게시판 기능 일체. 일반적인 게시판의 모든 기능.
-  - friend - 친구 관리. 블럭 사용자 관리. 블럭한 사용자의 글,코멘트,사진,추천,채팅 등을 블럭.
+  - 소셜 로그인 - 파이어베이스를 통한 구글, 페이스북, 애플 로그인. 그리고 카카오톡과 네이버 로그인
+  - 패스로그인을 통한 본인(성인 실명) 인증.
+  - 게시판 기능 일체. 일반적인 게시판의 모든 기능.
+  - 친구 관리. 블럭 사용자 관리. 블럭한 사용자의 글,코멘트,사진,추천,채팅 등을 블럭.
+  - 1:1 채팅 기능
 - 작업 후, 프로젝트 매니저에게 main 브랜치로 merge 요청
+- 자기만의 브랜치에서 맡은 기능 개발
+- Mono repo 를 통한 자기만의 앱 개발
 
-# 과제
+## 각 개발자가 반드시 따라야하는 부분
 
-- 하나의 플러터 프로젝트(git repo)로 여러개의 앱 만들기
-  - 예) 만능앱 프로젝트의 하나의 Git repo 를 통해 "메모장 앱 개발 및 배포", "QR 스캔 앱 개발 및 배포" 등 여러개의 repo 를 만들지 않고, 하나의 repo 에서 개발하는 방법
-    - Flavor 로 해야할지?
-    - Mono repo 로 해야할지?
-      - 최상위 `lib` 폴더를 공유하는 하위 프로젝트를 `projects` 폴더에 여러개 생성?
-    - Submodule 로 해야할지?
-      - 위젯, service, screen 등 등을 하나의 repo 에 보관하고, 별개의 프로젝트를 생성해서, submodule 로 추가해서 작업?
+- 위젯을 만들면, 재 사용가능하도록 다듬어, `WidgetCollection` 반드시 추가를 해야 합니다.
 
-# 참고해야 할 문서
 
-- 패키지 만들기
-  - [공식문서: Flutter CLI - Developing Dart Packages](https://flutter.dev/docs/development/packages-and-plugins/developing-packages)
-  - [공식문서: Creating Packages](https://dart.dev/guides/libraries/create-library-packages)
+
 
 # 이슈 및 개발 작업 공간
+
+- [Git Projects 참고](https://github.com/thruthesky/all_in_one/projects/1)
+
+# 과제
 
 - [Git Projects 참고](https://github.com/thruthesky/all_in_one/projects/1)
 
@@ -74,8 +117,6 @@
   - 수정하여 push 를 한 다음,
   - github 의 all_in_one 사이트로 들어가서, pull request 버튼을 눌러, request 하면 됩니다.
 
-
-
 ## Flutter 코드 개발 편집기
 
 - 통일성 있게 `VSCode` 를 사용합니다.
@@ -85,7 +126,7 @@
   - `@attention` (json 설정에서 강조 표시 필요)
   - `@todo`
 
-## 스타일 가이드
+# 스타일 가이드
 
 - 본 프로젝트는 다트/플러터 코딩 가이드라인을 따릅니다.
 
@@ -105,7 +146,18 @@
   - 코드가 짧아지면 짧아질수록 좋은 코드이며 버그가 적습니다.
   - 짧고 간결하게, 그리고 원하는 것을 충분히 표현하도록하는 연습을 해야 합니다.
 
-## 문서화
+# 개발 방향
+
+- 플러터의 정체성(기본)을 헤치지 않는 범위에서 3rd party 라이브러리 또는 패키지를 사용한다.
+  - 예를 들어, 디자인 시스템을 사용하는데 기존의 플러터 코딩 또는 Material Design 방식의 코딩과 매우 동떨어진다면, 사용하기 어렵다.
+    - Velocity X 나 Flutter Hooks 가 그러한 예이다. 비록 좋은 기능들이긴 하지만, 기존의 플러터 코딩 방식과 차이가 있어 채택하지 않는다.
+
+### Mono repo
+
+- 본 페이지의 mono repo 항목을 참고해 주세요.
+
+
+# 문서화
 
 - `$ dartdoc`
   - 만약, 문서화에 에러가 있으면, 플러터 폴더에 들어 있는 `dartdoc` 명령을 실행한다.
@@ -118,7 +170,7 @@
     - 참고: [Dart 문서화 툴](https://pub.dev/packages/dartdoc)
     - 참고: [Dart 문서화를 잘하는 방법](https://dart.dev/guides/language/effective-dart/documentation)
 
-## 백엔드 설치
+# 백엔드 설치
 
 - 백엔드는 Matrix 를 사용합니다. Matrix 는 도커 기반에 Nginx + PHP + MariaDB 로 작성된 오픈 소스입니다.
 - 백엔드 설치는 Matrix 문서를 사용하면 되며,
@@ -148,12 +200,18 @@
 - 각종 임시 파일은 `lib/tmp/**/*` 에 저장하면 됩니다.
   - 예) `lib/tmp/json/user.json`
 
-- 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요. 
+- `/packages` 에는 프로젝트 별로 공유 가능한 디자인 UI, 비지니스 로직, 또는 여러가지 리소스가 들어가 있습니다.
+  - `/packages/subtrees` 에는 다른 git repo 가 subtree 로 추가되어져 있습니다.
+
+- `/projects` 에는 개별 플러터 앱(프로젝트)를 생성하고 개발하는 곳입니다.
+  각 프로젝트에서는 `/packages` 에 있는 리소스를 가져다 개발을 하면 되며, 최 상위 프로젝트의 여러가지 기능을 보고 마음에 드는 것만 골라서 쓰면 됩니다.
+
+- 스크린(페이지) 만드는 방법은 "코드 설명: 스크린 생성" 항목을 참고해주세요.
 
 # 실행 및 개발 설정
 
 - launch.json 에 실행 설정을 해야 한다면, 가능한 다음의 포멧을 따르세요.
-  - `name` 에는 "개발자이름 - 장치 타입 및 버전 - 개발컴퓨터(또는 위치) - 서버"
+  - `name` 에는 "개발자이름(또는 앱 이름) - 장치 타입 및 버전 - 개발컴퓨터(또는 위치) - 서버"
   - `CONFIG` 는 앱의 설정을 하는 것입니다.
   - `OPTIONS` 에는 앱을 실행 할 때, 어떤 옵션으로 실행 할지 지정하는 것입니다.
 
@@ -172,6 +230,11 @@
     "deviceId": "00008030-000904C80290802E"
 },
 ```
+
+# x_flutter 패키지
+
+- x_flutter 패키지는 Matrix 백엔드와 연동을 위한 것으로 Restful Api 호출이나 그에 필요한 Model 정보를 가지고 있습니다.
+- 예외적으로 `UserChange` 와 같은 몇 몇 위젯을 제공합니다.
 
 # 상태 관리
 
@@ -218,35 +281,27 @@
 
 ## x_flutter 패키지 개발 방법
 
-- .gitignore 에 x_flutter 가 등록되어져 있다.
-- 따라서, lib/x_flutter 에 clone 을 하고, pubspec.yaml 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pubspec.yaml 의 x_flutter 를 최신 버전으로 변경하면된다.
-- 주의 할 점은, pub.dev 의 패키지를 사용하는 경우, x_flutter 를 수정하면, github 에 적용이 안된다.
-  - 반드시, pubspec.yaml 에 github 에 있는 소스를 클론 후 path 로 지정 후, 그 x_flutter 를 수정해야지, github 에 업데이트하고, pub.dev 에 publish 할 수 있다. 이 부분이 혼동되는 경우가 있을 수 있으니 유의한다.
+- x_flutter 를 직접 코딩하지 않는다면, 일반적인 사용은 pub.dev 의 최신 버전을 사용하면 된다.
+
+- 만약, x_flutter 를 직접 개발(코딩) 할 것이라면,
+  - `% git submodule update --init` 으로 추가하면 된다.
+    - 참고로, 아래와 같이 서브 모듈로 추가되어져 있으므로, 다시 `submodule add` 는 할 필요 없다.
+      - `% git submodule add https://github.com/withcenter/x_flutter packages/x_flutter`
+
+  - 그리고 `pubspec.yaml` 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pub.dev 에 publish 하고,
+    pubspec.yaml 의 x_flutter 를 pub.dev 의 최신 버전으로 변경하면된다.
+  - 주의 할 점은, pub.dev 의 패키지를 사용하는 경우, x_flutter 를 수정하면, github 에 적용이 안된다.
 
 # 파이어베이스
 
 - 파이어베이스는 본 프로젝트에 이미 설정되어져 있으며, 직접 본인의 파이어베이스 프로젝트에 연결하여도 됩니다.
 
-# 깃 브랜치
-
-## base
-
-프로젝트 처음 시작시 매우 기본적인 구조가 들어가 있습니다.
 
 # 코드 설명
 
 ## 실행 및 설정
 
--
-
-## Layout
-
-- 일반적으로 각 스크린(페이지)은 Scaffold 를 바탕으로 appbar, body 등을 구성하는데, 각 스크린 별로 통일된 디자인을 하기가 쉽지 않은데,
-- Layout 이라는 위젯들 만들어, 그 안에 Scaffold 를 두고 통일된 appbar, body 등의 디자인을 적용하는 것입니다.
-- 이렇게하면 모든 스크린에서 동일한 Scaffold 를 가지게 되어 일관성 있게 디장니을 유지할 수 있으며, Layout 을 수정하면 전체 스크린의 디자인이 모두 같이 변경되는 것입니다.
-- 특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
-
-
+- launch.json 사용 방법
 ## 스크린 생성
 
 스크린(페이지)를 생성하는 방법에 대해서 설명을 합니다.
@@ -289,6 +344,102 @@ ElevatedButton(
   child: Text('메모장'),
 )
 ```
+
+## Layout
+
+- 일반적으로 각 스크린(페이지)은 Scaffold 를 바탕으로 appbar, body 등을 구성하는데, 각 스크린 별로 통일된 디자인을 하기가 쉽지 않은데, Layout 이라는 위젯들 만들어, 그 안에 Scaffold 를 두고 통일된 appbar, body 등의 디자인을 적용하는 것입니다.
+  이렇게하면 모든 스크린에서 동일한 Scaffold 를 가지게 되어 일관성 있게 디장니을 유지할 수 있으며, Layout 을 수정하면 전체 스크린의 디자인이 모두 같이 변경되는 것입니다.
+  특히 메뉴, 퀵메뉴 등 여러가지 부가적인 기능을 Layout 에 추가 할 수 있습니다.
+
+- Layout 위젯은 각 프로젝트의 공유 widgets 폴더에 넣으면 됩니다.
+  그리고 이 위젯 안에서 packages/widgets/layout 에 있는 여러가지 위젯 중 하나를 선택해서 사용하면 됩니다.
+
+
+## widgets 패키지와 services 패키지 안내
+
+- `widgets` 패키지에는 재 사용 가능한 위젯이 들어가는데, 좀 복잡한 위젯이 있을 수 있습니다. `services` 패키지는 말 그대로 서비스가 필요한 경우를 말합니다.
+  이 둘의 차이는 `widgets` 패키지는 오직 위젯만 제공합니다. 버튼 위젯, 사용자 이름 표시 위젯 등 앱 내에 표시할 위젯만 제공합니다.
+  `services` 패키지는 위젯을 제공하지 않습니다. 위젯보다는 로직 또는 기능을 제공합니다. 그래서 대부분 함수 또는 클래스를 사용합니다. 예를 들면, 알림창을 띄울 때, `showDialog()` 와 같은 함수를 호출해야 합니다. 이와 같이 위젯이 하닌 기능을 `services` 패키지가 합니다.
+
+
+## 재사용 가능한 위젯 모음
+
+- `widgets` 패키지에서 `WidgetCollection` 위젯을 제공합니다. 이 위젯을 화면에 표시하면 사용가능한 모든 위젯을 볼 수 있습니다. 물론, 개발자가 자신이 만든 위젯을 이 위젯에 등록을 해야만 합니다.
+
+
+## 사용자 정보 표시
+
+- 회원 가입, 로그인, 로그아웃, 회원 정보 수정 등에서 회원 정보가 변할 때 적절히 표시 할 수 있어야 합니다. [x_flutter 프로젝트 문서](https://github.com/withcenter/x_flutter)를 참고 해 주세요.
+
+
+
+## 사진 업로드
+
+- 특정 위치에 원하는 사진을 표시하고 싶을 때, `UploadImage` 위젯을 통해서 이미지를 업로드 할 수 있습니다. [x_flutter 프로젝트 문서](https://github.com/withcenter/x_flutter)를 참고 해 주세요.
+
+
+
+# Mono repo
+
+- Mono repo 란, 하나의 Git repo 에 여러개의 프로젝트가 관리되고 개발되는 것을 말합니다.
+
+- 만능앱은 굉장히 많은 기능들을 포함하고, 또 여러가지 형태로 파생되어 서브 프로젝트 개발 및 앱 스토어에 배포가 이루어 질 것입니다.
+  - 이와 같은 경우, 어떻게 하면 효율적으로 만능앱에서 필요한 기능만 쏙 빼서 나만의 앱을 만들 수 있을까요?
+  - 만능앱에서 서브 프로젝트를 생성 할 때 마다, 새로운 플러터 프로젝트를 만들고 원하는 기능의 소스 코드만 가져와서 개발할까요? 그런데 원본 소스가 계속 업데이트가 된다면요?
+  - 만능앱의 주요 요소를 패키지화하거나 서브 git repo 로 만들어 submodule 로 사용하면 조금 낫겠지만, 번거롭습니다.
+  - 플러터의 Flavor 도 만이 번거롭습니다.
+  - 이 문제의 핵심은 바로 코드 공유입니다.
+
+- Flavor 도 쓰지 않고, git submodule 방식으로 하지 않고, pub.dev 에 패키지를 올리지 않고, 더 간단하게 코드 공유를 할 수 있 방법?
+  - 그래서 Mono repo 를 선택 했습니다.
+
+- 흩어져 있는 repo 들은 `git subtree` 기능으로 모았으며, `/packages` 폴더에 재 사용가능한 코드를 모아 놓았습니다.
+  - 참고로 `git subtree` 는
+    - `$ git subtree --prefix=packages/subtrees/x_flutter x_flutter main` 으로 지정되어져 있습니다.
+
+- `/projects` 폴더에 서브 프로젝트를 생성하면 됩니다.
+
+## 각자의 프로젝트 생성
+
+- 먼저 아래와 같이 여러분들의 프로젝트를 생성합니다.
+  - `$ cd projects`
+  - `$ flutter create project-name`
+
+- 프로젝트 생성 후, pubspec.yaml 설정을 통해서 x_flutter 를 비롯한 필요한 패키지를 추가합니다.
+  예를 들면 아래와 같습니다.
+  여러분들이 개발할 앱의 요구 사항에 맞게 수정하여 사용하시면 됩니다.
+
+예제) pubspec.yaml
+```yaml
+name: youngja
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  get: ^4.1.4
+  get_storage: ^2.0.2
+  x_flutter: 0.0.7
+  user:
+    path: ../../packages/user
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+```
+
+## 각자의 프로젝트 설정
+
+- 루트 프로젝트의 `lib/main.dart` 에 있는 코드를 복사를 해서 쓰거나 비슷하게 쓰면 됩니다.
+
 
 
 

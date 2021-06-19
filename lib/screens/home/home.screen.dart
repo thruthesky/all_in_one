@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 import 'package:all_in_one/controllers/app.controller.dart';
 import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
-import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -14,128 +13,34 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-//임의수정
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  double p = 0;
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<App>(
+    return GetBuilder<AppController>(
       builder: (_) => Layout(
         title: Config.appName,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Matrix server version: ${_.version}'),
-              Text('Matrix server time: ${_.time}'),
-              Divider(),
-              if (_.loggedIn) Text('회원 이름: ${_.user.name}'),
-              if (_.loggedIn)
-                ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
-              Divider(),
-              Wrap(alignment: WrapAlignment.spaceBetween, children: [
-                ElevatedButton(
-                    onPressed: service.openAbout, child: Text('어바웃 페이지')),
-                ElevatedButton(
-                    onPressed: service.openRegister, child: Text('회원가입')),
-                ElevatedButton(
-                    onPressed: service.openLogin, child: Text('로그인')),
-                ElevatedButton(
-                    onPressed: service.openProfile, child: Text('회원 정보')),
-              ]),
-              OutlinedButton(onPressed: service.openChanWoo, child: Text('ChanWoo\'s page')),
-
-              Divider(),
-              Wrap(
-                children: [
-                  ElevatedButton(
-                    onPressed: () => service.open(RouteNames.memo),
-                    child: Text('메모장'),
-                  )
-                ],
-              )
-            ],
+        body: Padding(
+          padding: EdgeInsets.all(md),
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text('만능앱'),
+                Row(
+                  children: [
+                    UserName(),
+                    Text('님의 일상을 책임지겠습니다.'),
+                  ],
+                ),
+                Divider(),
+                WidgetCollection(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-=======
-import 'package:all_in_one/controllers/app.controller.dart';
-import 'package:all_in_one/services/config.dart';
-import 'package:all_in_one/services/globals.dart';
-import 'package:all_in_one/services/route_names.dart';
-import 'package:all_in_one/widgets/layout.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-
-class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-//임의수정
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<App>(
-      builder: (_) => Layout(
-        title: Config.appName,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('Matrix server version: ${_.version}'),
-              Text('Matrix server time: ${_.time}'),
-              Divider(),
-              if (_.loggedIn) Text('회원 이름: ${_.user.name}'),
-              if (_.loggedIn) ElevatedButton(onPressed: _.logout, child: Text('로그아웃')),
-              Divider(),
-              Wrap(alignment: WrapAlignment.spaceBetween, children: [
-                ElevatedButton(onPressed: service.openAbout, child: Text('어바웃 페이지')),
-                ElevatedButton(onPressed: service.openRegister, child: Text('회원가입')),
-                ElevatedButton(onPressed: service.openLogin, child: Text('로그인')),
-                ElevatedButton(onPressed: service.openProfile, child: Text('회원 정보')),
-              ]),
-              Divider(),
-              Wrap(
-                children: [
-                  ElevatedButton(
-                    onPressed: () => service.open(RouteNames.memo),
-                    child: Text('메모장'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => service.open(RouteNames.boni),
-                    child: Text('9BONI'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => service.open(RouteNames.gyeony),
-                    child: Text('gyeony'),
-                  ),
-                ],
-              ),
-              Text('기능별 메뉴'),
-              Divider(),
-              ElevatedButton(
-                  onPressed: () => service.open(RouteNames.qrCodeGenerate), child: Text('QR 코드 생성'))
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
->>>>>>> origin/main
