@@ -4,9 +4,11 @@ import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+/// [UserApi]는 내부적으로 사용자 정보를 관리해서 보다 많이 사용 될 것 같아 singleton 으로 만들었다.
+///
 class UserApi {
   /// [api]는 api.dart 에서 초기화. 즉, Api 가 먼저 초기화 되어야만 한다.
-  late final Api api;
+  Api get api => Api.instance;
 
   /// 사용자 정보
   UserModel model = UserModel();
@@ -37,17 +39,14 @@ class UserApi {
   }
 
   /// UserApi Singleton
-  static late UserApi _instance;
-  static bool _ready = false;
+  static UserApi? _instance;
   static UserApi get instance {
-    if (_ready) {
-      return _instance;
-    } else {
+    if (_instance == null) {
       print("static UserApi constructor for Singleton");
       _instance = UserApi();
-      _ready = true;
-      return _instance;
     }
+
+    return _instance!;
   }
 
   _initUserLogin() async {

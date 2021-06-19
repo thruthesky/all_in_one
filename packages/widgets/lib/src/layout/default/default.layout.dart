@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widgets/widgets.dart';
 
 class DefaultLayout extends StatefulWidget {
   const DefaultLayout({
@@ -8,7 +9,7 @@ class DefaultLayout extends StatefulWidget {
     required this.body,
     this.backgroundColor = Colors.grey,
     this.titleStyle = const TextStyle(fontSize: 16),
-    this.menuTextStyle = const TextStyle(fontSize: 10),
+    this.menuTextStyle = const TextStyle(fontSize: 10, color: Colors.black87),
     required this.drawer,
   }) : super(key: key);
 
@@ -44,6 +45,7 @@ class _DefaultLayoutState extends State<DefaultLayout> {
           elevation: 0,
           backgroundColor: Colors.white,
           actions: [
+            Center(child: UserAvatar(size: 38)),
             SizedBox(
               width: 52,
               child: IconButton(

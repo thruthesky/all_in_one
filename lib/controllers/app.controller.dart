@@ -1,5 +1,6 @@
 import 'package:all_in_one/services/config.dart';
 import 'package:get/get.dart';
+import 'package:services/services.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class AppController extends GetxController {
@@ -7,6 +8,13 @@ class AppController extends GetxController {
 
   String version = '0.0.0';
   String time = '';
+
+  /// 앱에서 사용하는 카테고리
+  ///
+  /// ```
+  /// if (_.categories != null) for (final cat in _.categories!) Text('${cat.title}'),
+  /// ```
+  List<CategoryModel>? categories;
 
   @override
   onInit() {
@@ -22,5 +30,15 @@ class AppController extends GetxController {
       api.version().then((res) => version = res.version),
       api.time().then((res) => time = res.time),
     ]).then((value) => update());
+
+    initForum();
+  }
+
+  initForum() async {
+    try {
+      categories = await api.category.gets(Config.categories);
+    } catch (e) {
+      alert('에러', '게시판 정보를 가져오지 못했습니다.');
+    }
   }
 }

@@ -12,4 +12,7 @@ class Config {
 
   /// Android 앱을 다운로드 또는 다른 친구에게 공유해서 알려줄 때 사용
   static const androidAppDownloadUrl = 'https://www.philgo.com';
+
+  /// 사용할 게시판 카테고리. README 참고.
+  static List<String> categories = ['qna', 'discussion', 'reminder'];
 }

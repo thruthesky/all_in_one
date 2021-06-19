@@ -1,4 +1,5 @@
 import 'package:all_in_one/screens/about/about.screen.dart';
+import 'package:all_in_one/screens/forum/forum.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
@@ -36,10 +37,15 @@ class AioApp extends StatelessWidget {
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
-        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),
+        GetPage(
+            name: RouteNames.qrCodeGenerate,
+            page: () => QrCodeGenerateScreen()),
         GetPage(name: RouteNames.qrCodeScan, page: () => QrCodeScanScreen()),
         GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
-        GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
+        GetPage(
+            name: RouteNames.widgetCollection,
+            page: () => WidgetCollectionScreen()),
+        GetPage(name: RouteNames.forum, page: () => ForumScreen()),
       ],
     );
   }

@@ -6,6 +6,7 @@ class Button extends StatelessWidget {
     this.text,
     this.color = Colors.white,
     this.backgroundColor = Colors.black87,
+    this.margin = const EdgeInsets.all(6.0),
     this.padding = const EdgeInsets.all(6.0),
     this.radius = 3.0,
     this.onTap,
@@ -14,6 +15,7 @@ class Button extends StatelessWidget {
   final String? text;
   final Color color;
   final Color backgroundColor;
+  final EdgeInsets margin;
   final EdgeInsets padding;
   final double radius;
   final VoidCallback? onTap;
@@ -22,6 +24,7 @@ class Button extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        margin: padding,
         padding: padding,
         decoration:
             BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(radius)),
