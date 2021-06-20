@@ -2,7 +2,6 @@ import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:services/services.dart';
-import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class ForumScreen extends StatefulWidget {
@@ -20,7 +19,7 @@ class _ForumScreenState extends State<ForumScreen> {
     return Layout(
       title: '게시판',
       back: () => controller.editing ? controller.stopEditing() : Get.back(),
-      create: () => controller.create(),
+      create: () => controller.showPostCreateForm(),
       body:
 
           /// 게시판 위젯
@@ -53,29 +52,29 @@ class _ForumScreenState extends State<ForumScreen> {
 
         /// [titleBuilder] 는 제목을 표시. 생략 가능.
         /// 제목이 클릭되면, postBuilder, commentBuilder, fileBuilder 등 글 내용을 보여주기 위한 빌더들이 실행된다.
-        titleBuilder: (PostModel post) {
-          Widget child;
-          if (post.open) {
-            /// 글 읽기 상태
-            child = ListTile(
-              leading: SizedBox(
-                width: 48,
-                height: 48,
-                child: Avatar(url: post.user.photoUrl),
-              ),
-              title: Text('${post.idx}. ${post.title}'),
-              subtitle: Text('${post.user.nicknameOrName}'),
-              trailing: Icon(Icons.arrow_upward),
-            );
-          } else {
-            /// 목록 상태
-            child = ListTile(
-              title: Text('${post.idx}. ${post.title}'),
-              trailing: Icon(Icons.arrow_downward),
-            );
-          }
-          return child;
-        },
+        // titleBuilder: (PostModel post) {
+        //   Widget child;
+        //   if (post.open) {
+        //     /// 글 읽기 상태
+        //     child = ListTile(
+        //       leading: SizedBox(
+        //         width: 48,
+        //         height: 48,
+        //         child: Avatar(url: post.user.photoUrl),
+        //       ),
+        //       title: Text('${post.idx}. ${post.title}'),
+        //       subtitle: Text('${post.user.nicknameOrName}'),
+        //       trailing: Icon(Icons.arrow_upward),
+        //     );
+        //   } else {
+        //     /// 목록 상태
+        //     child = ListTile(
+        //       title: Text('${post.idx}. ${post.title}'),
+        //       trailing: Icon(Icons.arrow_downward),
+        //     );
+        //   }
+        //   return child;
+        // },
         // buttonBuilder: (PostModel post) {
         //   return Row(
         //     children: [

@@ -6,31 +6,38 @@ class ForumController {
   late _ForumWidgetState state;
 
   /// 글 작성(생성, 수정) 중이면 참을 리턴.
-  bool get editing => state.mode != '';
+  bool get editing => state.edit != null;
 
   /// 글 작성을 중지한다.
-  stopEditing() => state.mode = '';
+  stopEditing() => state.edit = null;
 
   /// 글 작성
   ///
   /// 글 작성을 위한 상태를 만든다. 글 작성 폼 열기 등.
-  create() {
-    state.mode = state.mode == '' ? 'create' : '';
+  showPostCreateForm() {
+    // 현재 글 수정 상태
+    if (state.edit == null) {
+      // 수정 상태가 아니면, 글 작성 상태로 변경. 카테고리 지정.
+      state.edit = PostModel()..categoryId = state.widget.categoryId;
+    } else {
+      // 수정 상태이면, 글 작성 폼 닫기
+      state.edit = null;
+    }
   }
 
   /// 새 글이 생성된 경우 호출하면 됨.
   ///
   /// 새 글을 맨 위체 추가하고, 읽기 모드로 설정.
   edited(PostModel p) {
-    if (state.mode == 'create') {
+    if (state.edit!.idx == 0) {
+      // 새 글을 작성했으면, 맨 위에 추가
       state.posts.insert(0, p..open = true);
     }
-    state.mode = '';
+    state.edit = null;
   }
 
-  edit(PostModel p) {
+  showPostEditForm(PostModel p) {
     state.edit = p;
-    state.mode = 'edit';
   }
 }
 
@@ -78,20 +85,20 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   final scrollController = ScrollController();
 
-  /// [mode] 는 'create', 'edit' 중 하나의 값을 가진다.
-  /// 'edit' 인 경우, [edit] 에 수정 할 글이 들어간다.
-  /// 'create' 인 경우, [edit] 에 빈 PostModel 이 들어가며 categoryId 가 설정된다.
-  String _mode = '';
-  String get mode => _mode;
-  set mode(v) {
-    if (v == 'create') {
-      edit = PostModel()..categoryId = widget.categoryId;
-    }
-    setState(() => _mode = v);
-  }
-
   /// 글 작성 시, 수정되는 글
-  late PostModel edit;
+  ///
+  /// null 이면, 글 작성/수정이 아님.
+  /// edit.idx = 0 이면, 글 작성.
+  /// edit.idx != 0 이면, 글 수정.
+  PostModel? _edit;
+  PostModel? get edit => _edit;
+
+  /// 글 작성 설정 변경시 setState 호출
+  set edit(PostModel? p) {
+    setState(() {
+      _edit = p;
+    });
+  }
 
   bool get atBottom {
     return scrollController.offset > (scrollController.position.maxScrollExtent - 240);
@@ -109,7 +116,7 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (mode != '') return editBuilder(edit);
+    if (edit != null) return editBuilder(edit!);
     return ListView.builder(
       itemBuilder: (_, i) {
         PostModel post = posts[i];
@@ -121,10 +128,20 @@ class _ForumWidgetState extends State<ForumWidget> {
           Widget child;
           if (post.close) {
             child = titleBuilder(post);
+            // child = GestureDetector(
+            //   behavior: HitTestBehavior.opaque,
+            //   onTap: () {
+            //     print('idx; ${post.idx}');
+            //   },
+            //   child: Padding(
+            //     padding: const EdgeInsets.all(18.0),
+            //     child: Text('${post.idx}: ${post.title}'),
+            //   ),
+            // );
           } else {
             child = viewBuilder(post);
           }
-
+          // print('${post.idx}: ${post.title}');
           if (loading && i == posts.length - 1) {
             /// 글을 가져오는 중이면, 각 페이지별 맨 밑마지막 글 아래에 로더 표시
             return Column(
@@ -178,32 +195,50 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// 글 제목 빌더
   titleBuilder(PostModel post) {
-    print('post: ${post.idx}');
-    return GestureDetector(
-        onTap: () {
-          print('post.idx: ${post.idx}');
-          post.open = !post.open;
-        },
-        child: ListTile(title: Text('${post.idx}: ${post.title}')));
+    // return GestureDetector(
+    //     onTap: () {
+    //       print('post.idx: ${post.idx}');
+    //       setState(() {
+    //         post.open = !post.open;
+    //       });
+    //     },
+    //     behavior: HitTestBehavior.opaque,
+    //     child: Container(
+    //         key: ValueKey('post-${post.idx}'),
+    //         padding: EdgeInsets.all(16),
+    //         child: Text('${post.idx}: ${post.title}')));
 
     /// 기본 빌더
     Widget child;
     if (widget.titleBuilder == null) {
       if (post.open) {
         /// 글 읽기 상태
-        child = ListTile(
-          leading: CircleAvatar(
-            child: Icon(Icons.person),
+        child = Container(
+          padding: EdgeInsets.all(16),
+          child: Row(
+            children: [
+              CircleAvatar(child: Icon(Icons.person)),
+              SizedBox(width: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Text('${post.idx}. ${post.title}'), Text('${post.user.nicknameOrName}')],
+              ),
+              Spacer(),
+              Icon(Icons.arrow_upward),
+            ],
           ),
-          title: Text('${post.idx}. ${post.title}'),
-          subtitle: Text('${post.user.nicknameOrName}'),
-          trailing: Icon(Icons.arrow_upward),
         );
       } else {
         /// 목록 상태
-        child = ListTile(
-          title: Text('${post.idx}. ${post.title}'),
-          trailing: Icon(Icons.arrow_downward),
+        child = Container(
+          padding: EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Text('${post.idx}. ${post.title}'),
+              Spacer(),
+              Icon(Icons.arrow_downward),
+            ],
+          ),
         );
       }
     } else {
@@ -211,10 +246,13 @@ class _ForumWidgetState extends State<ForumWidget> {
       child = widget.titleBuilder!(post);
     }
     return GestureDetector(
-        child: child,
-        onTap: () => setState(
-              () => post.open = !post.open,
-            ));
+      child: child,
+      onTap: () {
+        print('post.idx:; ${post.idx}');
+        setState(() => post.open = !post.open);
+      },
+      behavior: HitTestBehavior.opaque,
+    );
   }
 
   viewBuilder(PostModel post) {
@@ -224,8 +262,27 @@ class _ForumWidgetState extends State<ForumWidget> {
         contentBuilder(post),
         buttonBuilder(post),
         commentFormBuilder(post),
+        for (final comment in post.comments)
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(16),
+                color: Colors.black54,
+                child: Text(
+                  '${comment.idx}: ${comment.content}',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              commentButtonBuilder(comment),
+            ],
+          )
       ],
     );
+  }
+
+  commentButtonBuilder(CommentModel comment) {
+    return postAndCommentButtonBuilder(comment);
   }
 
   contentBuilder(PostModel post) {
@@ -239,6 +296,11 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   buttonBuilder(PostModel post) {
     if (widget.buttonBuilder != null) return widget.buttonBuilder!(post);
+    return postAndCommentButtonBuilder(post);
+  }
+
+  /// 글과 코멘트 둘다 쓰이는 버튼 빌더
+  postAndCommentButtonBuilder(dynamic post) {
     return Row(
       children: [
         TextButton(
@@ -296,7 +358,11 @@ class _ForumWidgetState extends State<ForumWidget> {
           onSelected: (String value) async {
             try {
               if (value == 'edit') {
-                controller.edit(post);
+                if (post.isComment) {
+                  // controller.showCommentEditForm(post);
+                } else {
+                  controller.showPostEditForm(post);
+                }
               }
               if (value == 'delete') {
                 await post.delete();
@@ -336,7 +402,7 @@ class _ForumWidgetState extends State<ForumWidget> {
         ),
         Row(
           children: [
-            ElevatedButton(onPressed: () => mode = '', child: Text('취소')),
+            ElevatedButton(onPressed: () => edit = null, child: Text('취소')),
             ElevatedButton(
                 onPressed: () =>
                     post.edit().then((p) => controller.edited(p)).catchError(widget.error),
@@ -348,68 +414,59 @@ class _ForumWidgetState extends State<ForumWidget> {
   }
 
   commentFormBuilder(PostModel post) {
-    return CommentForm(post: post);
-  }
-}
-
-class CommentForm extends StatefulWidget {
-  const CommentForm({
-    Key? key,
-    required this.post,
-  }) : super(key: key);
-
-  final PostModel post;
-
-  @override
-  _CommentFormState createState() => _CommentFormState();
-}
-
-class _CommentFormState extends State<CommentForm> {
-  CommentModel comment = CommentModel();
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.camera_alt)),
-            Expanded(
-              child: Stack(
-                children: [
-                  if (comment.content != '')
-                    Positioned(
-                        top: -5,
-                        right: -2,
-                        child: IconButton(onPressed: () => {}, icon: Icon(Icons.send))),
-                  TextField(
-                    onChanged: (v) => setState(() => comment.content = v),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding:
-                          const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 40),
-                      hintText: "코멘트를 입력하세요.",
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3.0),
-                        borderSide: BorderSide(
-                          color: Colors.grey[800]!,
+    CommentModel comment = CommentModel();
+    comment.parentIdx = post.idx;
+    comment.rootIdx = post.idx;
+    return StatefulBuilder(builder: (_, setState) {
+      return Column(
+        children: [
+          Row(
+            children: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.camera_alt)),
+              Expanded(
+                child: Stack(
+                  children: [
+                    TextField(
+                      onChanged: (v) => setState(() => comment.content = v),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        contentPadding:
+                            const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 40),
+                        hintText: "코멘트를 입력하세요.",
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3.0),
+                          borderSide: BorderSide(
+                            color: Colors.grey[800]!,
+                          ),
                         ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(3.0),
-                        borderSide: BorderSide(
-                          color: Colors.blueGrey,
-                          width: 1.0,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3.0),
+                          borderSide: BorderSide(
+                            color: Colors.blueGrey,
+                            width: 1.0,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                    if (comment.content != '')
+                      Positioned(
+                        top: -5,
+                        right: -2,
+                        child: IconButton(
+                          onPressed: () {
+                            comment.edit().then((value) => null).catchError(widget.error);
+                          },
+                          icon: Icon(Icons.send),
+                        ),
+                      ),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(width: 16),
-          ],
-        )
-      ],
-    );
+              SizedBox(width: 16),
+            ],
+          )
+        ],
+      );
+    });
   }
 }

@@ -15,7 +15,6 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Api.instance.init(url: 'https://local.sonub.com/index.php');
   }
