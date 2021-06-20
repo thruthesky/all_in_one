@@ -107,6 +107,8 @@ class ForumModel {
     }
   }
 
+  bool get deleted => deletedAt > 0;
+
   @override
   String toString() => 'ForumModel(name: $name)';
 

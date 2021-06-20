@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:x_flutter/src/widgets/spinner.dart';
 import 'package:x_flutter/x_flutter.dart';
@@ -156,7 +158,10 @@ class _ForumWidgetState extends State<ForumWidget> {
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
         /// 각 글 별 전처리를 여기서 할 수 있음.
-        if (p.title == '') p.title = '제목이 없습니다.';
+        if (p.deleted) {
+          p.title = '삭제되었습니다.';
+          p.content = '삭제되었습니다.';
+        } else if (p.title == '') p.title = '제목이 없습니다.';
         posts.add(p);
       });
       if (mounted) setState(() => loading = false);
@@ -175,9 +180,17 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// 글 제목 빌더
   titleBuilder(PostModel post) {
+    print('post: ${post.idx}');
+    return GestureDetector(
+        onTap: () {
+          print('post.idx: ${post.idx}');
+          post.open = !post.open;
+        },
+        child: ListTile(title: Text('${post.idx}: ${post.title}')));
+
+    /// 기본 빌더
     Widget child;
     if (widget.titleBuilder == null) {
-      /// 기본 빌더
       if (post.open) {
         /// 글 읽기 상태
         child = ListTile(
@@ -199,7 +212,11 @@ class _ForumWidgetState extends State<ForumWidget> {
       /// 커스텀 빌더
       child = widget.titleBuilder!(post);
     }
-    return GestureDetector(child: child, onTap: () => setState(() => post.open = !post.open));
+    return GestureDetector(
+        child: child,
+        onTap: () => setState(
+              () => post.open = !post.open,
+            ));
   }
 
   viewBuilder(PostModel post) {
@@ -208,6 +225,7 @@ class _ForumWidgetState extends State<ForumWidget> {
         titleBuilder(post),
         contentBuilder(post),
         buttonBuilder(post),
+        commentFormBuilder(post),
       ],
     );
   }
@@ -222,6 +240,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   }
 
   buttonBuilder(PostModel post) {
+    if (widget.buttonBuilder != null) return widget.buttonBuilder!(post);
     return Row(
       children: [
         TextButton(
@@ -276,9 +295,17 @@ class _ForumWidgetState extends State<ForumWidget> {
               child: Text('코멘트 목록'),
             ),
           ],
-          onSelected: (String value) {
-            if (value == 'edit') {
-              controller.edit(post);
+          onSelected: (String value) async {
+            try {
+              if (value == 'edit') {
+                controller.edit(post);
+              }
+              if (value == 'delete') {
+                await post.delete();
+                setState(() {});
+              }
+            } catch (e) {
+              widget.error(e);
             }
           },
         ),
@@ -313,8 +340,75 @@ class _ForumWidgetState extends State<ForumWidget> {
           children: [
             ElevatedButton(onPressed: () => mode = '', child: Text('취소')),
             ElevatedButton(
-                onPressed: () => post.edit().then((p) => controller.edited(p)),
+                onPressed: () =>
+                    post.edit().then((p) => controller.edited(p)).catchError(widget.error),
                 child: Text('글 쓰기')),
+          ],
+        )
+      ],
+    );
+  }
+
+  commentFormBuilder(PostModel post) {
+    return CommentForm(post: post);
+  }
+}
+
+class CommentForm extends StatefulWidget {
+  const CommentForm({
+    Key? key,
+    required this.post,
+  }) : super(key: key);
+
+  final PostModel post;
+
+  @override
+  _CommentFormState createState() => _CommentFormState();
+}
+
+class _CommentFormState extends State<CommentForm> {
+  CommentModel comment = CommentModel();
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            IconButton(onPressed: () {}, icon: Icon(Icons.camera_alt)),
+            Expanded(
+              child: Stack(
+                children: [
+                  if (comment.content != '')
+                    Positioned(
+                        top: -5,
+                        right: -2,
+                        child: IconButton(onPressed: () => {}, icon: Icon(Icons.send))),
+                  TextField(
+                    onChanged: (v) => setState(() => comment.content = v),
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding:
+                          const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 40),
+                      hintText: "코멘트를 입력하세요.",
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3.0),
+                        borderSide: BorderSide(
+                          color: Colors.grey[800]!,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(3.0),
+                        borderSide: BorderSide(
+                          color: Colors.blueGrey,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 16),
           ],
         )
       ],

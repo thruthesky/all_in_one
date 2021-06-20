@@ -66,4 +66,15 @@ class PostModel extends ForumModel {
   Future<PostModel> edit() {
     return api.post.edit(toEdit());
   }
+
+  /// 글 삭제
+  ///
+  /// 글 삭제 후, 현재 객체에 반영
+  Future<PostModel> delete() async {
+    PostModel p = await api.post.delete(idx);
+    title = p.title;
+    content = p.content;
+    deletedAt = p.deletedAt;
+    return this;
+  }
 }

@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () => service.open(RouteNames.forum, arguments: {'categoryId': ''})),
                     Button(
                         text: '자유게시판',
-                        onTap: () =>
-                            service.open(RouteNames.forum, arguments: {'categoryId': 'dicussion'})),
+                        onTap: () => service
+                            .open(RouteNames.forum, arguments: {'categoryId': 'discussion'})),
                     Button(
                         text: '질문게시판',
                         onTap: () =>

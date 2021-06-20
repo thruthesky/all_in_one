@@ -50,4 +50,14 @@ class PostApi extends ForumApi {
     final json = await api.request(route, data);
     return PostModel.fromJson(json);
   }
+
+  /// Deletes a post.
+  ///
+  Future<PostModel> delete(int idx) async {
+    final res = await api.request('post.delete', {
+      'idx': idx,
+    });
+
+    return PostModel.fromJson(res);
+  }
 }

@@ -55,8 +55,6 @@ class _ForumScreenState extends State<ForumScreen> {
         /// 제목이 클릭되면, postBuilder, commentBuilder, fileBuilder 등 글 내용을 보여주기 위한 빌더들이 실행된다.
         titleBuilder: (PostModel post) {
           Widget child;
-
-          /// 기본 빌더
           if (post.open) {
             /// 글 읽기 상태
             child = ListTile(
@@ -78,13 +76,13 @@ class _ForumScreenState extends State<ForumScreen> {
           }
           return child;
         },
-        buttonBuilder: (PostModel post) {
-          return Row(
-            children: [
-              TextButton(onPressed: () => post.like(), child: Text('좋아요')),
-            ],
-          );
-        },
+        // buttonBuilder: (PostModel post) {
+        //   return Row(
+        //     children: [
+        //       TextButton(onPressed: () => post.like(), child: Text('좋아요')),
+        //     ],
+        //   );
+        // },
       ),
     );
   }
