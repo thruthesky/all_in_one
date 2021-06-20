@@ -1,7 +1,9 @@
 import 'package:x_flutter/src/models/forum.model.dart';
+import 'package:x_flutter/x_flutter.dart';
 
 class CommentModel extends ForumModel {
   int depth = 0;
+  String mode = '';
   @override
   CommentModel([Map<String, dynamic>? json]) : super(json == null ? {} : json);
   String toString() => 'CommentModel(idx: $idx, content: $content, name: $name)';
@@ -29,7 +31,14 @@ class CommentModel extends ForumModel {
   }
 
   /// 글 작성 또는 수정
-  Future<CommentModel> edit() {
-    return api.comment.edit(toEdit());
+  Future<CommentModel> edit(PostModel post) async {
+    CommentModel comment = await api.comment.edit(toEdit());
+
+    if (comment.parentIdx == post.idx) {
+      /// 글 바로 아래의 (최 상위, 레벨 1) 댓글. 그냥 맨 마지막에 추가.
+      post.comments.add(comment);
+    }
+
+    return comment;
   }
 }

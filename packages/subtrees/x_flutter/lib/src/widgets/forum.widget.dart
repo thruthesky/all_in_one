@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:x_flutter/src/widgets/spinner.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+/// ForumWidget controller
+///
+/// ForumWidget 내부적으로 상태 관리를 하는데, 드릴링이 발생하는 경우, controller 를 통해서
+/// 코드를 간편하게 한다.
+/// 특히, [state] 나 [update] 나 [erorr] 를 통해서 간편한 코딩을 할 수 있다.
 class ForumController {
   late _ForumWidgetState state;
 
@@ -36,8 +41,32 @@ class ForumController {
     state.edit = null;
   }
 
-  showPostEditForm(PostModel p) {
+  _showPostEditForm(PostModel p) {
     state.edit = p;
+  }
+
+  /// 코멘트 수정 폼을 열고, 업데이트
+  _showCommentEditForm(CommentModel c) {
+    c.mode = 'edit';
+    update();
+  }
+
+  showEditForm(post) {
+    if (post.isComment) {
+      _showCommentEditForm(post);
+    } else {
+      _showPostEditForm(post);
+    }
+  }
+
+  /// 화면을 다시 랜더링한다.
+  update() {
+    state.update();
+  }
+
+  /// 위젯에 연결된 에러 콜백을 호출한다.
+  error(e) {
+    state.widget.error(e);
   }
 }
 
@@ -100,6 +129,8 @@ class _ForumWidgetState extends State<ForumWidget> {
     });
   }
 
+  void update() => setState(() => null);
+
   bool get atBottom {
     return scrollController.offset > (scrollController.position.maxScrollExtent - 240);
   }
@@ -117,7 +148,8 @@ class _ForumWidgetState extends State<ForumWidget> {
   @override
   Widget build(BuildContext context) {
     if (edit != null) return editBuilder(edit!);
-    return ListView.builder(
+    return ListView.separated(
+      separatorBuilder: (_, i) => Divider(),
       itemBuilder: (_, i) {
         PostModel post = posts[i];
         if (post.noMorePosts) {
@@ -263,20 +295,22 @@ class _ForumWidgetState extends State<ForumWidget> {
         buttonBuilder(post),
         commentFormBuilder(post),
         for (final comment in post.comments)
-          Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(16),
-                color: Colors.black54,
-                child: Text(
-                  '${comment.idx}: ${comment.content}',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              commentButtonBuilder(comment),
-            ],
-          )
+          comment.mode == 'edit'
+              ? Text('@TODO 글 수정\n글 수정 박스를 보여주고, 수정 할 것.')
+              : Column(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      padding: EdgeInsets.all(16),
+                      color: Colors.black54,
+                      child: Text(
+                        '${comment.idx}: ${comment.content}',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    commentButtonBuilder(comment),
+                  ],
+                )
       ],
     );
   }
@@ -358,11 +392,7 @@ class _ForumWidgetState extends State<ForumWidget> {
           onSelected: (String value) async {
             try {
               if (value == 'edit') {
-                if (post.isComment) {
-                  // controller.showCommentEditForm(post);
-                } else {
-                  controller.showPostEditForm(post);
-                }
+                controller.showEditForm(post);
               }
               if (value == 'delete') {
                 await post.delete();
@@ -414,9 +444,11 @@ class _ForumWidgetState extends State<ForumWidget> {
   }
 
   commentFormBuilder(PostModel post) {
+    bool loading = false;
     CommentModel comment = CommentModel();
     comment.parentIdx = post.idx;
     comment.rootIdx = post.idx;
+    final content = TextEditingController(text: comment.content);
     return StatefulBuilder(builder: (_, setState) {
       return Column(
         children: [
@@ -427,7 +459,8 @@ class _ForumWidgetState extends State<ForumWidget> {
                 child: Stack(
                   children: [
                     TextField(
-                      onChanged: (v) => setState(() => comment.content = v),
+                      controller: content,
+                      onChanged: (v) => setState(() => null),
                       decoration: InputDecoration(
                         isDense: true,
                         contentPadding:
@@ -448,15 +481,30 @@ class _ForumWidgetState extends State<ForumWidget> {
                         ),
                       ),
                     ),
-                    if (comment.content != '')
+                    if (content.text != '')
                       Positioned(
                         top: -5,
                         right: -2,
                         child: IconButton(
-                          onPressed: () {
-                            comment.edit().then((value) => null).catchError(widget.error);
+                          onPressed: () async {
+                            setState(() => loading = true);
+                            try {
+                              comment.content = content.text;
+                              await comment.edit(post);
+                              comment.content = '';
+                              controller.update();
+                            } catch (e) {
+                              controller.error(e);
+                            }
+
+                            setState(() {
+                              loading = false;
+                            });
+
+                            // .then((value) => controller.update())
+                            // .catchError(controller.error);
                           },
-                          icon: Icon(Icons.send),
+                          icon: loading ? Spinner() : Icon(Icons.send),
                         ),
                       ),
                   ],
