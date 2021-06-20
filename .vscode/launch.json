@@ -98,6 +98,21 @@
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
     },
     {
+      "name": "영자 - 메인 - iPhone 12 Pro Max - 맥북16 - 원격",
+      "program": "lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=만능 메인앱",
+        "--dart-define",
+        "SERVER_URL=https://flutterkorea.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=off&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
+    },
+    {
       "name": "영자 - QR Code - Simulator 12 Pro Max - Macbook 16 - 원격",
       "program": "projects/qrcode/lib/main.dart",
       "args": [

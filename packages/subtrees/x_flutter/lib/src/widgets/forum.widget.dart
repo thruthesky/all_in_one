@@ -337,17 +337,23 @@ class _ForumWidgetState extends State<ForumWidget> {
   postAndCommentButtonBuilder(dynamic post) {
     return Row(
       children: [
+        if (post.isComment)
+          TextButton(
+            onPressed: () {},
+            child: Text('댓글'),
+          ),
         TextButton(
           onPressed: () => post.like().then((v) => setState(() => {})),
           child: Text('좋아요 (${post.Y})'),
         ),
-        TextButton(
-          onPressed: () => post.dislike().then((v) => setState(() => {})),
-          child: Text('싫어요 (${post.N})'),
-        ),
+        // 싫어요는 주석 처리. 싫어요 기능은 사용하지 않음.
+        // TextButton(
+        //   onPressed: () => post.dislike().then((v) => setState(() => {})),
+        //   child: Text('싫어요 (${post.N})'),
+        // ),
         TextButton(onPressed: () => post.like(), child: Text('별쏘기')),
         TextButton(onPressed: () => post.like(), child: Text('채팅')),
-        TextButton(onPressed: () => post.like(), child: Text('신고')),
+        // TextButton(onPressed: () => post.like(), child: Text('신고')),
         Spacer(),
         PopupMenuButton<String>(
           child: Padding(
