@@ -9,20 +9,116 @@ import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+/// Layout
+///
+/// [create] 에 콜백이 지정되면 "추가" 버튼이 화면에 표시되며, 클릭되면, 해당 콜백이 실행된다.
+/// [back] 콜백은 백 버튼을 누른 경우 호출된다. 만약, [back] 콜백이 주어진 경우, 해당 스크린에서 직접 이전 페이지로 이동해야 한다.
+///   또는 경우에 따라 이전 페이지로 가지 않거나, 다른 페이지로 가는 등의 처리를 할 수 있다.
+///   예제) 게시판에서 글 작성 폼을 열고, 백 버튼을 누르면, 글 작성 폼을 닫는다.
 class Layout extends StatelessWidget {
-  Layout({Key? key, this.title = '', required this.body}) : super(key: key);
+  Layout({
+    Key? key,
+    this.title = '',
+    required this.body,
+    this.create,
+    this.back,
+  }) : super(key: key);
 
   final String title;
   final Widget body;
+  final VoidCallback? create;
+  final VoidCallback? back;
+
+  final GlobalKey<ScaffoldState> _key = GlobalKey(); // Create a key
 
   @override
   Widget build(BuildContext context) {
-    return DefaultLayout(
+    return Scaffold(
+      key: _key,
       backgroundColor: Colors.grey[200]!,
-      title: this.title,
-      titleStyle: TextStyle(color: Colors.black87),
-      body: this.body,
-      drawer: LayoutDrawer(),
+      appBar: AppTitleBar(globalKey: _key, title: title, create: create, back: back),
+      body: body,
+      endDrawer: LayoutDrawer(),
+    );
+  }
+}
+
+class AppTitleBar extends StatefulWidget with PreferredSizeWidget {
+  AppTitleBar({
+    Key? key,
+    required this.globalKey,
+    required this.title,
+    this.titleStyle = const TextStyle(fontSize: 16),
+    this.menuTextStyle = const TextStyle(fontSize: 8, color: Colors.black),
+    this.create,
+    this.back,
+  }) : super(key: key);
+  final GlobalKey<ScaffoldState> globalKey;
+  final String title;
+  final TextStyle titleStyle;
+  final TextStyle menuTextStyle;
+  final VoidCallback? create;
+  final VoidCallback? back;
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+
+  @override
+  _AppTitleBarState createState() => _AppTitleBarState();
+}
+
+class _AppTitleBarState extends State<AppTitleBar> {
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(widget.title, style: widget.titleStyle),
+      leading: navigator!.canPop()
+          ? BackButton(
+              color: Colors.black,
+              onPressed: () {
+                if (widget.back != null) {
+                  widget.back!();
+                } else {
+                  Get.back();
+                }
+              })
+          : SizedBox.shrink(),
+      shape: Border(bottom: BorderSide(color: Colors.grey[300]!, width: 1)),
+      elevation: 0,
+      backgroundColor: Colors.white,
+      actions: [
+        Center(child: UserAvatar(size: 36, onTap: service.openProfile)),
+        if (widget.create != null)
+          IconButton(
+              onPressed: widget.create,
+              icon: Column(
+                children: [
+                  Icon(
+                    Icons.add_circle,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  Text('글쓰기', style: widget.menuTextStyle)
+                ],
+              )),
+        SizedBox(
+          width: 52,
+          child: IconButton(
+            icon: Column(
+              children: [
+                Icon(
+                  Icons.menu,
+                  color: Colors.black,
+                  size: 28,
+                ),
+                Text(Platform.isAndroid ? '메뉴' : '전체메뉴', style: widget.menuTextStyle)
+              ],
+            ),
+            onPressed: () {
+              widget.globalKey.currentState!.openEndDrawer();
+            },
+          ),
+        ),
+      ],
     );
   }
 }

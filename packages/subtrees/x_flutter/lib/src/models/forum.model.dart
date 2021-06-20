@@ -95,7 +95,7 @@ class ForumModel {
         relativeUrl = json['relativeUrl'] ?? '',
         appliedPoint = json['appliedPoint'] ?? 0,
         shortDate = json['shortDate'] ?? '',
-        categoryId = json['countryId'] ?? '' {
+        categoryId = json['categoryId'] ?? '' {
     if (json['files'] != null && json['files'].length > 0) {
       for (final f in json['files']) {
         files.add(FileModel.fromJson(f));
@@ -113,7 +113,12 @@ class ForumModel {
   Map<String, dynamic> toJson() {
     return {
       'idx': idx,
-      'name': name,
+      'categoryId': categoryId,
+      'categoryIdx': categoryIdx,
+      'parentIdx': parentIdx,
+      'title': title,
+      'content': content,
+      'user': user.toJson()
     };
   }
 

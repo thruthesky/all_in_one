@@ -38,4 +38,16 @@ class PostApi extends ForumApi {
     }
     return posts;
   }
+
+  ///
+  Future<PostModel> edit(Map<String, dynamic> data) async {
+    String route;
+    if (data['idx'] == null)
+      route = 'post.create';
+    else
+      route = 'post.update';
+
+    final json = await api.request(route, data);
+    return PostModel.fromJson(json);
+  }
 }

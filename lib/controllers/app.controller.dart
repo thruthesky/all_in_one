@@ -1,4 +1,5 @@
 import 'package:all_in_one/services/config.dart';
+import 'package:all_in_one/services/route_names.dart';
 import 'package:get/get.dart';
 import 'package:services/services.dart';
 import 'package:x_flutter/x_flutter.dart';
@@ -8,6 +9,8 @@ class AppController extends GetxController {
 
   String version = '0.0.0';
   String time = '';
+
+  RxString routeName = RouteNames.home.obs;
 
   /// 앱에서 사용하는 카테고리
   ///

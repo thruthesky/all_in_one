@@ -1,34 +1,27 @@
+import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:services/services.dart' as s;
 
 class Service {
   BuildContext get context => Get.context!;
 
   /// 싱글톤
-  static late Service _instance;
-  static bool _ready = false;
-  static Service get instance {
-    if (_ready) {
-      return _instance;
-    } else {
-      _instance = Service();
-      _ready = true;
-      return _instance;
-    }
-  }
 
-  // ignore: close_sinks
-  PublishSubject<String> screenChanges = PublishSubject();
+  static Service? _instance;
+  static Service get instance {
+    if (_instance == null) {
+      _instance = Service();
+    }
+    return _instance!;
+  }
 
   /// 스크린(페이지) 이동
   ///
   /// [offAll] 에 true 가 지정되면, nav stack 의 중간에 있는 모든 페이지를 없애고 해당 페이지로 이동.
-  Future? open(String routeName,
-      {arguments = const {}, offAll = false, off = false}) {
-    screenChanges.add(routeName);
+  Future? open(String routeName, {arguments = const {}, offAll = false, off = false}) {
+    app.routeName.value = routeName;
     if (offAll) {
       return Get.offAllNamed(routeName, arguments: arguments);
     } else if (off) {
