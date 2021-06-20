@@ -338,6 +338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
+  services:
+    dependency: transitive
+    description:
+      path: "../../packages/services"
+      relative: true
+    source: path
+    version: "0.0.1"
   share_plus:
     dependency: transitive
     description:

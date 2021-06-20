@@ -1,6 +1,7 @@
 import 'package:x_flutter/x_flutter.dart';
 
 class ForumModel {
+  Api api = Api.instance;
   int idx;
   int rootIdx;
   int parentIdx;
@@ -94,7 +95,7 @@ class ForumModel {
         relativeUrl = json['relativeUrl'] ?? '',
         appliedPoint = json['appliedPoint'] ?? 0,
         shortDate = json['shortDate'] ?? '',
-        categoryId = json['countryId'] ?? '' {
+        categoryId = json['categoryId'] ?? '' {
     if (json['files'] != null && json['files'].length > 0) {
       for (final f in json['files']) {
         files.add(FileModel.fromJson(f));
@@ -106,13 +107,38 @@ class ForumModel {
     }
   }
 
+  bool get deleted => deletedAt > 0;
+
   @override
   String toString() => 'ForumModel(name: $name)';
 
   Map<String, dynamic> toJson() {
     return {
       'idx': idx,
-      'name': name,
+      'categoryId': categoryId,
+      'categoryIdx': categoryIdx,
+      'parentIdx': parentIdx,
+      'title': title,
+      'content': content,
+      'user': user.toJson()
     };
+  }
+
+  /// 추천을 하고, 현재 객체에 반영.
+  Future<Map<String, int>> like() async {
+    final Map<String, int> re = await api.post.like(idx);
+    this.Y = re['Y'] ?? 0;
+    this.N = re['N'] ?? 0;
+
+    return re;
+  }
+
+  /// 비추천을 하고, 현재 객체에 반영.
+  Future<Map<String, int>> dislike() async {
+    final Map<String, int> re = await api.post.dislike(idx);
+    this.Y = re['Y'] ?? 0;
+    this.N = re['N'] ?? 0;
+
+    return re;
   }
 }

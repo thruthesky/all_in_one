@@ -17,7 +17,7 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: this.title,
+      appBar: (c) => AppBar(),
       body: this.body,
       drawer: LayoutDrawer(),
     );

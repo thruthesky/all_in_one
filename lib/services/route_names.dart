@@ -13,4 +13,5 @@ class RouteNames {
   static final String qrCodeResult = 'qrCodeResult';
   static final String forum = 'forum';
   static final String widgetCollection = 'widgetCollection';
+  static final String contact = 'contact';
 }

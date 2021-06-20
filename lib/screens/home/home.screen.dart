@@ -6,7 +6,6 @@ import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -16,21 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  double p = 0;
-  @override
-  void initState() {
-    super.initState();
-    // Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
-    // final post = PostModel.fromJson(m);
-    // print(post);
-    () async {
-      final res = await Api.instance.post.search({});
-      for (final p in res) {
-        print(p);
-      }
-    }();
-  }
-
   @override
   Widget build(BuildContext context) {
     return GetBuilder<AppController>(
@@ -54,9 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   children: [
                     Button(
+                        text: '전체',
+                        onTap: () => service.open(RouteNames.forum, arguments: {'categoryId': ''})),
+                    Button(
                         text: '자유게시판',
-                        onTap: () =>
-                            service.open(RouteNames.forum, arguments: {'categoryId': 'dicussion'})),
+                        onTap: () => service
+                            .open(RouteNames.forum, arguments: {'categoryId': 'discussion'})),
                     Button(
                         text: '질문게시판',
                         onTap: () =>
@@ -69,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Divider(),
                 WidgetCollection(),
+                ElevatedButton(onPressed: () => Get.toNamed(RouteNames.contact), child: Text('연락처'))
               ],
             ),
           ),

@@ -236,8 +236,12 @@
 
 # x_flutter 패키지
 
-- x_flutter 패키지는 Matrix 백엔드와 연동을 위한 것으로 Restful Api 호출이나 그에 필요한 Model 정보를 가지고 있습니다.
-- 예외적으로 `UserChange` 와 같은 몇 몇 위젯을 제공합니다.
+- x_flutter 패키지는 [`Matrix`](https://github.com/thruthesky/centerx) 백엔드와 연동을 위한 것으로 Restful Api 호출이나 그에 필요한 Model 정보를 가지고 있습니다.
+  - 예외적으로 `UserChange` 와 같은 몇 몇 위젯을 제공합니다.
+
+- [`Matrix`](https://github.com/thruthesky/centerx)는 도커(Nginx + PHP + MariaDB)기반의 백엔드로서 회원 기능, 게시판 기능을 비롯한 여러가지 기능을 제공하는 오픈소스입니다.
+  - 플러터에서 Restful Api 방식으로 `Matrix` 에 접속하여, 회원 가입을 하고, 로그인, 회원 정보 수정, 회원 프로필 사진, 및 게시판 기능 등 많은 기능을 할 수 있습니다.
+
 
 # 상태 관리
 

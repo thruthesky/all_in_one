@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+/// 회원 가입 양식
+///
+/// 회원 가입에 성공하면 [success] 콜백이 호출된다. 콜백 인자로 사용자 모델이 전달된다.
 class UserRegisterForm extends StatelessWidget {
   UserRegisterForm({Key? key, required this.success, required this.error}) : super(key: key);
 

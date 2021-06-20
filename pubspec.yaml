@@ -23,8 +23,7 @@ dependencies:
 
   # 전화걸기
   flutter_phone_direct_caller: ^2.0.0
-  
-  
+
 
   # x_flutter: ^0.0.7
   x_flutter:
@@ -35,8 +34,7 @@ dependencies:
 
   services:
     path: packages/services
-    
-    
+
 
 dev_dependencies:
   flutter_test:

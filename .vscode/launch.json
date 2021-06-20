@@ -111,6 +111,36 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
+    },
+    {
+      "name": "영자 - ABC - Simulator 12 Pro Max - iMac - 로컬",
+      "program": "projects/abc/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=영자의 QR 코드 앱",
+        "--dart-define",
+        "SERVER_URL=https://local.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=off&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
+    },
+    {
+      "name": "영자 - ABC - Simulator 12 Pro Max - iMac - 원격",
+      "program": "projects/abc/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=영자의 QR 코드 앱",
+        "--dart-define",
+        "SERVER_URL=https://flutterkorea.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=off&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
     }
   ]
 }
