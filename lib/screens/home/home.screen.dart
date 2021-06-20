@@ -56,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Divider(),
                 WidgetCollection(),
+                ElevatedButton(onPressed: () => Get.toNamed(RouteNames.contact), child: Text('연락처'))
               ],
             ),
           ),

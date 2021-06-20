@@ -7,11 +7,10 @@ class RouteNames {
   static final String login = 'login';
   static final String profile = 'profile';
   static final String memo = 'memo';
-  static final String boni = 'boni';
-  static final String gyeony = 'gyeony';
   static final String qrCodeGenerate = 'qrCodeGenerate';
   static final String qrCodeScan = 'qrCodeScan';
   static final String qrCodeResult = 'qrCodeResult';
   static final String forum = 'forum';
   static final String widgetCollection = 'widgetCollection';
+  static final String contact = 'contact';
 }

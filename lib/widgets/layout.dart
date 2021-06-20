@@ -48,7 +48,7 @@ class AppTitleBar extends StatefulWidget with PreferredSizeWidget {
     Key? key,
     required this.globalKey,
     required this.title,
-    this.titleStyle = const TextStyle(fontSize: 16),
+    this.titleStyle = const TextStyle(fontSize: 16, color: Colors.black),
     this.menuTextStyle = const TextStyle(fontSize: 8, color: Colors.black),
     this.create,
     this.back,

@@ -1,6 +1,7 @@
-import 'dart:async';
+// import 'dart:async';
 
 import 'package:all_in_one/screens/about/about.screen.dart';
+import 'package:all_in_one/screens/contact/contact.screen.dart';
 import 'package:all_in_one/screens/forum/forum.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
@@ -41,8 +42,8 @@ class _AioAppState extends State<AioApp> {
 // final res = await Api.instance.post.search({});
 // for (final p in res) print(p);
 //     }();
-    Timer(Duration(milliseconds: 100),
-        () => service.open(RouteNames.forum, arguments: {'categoryId': 'qna'}));
+    // Timer(Duration(milliseconds: 100),
+    //     () => service.open(RouteNames.forum, arguments: {'categoryId': 'qna'}));
   }
 
   @override
@@ -64,6 +65,7 @@ class _AioAppState extends State<AioApp> {
         GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
         GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
         GetPage(name: RouteNames.forum, page: () => ForumScreen()),
+        GetPage(name: RouteNames.contact, page: () => ContactScreen()),
       ],
     );
   }

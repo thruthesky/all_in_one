@@ -8,7 +8,6 @@ class Service {
   BuildContext get context => Get.context!;
 
   /// 싱글톤
-
   static Service? _instance;
   static Service get instance {
     if (_instance == null) {
@@ -49,14 +48,6 @@ class Service {
 
   openProfile() {
     open(RouteNames.profile);
-  }
-
-  openBoni() {
-    open(RouteNames.boni);
-  }
-
-  openGyeony() {
-    open(RouteNames.gyeony);
   }
 
   error(e) {
