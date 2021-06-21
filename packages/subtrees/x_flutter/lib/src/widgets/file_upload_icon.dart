@@ -32,6 +32,7 @@ class FileUploadIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
         onPressed: () async {
+          FocusScope.of(context).requestFocus(FocusNode());
           try {
             ImageSource? re = await _choiceBuilder(context);
             if (re == null) return;

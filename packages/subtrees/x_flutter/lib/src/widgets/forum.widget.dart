@@ -20,6 +20,12 @@ import 'package:x_flutter/x_flutter.dart';
 ///
 /// 글/코멘트에서 파일 업로드를 하는 경우, 업로드된 파일을 해당 객체의 `files` 배열에 저장한다.
 /// 그리고 렌더링을 할 때, 파일이 있으면 화면에 보여주고 삭제를 할 수 있게 해 주면 된다.
+///
+/// 코멘트 수정은 새 창(다이얼로그)을 띄워서 한다.
+/// 그 이유는 코멘트가 사진이 여러장 있어, 내용이 길게 표시되는 경우, 코멘트의 맨 꼭대기 부분(사용자 정보 등)은
+/// 화면의 위로 스크롤되어 보이지 않고, 맨 아래에 있는 수정 버튼을 클릭하면
+/// 코멘트 수정 창이 해당 코멘트의 맨 꼭대기 위치에 표시되어, 수정 창이 보이지 않는 것이다.
+/// 그래서 수정을 하는 경우, 그냥 다이얼로그를 띄워서 수정을 한다.
 class ForumController {
   late _ForumWidgetState state;
 
@@ -60,8 +66,8 @@ class ForumController {
 
   /// 코멘트 수정 폼을 열고, 업데이트
   _showCommentEditForm(CommentModel c) {
-    c.mode = 'edit';
-    setState(() => null);
+    // c.mode = 'edit';
+    // setState(() => null);
   }
 
   /// 글 또는 코멘트 수정 폼을 열때 사용.
@@ -164,6 +170,7 @@ class _ForumWidgetState extends State<ForumWidget> {
     });
   }
 
+  /// @todo 개선점. 글 작성/수정을 팝업 다이얼로그로 하는 것이 어떨까? 네비게이션이 힘들다.
   @override
   Widget build(BuildContext context) {
     if (edit != null) return editBuilder(edit!);
@@ -228,7 +235,7 @@ class _ForumWidgetState extends State<ForumWidget> {
         posts.add(p);
       });
       if (mounted) setState(() => loading = false);
-      if (posts.length < widget.limit) {
+      if (_posts.length < widget.limit) {
         // last page
         noMorePosts = true;
         posts.add(PostModel({})..setNoMorePosts());
@@ -303,14 +310,10 @@ class _ForumWidgetState extends State<ForumWidget> {
             child: Column(
               children: [
                 commentMetaBuilder(comment),
-                comment.mode == 'edit'
-                    ? Column(children: [Text('코멘트 수정을 합니다.'), commentEditBuilder(post, comment)])
-                    : Column(children: [
-                        commentContentBuilder(comment),
-                        commentButtonBuilder(comment),
-                      ]),
+                commentContentBuilder(comment),
+                commentButtonBuilder(comment),
                 if (comment.mode == 'reply') ...[
-                  commentEditBuilder(post, CommentModel(), comment),
+                  commentEditBuilder(post, CommentModel(), parent: comment),
                 ],
               ],
             ),
@@ -323,12 +326,27 @@ class _ForumWidgetState extends State<ForumWidget> {
     return postAndCommentButtonBuilder(comment);
   }
 
+  /// 글 내용 표시 빌더
+  ///
+  /// 텍스트와 사진(파일)의 위치를 아래/위로 변경 할 수 있도록 하나의 빌더에서 같이 표현한다.
   contentBuilder(PostModel post) {
     return Container(
       padding: EdgeInsets.all(16),
       width: double.infinity,
       color: Colors.white,
-      child: Text(post.content),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(bottom: 8),
+            padding: EdgeInsets.all(16),
+            width: double.infinity,
+            color: Colors.brown[50],
+            child: Text(post.content),
+          ),
+          for (final f in post.files) CacheImage(f.url, width: double.infinity, height: null),
+        ],
+      ),
     );
   }
 
@@ -372,11 +390,11 @@ class _ForumWidgetState extends State<ForumWidget> {
           itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
             const PopupMenuItem<String>(
               value: 'edit',
-              child: Text('글 수정'),
+              child: Text('수정'),
             ),
             const PopupMenuItem<String>(
               value: 'delete',
-              child: Text('글 삭제'),
+              child: Text('삭제'),
             ),
             // const PopupMenuItem<String>(
             //   value: 'profile',
@@ -406,8 +424,13 @@ class _ForumWidgetState extends State<ForumWidget> {
           onSelected: (String value) async {
             try {
               if (value == 'edit') {
-                /// 글/코멘트 수정 창 열기
-                controller.showEditForm(post);
+                if (post.isComment) {
+                  /// 코멘트 수정.
+                  openCommentEditBuilder(post);
+                } else {
+                  /// 글
+                  controller.showEditForm(post);
+                }
               }
               if (value == 'delete') {
                 await post.delete();
@@ -424,55 +447,122 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// 새 글 쓰기의 경우, post.idx = 0 이고, post.categoryId 에는 게시판 카테고리가 들어가 있다.
   editBuilder(PostModel post) {
-    return Column(
-      children: [
-        Text('${post.categoryId}에 글 쓰기'),
-        TextField(
-          controller: TextEditingController()..text = post.title,
-          onChanged: (v) => post.title = v,
-          onSubmitted: (text) {},
-          decoration: InputDecoration(
-            labelText: "제목",
-            hintText: "제목을 입력하세요.",
+    bool loading = false;
+    double progress = 0.0;
+    return StatefulBuilder(
+      builder: (_, setState) {
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Text('${post.categoryId}에 글 쓰기'),
+              TextField(
+                controller: TextEditingController()..text = post.title,
+                onChanged: (v) => post.title = v,
+                onSubmitted: (text) {},
+                decoration: InputDecoration(
+                  labelText: "제목",
+                  hintText: "제목을 입력하세요.",
+                ),
+              ),
+              ConstrainedBox(
+                constraints: BoxConstraints(maxHeight: 300),
+                child: TextField(
+                  controller: TextEditingController()..text = post.content,
+                  onChanged: (v) => post.content = v,
+                  onSubmitted: (text) {},
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    labelText: "내용",
+                    hintText: "내용을 입력하세요.",
+                  ),
+                ),
+              ),
+              Row(
+                children: [
+                  FileUploadIcon(
+                      success: (FileModel file) {
+                        progress = 0;
+                        setState(() => post.files.add(file));
+                      },
+                      error: controller.error,
+                      progress: (p) => setState(() => progress = p)),
+                  Spacer(),
+                  ElevatedButton(onPressed: () => edit = null, child: Text('취소')),
+                  SizedBox(width: 6),
+                  ElevatedButton(
+                      onPressed: () =>
+                          post.edit().then((p) => controller.edited(p)).catchError(widget.error),
+                      child: Text('글 쓰기')),
+                ],
+              ),
+              if (progress > 0) LinearProgressIndicator(value: progress),
+              Container(
+                width: double.infinity,
+                child: Wrap(
+                  alignment: WrapAlignment.start,
+                  children: [
+                    for (final FileModel file in post.files)
+                      fileEditBuilder(file, post, () => setState(() {})),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ),
-        TextField(
-          controller: TextEditingController()..text = post.content,
-          onChanged: (v) => post.content = v,
-          onSubmitted: (text) {},
-          decoration: InputDecoration(
-            labelText: "내용",
-            hintText: "내용을 입력하세요.",
+        );
+      },
+    );
+  }
+
+  /// 코멘트 수정 시, 새창을 띄워서 수정.
+  ///
+  /// 새창을 띄우는 이유는 위에 설명.
+  /// 기존의 코멘트 수정 창 코드를 활용한다.
+  /// 코멘트 수정을 할 때, 부모 글은 필요 없다.
+  /// 사진을 수정하고, 새창을 닫는다.
+  Future openCommentEditBuilder(CommentModel comment) {
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.all(10.0),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Text('덧글 수정'),
+                  Spacer(),
+                  TextButton(onPressed: () => Navigator.pop(context), child: Text('취소'))
+                ],
+              ),
+              Divider(),
+              commentEditBuilder(PostModel(), comment, edited: () => Navigator.pop(context)),
+            ],
           ),
-        ),
-        Row(
-          children: [
-            ElevatedButton(onPressed: () => edit = null, child: Text('취소')),
-            ElevatedButton(
-                onPressed: () =>
-                    post.edit().then((p) => controller.edited(p)).catchError(widget.error),
-                child: Text('글 쓰기')),
-          ],
-        )
-      ],
+        );
+      },
     );
   }
 
   /// 코멘트 작성 또는 수정 창
   ///
-  /// [post] 부모 글
+  /// [post] 부모 글. 참고로, 코멘트 수정을 하는 경우, [post] 는 빈 PostModel() 의 객체라도 상관 없다.
   /// [comment] 현재 생성되는 또는 수정되는 코멘트. 생성을 하는 경우, 빈 CommentModel() 의 객체를 만들어 전달하면 된다.
   /// [parent] 현재 코멘트의 부모 코멘트. 즉, 코멘트의 코멘트를 작성하는 경우 필요.
-  commentEditBuilder(PostModel post, CommentModel comment, [CommentModel? parent]) {
+  commentEditBuilder(PostModel post, CommentModel comment,
+      {CommentModel? parent, Function? edited}) {
     bool loading = false;
+    bool focus = true;
     double progress = 0.0;
 
     if (comment.idx == 0) {
       // 새 코멘트 작성
       comment.rootIdx = post.idx;
       if (parent == null) {
-        // 부모 글 바로 밑에 (1단계) 코멘트 작성
+        // 부모 글 바로 밑에 (1단계) 코멘트 작성. 즉, 부모글 내용 아래에 항상 보이는 코멘트 작성 폼.
         comment.parentIdx = post.idx;
+        focus = false;
       } else {
         // 코멘트 밑에 코멘트 작성
         comment.parentIdx = parent.idx;
@@ -488,35 +578,27 @@ class _ForumWidgetState extends State<ForumWidget> {
               alignment: WrapAlignment.start,
               children: [
                 for (final FileModel file in comment.files)
-                  Stack(children: [
-                    CacheImage(file.url),
-                    Positioned(
-                        top: 0,
-                        right: 0,
-                        child: IconButton(
-                            onPressed: () => file
-                                .delete(comment)
-                                .then((v) => setState(() {}))
-                                .catchError(controller.error),
-                            icon: Icon(
-                              Icons.highlight_remove,
-                              color: Colors.red[700],
-                            )))
-                  ]),
+                  fileEditBuilder(file, comment, () => setState(() {})),
               ],
             ),
           ),
+          if (progress > 0) LinearProgressIndicator(value: progress),
           Row(
             children: [
               FileUploadIcon(
-                  success: (FileModel file) => setState(() => comment.files.add(file)),
+                  success: (FileModel file) {
+                    progress = 0;
+                    setState(() => comment.files.add(file));
+                  },
                   error: controller.error,
-                  progress: (p) => progress = p),
+                  progress: (p) => setState(() => progress = p)),
               Expanded(
                 child: Stack(
                   children: [
                     TextField(
+                      autofocus: focus,
                       controller: content,
+                      maxLines: null,
                       onChanged: (v) => setState(() => null),
                       decoration: InputDecoration(
                         isDense: true,
@@ -540,7 +622,8 @@ class _ForumWidgetState extends State<ForumWidget> {
                     ),
                     if (content.text != '' || comment.files.length > 0)
                       Positioned(
-                        top: -5,
+                        top: 0,
+                        bottom: 0,
                         right: -2,
                         child: IconButton(
                           onPressed: () async {
@@ -551,6 +634,10 @@ class _ForumWidgetState extends State<ForumWidget> {
 
                               /// 코멘트의 코멘트를 쓰는 경우, 코멘트 생성 후, 부모 mode='' 으로 해서, 입력 창 감추기
                               if (parent != null) parent.mode = '';
+                              comment.mode = '';
+
+                              /// 글 수정 완료 콜백
+                              if (edited != null) edited();
                               controller.setState(() {});
                             } catch (e) {
                               controller.error(e);
@@ -595,12 +682,7 @@ class _ForumWidgetState extends State<ForumWidget> {
             '${comment.content}',
             style: TextStyle(color: Colors.white),
           ),
-          for (final f in comment.files)
-            CacheImage(
-              f.url,
-              width: double.infinity,
-              height: null,
-            ),
+          for (final f in comment.files) CacheImage(f.url, width: double.infinity, height: null),
         ],
       ),
     );
@@ -620,5 +702,63 @@ class _ForumWidgetState extends State<ForumWidget> {
       default:
         return 68;
     }
+  }
+
+  /// 파일 편집
+  ///
+  /// 글/코멘트 작성 폼에서, 파일을 업로드 한 후, 파일을 표시하고, 삭제 아이콘을 표시한다.
+  /// 그리고 삭제 버튼이 눌러지면 삭제하고 [deleted] 콜백을 호출한다. 콜백에서는 화면 랜더링을 하면 된다.
+  Widget fileEditBuilder(FileModel file, dynamic parent, Function deleted) {
+    return Stack(
+      children: [
+        CacheImage(file.url),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: IconButton(
+            onPressed: () async {
+              try {
+                final re = await showDialog(
+                    context: context, builder: (_) => confirmDialogBuilder(_, title: '삭제하시겠습니까?'));
+                if (re == false) return;
+                await file.delete(parent);
+                deleted();
+              } catch (e) {
+                controller.error(e);
+              }
+            },
+            icon: Icon(
+              Icons.highlight_remove,
+              color: Colors.red[700],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// 예/아니오를 선택하는 확인 창
+  confirmDialogBuilder(BuildContext context, {String title = '제목'}) {
+    return AlertDialog(
+      title: Text(title, style: TextStyle(fontSize: 16)),
+      content: Column(
+        mainAxisSize: MainAxisSize.min, // 다이얼로그 크기를 딱 맞게 조절한다.
+        children: [
+          Row(
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text('예'),
+              ),
+              SizedBox(width: 6),
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text('아니오'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
