@@ -301,17 +301,15 @@ class _ForumWidgetState extends State<ForumWidget> {
         titleBuilder(post),
         contentBuilder(post),
         buttonBuilder(post),
-        commentFormBuilder(post),
+        commentFormBuilder(post, CommentModel()),
         for (final comment in post.comments)
           Column(
             children: [
               commentMetaBuilder(comment),
               comment.mode == 'edit'
-                  ? Text('@TODO 글 수정\n글 수정 박스를 보여주고, 수정 할 것.')
-                  : Column(children: [
-                      commentContentBuilder(comment),
-                      commentButtonBuilder(comment),
-                    ]),
+                  ? Column(children: [Text('코멘트 수정을 합니다.'), commentFormBuilder(post, comment)])
+                  : Column(
+                      children: [commentContentBuilder(comment), commentButtonBuilder(comment)]),
             ],
           )
       ],
@@ -452,11 +450,14 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
-  commentFormBuilder(PostModel post) {
+  commentFormBuilder(PostModel post, CommentModel comment) {
     bool loading = false;
-    CommentModel comment = CommentModel();
-    comment.parentIdx = post.idx;
-    comment.rootIdx = post.idx;
+
+    if (comment.idx == 0) {
+      // 새 코멘트 작성
+      comment.parentIdx = post.idx;
+      comment.rootIdx = post.idx;
+    }
     final content = TextEditingController(text: comment.content);
     return StatefulBuilder(builder: (_, setState) {
       return Column(
