@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
