@@ -1,3 +1,5 @@
+import 'package:x_flutter/x_flutter.dart';
+
 class FileModel {
   int idx;
   String taxonomy;
@@ -10,7 +12,7 @@ class FileModel {
   int size;
   int createdAt;
   int updatedAt;
-  String? url;
+  String url;
 
   FileModel({
     this.idx = 0,
@@ -24,7 +26,7 @@ class FileModel {
     this.size = 0,
     this.createdAt = 0,
     this.updatedAt = 0,
-    this.url,
+    this.url = '',
   });
 
   @override
@@ -64,5 +66,10 @@ class FileModel {
       'updatedAt': updatedAt,
       'url': url,
     };
+  }
+
+  /// 파일 삭제
+  Future delete([dynamic postOrComment]) {
+    return Api.instance.file.delete(idx, postOrComment);
   }
 }

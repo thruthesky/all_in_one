@@ -14,8 +14,12 @@ class FileApi {
 
   /// 사진업로드
   ///
+  ///
   /// 이미지를 카메라 또는 갤러리로 부터 가져와서, 이미지 누어서 찍힌 이미지를 바로 보정을 하고, 압축을 하고, 서버에 업로드
   /// [deletePreviousUpload] 가 true 이면, 기존에 업로드된 동일한 taxonomy 와 entity 파일을 삭제한다.
+  ///
+  /// 참고로, 사용자에게 사진을 카메로 가져오거나 갤러리로 부터 가져오는지 물어보려면, `UploadImage` 위젯을 사용하거나
+  /// `UploadImage` 안의 로직을 복사해서 사용한다.
   ///
   Future<dynamic> pickUpload({
     required ImageSource source,
@@ -49,6 +53,7 @@ class FileApi {
     );
   }
 
+  /// 파일을 압축하고, 가로/세로를 맞춘다.
   imageCompressor(String filepath, int quality) async {
     /// This method will be called when image was taken by [Api.takeUploadFile].
     /// It can compress the image and then return it as a File object.
@@ -63,6 +68,9 @@ class FileApi {
     return file;
   }
 
+  /// 사진 업로드
+  ///
+  /// 사용자에게 물어보지 않고, 파일만 주면 바로 업로드한다.
   Future<FileModel> upload({
     required File file,
     Function? progress,
@@ -73,7 +81,7 @@ class FileApi {
   }) async {
     FormData formData;
 
-    /// [Prefix] 를 쓰는 이유는 Dio 의 FromData 와 Flutter 의 기본 HTTP 와 충돌하기 때문이다.
+    ///
     formData = FormData.fromMap({
       /// `route` 와 `session_id` 등 추가 파라메타 값을 전달 할 수 있다.
       'route': 'file.upload',
@@ -117,10 +125,29 @@ class FileApi {
     return FileModel.fromJson(res.data['response']);
   }
 
+  /// 파일 정보를 가져온다.
   Future<FileModel> get({String taxonomy = '', int entity = 0, String code = ''}) async {
     final res = await Api.instance
         .request('file.get', {'taxonomy': taxonomy, 'entity': entity, 'code': code});
 
+    return FileModel.fromJson(res);
+  }
+
+  /// Deletes a file.
+  ///
+  /// [idx] is the file idx to delete.
+  /// [postOrComment] is a post or a comment that the file is attached to.
+  /// If [postOrComment] is given, then the file will be removed from the `files` array after deletion.
+  ///
+  /// It returns deleted file id.
+  Future<FileModel> delete(int idx, [dynamic postOrComment]) async {
+    final res = await api.request('file.delete', {'idx': idx});
+    if (postOrComment != null) {
+      int i = postOrComment.files.indexWhere((file) => file.idx == idx);
+      if (i > -1) {
+        postOrComment.files.removeAt(i);
+      }
+    }
     return FileModel.fromJson(res);
   }
 }

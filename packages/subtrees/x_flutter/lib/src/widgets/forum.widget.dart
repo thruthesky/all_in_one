@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:x_flutter/src/widgets/cache_image.dart';
+import 'package:x_flutter/src/widgets/file_upload_icon.dart';
 import 'package:x_flutter/src/widgets/spinner.dart';
 import 'package:x_flutter/x_flutter.dart';
 
@@ -6,13 +8,18 @@ import 'package:x_flutter/x_flutter.dart';
 ///
 /// ForumWidget 내부적으로 상태 관리를 하는데, 드릴링이 발생하는 경우, controller 를 통해서
 /// 코드를 간편하게 한다.
-/// 특히, [state] 나 [update] 나 [erorr] 를 통해서 간편한 코딩을 할 수 있다.
+/// 특히, [state] 나 [setState], [erorr] 를 통해서 간편한 코딩을 할 수 있다.
 ///
 ///
 /// 글/코멘트 생성/수정을 할 때에는 [controller.showEditForm] 을 호출하면 된다.
 /// 글의 경우 [ForumWidget.edit] 을 수정하여 글 생성/수정을 관리하고
 /// 코멘트의 경우, 해당 코멘트의 객체를 comment.mode='edit' 와 하면 코멘트 생성/수정 폼을
 /// 보여준다.
+///
+/// 글/코멘트 작성시 파일 업로드
+///
+/// 글/코멘트에서 파일 업로드를 하는 경우, 업로드된 파일을 해당 객체의 `files` 배열에 저장한다.
+/// 그리고 렌더링을 할 때, 파일이 있으면 화면에 보여주고 삭제를 할 수 있게 해 주면 된다.
 class ForumController {
   late _ForumWidgetState state;
 
@@ -54,9 +61,10 @@ class ForumController {
   /// 코멘트 수정 폼을 열고, 업데이트
   _showCommentEditForm(CommentModel c) {
     c.mode = 'edit';
-    update();
+    setState(() => null);
   }
 
+  /// 글 또는 코멘트 수정 폼을 열때 사용.
   showEditForm(post) {
     if (post.isComment) {
       _showCommentEditForm(post);
@@ -65,8 +73,11 @@ class ForumController {
     }
   }
 
-  /// 화면을 다시 랜더링한다.
-  update() {
+  /// ForumWidget 의 setState() 를 호출하여 화면을 (다시) 랜더링.
+  ///
+  /// 사용방법은 setState() 와 동일
+  setState(VoidCallback fn) {
+    fn();
     state.update();
   }
 
@@ -213,10 +224,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
         /// 각 글 별 전처리를 여기서 할 수 있음.
-        if (p.deleted) {
-          p.title = '삭제되었습니다.';
-          p.content = '삭제되었습니다.';
-        } else if (p.title == '') p.title = '제목이 없습니다.';
+        /// 참고, 기본 전 처리는 PostModel 에서 되며, 여기서는 추가적인 작업을 할 수 있음.
         posts.add(p);
       });
       if (mounted) setState(() => loading = false);
@@ -235,19 +243,6 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// 글 제목 빌더
   titleBuilder(PostModel post) {
-    // return GestureDetector(
-    //     onTap: () {
-    //       print('post.idx: ${post.idx}');
-    //       setState(() {
-    //         post.open = !post.open;
-    //       });
-    //     },
-    //     behavior: HitTestBehavior.opaque,
-    //     child: Container(
-    //         key: ValueKey('post-${post.idx}'),
-    //         padding: EdgeInsets.all(16),
-    //         child: Text('${post.idx}: ${post.title}')));
-
     /// 기본 빌더
     Widget child;
     if (widget.titleBuilder == null) {
@@ -301,16 +296,24 @@ class _ForumWidgetState extends State<ForumWidget> {
         titleBuilder(post),
         contentBuilder(post),
         buttonBuilder(post),
-        commentFormBuilder(post, CommentModel()),
+        commentEditBuilder(post, CommentModel()), // 부모 글의 코멘트 창. 항상 보여 줌.
         for (final comment in post.comments)
-          Column(
-            children: [
-              commentMetaBuilder(comment),
-              comment.mode == 'edit'
-                  ? Column(children: [Text('코멘트 수정을 합니다.'), commentFormBuilder(post, comment)])
-                  : Column(
-                      children: [commentContentBuilder(comment), commentButtonBuilder(comment)]),
-            ],
+          Container(
+            margin: EdgeInsets.only(left: commentLeftMargin(comment)),
+            child: Column(
+              children: [
+                commentMetaBuilder(comment),
+                comment.mode == 'edit'
+                    ? Column(children: [Text('코멘트 수정을 합니다.'), commentEditBuilder(post, comment)])
+                    : Column(children: [
+                        commentContentBuilder(comment),
+                        commentButtonBuilder(comment),
+                      ]),
+                if (comment.mode == 'reply') ...[
+                  commentEditBuilder(post, CommentModel(), comment),
+                ],
+              ],
+            ),
           )
       ],
     );
@@ -340,7 +343,11 @@ class _ForumWidgetState extends State<ForumWidget> {
       children: [
         if (post.isComment)
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              /// 코멘트 폼 열고 닫기
+              post.mode = post.mode == '' ? 'reply' : '';
+              controller.setState(() {});
+            },
             child: Text('댓글'),
           ),
         TextButton(
@@ -352,9 +359,9 @@ class _ForumWidgetState extends State<ForumWidget> {
         //   onPressed: () => post.dislike().then((v) => setState(() => {})),
         //   child: Text('싫어요 (${post.N})'),
         // ),
-        TextButton(onPressed: () => post.like(), child: Text('별쏘기')),
-        TextButton(onPressed: () => post.like(), child: Text('채팅')),
-        // TextButton(onPressed: () => post.like(), child: Text('신고')),
+        // TextButton(onPressed: () => post.like(), child: Text('별쏘기')),
+        // TextButton(onPressed: () => post.like(), child: Text('채팅')),
+        TextButton(onPressed: () => post.like(), child: Text('신고')),
         Spacer(),
         PopupMenuButton<String>(
           child: Padding(
@@ -371,34 +378,35 @@ class _ForumWidgetState extends State<ForumWidget> {
               value: 'delete',
               child: Text('글 삭제'),
             ),
-            const PopupMenuItem<String>(
-              value: 'profile',
-              child: Text('프로필'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'add-friend',
-              child: Text('친구 추가'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'block',
-              child: Text('차단'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'report',
-              child: Text('신고'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'posts',
-              child: Text('글 목록'),
-            ),
-            const PopupMenuItem<String>(
-              value: 'comments',
-              child: Text('코멘트 목록'),
-            ),
+            // const PopupMenuItem<String>(
+            //   value: 'profile',
+            //   child: Text('프로필'),
+            // ),
+            // const PopupMenuItem<String>(
+            //   value: 'add-friend',
+            //   child: Text('친구 추가'),
+            // ),
+            // const PopupMenuItem<String>(
+            //   value: 'block',
+            //   child: Text('차단'),
+            // ),
+            // const PopupMenuItem<String>(
+            //   value: 'report',
+            //   child: Text('신고'),
+            // ),
+            // const PopupMenuItem<String>(
+            //   value: 'posts',
+            //   child: Text('글 목록'),
+            // ),
+            // const PopupMenuItem<String>(
+            //   value: 'comments',
+            //   child: Text('코멘트 목록'),
+            // ),
           ],
           onSelected: (String value) async {
             try {
               if (value == 'edit') {
+                /// 글/코멘트 수정 창 열기
                 controller.showEditForm(post);
               }
               if (value == 'delete') {
@@ -450,21 +458,60 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
-  commentFormBuilder(PostModel post, CommentModel comment) {
+  /// 코멘트 작성 또는 수정 창
+  ///
+  /// [post] 부모 글
+  /// [comment] 현재 생성되는 또는 수정되는 코멘트. 생성을 하는 경우, 빈 CommentModel() 의 객체를 만들어 전달하면 된다.
+  /// [parent] 현재 코멘트의 부모 코멘트. 즉, 코멘트의 코멘트를 작성하는 경우 필요.
+  commentEditBuilder(PostModel post, CommentModel comment, [CommentModel? parent]) {
     bool loading = false;
+    double progress = 0.0;
 
     if (comment.idx == 0) {
       // 새 코멘트 작성
-      comment.parentIdx = post.idx;
       comment.rootIdx = post.idx;
+      if (parent == null) {
+        // 부모 글 바로 밑에 (1단계) 코멘트 작성
+        comment.parentIdx = post.idx;
+      } else {
+        // 코멘트 밑에 코멘트 작성
+        comment.parentIdx = parent.idx;
+      }
     }
     final content = TextEditingController(text: comment.content);
     return StatefulBuilder(builder: (_, setState) {
       return Column(
         children: [
+          Container(
+            width: double.infinity,
+            child: Wrap(
+              alignment: WrapAlignment.start,
+              children: [
+                for (final FileModel file in comment.files)
+                  Stack(children: [
+                    CacheImage(file.url),
+                    Positioned(
+                        top: 0,
+                        right: 0,
+                        child: IconButton(
+                            onPressed: () => file
+                                .delete(comment)
+                                .then((v) => setState(() {}))
+                                .catchError(controller.error),
+                            icon: Icon(
+                              Icons.highlight_remove,
+                              color: Colors.red[700],
+                            )))
+                  ]),
+              ],
+            ),
+          ),
           Row(
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.camera_alt)),
+              FileUploadIcon(
+                  success: (FileModel file) => setState(() => comment.files.add(file)),
+                  error: controller.error,
+                  progress: (p) => progress = p),
               Expanded(
                 child: Stack(
                   children: [
@@ -491,7 +538,7 @@ class _ForumWidgetState extends State<ForumWidget> {
                         ),
                       ),
                     ),
-                    if (content.text != '')
+                    if (content.text != '' || comment.files.length > 0)
                       Positioned(
                         top: -5,
                         right: -2,
@@ -501,18 +548,15 @@ class _ForumWidgetState extends State<ForumWidget> {
                             try {
                               comment.content = content.text;
                               await comment.edit(post);
-                              comment.content = '';
-                              controller.update();
+
+                              /// 코멘트의 코멘트를 쓰는 경우, 코멘트 생성 후, 부모 mode='' 으로 해서, 입력 창 감추기
+                              if (parent != null) parent.mode = '';
+                              controller.setState(() {});
                             } catch (e) {
                               controller.error(e);
                             }
 
-                            setState(() {
-                              loading = false;
-                            });
-
-                            // .then((value) => controller.update())
-                            // .catchError(controller.error);
+                            setState(() => loading = false);
                           },
                           icon: loading ? Spinner() : Icon(Icons.send),
                         ),
@@ -534,7 +578,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       padding: EdgeInsets.all(16),
       color: Colors.black54,
       child: Text(
-        'Comment No. ${comment.idx}: ${comment.shortDate}',
+        'Comment No. ${comment.idx}: depth: ${comment.depth}, ${comment.shortDate}',
         style: TextStyle(color: Colors.white),
       ),
     );
@@ -545,10 +589,36 @@ class _ForumWidgetState extends State<ForumWidget> {
       width: double.infinity,
       padding: EdgeInsets.all(16),
       color: Colors.black54,
-      child: Text(
-        '${comment.content}',
-        style: TextStyle(color: Colors.white),
+      child: Column(
+        children: [
+          Text(
+            '${comment.content}',
+            style: TextStyle(color: Colors.white),
+          ),
+          for (final f in comment.files)
+            CacheImage(
+              f.url,
+              width: double.infinity,
+              height: null,
+            ),
+        ],
       ),
     );
+  }
+
+  double commentLeftMargin(CommentModel comment) {
+    switch (comment.depth) {
+      case 0:
+      case 1:
+        return 0;
+      case 2:
+        return 32;
+      case 3:
+        return 48;
+      case 4:
+        return 60;
+      default:
+        return 68;
+    }
   }
 }

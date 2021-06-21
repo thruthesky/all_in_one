@@ -27,6 +27,7 @@ class UserApi {
   int get idx => model.idx;
   String get sessionId => model.sessionId;
   String get email => model.email;
+  int get point => model.point;
   String get address => model.address;
 
   /// [changes] 이벤트는 회원 정보의 변경에 따라 발생

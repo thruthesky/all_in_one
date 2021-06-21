@@ -20,6 +20,12 @@ class _UserProfileFormState extends State<UserProfileForm> {
   final address = TextEditingController(text: UserApi.instance.address);
 
   @override
+  void initState() {
+    super.initState();
+    UserApi.instance.profile().then((value) => setState(() {}));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,6 +83,8 @@ class _UserProfileFormState extends State<UserProfileForm> {
         ],
         Text('로그인 이메일'),
         Text(UserApi.instance.email),
+        Text('포인트'),
+        Text(UserApi.instance.point.toString()),
         SizedBox(height: 16),
         Text('사용자 이름'),
         TextField(controller: name),
