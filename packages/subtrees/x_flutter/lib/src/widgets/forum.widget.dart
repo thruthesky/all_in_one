@@ -99,7 +99,7 @@ class ForumController {
 /// 질문게시판의 기존 글(및 스크롤 상태)이 유지되어야 하므로,
 /// 글 목록 및 스크롤 상태를 위젯 내부에 보관해야 한다.
 ///
-/// [create] 이 참이면, 새 글을 작성하는 글 작성 폼 위젯을 보여준다.
+/// [fetch] 글 페이지를 서버로 부터 가져오면 발생되는 콜백.
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
@@ -107,6 +107,7 @@ class ForumWidget extends StatefulWidget {
     this.categoryId = '',
     this.titleBuilder,
     this.buttonBuilder,
+    this.editBuilder,
     this.fetch,
     required this.error,
     this.limit = 10,
@@ -118,6 +119,7 @@ class ForumWidget extends StatefulWidget {
   final String categoryId;
   final Function? titleBuilder;
   final Function? buttonBuilder;
+  final Function? editBuilder;
   final Function? fetch;
   final Function error;
   final int limit;
@@ -127,6 +129,7 @@ class ForumWidget extends StatefulWidget {
   _ForumWidgetState createState() => _state;
 }
 
+/// 게시판 위젯
 class _ForumWidgetState extends State<ForumWidget> {
   Api api = Api.instance;
   List<PostModel> posts = [];
@@ -447,6 +450,7 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// 새 글 쓰기의 경우, post.idx = 0 이고, post.categoryId 에는 게시판 카테고리가 들어가 있다.
   editBuilder(PostModel post) {
+    if (widget.editBuilder != null) return widget.editBuilder!(post);
     bool loading = false;
     double progress = 0.0;
     return StatefulBuilder(

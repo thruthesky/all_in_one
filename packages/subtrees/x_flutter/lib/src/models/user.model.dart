@@ -1,6 +1,7 @@
 /// 사용자 모델
 ///
-/// 빈 값을 가지는 사용자 모델 객체를 생성하기 위해서는 그냥 UserModel() 을 사용하면 된다.
+/// 빈 값을 가지는 사용자 모델 객체를 생성하기 위해서는 UserModel() 또는 UserModel.init() 을
+/// 사용하면 된다.
 
 class UserModel {
   int idx;
@@ -70,6 +71,9 @@ class UserModel {
   String toString() {
     return toJson().toString();
   }
+
+  @Deprecated('UserMode()을 사용 할 것.')
+  UserModel.init() : this();
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
