@@ -7,6 +7,12 @@ import 'package:x_flutter/x_flutter.dart';
 /// ForumWidget 내부적으로 상태 관리를 하는데, 드릴링이 발생하는 경우, controller 를 통해서
 /// 코드를 간편하게 한다.
 /// 특히, [state] 나 [update] 나 [erorr] 를 통해서 간편한 코딩을 할 수 있다.
+///
+///
+/// 글/코멘트 생성/수정을 할 때에는 [controller.showEditForm] 을 호출하면 된다.
+/// 글의 경우 [ForumWidget.edit] 을 수정하여 글 생성/수정을 관리하고
+/// 코멘트의 경우, 해당 코멘트의 객체를 comment.mode='edit' 와 하면 코멘트 생성/수정 폼을
+/// 보여준다.
 class ForumController {
   late _ForumWidgetState state;
 
@@ -114,7 +120,9 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   final scrollController = ScrollController();
 
-  /// 글 작성 시, 수정되는 글
+  /// 글 작성/수정 상태 관리
+  ///
+  /// [edit] 변수를 통해, 글 작성/수정 양식을 보여주거나 숨긴다.
   ///
   /// null 이면, 글 작성/수정이 아님.
   /// edit.idx = 0 이면, 글 작성.
@@ -295,22 +303,17 @@ class _ForumWidgetState extends State<ForumWidget> {
         buttonBuilder(post),
         commentFormBuilder(post),
         for (final comment in post.comments)
-          comment.mode == 'edit'
-              ? Text('@TODO 글 수정\n글 수정 박스를 보여주고, 수정 할 것.')
-              : Column(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(16),
-                      color: Colors.black54,
-                      child: Text(
-                        '${comment.idx}: ${comment.content}',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    commentButtonBuilder(comment),
-                  ],
-                )
+          Column(
+            children: [
+              commentMetaBuilder(comment),
+              comment.mode == 'edit'
+                  ? Text('@TODO 글 수정\n글 수정 박스를 보여주고, 수정 할 것.')
+                  : Column(children: [
+                      commentContentBuilder(comment),
+                      commentButtonBuilder(comment),
+                    ]),
+            ],
+          )
       ],
     );
   }
@@ -522,5 +525,29 @@ class _ForumWidgetState extends State<ForumWidget> {
         ],
       );
     });
+  }
+
+  commentMetaBuilder(CommentModel comment) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      color: Colors.black54,
+      child: Text(
+        'Comment No. ${comment.idx}: ${comment.shortDate}',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
+  }
+
+  commentContentBuilder(CommentModel comment) {
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      color: Colors.black54,
+      child: Text(
+        '${comment.content}',
+        style: TextStyle(color: Colors.white),
+      ),
+    );
   }
 }
