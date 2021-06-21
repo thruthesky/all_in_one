@@ -1,3 +1,7 @@
+/// 사용자 모델
+///
+/// 빈 값을 가지는 사용자 모델 객체를 생성하기 위해서는 그냥 UserModel() 을 사용하면 된다.
+
 class UserModel {
   int idx;
   String email;
@@ -67,18 +71,6 @@ class UserModel {
     return toJson().toString();
   }
 
-  /// 빈 값으로 사용자 모델 초기화
-  ///
-  /// @usage 회원 정보가 없는 임시 사용자 모델을 만들 때 사용한다. 예) 사용자 변수를 만들고 초기값을 지정하려고 할 때
-  ///
-  /// @example 사용자 변수에 임시 값 지정 예
-  /// ```dart
-  /// UserModel user = UserModel.init();
-  /// ```
-  @Deprecated('UserModel() 을 사용 할 것')
-  factory UserModel.init() {
-    return UserModel.fromJson({'idx': 0});
-  }
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       idx: json['idx'] as int,
