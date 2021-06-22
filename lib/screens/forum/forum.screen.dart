@@ -2,6 +2,7 @@ import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:services/services.dart';
+import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class ForumScreen extends StatefulWidget {
@@ -82,6 +83,97 @@ class _ForumScreenState extends State<ForumScreen> {
         //     ],
         //   );
         // },
+        editBuilder: (PostModel post) {
+          bool loading = false;
+          double progress = 0.0;
+
+          /// 자체적 state 관리. 즉, 글 작성 폼에서는 외부 상태와 상관없이 독자적으로 상태를 관리한다.
+          return StatefulBuilder(
+            builder: (_, setState) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '${post.categoryId} 게시판 글 쓰기',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    TextField(
+                      controller: TextEditingController()..text = post.title,
+                      onChanged: (v) => post.title = v,
+                      onSubmitted: (text) {},
+                      decoration: InputDecoration(
+                        labelText: "제목",
+                        hintText: "제목을 입력하세요.",
+                      ),
+                    ),
+                    spaceXl,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(maxHeight: 300),
+                      child: TextField(
+                        controller: TextEditingController()..text = post.content,
+                        onChanged: (v) => post.content = v,
+                        onSubmitted: (text) {},
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          labelText: "내용",
+                          hintText: "내용을 입력하세요.",
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        FileUploadIcon(
+                            success: (FileModel file) {
+                              progress = 0;
+                              setState(() => post.files.add(file));
+                            },
+                            error: controller.error,
+                            progress: (p) => setState(() => progress = p)),
+                        Spacer(),
+                        ElevatedButton(
+                            onPressed: () => controller.state.edit = null, child: Text('취소')),
+                        SizedBox(width: 6),
+                        ElevatedButton(
+                            onPressed: loading
+                                ? null
+                                : () async {
+                                    try {
+                                      setState(() => loading = true);
+                                      final p = await post.edit();
+
+                                      /// 글 쓰기 완료 후, 이 콜백을 실행하면, 글 목록으로 돌아 감.
+                                      controller.edited(p);
+                                    } catch (e) {
+                                      controller.error(e);
+                                    }
+                                    setState(() => loading = false);
+                                  },
+                            child: loading ? Spinner() : Text('글 쓰기')),
+                      ],
+                    ),
+
+                    /// 사진 업로드 전송률(바 그래프) 표시
+                    if (progress > 0) LinearProgressIndicator(value: progress),
+
+                    /// 업로드 된 사진 표시
+                    Container(
+                      width: double.infinity,
+                      child: Wrap(
+                        alignment: WrapAlignment.start,
+                        children: [
+                          for (final FileModel file in post.files)
+                            controller.state.fileEditBuilder(file, post, () => setState(() {})),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

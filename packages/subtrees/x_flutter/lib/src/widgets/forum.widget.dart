@@ -189,16 +189,6 @@ class _ForumWidgetState extends State<ForumWidget> {
           Widget child;
           if (post.close) {
             child = titleBuilder(post);
-            // child = GestureDetector(
-            //   behavior: HitTestBehavior.opaque,
-            //   onTap: () {
-            //     print('idx; ${post.idx}');
-            //   },
-            //   child: Padding(
-            //     padding: const EdgeInsets.all(18.0),
-            //     child: Text('${post.idx}: ${post.title}'),
-            //   ),
-            // );
           } else {
             child = viewBuilder(post);
           }
@@ -448,16 +438,22 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
+  /// 글 작성 폼
+  ///
+  /// 직접 디자인하려면, 아래의 함수를 복사해서 callback builder 로 만들면 된다.
   /// 새 글 쓰기의 경우, post.idx = 0 이고, post.categoryId 에는 게시판 카테고리가 들어가 있다.
   editBuilder(PostModel post) {
     if (widget.editBuilder != null) return widget.editBuilder!(post);
     bool loading = false;
     double progress = 0.0;
+
+    /// 자체적 state 관리. 즉, 글 작성 폼에서는 외부 상태와 상관없이 독자적으로 상태를 관리한다.
     return StatefulBuilder(
       builder: (_, setState) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('${post.categoryId}에 글 쓰기'),
               TextField(
@@ -492,22 +488,38 @@ class _ForumWidgetState extends State<ForumWidget> {
                       error: controller.error,
                       progress: (p) => setState(() => progress = p)),
                   Spacer(),
-                  ElevatedButton(onPressed: () => edit = null, child: Text('취소')),
+                  ElevatedButton(onPressed: () => controller.state.edit = null, child: Text('취소')),
                   SizedBox(width: 6),
                   ElevatedButton(
-                      onPressed: () =>
-                          post.edit().then((p) => controller.edited(p)).catchError(widget.error),
-                      child: Text('글 쓰기')),
+                      onPressed: loading
+                          ? null
+                          : () async {
+                              try {
+                                setState(() => loading = true);
+                                final p = await post.edit();
+
+                                /// 글 쓰기 완료 후, 이 콜백을 실행하면, 글 목록으로 돌아 감.
+                                controller.edited(p);
+                              } catch (e) {
+                                controller.error(e);
+                              }
+                              setState(() => loading = false);
+                            },
+                      child: loading ? Spinner() : Text('글 쓰기')),
                 ],
               ),
+
+              /// 사진 업로드 전송률(바 그래프) 표시
               if (progress > 0) LinearProgressIndicator(value: progress),
+
+              /// 업로드 된 사진 표시
               Container(
                 width: double.infinity,
                 child: Wrap(
                   alignment: WrapAlignment.start,
                   children: [
                     for (final FileModel file in post.files)
-                      fileEditBuilder(file, post, () => setState(() {})),
+                      controller.state.fileEditBuilder(file, post, () => setState(() {})),
                   ],
                 ),
               ),

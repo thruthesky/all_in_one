@@ -1,7 +1,5 @@
 // import 'dart:async';
 
-import 'dart:async';
-
 import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/contact/contact.screen.dart';
 import 'package:all_in_one/screens/forum/forum.screen.dart';
@@ -17,11 +15,18 @@ import 'package:all_in_one/screens/widget_collection/widget_collection.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:widgets/widgets.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   await GetStorage.init();
   runApp(AioApp());
 }
@@ -44,8 +49,8 @@ class _AioAppState extends State<AioApp> {
 // final res = await Api.instance.post.search({});
 // for (final p in res) print(p);
 //     }();
-    Timer(Duration(milliseconds: 100),
-        () => service.open(RouteNames.forum, arguments: {'categoryId': 'qna'}));
+    // Timer(Duration(milliseconds: 100),
+    //     () => service.open(RouteNames.forum, arguments: {'categoryId': 'qna'}));
   }
 
   @override
