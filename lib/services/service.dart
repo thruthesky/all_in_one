@@ -50,6 +50,10 @@ class Service {
     open(RouteNames.profile);
   }
 
+  openMap() {
+    open(RouteNames.map);
+  }
+
   error(e) {
     s.error(e);
   }

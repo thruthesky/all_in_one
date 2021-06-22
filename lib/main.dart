@@ -4,6 +4,7 @@ import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/contact/contact.screen.dart';
 import 'package:all_in_one/screens/forum/forum.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
+import 'package:all_in_one/screens/map/map.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.result.dart';
@@ -66,6 +67,7 @@ class _AioAppState extends State<AioApp> {
         GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
         GetPage(name: RouteNames.forum, page: () => ForumScreen()),
         GetPage(name: RouteNames.contact, page: () => ContactScreen()),
+        GetPage(name: RouteNames.map, page: () => MapScreen()),
       ],
     );
   }

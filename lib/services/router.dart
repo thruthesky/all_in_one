@@ -2,6 +2,7 @@
 ///
 import 'package:all_in_one/screens/about/about.screen.dart';
 import 'package:all_in_one/screens/home/home.screen.dart';
+import 'package:all_in_one/screens/map/map.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.result.dart';
@@ -30,6 +31,7 @@ class AppRouter extends NavigatorObserver {
     RouteNames.qrCodeScan: QrCodeScanScreen(),
     RouteNames.qrCodeResult: QrCodeResult(),
     RouteNames.qrCodeResult: QrCodeResult(),
+    RouteNames.map: MapScreen(),
   };
 
   /// GetMaterialApp( onGenerateRoute: AppRouter.generate ) 에 사용되는 함수.

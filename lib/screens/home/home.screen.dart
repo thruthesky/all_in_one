@@ -52,6 +52,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         text: '공지사항',
                         onTap: () =>
                             service.open(RouteNames.forum, arguments: {'categoryId': 'reminder'})),
+                    Button(
+                        text: '지도',
+                        onTap: () =>
+                            service.open(RouteNames.map, arguments: {'categoryId': 'map'}))
                   ],
                 ),
                 Divider(),
