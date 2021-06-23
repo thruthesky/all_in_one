@@ -1,20 +1,20 @@
 import 'weather.dart';
 
 class Current {
-  int? dt;
-  int? sunrise;
-  int? sunset;
+  num? dt;
+  num? sunrise;
+  num? sunset;
   num? temp;
-  double? feelsLike;
-  int? pressure;
-  int? humidity;
-  double? dewPoint;
-  int? uvi;
-  int? clouds;
-  int? visibility;
-  double? windSpeed;
-  int? windDeg;
-  double? windGust;
+  num? feelsLike;
+  num? pressure;
+  num? humidity;
+  num? dewPoint;
+  num? uvi;
+  num? clouds;
+  num? visibility;
+  num? windSpeed;
+  num? windDeg;
+  num? windGust;
   List<Weather>? weather;
 
   Current({
@@ -41,20 +41,20 @@ class Current {
   }
 
   factory Current.fromJson(Map<String, dynamic> json) => Current(
-        dt: json['dt'] as int?,
-        sunrise: json['sunrise'] as int?,
-        sunset: json['sunset'] as int?,
+        dt: json['dt'] as num?,
+        sunrise: json['sunrise'] as num?,
+        sunset: json['sunset'] as num?,
         temp: json['temp'] as num?,
-        feelsLike: json['feels_like'] as double?,
-        pressure: json['pressure'] as int?,
-        humidity: json['humidity'] as int?,
-        dewPoint: json['dew_point'] as double?,
-        uvi: json['uvi'] as int?,
-        clouds: json['clouds'] as int?,
-        visibility: json['visibility'] as int?,
-        windSpeed: json['wind_speed'] as double?,
-        windDeg: json['wind_deg'] as int?,
-        windGust: json['wind_gust'] as double?,
+        feelsLike: json['feels_like'] as num?,
+        pressure: json['pressure'] as num?,
+        humidity: json['humidity'] as num?,
+        dewPoint: json['dew_point'] as num?,
+        uvi: json['uvi'] as num?,
+        clouds: json['clouds'] as num?,
+        visibility: json['visibility'] as num?,
+        windSpeed: json['wind_speed'] as num?,
+        windDeg: json['wind_deg'] as num?,
+        windGust: json['wind_gust'] as num?,
         weather: (json['weather'] as List<dynamic>?)
             ?.map((e) => Weather.fromJson(e as Map<String, dynamic>))
             .toList(),

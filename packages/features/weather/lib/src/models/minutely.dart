@@ -1,6 +1,6 @@
 class Minutely {
-	int? dt;
-	int? precipitation;
+	num? dt;
+	num? precipitation;
 
 	Minutely({this.dt, this.precipitation});
 
@@ -8,8 +8,8 @@ class Minutely {
 	String toString() => 'Minutely(dt: $dt, precipitation: $precipitation)';
 
 	factory Minutely.fromJson(Map<String, dynamic> json) => Minutely(
-				dt: json['dt'] as int?,
-				precipitation: json['precipitation'] as int?,
+				dt: json['dt'] as num?,
+				precipitation: json['precipitation'] as num?,
 			);
 
 	Map<String, dynamic> toJson() => {

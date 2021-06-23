@@ -1,5 +1,5 @@
 class Rain {
-  double? h;
+  num? h;
 
   Rain({this.h});
 
@@ -7,7 +7,7 @@ class Rain {
   String toString() => 'Rain(1h: $h)';
 
   factory Rain.fromJson(Map<String, dynamic> json) => Rain(
-        h: json['1h'] as double?,
+        h: json['1h'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

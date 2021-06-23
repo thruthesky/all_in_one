@@ -2,17 +2,17 @@ import 'rain.dart';
 import 'weather.dart';
 
 class Hourly {
-  int? dt;
+  num? dt;
   num? temp;
   num? feelsLike;
-  int? pressure;
-  int? humidity;
+  num? pressure;
+  num? humidity;
   num? dewPoint;
   num? uvi;
-  int? clouds;
-  int? visibility;
+  num? clouds;
+  num? visibility;
   num? windSpeed;
-  int? windDeg;
+  num? windDeg;
   num? windGust;
   List<Weather>? weather;
   num? pop;
@@ -42,17 +42,17 @@ class Hourly {
   }
 
   factory Hourly.fromJson(Map<String, dynamic> json) => Hourly(
-        dt: json['dt'] as int?,
+        dt: json['dt'] as num?,
         temp: json['temp'] as num?,
         feelsLike: json['feels_like'] as num?,
-        pressure: json['pressure'] as int?,
-        humidity: json['humidity'] as int?,
+        pressure: json['pressure'] as num?,
+        humidity: json['humidity'] as num?,
         dewPoint: json['dew_point'] as num?,
         uvi: json['uvi'] as num?,
-        clouds: json['clouds'] as int?,
-        visibility: json['visibility'] as int?,
+        clouds: json['clouds'] as num?,
+        visibility: json['visibility'] as num?,
         windSpeed: json['wind_speed'] as num?,
-        windDeg: json['wind_deg'] as int?,
+        windDeg: json['wind_deg'] as num?,
         windGust: json['wind_gust'] as num?,
         weather: (json['weather'] as List<dynamic>?)
             ?.map((e) => Weather.fromJson(e as Map<String, dynamic>))

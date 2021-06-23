@@ -3,24 +3,24 @@ import 'temp.dart';
 import 'weather.dart';
 
 class Daily {
-  int? dt;
-  int? sunrise;
-  int? sunset;
-  int? moonrise;
-  int? moonset;
-  double? moonPhase;
+  num? dt;
+  num? sunrise;
+  num? sunset;
+  num? moonrise;
+  num? moonset;
+  num? moonPhase;
   Temp? temp;
   FeelsLike? feelsLike;
-  int? pressure;
-  int? humidity;
-  double? dewPoint;
-  double? windSpeed;
-  int? windDeg;
-  double? windGust;
+  num? pressure;
+  num? humidity;
+  num? dewPoint;
+  num? windSpeed;
+  num? windDeg;
+  num? windGust;
   List<Weather>? weather;
-  int? clouds;
+  num? clouds;
   num? pop;
-  double? rain;
+  num? rain;
   num? uvi;
 
   Daily({
@@ -51,28 +51,28 @@ class Daily {
   }
 
   factory Daily.fromJson(Map<String, dynamic> json) => Daily(
-        dt: json['dt'] as int?,
-        sunrise: json['sunrise'] as int?,
-        sunset: json['sunset'] as int?,
-        moonrise: json['moonrise'] as int?,
-        moonset: json['moonset'] as int?,
-        moonPhase: json['moon_phase'] as double?,
+        dt: json['dt'] as num?,
+        sunrise: json['sunrise'] as num?,
+        sunset: json['sunset'] as num?,
+        moonrise: json['moonrise'] as num?,
+        moonset: json['moonset'] as num?,
+        moonPhase: json['moon_phase'] as num?,
         temp: json['temp'] == null ? null : Temp.fromJson(json['temp'] as Map<String, dynamic>),
         feelsLike: json['feels_like'] == null
             ? null
             : FeelsLike.fromJson(json['feels_like'] as Map<String, dynamic>),
-        pressure: json['pressure'] as int?,
-        humidity: json['humidity'] as int?,
-        dewPoint: json['dew_point'] as double?,
-        windSpeed: json['wind_speed'] as double?,
-        windDeg: json['wind_deg'] as int?,
-        windGust: json['wind_gust'] as double?,
+        pressure: json['pressure'] as num?,
+        humidity: json['humidity'] as num?,
+        dewPoint: json['dew_point'] as num?,
+        windSpeed: json['wind_speed'] as num?,
+        windDeg: json['wind_deg'] as num?,
+        windGust: json['wind_gust'] as num?,
         weather: (json['weather'] as List<dynamic>?)
             ?.map((e) => Weather.fromJson(e as Map<String, dynamic>))
             .toList(),
-        clouds: json['clouds'] as int?,
+        clouds: json['clouds'] as num?,
         pop: json['pop'] as num?,
-        rain: json['rain'] as double?,
+        rain: json['rain'] as num?,
         uvi: json['uvi'] as num?,
       );
 

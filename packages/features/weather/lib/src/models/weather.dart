@@ -1,5 +1,5 @@
 class Weather {
-	int? id;
+	num? id;
 	String? main;
 	String? description;
 	String? icon;
@@ -12,7 +12,7 @@ class Weather {
 	}
 
 	factory Weather.fromJson(Map<String, dynamic> json) => Weather(
-				id: json['id'] as int?,
+				id: json['id'] as num?,
 				main: json['main'] as String?,
 				description: json['description'] as String?,
 				icon: json['icon'] as String?,
