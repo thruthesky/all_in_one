@@ -3,6 +3,7 @@ import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
+import 'package:calculator/calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -13,7 +14,6 @@ import 'package:widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -44,7 +44,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: sm,
                     children: [
-                      AppIcon(FontAwesome5.calculator, '계산기', () {}),
+                      Calculator(
+                        child: IconText(
+                          icon: FontAwesome5.calculator,
+                          label: '계산기',
+                          size: 40,
+                        ),
+                      ),
                       AppIcon(Typicons.sun, '날씨', () {}),
                       AppIcon(FontAwesome5.map_marked_alt, '지도', RouteNames.map),
                     ],
@@ -55,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: sm,
                     children: [
-                      AppIcon(Elusive.qrcode, 'QR 코드', () {}),
-                      AppIcon(FontAwesome5.codepen, 'QR 생성', () {}),
+                      AppIcon(Elusive.qrcode, 'QR 코드', RouteNames.qrCodeScan),
+                      AppIcon(FontAwesome5.codepen, 'QR 생성', RouteNames.qrCodeGenerate),
                       AppIcon(Icons.font_download_outlined, '구글 폰트', () {}),
                       AppIcon(Icons.font_download_outlined, '환율', () {}),
                     ],
@@ -112,6 +118,6 @@ class AppIcon extends StatelessWidget {
         service.open(action, arguments: arguments);
       else
         action();
-    });
+    }, size: 40);
   }
 }

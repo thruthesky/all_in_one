@@ -21,11 +21,15 @@ dependencies:
   rxdart: ^0.27.1
 
 
-  # 전화걸기
+  # 전화걸기. QR 코드 스캔 후 전화 걸기.
   flutter_phone_direct_caller: ^2.0.0
 
   # 아이콘 모음집
   fluttericon: ^2.0.0
+
+
+  webview_flutter: ^2.0.8
+
 
   # x_flutter: ^0.0.7
   x_flutter:
@@ -37,9 +41,20 @@ dependencies:
   services:
     path: packages/services
 
+  calculator:
+    path: packages/features/calculator
 
-  webview_flutter: ^2.0.8
+  qr_code:
+    path: packages/features/qr_code
 
+
+
+dependency_overrides:
+  # flutter_simple_calculator 에서 패키지 함수 리턴 타입 관련 빌드 에러 발생하여 추가.
+  expressions: ^0.2.2
+
+  # expressions 패키지에서 사용하는 rxdart 버전이 다른 패키지와 달라서, 최신 버전으로 변경
+  rxdart: ^0.27.1
 
 
 dev_dependencies:
