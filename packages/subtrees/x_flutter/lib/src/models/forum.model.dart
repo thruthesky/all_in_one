@@ -108,6 +108,8 @@ class ForumModel {
   }
 
   bool get deleted => deletedAt > 0;
+  bool get isPost => parentIdx == 0;
+  bool get isComment => !isPost;
 
   @override
   String toString() => 'ForumModel(name: $name)';

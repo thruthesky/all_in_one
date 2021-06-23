@@ -32,6 +32,17 @@ class PostModel extends ForumModel {
         comments.add(CommentModel.fromJson(c));
       }
     }
+
+    if (idx > 0) {
+      if (deleted) {
+        /// 글이 삭제된 경우,
+        title = '삭제되었습니다.';
+        content = '삭제되었습니다.';
+      } else if (title == '') {
+        /// 제목이 없는 경우,
+        title = '제목이 없습니다.';
+      }
+    }
   }
   String toString() => 'PostModel(${toJson()})';
 

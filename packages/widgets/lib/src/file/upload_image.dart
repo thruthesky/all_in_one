@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+/// 사진 업로드
+///
+/// 이 위젯은 하나의 사진을 업로드하고, 수정할 때 사용하는 것으로 글/코멘트에서 여러 사진을 올리려면 다른 위젯을 사용해야 한다.
+/// 하지만, 위 젯을 글/코멘트에 쓸 때에는 code 별로 하나의 사진을 나타내고, 업데이트 하는 경우 사용하면 된다.
+///
 /// 특정 taxonomy, entity, code 에 맞춰서 사진을 올린다. 기존의 업로드된 사진을 덮어 쓸 수 있다.
 ///
 /// [deletePreviousUpload] 가 true 이면, 기존의 업로드된 이미지를 덮어 쓴다.
@@ -21,7 +26,7 @@ class UploadImage extends StatefulWidget {
     this.entity = 0,
     this.code = '',
     this.quality = 95,
-    this.deletePreviousUpload = true,
+    this.deletePreviousUpload = false,
     this.defaultChild,
     required this.imageBuilder,
     required this.choiceBuilder,

@@ -21,7 +21,7 @@ class PostApi extends ForumApi {
     return PostModel.fromJson(res);
   }
 
-  /// 문자열 또는 문자와 숫자를 가지는 배열을 입력 받아 백엔드로 부터 여러 카테고리 정보를 가져옵니다.
+  /// 글 검색
   ///
   /// [data] 는 백엔드 컨트롤러 참고
   /// ```dart

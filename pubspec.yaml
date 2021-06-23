@@ -24,6 +24,8 @@ dependencies:
   # 전화걸기
   flutter_phone_direct_caller: ^2.0.0
 
+  # 아이콘 모음집
+  fluttericon: ^2.0.0
 
   # x_flutter: ^0.0.7
   x_flutter:

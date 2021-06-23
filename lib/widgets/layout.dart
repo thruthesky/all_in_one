@@ -86,7 +86,10 @@ class _AppTitleBarState extends State<AppTitleBar> {
       elevation: 0,
       backgroundColor: Colors.white,
       actions: [
-        Center(child: UserAvatar(size: 36, onTap: service.openProfile)),
+        Center(
+            child: UserAvatar(
+                size: 36,
+                onTap: UserApi.instance.loggedIn ? service.openProfile : service.openLogin)),
         if (widget.create != null)
           IconButton(
               onPressed: widget.create,

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:x_flutter/src/category.api.dart';
+import 'package:x_flutter/src/comment.api.dart';
 import 'package:x_flutter/src/file.api.dart';
 import 'package:x_flutter/src/models/time.model.dart';
 import 'package:x_flutter/src/models/version.model.dart';
@@ -18,6 +19,7 @@ class Api {
   FileApi file = FileApi();
   CategoryApi category = CategoryApi();
   PostApi post = PostApi();
+  CommentApi comment = CommentApi();
 
   // Api Singleton
   static Api? _instance;
