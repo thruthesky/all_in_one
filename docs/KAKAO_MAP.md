@@ -41,24 +41,27 @@ android:usesCleartextTraffic="true" 추가.
 ```
 
 
-WebView
-------------------
+WebView 속성
+============
 
-### 속성
-
-#### javascriptMode
+javascriptMode
+----------
 
 자바스크립트를 선택적으로 사용하거나 중지할 수 있음.
 
 JavascriptMode.unrestricted (활성화)
 JavascriptMode.disabled (비활성화);기본값
 
-#### void Function(WebViewController)? onWebViewCreated
+
+void Function(WebViewController)? onWebViewCreated
+------------
 
 Flutter에서 WebView를 프로그래밍 방식으로 수정하거나 현재 표시되고 있는 URL과 같은 속성에 액세스 하기 위한 티켓.
 나중에 볼 수 있도록 페이지를 즐겨찾기에 저장할 수 있는 기능 등.
 
-#### gestureRecognizers
+
+gestureRecognizers
+---
 
 WebView가 동작에 응답하는 다른 위젯 (예: ListView) 내부에 있는 경우 앱이 동작에 응답하는 방식을
 지정하려 할 때.
@@ -142,5 +145,5 @@ return WebView(
  화면과 접촉하는 포인터를 추적하고 초점, 표시된 배율 및 회전을 계산
 
 
-#### #참조
+### #참조
 https://developers-kr.googleblog.com/2019/05/the-power-of-webviews-in-flutter.html
