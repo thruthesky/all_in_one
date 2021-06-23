@@ -4,7 +4,7 @@
 
 - [프로젝트 Git Project 참고](https://github.com/thruthesky/all_in_one/projects/1)
 - [프로젝트 Git repo 참고](https://github.com/thruthesky/all_in_one)
-- [개발자 가이드 - 처음 스터디에 참여하시는 분들 필독](https://github.com/thruthesky/all_in_one/blob/main/DEVELOPER_GUIDE.md)
+- [개발자 가이드 - 처음 스터디에 참여하시는 분들 필독](https://github.com/thruthesky/all_in_one/blob/main/docs/DEVELOPER_GUIDE.md)
 - 참여하실 분은 [만능앱 개발자 단톡방](https://open.kakao.com/o/gNs8gvid)에 입장하시면 됩니다.
 
 ## 프로젝트 매니저
@@ -16,7 +16,7 @@
 ## 컨트리뷰터
 ## 만능앱 개발자 가이드
 
-- 참고: [DEVELOPER_GUIDE.md](https://github.com/thruthesky/all_in_one/blob/main/DEVELOPER_GUIDE.md) 문서를 참고합니다.
+- 참고: [DEVELOPER_GUIDE.md](https://github.com/thruthesky/all_in_one/blob/main/docs/DEVELOPER_GUIDE.md) 문서를 참고합니다.
 
 
 # 만능앱 개발 스터디 목적 및 인원 모집

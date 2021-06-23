@@ -60,5 +60,13 @@
 	<string>App requires access to the camera.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires mic access to record video.</string>
+
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+	</dict>
 </dict>
 </plist>
