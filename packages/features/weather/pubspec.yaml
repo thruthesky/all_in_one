@@ -1,0 +1,27 @@
+
+
+name: weather
+description: weather packages
+version: 0.0.1
+homepage: https://github.com/thruthesky/all_in_one
+repository: https://github.com/thruthesky/all_in_one
+
+# pub.dev 에 publish 하지 않음
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  geolocator: ^7.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+

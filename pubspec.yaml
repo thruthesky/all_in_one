@@ -47,7 +47,8 @@ dependencies:
   qr_code:
     path: packages/features/qr_code
 
-
+  weather:
+    path: packages/features/weather
 
 dependency_overrides:
   # flutter_simple_calculator 에서 패키지 함수 리턴 타입 관련 빌드 에러 발생하여 추가.

@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           size: 40,
                         ),
                       ),
-                      AppIcon(Typicons.sun, '날씨', () {}),
+                      AppIcon(Typicons.sun, '날씨', RouteNames.weather),
                       AppIcon(FontAwesome5.map_marked_alt, '지도', RouteNames.map),
                     ],
                   ),
