@@ -15,4 +15,7 @@ class Config {
 
   /// 사용할 게시판 카테고리. README 참고.
   static List<String> categories = ['qna', 'discussion', 'reminder'];
+
+  /// 날씨 API Key
+  static String openWeatherMapApiKey = '7cb555e44cdaac586538369ac275a33b';
 }

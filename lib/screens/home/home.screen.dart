@@ -52,7 +52,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       AppIcon(Typicons.sun, '날씨', RouteNames.weather),
-                      AppIcon(FontAwesome5.map_marked_alt, '지도', RouteNames.map),
+                      AppIcon(
+                          FontAwesome5.map_marked_alt, '지도', RouteNames.map),
                     ],
                   ),
                   spaceXl,
@@ -62,7 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     spacing: sm,
                     children: [
                       AppIcon(Elusive.qrcode, 'QR 코드', RouteNames.qrCodeScan),
-                      AppIcon(FontAwesome5.codepen, 'QR 생성', RouteNames.qrCodeGenerate),
+                      AppIcon(FontAwesome5.codepen, 'QR 생성',
+                          RouteNames.qrCodeGenerate),
                       AppIcon(Icons.font_download_outlined, '구글 폰트', () {}),
                       AppIcon(Icons.font_download_outlined, '환율', () {}),
                     ],
@@ -88,7 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     spacing: sm,
                     children: [
                       AppIcon(FontAwesome5.share_alt_square, '공유하기', () => {}),
-                      AppIcon(Icons.contacts_rounded, '연락처', RouteNames.contact),
+                      AppIcon(
+                          Icons.contacts_rounded, '연락처', RouteNames.contact),
                       AppIcon(Icons.border_color_rounded, '기능 요청', () => {}),
                     ],
                   ),
@@ -105,7 +108,8 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class AppIcon extends StatelessWidget {
-  const AppIcon(this.icon, this.label, this.action, {Key? key, this.arguments}) : super(key: key);
+  const AppIcon(this.icon, this.label, this.action, {Key? key, this.arguments})
+      : super(key: key);
   final IconData icon;
   final String label;
   final dynamic action;

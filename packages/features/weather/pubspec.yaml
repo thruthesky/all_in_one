@@ -18,6 +18,9 @@ dependencies:
     sdk: flutter
 
   geolocator: ^7.1.1
+  dio: ^4.0.0
+
+  rxdart: ^0.27.1
 
 dev_dependencies:
   flutter_test:

@@ -14,12 +14,14 @@ import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
 import 'package:all_in_one/screens/weather/weather.screen.dart';
 import 'package:all_in_one/screens/widget_collection/widget_collection.dart';
+import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
 void main() async {
@@ -44,6 +46,16 @@ class _AioAppState extends State<AioApp> {
   @override
   void initState() {
     super.initState();
+
+    WeatherService.instance.init(apiKey: Config.openWeatherMapApiKey);
+    WeatherService.instance.data.listen((data) {
+      print('data: $data');
+      final String? icon = (data as WeatherModel).current?.weather?[0].icon;
+      if (icon != null) {
+        print("https://openweathermap.org/img/wn/$icon@2x.png");
+      }
+    });
+
     // Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
     // final post = PostModel.fromJson(m);
     // print(post);

@@ -66,7 +66,10 @@ class KakaoMapView extends StatelessWidget {
           javascriptMode: JavascriptMode.unrestricted,
           javascriptChannels: onTapMarker == null
               ? null
-              : Set.from([JavascriptChannel(name: 'onTapMarker', onMessageReceived: onTapMarker!)]),
+              : Set.from([
+                  JavascriptChannel(
+                      name: 'onTapMarker', onMessageReceived: onTapMarker!)
+                ]),
           debuggingEnabled: true,
           gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
             Factory(() => EagerGestureRecognizer()),
@@ -86,8 +89,7 @@ class KakaoMapView extends StatelessWidget {
       markerImageOption = 'image: markerImage';
     }
 
-    return Uri.dataFromString(
-            '''
+    return Uri.dataFromString('''
 <html>
 <header>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes\'>
@@ -137,9 +139,7 @@ class KakaoMapView extends StatelessWidget {
 	</script>
 </body>
 </html>
-    ''',
-            mimeType: 'text/html')
-        .toString();
+    ''', mimeType: 'text/html').toString();
   }
 
   String _customScriptHTML() {
@@ -149,8 +149,7 @@ class KakaoMapView extends StatelessWidget {
       iosSetting = 'min-width:${width}px;min-height:${height}px;';
     }
 
-    return Uri.dataFromString(
-            '''
+    return Uri.dataFromString('''
 <html>
 <header>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes\'>
@@ -170,8 +169,6 @@ class KakaoMapView extends StatelessWidget {
 	</script>
 </body>
 </html>
-    ''',
-            mimeType: 'text/html')
-        .toString();
+    ''', mimeType: 'text/html').toString();
   }
 }
