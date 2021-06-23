@@ -36,6 +36,11 @@ dependencies:
   qr_code_scanner: ^0.5.1
   
   url_launcher: ^6.0.6
+
+
+
+  flutter_simple_calculator: ^2.0.0-nullsafety.1
+
   # publish_to: none 이어야 path 사용 가능.
   x_flutter:
     path: ../subtrees/x_flutter

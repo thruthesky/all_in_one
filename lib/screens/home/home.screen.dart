@@ -13,7 +13,6 @@ import 'package:widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -44,7 +43,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: sm,
                     children: [
-                      AppIcon(FontAwesome5.calculator, '계산기', () {}),
+                      Calculator(
+                        child: IconText(
+                          icon: FontAwesome5.calculator,
+                          label: '계산기',
+                          size: 40,
+                        ),
+                      ),
                       AppIcon(Typicons.sun, '날씨', () {}),
                       AppIcon(FontAwesome5.map_marked_alt, '지도', RouteNames.map),
                     ],
@@ -112,6 +117,6 @@ class AppIcon extends StatelessWidget {
         service.open(action, arguments: arguments);
       else
         action();
-    });
+    }, size: 40);
   }
 }
