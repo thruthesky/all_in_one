@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'markers.dart' as markers;
 
 class KakaoMapView extends StatelessWidget {
   /// Map width. If width is wider than screen size, the map center can be changed
@@ -45,16 +44,16 @@ class KakaoMapView extends StatelessWidget {
 
   KakaoMapView(
       {required this.width,
-        required this.height,
-        required this.kakaoMapKey,
-        required this.lat,
-        required this.lng,
-        this.showZoomControl = false,
-        this.showMapTypeControl = false,
-        this.onTapMarker,
-        this.markerImageURL = '',
-        this.customScript,
-        this.mapWidgetKey});
+      required this.height,
+      required this.kakaoMapKey,
+      required this.lat,
+      required this.lng,
+      this.showZoomControl = false,
+      this.showMapTypeControl = false,
+      this.onTapMarker,
+      this.markerImageURL = '',
+      this.customScript,
+      this.mapWidgetKey});
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +64,9 @@ class KakaoMapView extends StatelessWidget {
       child: WebView(
           initialUrl: (customScript == null) ? _getHTML() : _customScriptHTML(),
           javascriptMode: JavascriptMode.unrestricted,
-          javascriptChannels: onTapMarker == null ? null : Set.from([
-            JavascriptChannel(
-                name: 'onTapMarker', onMessageReceived: onTapMarker!)
-          ]),
+          javascriptChannels: onTapMarker == null
+              ? null
+              : Set.from([JavascriptChannel(name: 'onTapMarker', onMessageReceived: onTapMarker!)]),
           debuggingEnabled: true,
           gestureRecognizers: <Factory<OneSequenceGestureRecognizer>>[
             Factory(() => EagerGestureRecognizer()),
@@ -88,7 +86,8 @@ class KakaoMapView extends StatelessWidget {
       markerImageOption = 'image: markerImage';
     }
 
-    return Uri.dataFromString('''
+    return Uri.dataFromString(
+            '''
 <html>
 <header>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes\'>
@@ -138,7 +137,9 @@ class KakaoMapView extends StatelessWidget {
 	</script>
 </body>
 </html>
-    ''', mimeType: 'text/html').toString();
+    ''',
+            mimeType: 'text/html')
+        .toString();
   }
 
   String _customScriptHTML() {
@@ -148,7 +149,8 @@ class KakaoMapView extends StatelessWidget {
       iosSetting = 'min-width:${width}px;min-height:${height}px;';
     }
 
-    return Uri.dataFromString('''
+    return Uri.dataFromString(
+            '''
 <html>
 <header>
   <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=yes\'>
@@ -168,6 +170,8 @@ class KakaoMapView extends StatelessWidget {
 	</script>
 </body>
 </html>
-    ''', mimeType: 'text/html').toString();
+    ''',
+            mimeType: 'text/html')
+        .toString();
   }
 }
