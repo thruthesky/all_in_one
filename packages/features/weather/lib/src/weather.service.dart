@@ -27,7 +27,7 @@ class WeatherService {
     this.apiKey = apiKey;
 
     updateWeather();
-    Timer.periodic(Duration(seconds: 30), (t) => updateWeather());
+    Timer.periodic(Duration(minutes: 3), (t) => updateWeather());
   }
 
   Future<Position> _currentLocation() async {

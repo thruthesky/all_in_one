@@ -203,6 +203,9 @@
 - 각 스크린(페이지)는 `lib/screens/**/*.screen.dart` 와 같이 기록해야 하며,
   - 스크린 위젯의 이름은 파일명과 일치해야 합니다.
     - 예) 파일명이 `abc.def.screen.dart` 이면 위젯 이름은 `AbcDefScreen` 이어야 합니다.
+
+- `docs/` 폴더에는 각종 문서 파일이 저장됩니다.
+  - 만약, 각 기능별로 패키지가 다르다면 (예: `/packages/features` 폴더에 들어가는 기능), 그 기능별 문서(README 등)는 해당 패키지 내에 저장되어야 합니다.
 - 위젯은 반드시 `**/widgets` 라는 폴더 아래에 기록되어야 합니다.
   - 예) `lib/screens/user/widgets/name_label.dart`
 - 공유 위젯은 `lib/widgets/**/*.dart` 형태로 저장되며, 여러곳에서 활용 할 수 있는 범용성이 위젯만 이곳에 저장됩니다.

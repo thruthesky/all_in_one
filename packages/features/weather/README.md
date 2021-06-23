@@ -1,0 +1,18 @@
+# 날씨
+
+
+- OpenWeatherMap 을 통해서 날씨를 구현.
+- 참고로 무료 버전은 쿼리 회수가 너무 작아 실 사용자가 하루 100명이 넘어 가면 쓰기 어렵다.
+  - 월 40 달러 정도면, 월 1천만 쿼리 가능.
+    - 1천만 쿼리를 30일로 나누고, 날씨 쿼리를 캐시하여 3분에 한번씩 쿼리 한다면, 사용자 당 평균 3회에서 10회 정도 (즉, 9분에서 30분 정도 앱을 본다면) 날짜 정보를 업데이트 한다면, 3천에서 1만명의 사용자를 커버 할 수 있다.
+    - 
+```dart
+WeatherService.instance.init(apiKey: Config.openWeatherMapApiKey);
+WeatherService.instance.data.listen((data) {
+  print('data: $data');
+  final String? icon = (data as WeatherModel).current?.weather?[0].icon;
+  if (icon != null) {
+    print("https://openweathermap.org/img/wn/$icon@2x.png");
+  }
+});
+```
