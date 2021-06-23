@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  calculator:
+    dependency: "direct main"
+    description:
+      path: "packages/features/calculator"
+      relative: true
+    source: path
+    version: "0.0.1"
   characters:
     dependency: transitive
     description:
@@ -381,6 +388,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  qr_code:
+    dependency: "direct main"
+    description:
+      path: "packages/features/qr_code"
+      relative: true
+    source: path
+    version: "0.0.1"
   qr_code_scanner:
     dependency: transitive
     description:

@@ -27,6 +27,10 @@ dependencies:
   # 아이콘 모음집
   fluttericon: ^2.0.0
 
+
+  webview_flutter: ^2.0.8
+
+
   # x_flutter: ^0.0.7
   x_flutter:
     path: packages/subtrees/x_flutter
@@ -37,8 +41,11 @@ dependencies:
   services:
     path: packages/services
 
+  calculator:
+    path: packages/features/calculator
 
-  webview_flutter: ^2.0.8
+  qr_code:
+    path: packages/features/qr_code
 
 
 

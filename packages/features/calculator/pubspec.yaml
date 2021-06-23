@@ -1,5 +1,5 @@
-name: widgets
-description: Widgets packages
+name: calculator
+description: calculator packages
 version: 0.0.1
 homepage: https://github.com/thruthesky/all_in_one
 repository: https://github.com/thruthesky/all_in_one
@@ -15,36 +15,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  path_provider: ^2.0.2
-  
-
-  get: ^4.1.4
-  get_storage: ^2.0.2
-  
-  # flutter_zoom_drawer: ^2.0.2+4
-  share_plus: ^2.1.2
-
-  
-
-  cached_network_image: ^3.0.0
-
-  
-  url_launcher: ^6.0.6
-
-
-
   flutter_simple_calculator: ^2.0.0-nullsafety.1
 
-  # publish_to: none 이어야 path 사용 가능.
-  x_flutter:
-    path: ../subtrees/x_flutter
-
-  services:
-    path: ../services
-  
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-

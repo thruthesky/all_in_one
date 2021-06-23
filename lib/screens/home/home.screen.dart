@@ -3,6 +3,7 @@ import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
+import 'package:calculator/calculator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -60,8 +61,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: sm,
                     children: [
-                      AppIcon(Elusive.qrcode, 'QR 코드', () {}),
-                      AppIcon(FontAwesome5.codepen, 'QR 생성', () {}),
+                      AppIcon(Elusive.qrcode, 'QR 코드', RouteNames.qrCodeScan),
+                      AppIcon(FontAwesome5.codepen, 'QR 생성', RouteNames.qrCodeGenerate),
                       AppIcon(Icons.font_download_outlined, '구글 폰트', () {}),
                       AppIcon(Icons.font_download_outlined, '환율', () {}),
                     ],

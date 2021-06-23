@@ -1,7 +1,7 @@
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:widgets/widgets.dart';
+import 'package:qr_code/qr_code.dart';
 
 class QrCodeGenerateScreen extends StatefulWidget {
   const QrCodeGenerateScreen({Key? key}) : super(key: key);

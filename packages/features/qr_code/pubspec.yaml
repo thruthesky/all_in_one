@@ -1,0 +1,41 @@
+
+
+name: qr_code
+description: qr_code packages
+version: 0.0.1
+homepage: https://github.com/thruthesky/all_in_one
+repository: https://github.com/thruthesky/all_in_one
+
+# pub.dev 에 publish 하지 않음
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+
+  # QR 생성기
+  qr_flutter: ^4.0.0
+
+
+  # QR 스캐너
+  qr_code_scanner: ^0.5.1
+
+  # 경로
+  path_provider: ^2.0.2
+  
+  # QR 코드 공유
+  share_plus: ^2.1.2
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
