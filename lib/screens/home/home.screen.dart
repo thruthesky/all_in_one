@@ -11,6 +11,8 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
+import 'pakcage:weather/weather.dart';
+
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -36,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('만능앱'),
                   Row(children: [UserName(), Text('님의 일상을 책임지겠습니다.')]),
                   spaceXl,
+                  WeatherIcon(),
                   Text('자주 사용하는 기능', style: tsSm),
                   Divider(),
                   spaceXl,
