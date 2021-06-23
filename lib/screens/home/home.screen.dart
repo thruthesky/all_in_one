@@ -46,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       AppIcon(FontAwesome5.calculator, '계산기', () {}),
                       AppIcon(Typicons.sun, '날씨', () {}),
+                      AppIcon(FontAwesome5.map_marked_alt, '지도', RouteNames.map),
                     ],
                   ),
                   spaceXl,

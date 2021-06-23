@@ -1,3 +1,4 @@
+
 // enum 으로 변경 가능?
 class RouteNames {
   static final String home = 'home';
@@ -13,4 +14,5 @@ class RouteNames {
   static final String forum = 'forum';
   static final String widgetCollection = 'widgetCollection';
   static final String contact = 'contact';
+  static final String map = 'map';
 }
