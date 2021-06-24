@@ -16,10 +16,10 @@ class _WeatherIconState extends State<WeatherIcon> {
 
   late final StreamSubscription subscribe;
 
-  String? get icon => data?.current?.weather?[0].icon;
-  String get iconUrl => "https://openweathermap.org/img/wn/$icon@2x.png";
-  String? get text => data?.current?.weather?[0].description;
-  num? get temp => data?.current?.temp?.round();
+  // String? get icon => data?.current?.weather?[0].icon;
+  // String get iconUrl => "https://openweathermap.org/img/wn/$icon@2x.png";
+  // String? get text => data?.current?.weather?[0].description;
+  // num? get temp => data?.current?.temp?.round();
   @override
   void initState() {
     super.initState();
@@ -43,7 +43,7 @@ class _WeatherIconState extends State<WeatherIcon> {
         color: Colors.white,
         child: Column(
           children: [
-            icon == null
+            data?.current?.icon == null
                 ? Spinner()
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -55,23 +55,24 @@ class _WeatherIconState extends State<WeatherIcon> {
                             heightFactor: 0.7,
                             widthFactor: 0.7,
                             child: CacheImage(
-                              iconUrl,
+                              data!.current!.iconUrl,
                               width: 60,
                               height: 60,
                             ),
                           ),
                         ),
                       ),
-                      if (temp != null)
+                      if (data?.current?.temp != null)
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(temp!.toString(), style: TextStyle(fontSize: 16)),
+                            Text(data!.current!.temp.toString(), style: TextStyle(fontSize: 16)),
                             Text('℃', style: TextStyle(fontSize: 11, fontWeight: FontWeight.bold)),
                           ],
                         ),
-                      if (text != null) Text(text!, style: TextStyle(fontSize: 14)),
+                      if (data?.current?.description != null)
+                        Text(data!.current!.description!, style: TextStyle(fontSize: 14)),
                     ],
                   ),
           ],

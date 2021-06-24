@@ -7,6 +7,17 @@
     - 1천만 쿼리를 30일로 나누고, 날씨 쿼리를 캐시하여 3분에 한번씩 쿼리 한다면, 사용자 당 평균 3회에서 10회 정도 (즉, 9분에서 30분 정도 앱을 본다면) 날짜 정보를 업데이트 한다면, 3천에서 1만명의 사용자를 커버 할 수 있다.
 
 
+## UVI - 자외선 지수
+
+- 참고 문서
+https://www.kma.go.kr/HELP/basic/help_01_06.jsp
+https://100.daum.net/encyclopedia/view/39XXXXX00639
+
+
+- 자외선 지수는 floor 처리한다.
+
+
+
 
 ## 날씨 기능 코드 설명
 
@@ -44,3 +55,4 @@ WeatherService.instance.dataChanges.listen((data) {
 ```dart
 WeatherService.instance.updateWeather().then((value) => print(value));
 ```
+

@@ -35,6 +35,11 @@ class Current {
     this.weather,
   });
 
+  String? get icon => weather?[0].icon;
+  String get iconUrl => "https://openweathermap.org/img/wn/$icon@2x.png";
+  String? get description => weather?[0].description;
+  num? get temperature => temp?.round();
+
   @override
   String toString() {
     return 'Current(dt: $dt, sunrise: $sunrise, sunset: $sunset, temp: $temp, feelsLike: $feelsLike, pressure: $pressure, humidity: $humidity, dewPoint: $dewPoint, uvi: $uvi, clouds: $clouds, visibility: $visibility, windSpeed: $windSpeed, windDeg: $windDeg, windGust: $windGust, weather: $weather)';
