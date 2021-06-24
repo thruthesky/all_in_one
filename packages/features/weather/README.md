@@ -8,5 +8,39 @@
 
 
 
-- 코드 예제는 실제 소스 코드 또는 dartdoc 으로 변환해서 참고 할 것
+## 날씨 기능 코드 설명
 
+### 초기화
+
+- 날씨 기능을 쓰기 위해서는 초기화를 해야 한다.
+- 초기화 할 때, 새로운 데이터를 가져 올 (업데이트) 주기를 설정 할 수 있으며, 그 업데이트 주기 마다 OpenWeatherMap 으로 부터 데이터를 가져와서 업데이트를 한다.
+업데이트가 후 `dataChanges` 이벤트가 발생시키는데, 이벤트를 listen() 하면 꼭 cancel() 해주도록 한다.
+
+
+  - 예제) 초기화
+```dart
+WeatherService.instance.init(
+  apiKey: Config.openWeatherMapApiKey, // Api key
+  updateInterval: Config.openWeatherMapUpdateInterval, // 업데이트 주기
+);
+```
+
+
+- 초기화를 한 다음, 날씨 정보를 수신 할 수 있다. `dataChanges` 이벤트를 listen 하면, 날씨 정보가 업데이트 될 때 마다 원하는 작업을 할 수 있다.
+
+  - 예제) 업데이트가 발생한 경우 핸들링
+```dart
+WeatherService.instance.dataChanges.listen((data) {
+  final String? icon = (data as WeatherModel).current?.weather?[0].icon;
+    if (icon != null) {
+      print("https://openweathermap.org/img/wn/$icon@2x.png");
+    }
+});
+```
+
+- 참고로 날씨 정보는 내부적으로 업데이트 주기 마다 새로운 데이터를 서버로 부터 가져오지만, 원하는 경우 프로그램적으로 업데이트 하게 할 수 있다.
+
+  - 예제) 날씨 데이터 업데이트하기
+```dart
+WeatherService.instance.updateWeather().then((value) => print(value));
+```

@@ -35,11 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text('만능앱'),
-                  Row(children: [UserName(), Text('님의 일상을 책임지겠습니다.')]),
+                  Row(children: [
+                    UserName(
+                      defaultName: '회원',
+                    ),
+                    Text('님의 일상을 책임지겠습니다.')
+                  ]),
                   spaceXl,
-                  WeatherIcon(),
                   Text('자주 사용하는 기능', style: tsSm),
                   Divider(),
+                  spaceXl,
+                  Text('위젯', style: tsSm),
+                  Divider(),
+                  WeatherIcon(onTap: () => service.open(RouteNames.weather)),
                   spaceXl,
                   Text('일상 생활', style: tsSm),
                   Divider(),

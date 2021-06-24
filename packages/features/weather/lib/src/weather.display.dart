@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 
@@ -11,9 +13,22 @@ class WeatherDisplay extends StatefulWidget {
 }
 
 class _WeatherDisplayState extends State<WeatherDisplay> {
+  WeatherModel? data;
+
+  late final StreamSubscription subscribe;
+
   @override
   void initState() {
     super.initState();
+    subscribe = WeatherService.instance.dataChanges
+        .where((event) => event != null)
+        .listen((value) => setState(() => data = value));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    subscribe.cancel();
   }
 
   @override

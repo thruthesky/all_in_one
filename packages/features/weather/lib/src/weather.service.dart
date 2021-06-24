@@ -7,25 +7,7 @@ import 'package:rxdart/rxdart.dart';
 
 /// 날씨 서비스
 ///
-/// 초기화 할 때, 새로운 데이터를 가져 올 (업데이트) 주기를 설정 할 수 있다.
-/// 그리고 업데이트가 되면 [dataChanges] 이벤트가 발생하는데, 이벤트 listen() 후 cancel() 꼭 해준다.
-///
-/// 예제) 초기화
-/// ```dart
-/// WeatherService.instance.init(
-///   apiKey: Config.openWeatherMapApiKey, // Api key
-///   updateInterval: Config.openWeatherMapUpdateInterval, // 업데이트 주기
-/// );
-/// ```
-///
-/// 예제) 업데이트가 발생한 경우 핸들링
-/// ```dart
-/// WeatherService.instance.dataChanges.listen((data) {
-///   final String? icon = (data as WeatherModel).current?.weather?[0].icon;
-///     if (icon != null) {
-///       print("https://openweathermap.org/img/wn/$icon@2x.png");
-///     }
-/// });
+/// 자세한 설명은, README.md 파일 참고
 class WeatherService {
   /// Singleton
   static WeatherService? _instance;
@@ -42,11 +24,11 @@ class WeatherService {
   late final int _updateInterval;
 
   /// 새로운 데이터를 가져오면 [dataChanges] 이벤트가 발생한다.
-  PublishSubject dataChanges = PublishSubject();
+  BehaviorSubject dataChanges = BehaviorSubject.seeded(null);
 
   late final String _apiKey;
   String get apiUrl =>
-      'https://api.openweathermap.org/data/2.5/onecall?lat=${_position?.latitude}&lon=${_position?.longitude}&lang=kr&appid=$_apiKey';
+      'https://api.openweathermap.org/data/2.5/onecall?lat=${_position?.latitude}&lon=${_position?.longitude}&lang=kr&units=metric&appid=$_apiKey';
 
   Position? _position;
 
