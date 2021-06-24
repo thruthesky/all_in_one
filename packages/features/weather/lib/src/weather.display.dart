@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:weather/src/models/current.dart';
+import 'package:weather/src/weather.functions.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
@@ -75,7 +76,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                   Text('°', style: TextStyle(fontSize: 12, color: Colors.grey[700])),
                 ],
               ),
-              Text('자외선 ' + current.uvi!.floor().toString()),
+              Text('자외선 ' + uviText(current.uvi)),
             ],
           )
         ],

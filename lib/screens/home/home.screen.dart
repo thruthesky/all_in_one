@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Text('님의 일상을 책임지겠습니다.')
                   ]),
+                  svg('face/devil'),
                   spaceXl,
                   Text('자주 사용하는 기능', style: tsSm),
                   Divider(),

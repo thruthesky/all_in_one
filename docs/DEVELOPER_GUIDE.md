@@ -23,6 +23,8 @@
 - [x_flutter 패키지](#x_flutter-패키지)
 - [상태 관리](#상태-관리)
 - [모델](#모델)
+- [위젯 패키지](#위젯-패키지)
+  - [SVG](#svg)
 - [백엔드](#백엔드)
   - [x_flutter 패키지 개발 방법](#x_flutter-패키지-개발-방법)
 - [파이어베이스](#파이어베이스)
@@ -206,6 +208,11 @@
 
 - `docs/` 폴더에는 각종 문서 파일이 저장됩니다.
   - 만약, 각 기능별로 패키지가 다르다면 (예: `/packages/features` 폴더에 들어가는 기능), 그 기능별 문서(README 등)는 해당 패키지 내에 저장되어야 합니다.
+
+
+- `assets/` 폴더
+  - SVG 파일은 항상 `assets/svg/` 폴더 아래에 저장을 해야 한다. 패키지를 작성 할 때에도 SVG 는 해당 패키지 내의 `assets/svg/` 폴더에 저장해야 한다.
+
 - 위젯은 반드시 `**/widgets` 라는 폴더 아래에 기록되어야 합니다.
   - 예) `lib/screens/user/widgets/name_label.dart`
 - 공유 위젯은 `lib/widgets/**/*.dart` 형태로 저장되며, 여러곳에서 활용 할 수 있는 범용성이 위젯만 이곳에 저장됩니다.
@@ -289,6 +296,16 @@
   - `> toString()? Yes`
   - `> Copy with? No`
   - `> Null safety? Yes`
+
+
+# 위젯 패키지
+
+## SVG
+- 위젯 패키지에 `assets/svg` 폴더에 SVG 파일들이 저장되어져 있으며, 또 필요한 SVG 파일은 항상 이 위치에 저장을 해야 한다.
+  - svg 사용을 하려면 `svg('face/fair');` 와 같이 하면 된다.
+  - 경로는 `assets/svg/[...].svg` 에서 대괄호 안에 들어가는 경로를 지정하면 된다. 예) `face/fair` 는 `packages/wdigets/assets/svg/face/fair.svg` 가 된다.
+  - 만약, `widgets` 패키지가 아닌 다른 패키지 또는 앱 폴더의 assets 경로에서 사용하고 싶다면, `svg('face/fair', '패키지 이름')` 와 같이 사용하면 된다.
+  - 
 
 # 백엔드
 

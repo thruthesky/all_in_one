@@ -10,11 +10,14 @@
 ## UVI - 자외선 지수
 
 - 참고 문서
+http://www.climate.go.kr/home/09_monitoring/uv/uv_main
 https://www.kma.go.kr/HELP/basic/help_01_06.jsp
 https://100.daum.net/encyclopedia/view/39XXXXX00639
 
 
-- 자외선 지수는 floor 처리한다.
+- 자외선 지수는 문서마다 지수 표기가 조금씩 다르다.
+  - climate.go.kr 에 나오는 지수를 따른다.
+  - 지수는 floor 처리한다.
 
 
 

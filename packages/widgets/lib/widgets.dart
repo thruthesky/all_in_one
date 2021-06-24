@@ -1,4 +1,5 @@
-export 'defines.dart';
+export 'src/defines.dart';
+export 'src/widgets.functions.dart';
 
 export 'src/layout/default/default.layout.dart';
 export 'src/layout/zoom_drawer/zoom_drawer.layout.dart';

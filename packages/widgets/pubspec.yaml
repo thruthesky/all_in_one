@@ -24,16 +24,14 @@ dependencies:
   # flutter_zoom_drawer: ^2.0.2+4
   share_plus: ^2.1.2
 
-  
-
   cached_network_image: ^3.0.0
 
   
   url_launcher: ^6.0.6
 
+  flutter_svg: ^0.22.0
+  
 
-
-  flutter_simple_calculator: ^2.0.0-nullsafety.1
 
   # publish_to: none 이어야 path 사용 가능.
   x_flutter:
@@ -48,3 +46,5 @@ dev_dependencies:
 
 flutter:
 
+  assets:
+    - assets/svg/face/

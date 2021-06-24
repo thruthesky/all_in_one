@@ -30,7 +30,6 @@ dependencies:
 
   webview_flutter: ^2.0.8
 
-
   # x_flutter: ^0.0.7
   x_flutter:
     path: packages/subtrees/x_flutter
