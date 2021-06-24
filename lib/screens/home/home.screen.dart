@@ -61,9 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           size: 40,
                         ),
                       ),
-                      AppIcon(Typicons.sun, '날씨', RouteNames.weather),
+                      AppIcon(icon: Typicons.sun, label: '날씨', action: RouteNames.weather),
                       AppIcon(
-                          FontAwesome5.map_marked_alt, '지도', RouteNames.map),
+                          icon: FontAwesome5.map_marked_alt, label: '지도', action: RouteNames.map),
                     ],
                   ),
                   spaceXl,
@@ -72,11 +72,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: sm,
                     children: [
-                      AppIcon(Elusive.qrcode, 'QR 코드', RouteNames.qrCodeScan),
-                      AppIcon(FontAwesome5.codepen, 'QR 생성',
-                          RouteNames.qrCodeGenerate),
-                      AppIcon(Icons.font_download_outlined, '구글 폰트', () {}),
-                      AppIcon(Icons.font_download_outlined, '환율', () {}),
+                      AppIcon(icon: Elusive.qrcode, label: 'QR 코드', action: RouteNames.qrCodeScan),
+                      AppIcon(
+                          icon: FontAwesome5.codepen,
+                          label: 'QR 생성',
+                          action: RouteNames.qrCodeGenerate),
+                      // AppIcon(icon: Icons.font_download_outlined, label: '구글 폰트', action: () {}),
+                      // AppIcon(icon: Icons.font_download_outlined, label: '환율', action: () {}),
+                      AppIcon(
+                        child: svg('money-exchange', package: '..', width: 36, height: 36),
+                        label: '환율',
+                        action: RouteNames.weather,
+                      ),
                     ],
                   ),
                   spaceXl,
@@ -85,11 +92,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: sm,
                     children: [
-                      AppIcon(Entypo.chat, '자유게시판', RouteNames.forum,
+                      AppIcon(
+                          icon: Entypo.chat,
+                          label: '자유게시판',
+                          action: RouteNames.forum,
                           arguments: {'categoryId': 'discussion'}),
-                      AppIcon(Icons.help_outline, '질문게시판', RouteNames.forum,
+                      AppIcon(
+                          icon: Icons.help_outline,
+                          label: '질문게시판',
+                          action: RouteNames.forum,
                           arguments: {'categoryId': 'qna'}),
-                      AppIcon(Entypo.docs, '공지사항', RouteNames.forum,
+                      AppIcon(
+                          icon: Entypo.docs,
+                          label: '공지사항',
+                          action: RouteNames.forum,
                           arguments: {'categoryId': 'reminder'}),
                     ],
                   ),
@@ -99,10 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: sm,
                     children: [
-                      AppIcon(FontAwesome5.share_alt_square, '공유하기', () => {}),
+                      AppIcon(icon: FontAwesome5.share_alt_square, label: '공유하기', action: () => {}),
                       AppIcon(
-                          Icons.contacts_rounded, '연락처', RouteNames.contact),
-                      AppIcon(Icons.border_color_rounded, '기능 요청', () => {}),
+                          icon: Icons.contacts_rounded, label: '연락처', action: RouteNames.contact),
+                      AppIcon(icon: Icons.border_color_rounded, label: '기능 요청', action: () => {}),
                     ],
                   ),
                   Divider(),
@@ -118,20 +134,51 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class AppIcon extends StatelessWidget {
-  const AppIcon(this.icon, this.label, this.action, {Key? key, this.arguments})
-      : super(key: key);
-  final IconData icon;
+  const AppIcon({
+    this.icon,
+    this.label = '',
+    this.action,
+    Key? key,
+    this.arguments,
+    this.child,
+  }) : super(key: key);
+  final IconData? icon;
+  final Widget? child;
   final String label;
+
   final dynamic action;
   final Map<String, dynamic>? arguments;
 
   @override
   Widget build(BuildContext context) {
-    return IconTextButton(icon, label, () {
-      if (action is String)
-        service.open(action, arguments: arguments);
-      else
-        action();
-    }, size: 40);
+    if (icon != null) {
+      return IconTextButton(icon!, label, () {
+        if (action is String)
+          service.open(action, arguments: arguments);
+        else
+          action();
+      }, size: 40);
+    } else {
+      return GestureDetector(
+        child: Column(
+          children: [
+            SizedBox(height: 2),
+            child!,
+            spaceXs,
+            Text(
+              label,
+              style: TextStyle(fontSize: 15),
+            )
+          ],
+        ),
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          if (action is String)
+            service.open(action, arguments: arguments);
+          else
+            action();
+        },
+      );
+    }
   }
 }

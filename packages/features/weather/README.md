@@ -9,6 +9,20 @@
 - 참고, OpenWeatherMap 에서 미세먼지 부분이 너무 맞지 않아, OpenWeatherMap 이 아닌 다른 국내 데이터를 사용해야 할 것 같다.
 
 
+
+- 국내 참고 문서
+  - https://www.me.go.kr/mamo/web/index.do?menuId=16201
+  - https://www.jeonju.go.kr/index.9is?contentUid=9be517a765366314016578d7e2a3556e
+
+
+- 국내 데이터 제공 참고 사이트
+  - 주로 동네예보 조회 API 를 많이 사용하는데, 위도, 경도를 바탕으로 동네를 파악할 수 있는 DB 를 먼저 만들거나,
+    - 참고: https://idlecomputer.tistory.com/320 를 보면, 위도/경도를 바탕으로 동네 예보 조회 하는 방법이 설명되어져 있다.
+  - https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=ufo7142&logNo=220716957884
+  - https://rubenchoi.tistory.com/48
+  - https://blog.naver.com/whddn0330/222345858709
+
+
 ## UVI - 자외선 지수
 
 - 참고 문서
@@ -23,18 +37,6 @@ https://100.daum.net/encyclopedia/view/39XXXXX00639
 
 
 ## 미세먼지
-
-- 참고 문서
-  - https://www.me.go.kr/mamo/web/index.do?menuId=16201
-  - https://www.jeonju.go.kr/index.9is?contentUid=9be517a765366314016578d7e2a3556e
-
-
-- 데이터 제공 참고 사이트
-  - 주로 동네예보 조회 API 를 많이 사용하는데, 위도, 경도를 바탕으로 동네를 파악할 수 있는 DB 를 먼저 만들거나,
-    - 참고: https://idlecomputer.tistory.com/320 를 보면, 위도/경도를 바탕으로 동네 예보 조회 하는 방법이 설명되어져 있다.
-  - https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=ufo7142&logNo=220716957884
-  - https://rubenchoi.tistory.com/48
-
 
 - 미세먼지의 경우 Open Weather Map 의 것을 사용 할 수 없다. 정확도가 너무 떨어진다.
   - 국내 API 나 정보 제공 사이트를 찾아서 파싱을 해야 할 필요가 있다.
