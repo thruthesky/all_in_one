@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import './spinner.dart';
+import '../spinner/spinner.dart';
 
 /// 이미지를 캐시해서 보기
 ///

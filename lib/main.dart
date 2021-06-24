@@ -47,14 +47,10 @@ class _AioAppState extends State<AioApp> {
   void initState() {
     super.initState();
 
-    WeatherService.instance.init(apiKey: Config.openWeatherMapApiKey);
-    WeatherService.instance.data.listen((data) {
-      print('data: $data');
-      final String? icon = (data as WeatherModel).current?.weather?[0].icon;
-      if (icon != null) {
-        print("https://openweathermap.org/img/wn/$icon@2x.png");
-      }
-    });
+    WeatherService.instance.init(
+      apiKey: Config.openWeatherMapApiKey, // Api key
+      updateInterval: Config.openWeatherMapUpdateInterval, // 업데이트 주기
+    );
 
     // Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
     // final post = PostModel.fromJson(m);
