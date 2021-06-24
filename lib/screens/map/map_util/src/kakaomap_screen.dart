@@ -7,7 +7,7 @@ class KakaoMapScreen extends StatelessWidget {
   final String url;
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
-  GlobalKey<ScaffoldMessengerState>();
+      GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +15,12 @@ class KakaoMapScreen extends StatelessWidget {
       key: _scaffoldMessengerKey,
       child: Scaffold(
           body: SafeArea(
-            child: WebView(
-              initialUrl: url,
-              javascriptMode: JavascriptMode.unrestricted,
-              javascriptChannels: <JavascriptChannel>{_toasterJavascriptChannel()},
-            ),
-          )),
+        child: WebView(
+          initialUrl: url,
+          javascriptMode: JavascriptMode.unrestricted,
+          javascriptChannels: <JavascriptChannel>{_toasterJavascriptChannel()},
+        ),
+      )),
     );
   }
 

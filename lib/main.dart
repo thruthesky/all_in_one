@@ -12,13 +12,16 @@ import 'package:all_in_one/screens/qr_code/qr_code.scan.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
+import 'package:all_in_one/screens/weather/weather.screen.dart';
 import 'package:all_in_one/screens/widget_collection/widget_collection.dart';
+import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
 void main() async {
@@ -43,6 +46,12 @@ class _AioAppState extends State<AioApp> {
   @override
   void initState() {
     super.initState();
+
+    WeatherService.instance.init(
+      apiKey: Config.openWeatherMapApiKey, // Api key
+      updateInterval: Config.openWeatherMapUpdateInterval, // 업데이트 주기
+    );
+
     // Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
     // final post = PostModel.fromJson(m);
     // print(post);
@@ -75,6 +84,7 @@ class _AioAppState extends State<AioApp> {
         GetPage(name: RouteNames.forum, page: () => ForumScreen()),
         GetPage(name: RouteNames.contact, page: () => ContactScreen()),
         GetPage(name: RouteNames.map, page: () => MapScreen()),
+        GetPage(name: RouteNames.weather, page: () => WeatherScreen()),
       ],
     );
   }

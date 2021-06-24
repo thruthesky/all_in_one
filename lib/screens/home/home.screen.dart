@@ -10,6 +10,7 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:get/get.dart';
+import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -34,10 +35,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Text('만능앱'),
-                  Row(children: [UserName(), Text('님의 일상을 책임지겠습니다.')]),
+                  Row(children: [
+                    UserName(
+                      defaultName: '회원',
+                    ),
+                    Text('님의 일상을 책임지겠습니다.')
+                  ]),
                   spaceXl,
                   Text('자주 사용하는 기능', style: tsSm),
                   Divider(),
+                  spaceXl,
+                  Text('위젯', style: tsSm),
+                  Divider(),
+                  WeatherIcon(onTap: () => service.open(RouteNames.weather)),
                   spaceXl,
                   Text('일상 생활', style: tsSm),
                   Divider(),
@@ -51,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           size: 40,
                         ),
                       ),
-                      AppIcon(Typicons.sun, '날씨', () {}),
+                      AppIcon(Typicons.sun, '날씨', RouteNames.weather),
                       AppIcon(FontAwesome5.map_marked_alt, '지도', RouteNames.map),
                     ],
                   ),

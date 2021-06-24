@@ -112,7 +112,8 @@ class _ForumScreenState extends State<ForumScreen> {
                     ConstrainedBox(
                       constraints: BoxConstraints(maxHeight: 300),
                       child: TextField(
-                        controller: TextEditingController()..text = post.content,
+                        controller: TextEditingController()
+                          ..text = post.content,
                         onChanged: (v) => post.content = v,
                         onSubmitted: (text) {},
                         maxLines: null,
@@ -133,7 +134,8 @@ class _ForumScreenState extends State<ForumScreen> {
                             progress: (p) => setState(() => progress = p)),
                         Spacer(),
                         ElevatedButton(
-                            onPressed: () => controller.state.edit = null, child: Text('취소')),
+                            onPressed: () => controller.state.edit = null,
+                            child: Text('취소')),
                         SizedBox(width: 6),
                         ElevatedButton(
                             onPressed: loading
@@ -164,7 +166,8 @@ class _ForumScreenState extends State<ForumScreen> {
                         alignment: WrapAlignment.start,
                         children: [
                           for (final FileModel file in post.files)
-                            controller.state.fileEditBuilder(file, post, () => setState(() {})),
+                            controller.state.fileEditBuilder(
+                                file, post, () => setState(() {})),
                         ],
                       ),
                     ),
