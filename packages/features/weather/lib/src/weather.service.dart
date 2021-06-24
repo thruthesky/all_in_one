@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather/src/models/air.model.dart';
 import 'package:weather/weather.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -23,12 +24,19 @@ class WeatherService {
   /// 기본 값 1,000 초( 16 분 40초 ).
   late final int _updateInterval;
 
-  /// 새로운 데이터를 가져오면 [dataChanges] 이벤트가 발생한다.
-  BehaviorSubject dataChanges = BehaviorSubject.seeded(null);
+  /// 새로운 날씨 데이터를 가져오면 [weatherChanges] 이벤트가 발생한다.
+  BehaviorSubject weatherChanges = BehaviorSubject.seeded(null);
+
+  /// 새로운 대기 오염 데이터를 가져오면 [airChanges] 이벤트가 발생한다.
+  /// 참고로, air pollution 의 경우에는 모델을 간단하게 만들었다.
+  BehaviorSubject airChanges = BehaviorSubject.seeded(null);
 
   late final String _apiKey;
-  String get apiUrl =>
+  String get weatherApiUrl =>
       'https://api.openweathermap.org/data/2.5/onecall?lat=${_position?.latitude}&lon=${_position?.longitude}&lang=kr&units=metric&appid=$_apiKey';
+
+  String get airApiUrl =>
+      'http://api.openweathermap.org/data/2.5/air_pollution?lat=${_position?.latitude}&lon=${_position?.longitude}&appid=$_apiKey';
 
   Position? _position;
 
@@ -37,7 +45,11 @@ class WeatherService {
     _updateInterval = updateInterval;
 
     updateWeather();
-    Timer.periodic(Duration(seconds: _updateInterval), (t) => updateWeather());
+    updateAir();
+    Timer.periodic(Duration(seconds: _updateInterval), (t) {
+      updateWeather();
+      updateAir();
+    });
   }
 
   Future<Position> _currentLocation() async {
@@ -49,9 +61,23 @@ class WeatherService {
     await _currentLocation();
     Dio dio = Dio();
     try {
-      final res = await dio.get(apiUrl);
+      final res = await dio.get(weatherApiUrl);
       final model = WeatherModel.fromJson(res.data);
-      dataChanges.add(model);
+      weatherChanges.add(model);
+      return model;
+    } catch (e) {
+      print('@error $e');
+      rethrow;
+    }
+  }
+
+  Future<AirModel> updateAir() async {
+    await _currentLocation();
+    Dio dio = Dio();
+    try {
+      final res = await dio.get(airApiUrl);
+      final model = AirModel.fromJson(res.data);
+      airChanges.add(model);
       return model;
     } catch (e) {
       print('@error $e');

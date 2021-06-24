@@ -37,7 +37,15 @@ class Current {
 
   String? get icon => weather?[0].icon;
   String get iconUrl => "https://openweathermap.org/img/wn/$icon@2x.png";
-  String? get description => weather?[0].description;
+  String? get description {
+    String? d = weather?[0].description;
+    String? m = weather?[0].main;
+    if (m == null) return '';
+    if (m == 'Clouds') return '흐림';
+
+    return d;
+  }
+
   num? get temperature => temp?.round();
 
   @override

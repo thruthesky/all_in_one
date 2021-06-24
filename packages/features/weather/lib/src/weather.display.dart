@@ -1,29 +1,107 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:weather/src/models/air.model.dart';
 import 'package:weather/src/models/current.dart';
 import 'package:weather/src/weather.functions.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
 class WeatherDisplay extends StatefulWidget {
-  const WeatherDisplay({Key? key, required this.apiKey}) : super(key: key);
-
-  final String apiKey;
+  const WeatherDisplay({Key? key}) : super(key: key);
 
   @override
   _WeatherDisplayState createState() => _WeatherDisplayState();
 }
 
 class _WeatherDisplayState extends State<WeatherDisplay> {
-  WeatherModel? weather;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        WeatherDisplayMain(),
+        Container(
+          height: 80,
+          child: VerticalDivider(
+            width: 60,
+            thickness: 1,
+            color: Colors.grey[300],
+          ),
+        ),
+        WeatherAirPollution(),
+      ],
+    );
+  }
+}
+
+class WeatherAirPollution extends StatefulWidget {
+  const WeatherAirPollution({Key? key}) : super(key: key);
+
+  @override
+  _WeatherAirPollutionState createState() => _WeatherAirPollutionState();
+}
+
+class _WeatherAirPollutionState extends State<WeatherAirPollution> {
+  AirModel? air;
 
   late final StreamSubscription subscribe;
 
   @override
   void initState() {
     super.initState();
-    subscribe = WeatherService.instance.dataChanges
+    subscribe = WeatherService.instance.airChanges
+        .where((event) => event != null)
+        .listen((value) => setState(() => air = value));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    subscribe.cancel();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (air == null) return Spinner();
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text('미세먼지 ${air?.coarseDust['text']}', style: TextStyle(fontSize: 12)),
+              SizedBox(width: 4),
+              svg(air!.coarseDust['icon']!, width: 16, height: 16)
+            ],
+          ),
+          Row(
+            children: [
+              Text('초미세먼지 ${air?.finDust['text']}', style: TextStyle(fontSize: 12)),
+              SizedBox(width: 4),
+              svg(air!.coarseDust['icon']!, width: 16, height: 16)
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class WeatherDisplayMain extends StatefulWidget {
+  @override
+  _WeatherDisplayMainState createState() => _WeatherDisplayMainState();
+}
+
+class _WeatherDisplayMainState extends State<WeatherDisplayMain> {
+  WeatherModel? weather;
+  late Current current;
+
+  late final StreamSubscription subscribe;
+
+  @override
+  void initState() {
+    super.initState();
+    subscribe = WeatherService.instance.weatherChanges
         .where((event) => event != null)
         .listen((value) => setState(() => weather = value));
   }
@@ -37,8 +115,9 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
   @override
   Widget build(BuildContext context) {
     if (weather == null) return Spinner();
-    Current current = weather!.current!;
+    current = weather!.current!;
     String feelsLike = current.feelsLike!.round().toString();
+
     return Container(
       child: Row(
         children: [
@@ -63,6 +142,10 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                 current.description!,
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
               ),
+              // Text(
+              //   current.weather![0].main!,
+              //   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              // ),
               Row(
                 children: [
                   Padding(
@@ -76,7 +159,16 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                   Text('°', style: TextStyle(fontSize: 12, color: Colors.grey[700])),
                 ],
               ),
-              Text('자외선 ' + uviText(current.uvi)),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('자외선(UV) ' + uviText(current.uvi),
+                      style: TextStyle(
+                          fontSize: 12, color: Colors.grey[700], fontWeight: FontWeight.w500)),
+                  SizedBox(width: 4),
+                  svg(uviIcon(current.uvi), width: 16, height: 16)
+                ],
+              ),
             ],
           )
         ],

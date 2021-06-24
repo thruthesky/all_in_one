@@ -23,7 +23,7 @@ class _WeatherIconState extends State<WeatherIcon> {
   @override
   void initState() {
     super.initState();
-    subscribe = WeatherService.instance.dataChanges
+    subscribe = WeatherService.instance.weatherChanges
         .where((event) => event != null)
         .listen((value) => setState(() => data = value));
   }

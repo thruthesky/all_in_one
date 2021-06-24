@@ -77,10 +77,14 @@ class _AioAppState extends State<AioApp> {
         GetPage(name: RouteNames.login, page: () => LoginScreen()),
         GetPage(name: RouteNames.profile, page: () => ProfileScreen()),
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
-        GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),
+        GetPage(
+            name: RouteNames.qrCodeGenerate,
+            page: () => QrCodeGenerateScreen()),
         GetPage(name: RouteNames.qrCodeScan, page: () => QrCodeScanScreen()),
         GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
-        GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
+        GetPage(
+            name: RouteNames.widgetCollection,
+            page: () => WidgetCollectionScreen()),
         GetPage(name: RouteNames.forum, page: () => ForumScreen()),
         GetPage(name: RouteNames.contact, page: () => ContactScreen()),
         GetPage(name: RouteNames.map, page: () => MapScreen()),
