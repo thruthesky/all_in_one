@@ -1,7 +1,6 @@
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
-import 'map_util/kakaomap_webview.dart';
-
+import 'package:kakaomap_webview/kakaomap_webview.dart';
 const String kakaoMapKey = '8def285fc256cfe05281d05f33ded483';
 
 class MapScreen extends StatelessWidget {
