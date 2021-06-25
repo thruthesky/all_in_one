@@ -64,26 +64,67 @@ class _WeatherAirPollutionState extends State<WeatherAirPollution> {
   Widget build(BuildContext context) {
     if (air == null) return Spinner();
     return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text('미세먼지 ${air?.coarseDust['text']}', style: TextStyle(fontSize: 12)),
-              SizedBox(width: 4),
-              svg(air!.coarseDust['icon']!, width: 16, height: 16)
-            ],
-          ),
-          Row(
-            children: [
-              Text('초미세먼지 ${air?.finDust['text']}', style: TextStyle(fontSize: 12)),
-              SizedBox(width: 4),
-              svg(air!.coarseDust['icon']!, width: 16, height: 16)
-            ],
-          ),
-        ],
-      ),
-    );
+        child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 4.8),
+              child: Text('미세먼지', style: TextStyle(fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.2),
+              child: Text('초 미세먼지', style: TextStyle(fontSize: 12)),
+            ),
+          ],
+        ),
+        spaceXs,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 4.8),
+              child: Text('${air?.coarseDust['text']}', style: TextStyle(fontSize: 12)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.2),
+              child: Text('${air?.finDust['text']}', style: TextStyle(fontSize: 12)),
+            ),
+          ],
+        ),
+        spaceXs,
+        Column(
+          children: [
+            svg(air!.coarseDust['icon']!, width: 21.6, height: 21.6),
+            spaceXs,
+            svg(air!.coarseDust['icon']!, width: 21.6, height: 21.6),
+          ],
+        )
+      ],
+    )
+
+        //  Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Row(
+        //       children: [
+        //         Text('미세먼지 ${air?.coarseDust['text']}', style: TextStyle(fontSize: 12)),
+        //         SizedBox(width: 4),
+        //         svg(air!.coarseDust['icon']!, width: 16, height: 16)
+        //       ],
+        //     ),
+        //     Row(
+        //       children: [
+        //         Text('초미세먼지 ${air?.finDust['text']}', style: TextStyle(fontSize: 12)),
+        //         SizedBox(width: 4),
+        //         svg(air!.coarseDust['icon']!, width: 16, height: 16)
+        //       ],
+        //     ),
+        //   ],
+        // ),
+        );
   }
 }
 
