@@ -62,10 +62,10 @@ dependencies:
     path: packages/features/exchange_rate
     
 dependency_overrides:
-  # flutter_simple_calculator 에서 패키지 함수 리턴 타입 관련 빌드 에러 발생하여 추가.
+  # flutter_simple_calculator
   expressions: ^0.2.2
 
-  # expressions 패키지에서 사용하는 rxdart 버전이 다른 패키지와 달라서, 최신 버전으로 변경
+  # expressions
   rxdart: ^0.27.1
 
 
