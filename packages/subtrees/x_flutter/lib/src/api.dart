@@ -7,6 +7,7 @@ import 'package:x_flutter/src/models/time.model.dart';
 import 'package:x_flutter/src/models/version.model.dart';
 import 'package:x_flutter/src/post.api.dart';
 import 'package:x_flutter/src/user.api.dart';
+import 'package:x_flutter/x_flutter.dart';
 
 class Api {
   final dio = Dio();
@@ -20,6 +21,7 @@ class Api {
   CategoryApi category = CategoryApi();
   PostApi post = PostApi();
   CommentApi comment = CommentApi();
+  CountryApi country = CountryApi();
 
   // Api Singleton
   static Api? _instance;

@@ -12,6 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   cupertino_icons: ^1.0.2
 
   get: ^4.1.4
@@ -30,7 +33,7 @@ dependencies:
 
   webview_flutter: ^2.0.8
 
-  # x_flutter: ^0.0.7
+
   x_flutter:
     path: packages/subtrees/x_flutter
 
@@ -51,6 +54,16 @@ dependencies:
 
   kakaomap_webview:
     path: packages/features/kakaomap_webview
+
+  country_info:
+    path: packages/features/country_info
+
+  exchange_rate:
+    path: packages/features/exchange_rate
+    
+  country_picker:
+    path: packages/features/country_picker
+    
     
 dependency_overrides:
   # flutter_simple_calculator 에서 패키지 함수 리턴 타입 관련 빌드 에러 발생하여 추가.

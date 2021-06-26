@@ -11,3 +11,14 @@ Widget svg(String path,
     color: color,
   );
 }
+
+/// [countryCode] is the alpha2 code.
+Widget flag(String countryCode, {double width = 100, double? height, Color? color}) {
+  return Image.asset(
+    "assets/img/flags/$countryCode.png",
+    package: 'widgets',
+    width: width,
+    height: height,
+    color: color,
+  );
+}

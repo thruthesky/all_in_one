@@ -21,6 +21,7 @@
   - https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=ufo7142&logNo=220716957884
   - https://rubenchoi.tistory.com/48
   - https://blog.naver.com/whddn0330/222345858709
+  - [기상청 격자 위치 정보와 위/경도 위치 정보 변환](https://fronteer.kr/service/kmaxy)
 
 
 ## UVI - 자외선 지수

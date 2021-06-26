@@ -4,6 +4,7 @@ import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:calculator/calculator.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -37,10 +38,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('만능앱'),
                   Row(children: [
                     UserName(
-                      defaultName: '회원',
+                      suffixLogin: '님의',
+                      defaultName: '당신의',
                     ),
-                    Text('님의 일상을 책임지겠습니다.')
+                    Text(' 일상을 책임지겠습니다.'),
+                    Text('app_name'.tr),
+                    Text('apple'.tr),
                   ]),
+                  CountryPicker(),
                   spaceXl,
                   Text('자주 사용하는 기능', style: tsSm),
                   Divider(),
@@ -52,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('일상 생활', style: tsSm),
                   Divider(),
                   Wrap(
-                    spacing: sm,
+                    spacing: md,
                     children: [
                       Calculator(
                         child: IconText(
@@ -70,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('유틸리티, 툴 모음', style: tsSm),
                   Divider(),
                   Wrap(
-                    spacing: sm,
+                    spacing: md,
                     children: [
                       AppIcon(icon: Elusive.qrcode, label: 'QR 코드', action: RouteNames.qrCodeScan),
                       AppIcon(
@@ -82,8 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppIcon(
                         child: svg('money-exchange', package: '..', width: 36, height: 36),
                         label: '환율',
-                        action: RouteNames.weather,
+                        action: RouteNames.exchangeRate,
                       ),
+                      AppIcon(
+                          icon: Typicons.globe_alt, label: '국가 정보', action: RouteNames.countryInfo),
                     ],
                   ),
                   spaceXl,
@@ -113,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Text('만능앱에 대해서', style: tsSm),
                   Divider(),
                   Wrap(
-                    spacing: sm,
+                    spacing: md,
                     children: [
                       AppIcon(icon: FontAwesome5.share_alt_square, label: '공유하기', action: () => {}),
                       AppIcon(
@@ -121,8 +128,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppIcon(icon: Icons.border_color_rounded, label: '기능 요청', action: () => {}),
                     ],
                   ),
-                  Divider(),
-                  WidgetCollection(),
                 ],
               ),
             ),

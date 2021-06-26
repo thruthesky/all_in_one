@@ -1,0 +1,34 @@
+name: country_info
+description: country_info packages
+version: 0.0.1
+homepage: https://github.com/thruthesky/all_in_one
+repository: https://github.com/thruthesky/all_in_one
+
+# pub.dev 에 publish 하지 않음
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+    
+  country_code_picker: ^2.0.2
+
+
+  x_flutter:
+    path: ../../subtrees/x_flutter
+
+  services:
+    path: ../../services
+
+    
+  widgets:
+    path: ../../widgets
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
