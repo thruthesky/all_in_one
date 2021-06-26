@@ -92,8 +92,7 @@ class CurrencyPickerCupertino extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CupertinoCurrencyPickerState createState() =>
-      _CupertinoCurrencyPickerState();
+  _CupertinoCurrencyPickerState createState() => _CupertinoCurrencyPickerState();
 }
 
 class _CupertinoCurrencyPickerState extends State<CurrencyPickerCupertino> {
@@ -104,18 +103,15 @@ class _CupertinoCurrencyPickerState extends State<CurrencyPickerCupertino> {
   void initState() {
     super.initState();
 
-    _countries =
-        countryList.where(widget.itemFilter ?? acceptAllCountries).toList();
+    _countries = countryList.where(widget.itemFilter ?? acceptAllCountries).toList();
 
     _scrollController = this.widget.scrollController;
 
     if ((_scrollController == null) && (this.widget.initialCountry != null)) {
-      var countyInList = _countries
-          .where(
-              (c) => c.currencyCode == this.widget.initialCountry!.currencyCode)
-          .first;
-      _scrollController = FixedExtentScrollController(
-          initialItem: _countries.indexOf(countyInList));
+      var countyInList =
+          _countries.where((c) => c.currencyCode == this.widget.initialCountry!.currencyCode).first;
+      _scrollController =
+          FixedExtentScrollController(initialItem: _countries.indexOf(countyInList));
     }
   }
 
@@ -173,7 +169,7 @@ class _CupertinoCurrencyPickerState extends State<CurrencyPickerCupertino> {
         children: <Widget>[
           CountryPickerUtils.getDefaultFlagImage(country),
           SizedBox(width: 8.0),
-          Flexible(child: Text(country.name!))
+          Flexible(child: Text(country.name))
         ],
       ),
     );

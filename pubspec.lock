@@ -81,9 +81,9 @@ packages:
   country_currency_pickers:
     dependency: transitive
     description:
-      name: country_currency_pickers
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "packages/subtrees/country_currency_pickers"
+      relative: true
+    source: path
     version: "2.0.0"
   country_info:
     dependency: "direct main"

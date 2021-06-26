@@ -4,7 +4,7 @@ import 'package:country_currency_pickers/currency_picker_dialog.dart';
 import 'package:country_currency_pickers/currency_picker_dropdown.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:country_currency_pickers/country_pickers.dart';
+import 'package:country_currency_pickers/country_currency_pickers.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,29 +29,21 @@ class DemoPage extends StatefulWidget {
 }
 
 class _HomePageState extends State<DemoPage> {
-  Country _selectedDialogCountry =
-      CountryPickerUtils.getCountryByPhoneCode('90');
+  Country _selectedDialogCountry = CountryPickerUtils.getCountryByPhoneCode('90');
 
-  Country _selectedDialogCurrency =
-      CountryPickerUtils.getCountryByCurrencyCode('INR');
+  Country _selectedDialogCurrency = CountryPickerUtils.getCountryByCurrencyCode('INR');
 
-  Country _selectedFilteredDialogCountry =
-      CountryPickerUtils.getCountryByPhoneCode('90');
+  Country _selectedFilteredDialogCountry = CountryPickerUtils.getCountryByPhoneCode('90');
 
-  Country _selectedFilteredDialogCurrency =
-      CountryPickerUtils.getCountryByCurrencyCode('INR');
+  Country _selectedFilteredDialogCurrency = CountryPickerUtils.getCountryByCurrencyCode('INR');
 
-  Country _selectedCupertinoCountry =
-      CountryPickerUtils.getCountryByIsoCode('tr');
+  Country _selectedCupertinoCountry = CountryPickerUtils.getCountryByIsoCode('tr');
 
-  Country _selectedCupertinoCurrency =
-      CountryPickerUtils.getCountryByCurrencyCode('INR');
+  Country _selectedCupertinoCurrency = CountryPickerUtils.getCountryByCurrencyCode('INR');
 
-  Country _selectedFilteredCupertinoCountry =
-      CountryPickerUtils.getCountryByIsoCode('DE');
+  Country _selectedFilteredCupertinoCountry = CountryPickerUtils.getCountryByIsoCode('DE');
 
-  Country _selectedFilteredCupertinoCurrency =
-      CountryPickerUtils.getCountryByCurrencyCode('INR');
+  Country _selectedFilteredCupertinoCurrency = CountryPickerUtils.getCountryByCurrencyCode('INR');
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +156,7 @@ class _HomePageState extends State<DemoPage> {
               children: <Widget>[
                 Text('CurrencyPickerCupertino'),
                 ListTile(
-                  title: _buildCupertinoSelectedCurrencyItem(
-                      _selectedCupertinoCurrency),
+                  title: _buildCupertinoSelectedCurrencyItem(_selectedCupertinoCurrency),
                   onTap: _openCupertinoCurrencyPicker,
                 ),
               ],
@@ -177,8 +168,7 @@ class _HomePageState extends State<DemoPage> {
               children: <Widget>[
                 Text('CountryPickerCupertino (filtered)'),
                 ListTile(
-                  title: _buildCupertinoSelectedItem(
-                      _selectedFilteredCupertinoCountry),
+                  title: _buildCupertinoSelectedItem(_selectedFilteredCupertinoCountry),
                   onTap: _openFilteredCupertinoCountryPicker,
                 ),
               ],
@@ -190,8 +180,7 @@ class _HomePageState extends State<DemoPage> {
               children: <Widget>[
                 Text('CurrencyPickerCupertino (filtered)'),
                 ListTile(
-                  title: _buildCupertinoSelectedCurrencyItem(
-                      _selectedFilteredCupertinoCurrency),
+                  title: _buildCupertinoSelectedCurrencyItem(_selectedFilteredCupertinoCurrency),
                   onTap: _openFilteredCupertinoCurrencyPicker,
                 ),
               ],
@@ -207,9 +196,7 @@ class _HomePageState extends State<DemoPage> {
           CountryPickerDropdown(
             initialValue: 'AR',
             itemBuilder: _buildDropdownItem,
-            itemFilter: filtered
-                ? (c) => ['AR', 'DE', 'GB', 'CN'].contains(c.isoCode)
-                : null,
+            itemFilter: filtered ? (c) => ['AR', 'DE', 'GB', 'CN'].contains(c.isoCode) : null,
             onValuePicked: (Country? country) {
               print("${country?.name}");
             },
@@ -231,8 +218,7 @@ class _HomePageState extends State<DemoPage> {
             initialValue: 'INR',
             itemBuilder: _buildCurrencyDropdownItem,
             itemFilter: filtered
-                ? (c) =>
-                    ['INR', 'CAD', 'USD', 'CHF', 'EUR'].contains(c.currencyCode)
+                ? (c) => ['INR', 'CAD', 'USD', 'CHF', 'EUR'].contains(c.currencyCode)
                 : null,
             onValuePicked: (Country? country) {
               print("${country?.name}");
@@ -279,7 +265,7 @@ class _HomePageState extends State<DemoPage> {
           SizedBox(width: 8.0),
           Text("+${country.phoneCode}"),
           SizedBox(width: 8.0),
-          Flexible(child: Text(country.name ?? ''))
+          Flexible(child: Text(country.name))
         ],
       );
 
@@ -289,7 +275,7 @@ class _HomePageState extends State<DemoPage> {
           SizedBox(width: 8.0),
           Text("(${country.currencyCode})"),
           SizedBox(width: 8.0),
-          Flexible(child: Text(country.name ?? ''))
+          Flexible(child: Text(country.name))
         ],
       );
 
@@ -351,8 +337,7 @@ class _HomePageState extends State<DemoPage> {
                 title: Text('Select your Currency'),
                 onValuePicked: (Country country) =>
                     setState(() => _selectedFilteredDialogCountry = country),
-                itemFilter: (c) => ['INR', 'CAD', 'USD', 'CHF', 'EUR']
-                    .contains(c.currencyCode),
+                itemFilter: (c) => ['INR', 'CAD', 'USD', 'CHF', 'EUR'].contains(c.currencyCode),
                 itemBuilder: _buildCurrencyDialogItem)),
       );
 
@@ -365,8 +350,7 @@ class _HomePageState extends State<DemoPage> {
           pickerSheetHeight: 300.0,
           pickerItemHeight: 75,
           initialCountry: _selectedCupertinoCountry,
-          onValuePicked: (Country country) =>
-              setState(() => _selectedCupertinoCountry = country),
+          onValuePicked: (Country country) => setState(() => _selectedCupertinoCountry = country),
         );
       });
 
@@ -379,8 +363,7 @@ class _HomePageState extends State<DemoPage> {
           pickerSheetHeight: 300.0,
           pickerItemHeight: 75,
           initialCountry: _selectedCupertinoCurrency,
-          onValuePicked: (Country country) =>
-              setState(() => _selectedCupertinoCurrency = country),
+          onValuePicked: (Country country) => setState(() => _selectedCupertinoCurrency = country),
         );
       });
 
@@ -406,8 +389,7 @@ class _HomePageState extends State<DemoPage> {
           initialCountry: _selectedFilteredCupertinoCurrency,
           onValuePicked: (Country country) =>
               setState(() => _selectedFilteredCupertinoCurrency = country),
-          itemFilter: (c) =>
-              ['INR', 'CAD', 'USD', 'CHF', 'EUR'].contains(c.currencyCode),
+          itemFilter: (c) => ['INR', 'CAD', 'USD', 'CHF', 'EUR'].contains(c.currencyCode),
         );
       });
 
@@ -418,7 +400,7 @@ class _HomePageState extends State<DemoPage> {
         SizedBox(width: 8.0),
         Text("+${country.phoneCode}"),
         SizedBox(width: 8.0),
-        Flexible(child: Text(country.name ?? ''))
+        Flexible(child: Text(country.name))
       ],
     );
   }
@@ -430,7 +412,7 @@ class _HomePageState extends State<DemoPage> {
         SizedBox(width: 8.0),
         Text("(${country.currencyCode})"),
         SizedBox(width: 8.0),
-        Flexible(child: Text(country.name ?? ''))
+        Flexible(child: Text(country.name))
       ],
     );
   }
@@ -448,7 +430,7 @@ class _HomePageState extends State<DemoPage> {
           SizedBox(width: 8.0),
           Text("+${country.phoneCode}"),
           SizedBox(width: 8.0),
-          Flexible(child: Text(country.name ?? ''))
+          Flexible(child: Text(country.name))
         ],
       ),
     );
@@ -467,7 +449,7 @@ class _HomePageState extends State<DemoPage> {
           SizedBox(width: 8.0),
           Text("(${country.currencyCode})"),
           SizedBox(width: 8.0),
-          Flexible(child: Text(country.name ?? ''))
+          Flexible(child: Text(country.name))
         ],
       ),
     );

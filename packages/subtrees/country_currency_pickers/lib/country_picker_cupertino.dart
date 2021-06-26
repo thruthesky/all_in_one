@@ -103,17 +103,15 @@ class _CupertinoCountryPickerState extends State<CountryPickerCupertino> {
   void initState() {
     super.initState();
 
-    _countries =
-        countryList.where(widget.itemFilter ?? acceptAllCountries).toList();
+    _countries = countryList.where(widget.itemFilter ?? acceptAllCountries).toList();
 
     _scrollController = this.widget.scrollController;
 
     if ((_scrollController == null) && (this.widget.initialCountry != null)) {
-      var countyInList = _countries
-          .where((c) => c.phoneCode == this.widget.initialCountry!.phoneCode)
-          .first;
-      _scrollController = FixedExtentScrollController(
-          initialItem: _countries.indexOf(countyInList));
+      var countyInList =
+          _countries.where((c) => c.phoneCode == this.widget.initialCountry!.phoneCode).first;
+      _scrollController =
+          FixedExtentScrollController(initialItem: _countries.indexOf(countyInList));
     }
   }
 
@@ -171,7 +169,7 @@ class _CupertinoCountryPickerState extends State<CountryPickerCupertino> {
         children: <Widget>[
           CountryPickerUtils.getDefaultFlagImage(country),
           SizedBox(width: 8.0),
-          Flexible(child: Text(country.name!))
+          Flexible(child: Text(country.name))
         ],
       ),
     );

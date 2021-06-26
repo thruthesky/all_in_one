@@ -21,8 +21,7 @@ class MyAlertDialog<T> extends StatelessWidget {
       height: 0.0,
     ),
     this.isDividerEnabled = true,
-  })  : assert(contentPadding != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// The (optional) title of the dialog is displayed in a large font at the top
   /// of the dialog.
@@ -102,8 +101,7 @@ class MyAlertDialog<T> extends StatelessWidget {
     if (title != null) {
       children.add(new Padding(
         padding: titlePadding ??
-            new EdgeInsets.fromLTRB(
-                24.0, 24.0, 24.0, isDividerEnabled ? 20.0 : 0.0),
+            new EdgeInsets.fromLTRB(24.0, 24.0, 24.0, isDividerEnabled ? 20.0 : 0.0),
         child: new DefaultTextStyle(
           style: Theme.of(context).textTheme.headline6!,
           child: new Semantics(child: title, namesRoute: true),
@@ -120,8 +118,7 @@ class MyAlertDialog<T> extends StatelessWidget {
         case TargetPlatform.windows:
         case TargetPlatform.macOS:
         case TargetPlatform.fuchsia:
-          label = semanticLabel ??
-              MaterialLocalizations.of(context).alertDialogLabel;
+          label = semanticLabel ?? MaterialLocalizations.of(context).alertDialogLabel;
       }
     }
 
@@ -154,8 +151,7 @@ class MyAlertDialog<T> extends StatelessWidget {
     );
 
     if (label != null)
-      dialogChild =
-          new Semantics(namesRoute: true, label: label, child: dialogChild);
+      dialogChild = new Semantics(namesRoute: true, label: label, child: dialogChild);
 
     return new Dialog(child: dialogChild);
   }

@@ -78,6 +78,8 @@ class CountryPickerDialog extends StatefulWidget {
   ///The search empty view is displayed if nothing returns from search result
   final Widget? searchEmptyView;
 
+  final Function? patchCountries;
+
   CountryPickerDialog({
     Key? key,
     this.onValuePicked,
@@ -95,6 +97,7 @@ class CountryPickerDialog extends StatefulWidget {
     this.searchInputDecoration,
     this.searchCursorColor,
     this.searchEmptyView,
+    this.patchCountries,
   }) : super(key: key);
 
   @override
@@ -110,8 +113,10 @@ class SingleChoiceDialogState extends State<CountryPickerDialog> {
 
   @override
   void initState() {
-    _allCountries =
-        countryList.where(widget.itemFilter ?? acceptAllCountries).toList();
+    _allCountries = countryList.where(widget.itemFilter ?? acceptAllCountries).toList();
+
+    if (widget.patchCountries != null) widget.patchCountries!(_allCountries);
+    _filteredCountries = _allCountries;
 
     _filteredCountries = _allCountries;
 
@@ -136,9 +141,8 @@ class SingleChoiceDialogState extends State<CountryPickerDialog> {
             shrinkWrap: true,
             children: _filteredCountries!
                 .map((item) => SimpleDialogOption(
-                      child: widget.itemBuilder != null
-                          ? widget.itemBuilder!(item)
-                          : Text(item.name!),
+                      child:
+                          widget.itemBuilder != null ? widget.itemBuilder!(item) : Text(item.name),
                       onPressed: () {
                         widget.onValuePicked!(item);
                         Navigator.pop(context);
@@ -175,17 +179,14 @@ class SingleChoiceDialogState extends State<CountryPickerDialog> {
   _buildSearchField() {
     return TextField(
       cursorColor: widget.searchCursorColor,
-      decoration:
-          widget.searchInputDecoration ?? InputDecoration(hintText: 'Search'),
+      decoration: widget.searchInputDecoration ?? InputDecoration(hintText: 'Search'),
       onChanged: (String value) {
         setState(() {
           _filteredCountries = _allCountries!
               .where((Country country) =>
-                  country.name!.toLowerCase().startsWith(value.toLowerCase()) ||
+                  country.name.toLowerCase().startsWith(value.toLowerCase()) ||
                   country.phoneCode!.startsWith(value) ||
-                  country.isoCode!
-                      .toLowerCase()
-                      .startsWith(value.toLowerCase()))
+                  country.isoCode!.toLowerCase().startsWith(value.toLowerCase()))
               .toList();
         });
       },

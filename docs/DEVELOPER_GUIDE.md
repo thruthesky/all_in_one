@@ -26,6 +26,7 @@
 - [모델](#모델)
 - [위젯 패키지](#위젯-패키지)
   - [SVG](#svg)
+- [서브트리, Subtree](#서브트리-subtree)
 - [백엔드](#백엔드)
   - [x_flutter 패키지 개발 방법](#x_flutter-패키지-개발-방법)
 - [파이어베이스](#파이어베이스)
@@ -316,6 +317,17 @@ svg(uviIcon(current.uvi), width: 20, height: 20)
 svg('money-exchange', package: '..'), // 앱 assets 경로
 ```
 
+# 서브트리, Subtree
+
+- 패키지(소스 코드)를 pub.dev 에 배포하는 것 보다 로컬(개발) 컴퓨터에서 수정하여 작업하는 것이 편합니다. 자신이 만든 패키지를 세상에 공개해서 널리 쓰게 할 목적이 아니라면, 굳이 pub.dev 에 배포 할 필요 없습니다.
+- 로컬(개발) 컴퓨터에서 수정을 하는 것이 편한데, 때로는 소스 코드가 git repo 에 있어야 할 때가 있습니다. 즉, 소스 코드가 git repo 로 저장되고 이리 저리 활용이 될 필요가 있을 수 있습니다. 예를 들면, 다른 프로젝트의 submodule 로 들어갈 수 있습니다.
+  - 하지만, 이와 같은 경우, git submodule 에 대해서 알지 못하는 개발자가 작업을 하는데 걸림돌이 됩니다.
+
+- 그래서, `git subtree` 로 git repo 의 코드를 가져와서 사용합니다.
+
+- 참고로 `x_flutter` 는 `$ git subtree --prefix=packages/subtrees/x_flutter x_flutter main` 와 같이 지정되어져 있고,
+  `country_currency_pickers` 는 `% git subtree add --prefix=packages/subtrees/country_currency_pickers --squash country_currency_pickers master` 와 같이 지정되어져 있습니다.
+
 # 백엔드
 
 - pub.dev 에 [x_flutter 패키지](https://pub.dev/packages/x_flutter)가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
@@ -463,8 +475,7 @@ ElevatedButton(
   - 그래서 Mono repo 를 선택 했습니다.
 
 - 흩어져 있는 repo 들은 `git subtree` 기능으로 모았으며, `/packages` 폴더에 재 사용가능한 코드를 모아 놓았습니다.
-  - 참고로 `git subtree` 는
-    - `$ git subtree --prefix=packages/subtrees/x_flutter x_flutter main` 으로 지정되어져 있습니다.
+  - 참고, 본 문서의 subtrees 항목
 
 - `/projects` 폴더에 서브 프로젝트를 생성하면 됩니다.
 

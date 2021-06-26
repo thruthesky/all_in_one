@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:country_currency_pickers/country.dart';
-import 'package:country_currency_pickers/country_pickers.dart';
 import 'package:country_currency_pickers/currency_picker_dialog.dart';
+import 'package:flutter/material.dart';
+import 'package:country_currency_pickers/country_currency_pickers.dart';
 import 'package:services/services.dart';
 
 class CountryPicker extends StatefulWidget {
@@ -45,7 +44,7 @@ class _CountryPickerState extends State<CountryPicker> {
             patchCountries: (List<Country> countries) {
               for (final c in countries) {
                 Map<String, String> info = countryCurrency(c.isoCode ?? '');
-                c.name = info['koreanName'];
+                c.name = info['koreanName'] ?? '';
               }
             },
           ),

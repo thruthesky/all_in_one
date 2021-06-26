@@ -14,11 +14,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-
-  country_currency_pickers: ^2.0.0
-
   services:
     path: ../../services
+
+  country_currency_pickers:
+    path: ../../subtrees/country_currency_pickers
 
 dev_dependencies:
   flutter_test:
