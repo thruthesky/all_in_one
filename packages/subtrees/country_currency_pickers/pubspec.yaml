@@ -1,0 +1,19 @@
+name: country_currency_pickers
+description: Countries, codes, flags, currency and several way of picking them at your service...one widget away...
+version: 2.0.0
+homepage: https://github.com/learnpainless/country_currency_pickers
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/
