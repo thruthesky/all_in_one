@@ -50,6 +50,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  country_currency_pickers:
+    dependency: transitive
+    description:
+      path: "../../subtrees/country_currency_pickers"
+      relative: true
+    source: path
+    version: "2.0.0"
+  country_picker:
+    dependency: "direct main"
+    description:
+      path: "../country_picker"
+      relative: true
+    source: path
+    version: "0.0.1"
   crypto:
     dependency: transitive
     description:

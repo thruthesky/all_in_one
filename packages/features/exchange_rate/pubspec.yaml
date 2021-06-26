@@ -20,11 +20,14 @@ dependencies:
 
   services:
     path: ../../services
-
     
   widgets:
     path: ../../widgets
 
+  country_picker:
+    path: ../country_picker
+    
+    
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -4,7 +4,6 @@ import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:calculator/calculator.dart';
-import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/elusive_icons.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -45,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text('app_name'.tr),
                     Text('apple'.tr),
                   ]),
-                  CountryPicker(),
                   spaceXl,
                   Text('자주 사용하는 기능', style: tsSm),
                   Divider(),

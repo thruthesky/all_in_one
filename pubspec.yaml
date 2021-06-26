@@ -61,10 +61,6 @@ dependencies:
   exchange_rate:
     path: packages/features/exchange_rate
     
-  country_picker:
-    path: packages/features/country_picker
-    
-    
 dependency_overrides:
   # flutter_simple_calculator 에서 패키지 함수 리턴 타입 관련 빌드 에러 발생하여 추가.
   expressions: ^0.2.2

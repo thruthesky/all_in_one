@@ -93,7 +93,7 @@ packages:
     source: path
     version: "0.0.1"
   country_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       path: "packages/features/country_picker"
       relative: true

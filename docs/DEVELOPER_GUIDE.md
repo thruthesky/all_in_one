@@ -45,6 +45,7 @@
   - [각자의 프로젝트 생성](#각자의-프로젝트-생성)
   - [각자의 프로젝트 설정](#각자의-프로젝트-설정)
 - [i18n, 다국어](#i18n-다국어)
+- [계산기](#계산기)
 - [문제점, 버그](#문제점-버그)
 
 
@@ -529,6 +530,10 @@ flutter:
 - 다국어는 services 패키지의 app.translation.dart 에서 제공하고 있다.
 
 
+
+# 계산기
+
+- https://itnext.io/building-a-calculator-app-in-flutter-824254704fe6 를 보고 따라 하다가, 그냥 https://pub.dev/packages/flutter_simple_calculator 으로 대체.
 
 # 문제점, 버그
 

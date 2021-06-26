@@ -3,28 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:country_currency_pickers/country_currency_pickers.dart';
 import 'package:services/services.dart';
 
+/// [onChanged] 는 defaultCountryCode 가 처음 설정될 때에도 호출된다.
 class CountryPicker extends StatefulWidget {
-  CountryPicker();
+  CountryPicker({this.defaultCountryCode = 'KR', required this.onChanged});
+  final String defaultCountryCode;
+  final Function onChanged;
 
   @override
   _CountryPickerState createState() => _CountryPickerState();
 }
 
 class _CountryPickerState extends State<CountryPicker> {
-  Country _selectedDialogCurrency = CountryPickerUtils.getCountryByCurrencyCode('KRW');
+  late Country _selectedDialogCurrency;
+
   Widget _buildCurrencyDialogItem(Country country) {
-    Map<String, String> info = countryCurrency(country.isoCode ?? '');
+    final info = countryCurrency(country.isoCode ?? '');
     return Row(
       children: <Widget>[
         CountryPickerUtils.getDefaultFlagImage(country),
         SizedBox(width: 8.0),
-        Expanded(child: Text(info['koreanName']!)),
+        Expanded(child: Text(info.koreanName)),
         SizedBox(width: 8.0),
-        if (info['currencyKoreanName'] != '')
-          Text(
-            "(${info['currencyKoreanName']!})",
-            style: TextStyle(fontSize: 10, color: Colors.grey[700]),
-          ),
+        Text(
+          "(${info.currencyKoreanName})",
+          style: TextStyle(fontSize: 10, color: Colors.grey[700]),
+        ),
       ],
     );
   }
@@ -39,17 +42,28 @@ class _CountryPickerState extends State<CountryPicker> {
             searchInputDecoration: InputDecoration(hintText: '검색...'),
             isSearchable: true,
             title: Text('국가 선택'),
-            onValuePicked: (Country country) => setState(() => _selectedDialogCurrency = country),
+            onValuePicked: (Country country) {
+              setState(() => _selectedDialogCurrency = country);
+              widget.onChanged(_selectedDialogCurrency);
+            },
             itemBuilder: _buildCurrencyDialogItem,
             patchCountries: (List<Country> countries) {
               for (final c in countries) {
-                Map<String, String> info = countryCurrency(c.isoCode ?? '');
-                c.name = info['koreanName'] ?? '';
+                final info = countryCurrency(c.isoCode ?? '');
+                c.name = info.koreanName;
               }
             },
           ),
         ),
       );
+
+  @override
+  void initState() {
+    super.initState();
+
+    _selectedDialogCurrency = CountryPickerUtils.getCountryByIsoCode(widget.defaultCountryCode);
+    widget.onChanged(_selectedDialogCurrency);
+  }
 
   @override
   Widget build(BuildContext context) {

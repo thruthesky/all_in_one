@@ -29,7 +29,6 @@ import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
 import 'package:country_code_picker/country_localizations.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -59,14 +58,14 @@ class _AioAppState extends State<AioApp> {
       updateInterval: Config.openWeatherMapUpdateInterval, // 업데이트 주기
     );
 
-    () async {
-      try {
-        final re = await Api.instance.country.get(countryCode: 'KR');
-        print(re);
-      } catch (e) {
-        print(e);
-      }
-    }();
+    // () async {
+    //   try {
+    //     final re = await Api.instance.country.get(countryCode: 'KR');
+    //     print(re);
+    //   } catch (e) {
+    //     print(e);
+    //   }
+    // }();
 
     // Map<String, dynamic> m = {'idx': 2, 'name': 'JaeHo', 'subject': 'title', 'content': 'content'};
     // final post = PostModel.fromJson(m);
