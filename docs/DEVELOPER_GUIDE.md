@@ -15,7 +15,8 @@
   - [Flutter 코드 개발 편집기](#flutter-코드-개발-편집기)
 - [스타일 가이드](#스타일-가이드)
 - [개발 방향](#개발-방향)
-    - [Mono repo](#mono-repo)
+  - [Mono repo](#mono-repo)
+  - [공유하지 않는 코드 관리](#공유하지-않는-코드-관리)
 - [문서화](#문서화)
 - [백엔드 설치](#백엔드-설치)
 - [테스트](#테스트)
@@ -169,10 +170,15 @@
 - 용량이 큰 자료는 서버에서 다운받는 것이 원칙입니다.
   - 예를 들어 단어장 또는 사전의 경우 용량이 수 메가 이상 클 수 있습니다. 이같은 경우 앱과 같이 번들하지 말고, 서버에서 가져와서 앱내에 저장 해 놓고 사용 해야 합니다.
 
-### Mono repo
+## Mono repo
 
 - 본 페이지의 mono repo 항목을 참고해 주세요.
 
+
+## 공유하지 않는 코드 관리
+
+- 나의 앱을 만들고자 할 때, 나의 프로젝트와 소스 코드를 git repo 에 저장하고 싶지 않을 때가 있다. 이 때에는 글로벌 git ignore 를 통해서 나의 프로젝트가 만능앱 git repo 에 추가되지 않도록 한다.
+  - 예를 들면, `projects/my/` 를 global git ignore 에 등록ㄹ하고, `project/my/my-app` 과 같이 프로젝트를 생성하고 나만의 private repo 에 등록해서 개발하면 된다.
 
 # 문서화
 
@@ -486,11 +492,12 @@ ElevatedButton(
   - `$ cd projects`
   - `$ flutter create project-name`
 
-- 프로젝트 생성 후, pubspec.yaml 설정을 통해서 x_flutter 를 비롯한 필요한 패키지를 추가합니다.
+- 프로젝트 생성 후, pubspec.yaml 설정을 통해서 `x_flutter` 를 비롯한 필요한 패키지를 추가합니다.
   예를 들면 아래와 같습니다.
   여러분들이 개발할 앱의 요구 사항에 맞게 수정하여 사용하시면 됩니다.
 
-예제) pubspec.yaml
+- 예제) pubspec.yaml
+  - 아래는 예제이며, 실제로는 동작하지 않을 수 있습니다.
 ```yaml
 name: youngja
 description: A new Flutter project.
@@ -520,6 +527,7 @@ flutter:
 ## 각자의 프로젝트 설정
 
 - 루트 프로젝트의 `lib/main.dart` 에 있는 코드를 복사를 해서 쓰거나 비슷하게 쓰면 됩니다.
+
 
 
 
