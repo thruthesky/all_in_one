@@ -1,0 +1,21 @@
+name: compute
+description: compute packages
+version: 0.0.1
+homepage: https://github.com/thruthesky/all_in_one
+repository: https://github.com/thruthesky/all_in_one
+
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+    
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
