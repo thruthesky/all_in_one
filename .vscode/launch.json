@@ -128,8 +128,8 @@
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
     },
     {
-      "name": "영자 - ABC - Simulator 12 Pro Max - iMac - 로컬",
-      "program": "projects/abc/lib/main.dart",
+      "name": "영자 - ALL - Simulator 12 Pro Max - iMac - 로컬",
+      "program": "projects/my/all/lib/main.dart",
       "args": [
         "--dart-define",
         "APP_NAME=영자의 QR 코드 앱",
@@ -143,8 +143,8 @@
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
     },
     {
-      "name": "영자 - ABC - Simulator 12 Pro Max - iMac - 원격",
-      "program": "projects/abc/lib/main.dart",
+      "name": "영자 - ALL - 아이폰11 - iMac - 원격",
+      "program": "projects/my/all/lib/main.dart",
       "args": [
         "--dart-define",
         "APP_NAME=영자의 QR 코드 앱",
@@ -155,7 +155,7 @@
       ],
       "request": "launch",
       "type": "dart",
-      "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
+      "deviceId": "00008030-000904C80290802E"
     }
   ]
 }
