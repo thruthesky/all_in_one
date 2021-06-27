@@ -9,7 +9,7 @@ class ConnectionDisplay extends StatelessWidget {
     return Container(
       child: Column(
         children: [
-          Text('Yo Connection'),
+          Text('Your Connection: '),
           StreamBuilder(
               stream: Connectivity().onConnectivityChanged,
               builder: (_, snapshot) {
