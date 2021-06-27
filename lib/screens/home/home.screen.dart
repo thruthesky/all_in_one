@@ -12,6 +12,7 @@ import 'package:fluttericon/typicons_icons.dart';
 import 'package:get/get.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
+import 'package:compute/compute.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
