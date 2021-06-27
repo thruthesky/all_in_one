@@ -17,4 +17,5 @@ class RouteNames {
   static const String weather = 'weather';
   static const String countryInfo = 'countryInfo';
   static const String exchangeRate = 'exchangeRate';
+  static const String beta = 'beta';
 }

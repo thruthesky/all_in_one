@@ -534,9 +534,15 @@ flutter:
 
 # i18n, 다국어
 
+- 다국어는 Getx 의 것을 사용하며, services 패키지의 app.translation.dart 에 기본 루틴을 정의하고 있다.
 - main 브랜치의 GetMaterialApp 에 다국어가 적용되어져 있다.
-- 다국어는 services 패키지의 app.translation.dart 에서 제공하고 있다.
+- 기본 번역 텍스트는 앱에서 지정 할 수 있으며, 관리자 페이지에서 실시간으로 앱의 텍스트를 변경 할 수 있다.
 
+- 예제
+```dart
+Text('app_name'.tr),
+Text('apple'.tr),
+```
 
 
 # 계산기

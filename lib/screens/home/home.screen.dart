@@ -12,7 +12,7 @@ import 'package:fluttericon/typicons_icons.dart';
 import 'package:get/get.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
-import 'package:compute/compute.dart';
+import 'package:x_flutter/x_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -40,14 +40,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     UserName(
                       suffixLogin: '님의',
                       defaultName: '당신의',
+                      style: tsTitle,
                     ),
-                    Text(' 일상을 책임지겠습니다.'),
-                    Text('app_name'.tr),
-                    Text('apple'.tr),
+                    Text(
+                      ' 일상을 책임지겠습니다.',
+                      style: tsTitle,
+                    ),
                   ]),
-                  spaceXl,
-                  Text('자주 사용하는 기능', style: tsSm),
-                  Divider(),
+                  NotLoggedIn(builder: (_) => Text('로그인 하기'), onTap: service.openLogin),
                   spaceXl,
                   Text('위젯', style: tsSm),
                   Divider(),
@@ -125,6 +125,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppIcon(
                           icon: Icons.contacts_rounded, label: '연락처', action: RouteNames.contact),
                       AppIcon(icon: Icons.border_color_rounded, label: '기능 요청', action: () => {}),
+                      AppIcon(icon: FontAwesome5.tools, label: '준비중', action: RouteNames.beta),
                     ],
                   ),
                 ],

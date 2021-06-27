@@ -61,6 +61,9 @@ dependencies:
   exchange_rate:
     path: packages/features/exchange_rate
 
+
+  connection:
+    path: packages/features/connection
     
 dependency_overrides:
   # flutter_simple_calculator
