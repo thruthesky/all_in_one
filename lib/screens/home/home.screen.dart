@@ -121,10 +121,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   Wrap(
                     spacing: md,
                     children: [
-                      AppIcon(icon: FontAwesome5.share_alt_square, label: '공유하기', action: () => {}),
+                      AppIcon(
+                          icon: FontAwesome5.info_circle, label: '어바웃', action: RouteNames.about),
+                      AppIcon(icon: FontAwesome5.share_alt_square, label: '공유하기', action: () {}),
                       AppIcon(
                           icon: Icons.contacts_rounded, label: '연락처', action: RouteNames.contact),
-                      AppIcon(icon: Icons.border_color_rounded, label: '기능 요청', action: () => {}),
+                      AppIcon(icon: Icons.border_color_rounded, label: '기능 요청', action: () {}),
                       AppIcon(icon: FontAwesome5.tools, label: '준비중', action: RouteNames.beta),
                     ],
                   ),
