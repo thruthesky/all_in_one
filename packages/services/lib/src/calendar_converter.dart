@@ -65,6 +65,7 @@ class CalendarConverter {
   //Tính ngày Sóc thứ k kể từ điểm Sóc ngày 1/1/1900.
   //Kết quả trả về là số ngày Julius của ngày Sóc cần tìm
   static int getNewMoonDay(int k, int timeZone) {
+    // ignore: non_constant_identifier_names
     var T, T2, T3, dr, Jd1, M, Mpr, F, C1, deltat, JdNew;
     T = k / 1236.85; // Time in Julian centuries from 1900 January 0.5
     T2 = T * T;
@@ -90,7 +91,7 @@ class CalendarConverter {
     } else {
       deltat = -0.000278 + 0.000265 * T + 0.000262 * T2;
     }
-    ;
+
     JdNew = Jd1 + C1 - deltat;
     return intVal(JdNew + 0.5 + timeZone / 24);
   }
@@ -100,6 +101,7 @@ class CalendarConverter {
   //-chia đường hoàng đạo làm 12 phần và đánh số các cung này từ 0 đến 11: từ Xuân phân đến Cốc vũ là 0; từ Cốc vũ đến Tiểu mãn là 1; từ Tiểu mãn đến Hạ chí là 2; v.v..
   //-cho jdn là số ngày Julius của bất kỳ một ngày, phương pháp sau này sẽ trả lại số cung nói trên.
   static int getSunLongitude(jdn, timeZone) {
+    // ignore: non_constant_identifier_names
     var T, T2, dr, M, L0, DL, L;
     T = (jdn - 2451545.5 - timeZone / 24) /
         36525; // Time in Julian centuries from 2000-01-01 12:00:00 GMT
@@ -165,6 +167,7 @@ class CalendarConverter {
     List<int> result = new List.filled(3, 0);
 
     var utcValue = getTimeZoneValue(timezone);
+    // ignore: unused_local_variable
     var k, dayNumber, monthStart, a11, b11, lunarDay, lunarMonth, lunarYear, lunarLeap;
     dayNumber = jdFromDate(solarDay, solarMonth, solarYear);
     k = intVal((dayNumber - 2415021.076998695) / 29.530588853);

@@ -26,6 +26,9 @@ import 'package:x_flutter/x_flutter.dart';
 /// 화면의 위로 스크롤되어 보이지 않고, 맨 아래에 있는 수정 버튼을 클릭하면
 /// 코멘트 수정 창이 해당 코멘트의 맨 꼭대기 위치에 표시되어, 수정 창이 보이지 않는 것이다.
 /// 그래서 수정을 하는 경우, 그냥 다이얼로그를 띄워서 수정을 한다.
+///
+/// ! 주의, ForumWidget 이 먼저 랜더링된 후, controller 를 사용해야 한다. ForumWidget 이 랜더링되지 않았는데,
+/// ! controller.togglePostCreateForm() 등을 사용한다면, 얘기치 않은 동작을 할 수 있다.
 class ForumController {
   late _ForumWidgetState state;
 
@@ -38,7 +41,7 @@ class ForumController {
   /// 글 작성
   ///
   /// 글 작성을 위한 상태를 만든다. 글 작성 폼 열기 등.
-  showPostCreateForm() {
+  togglePostCreateForm() {
     // 현재 글 수정 상태
     if (state.edit == null) {
       // 수정 상태가 아니면, 글 작성 상태로 변경. 카테고리 지정.
@@ -99,15 +102,19 @@ class ForumController {
 /// 질문게시판의 기존 글(및 스크롤 상태)이 유지되어야 하므로,
 /// 글 목록 및 스크롤 상태를 위젯 내부에 보관해야 한다.
 ///
+/// [separatorBuilder] 는 각 글 사이에 구분자이다.
+///
 /// [fetch] 글 페이지를 서버로 부터 가져오면 발생되는 콜백.
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
     required this.controller,
     this.categoryId = '',
-    this.titleBuilder,
+    this.closedTitleBuilder,
+    this.openedTitleBuilder,
     this.buttonBuilder,
     this.editBuilder,
+    this.separatorBuilder,
     this.fetch,
     required this.error,
     this.limit = 10,
@@ -117,9 +124,11 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String categoryId;
-  final Function? titleBuilder;
+  final Function? closedTitleBuilder;
+  final Function? openedTitleBuilder;
   final Function? buttonBuilder;
   final Function? editBuilder;
+  final Function? separatorBuilder;
   final Function? fetch;
   final Function error;
   final int limit;
@@ -167,18 +176,19 @@ class _ForumWidgetState extends State<ForumWidget> {
   void initState() {
     super.initState();
     controller = widget.controller;
+    controller.showEditForm(PostModel());
     _fetchPage();
     scrollController.addListener(() {
       if (atBottom) _fetchPage();
     });
   }
 
-  /// @todo 개선점. 글 작성/수정을 팝업 다이얼로그로 하는 것이 어떨까? 네비게이션이 힘들다.
   @override
   Widget build(BuildContext context) {
     if (edit != null) return editBuilder(edit!);
     return ListView.separated(
-      separatorBuilder: (_, i) => Divider(),
+      separatorBuilder: (_, i) =>
+          widget.separatorBuilder == null ? Divider() : widget.separatorBuilder!(),
       itemBuilder: (_, i) {
         PostModel post = posts[i];
         if (post.noMorePosts) {
@@ -188,7 +198,7 @@ class _ForumWidgetState extends State<ForumWidget> {
         } else {
           Widget child;
           if (post.close) {
-            child = titleBuilder(post);
+            child = closedTitleBuilder(post);
           } else {
             child = viewBuilder(post);
           }
@@ -241,50 +251,63 @@ class _ForumWidgetState extends State<ForumWidget> {
     }
   }
 
-  /// 글 제목 빌더
-  titleBuilder(PostModel post) {
-    /// 기본 빌더
+  /// 글이 닫힌 경우, 제목 빌더
+  closedTitleBuilder(PostModel post) {
     Widget child;
-    if (widget.titleBuilder == null) {
-      if (post.open) {
-        /// 글 읽기 상태
-        child = Container(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            children: [
-              CircleAvatar(child: Icon(Icons.person)),
-              SizedBox(width: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text('${post.idx}. ${post.title}'), Text('${post.user.nicknameOrName}')],
-              ),
-              Spacer(),
-              Icon(Icons.arrow_upward),
-            ],
-          ),
-        );
-      } else {
-        /// 목록 상태
-        child = Container(
-          padding: EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Text('${post.idx}. ${post.title}'),
-              Spacer(),
-              Icon(Icons.arrow_downward),
-            ],
-          ),
-        );
-      }
+    if (widget.closedTitleBuilder == null) {
+      /// 기본 디자인
+      child = Container(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          children: [
+            Text('${post.title}'),
+            Spacer(),
+            Icon(Icons.arrow_downward),
+          ],
+        ),
+      );
     } else {
       /// 커스텀 빌더
-      child = widget.titleBuilder!(post);
+      child = widget.closedTitleBuilder!(post);
     }
     return GestureDetector(
       child: child,
       onTap: () {
-        print('post.idx:; ${post.idx}');
-        setState(() => post.open = !post.open);
+        print('open post.idx:; ${post.idx}');
+        setState(() => post.open = true);
+      },
+      behavior: HitTestBehavior.opaque,
+    );
+  }
+
+  openedTitleBuilder(PostModel post) {
+    /// 기본 빌더
+    Widget child;
+    if (widget.openedTitleBuilder == null) {
+      child = Container(
+        padding: EdgeInsets.all(16),
+        child: Row(
+          children: [
+            CircleAvatar(child: Icon(Icons.person)),
+            SizedBox(width: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [Text('${post.idx}. ${post.title}'), Text('${post.user.nicknameOrName}')],
+            ),
+            Spacer(),
+            Icon(Icons.arrow_upward),
+          ],
+        ),
+      );
+    } else {
+      /// 커스텀 빌더
+      child = widget.openedTitleBuilder!(post);
+    }
+    return GestureDetector(
+      child: child,
+      onTap: () {
+        print('close post.idx:; ${post.idx}');
+        setState(() => post.open = false);
       },
       behavior: HitTestBehavior.opaque,
     );
@@ -293,7 +316,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   viewBuilder(PostModel post) {
     return Column(
       children: [
-        titleBuilder(post),
+        openedTitleBuilder(post),
         contentBuilder(post),
         buttonBuilder(post),
         commentEditBuilder(post, CommentModel()), // 부모 글의 코멘트 창. 항상 보여 줌.

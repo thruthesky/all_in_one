@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -27,9 +28,34 @@ class _AboutPhoneDisplayState extends State<AboutPhoneDisplay> {
   String platformName = '';
   String model = '';
   String machine = '';
+
+  final battery = Battery();
+  int level = 0;
+
+  init() async {
+// Access current battery level
+
+    try {
+      level = await battery.batteryLevel;
+    } catch (e) {
+      level = -1;
+      // 에러 무시
+      print('배터리 에러 무시: 시뮬레이터에서는 안 나옴. $e');
+    }
+    setState(() {});
+
+// Be informed when the state (full, charging, discharging) changes
+    battery.onBatteryStateChanged.listen((BatteryState state) {
+      // Do something with new state
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+
+    init();
+
     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
       appName = packageInfo.appName;
       packageName = packageInfo.packageName;
@@ -44,7 +70,6 @@ class _AboutPhoneDisplayState extends State<AboutPhoneDisplay> {
         platformName = '안드로이드';
 
         AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-        print(androidInfo);
         machine = androidInfo.device!;
         model = androidInfo.model!;
       } else {
@@ -54,8 +79,6 @@ class _AboutPhoneDisplayState extends State<AboutPhoneDisplay> {
         model = iosInfo.name!;
 
         machine = iosInfo.utsname.machine! + ' ' + iosInfo.utsname.release!;
-
-        print(iosInfo);
       }
       setState(() {});
     }();
@@ -74,20 +97,17 @@ class _AboutPhoneDisplayState extends State<AboutPhoneDisplay> {
                 widget.title,
                 style: TextStyle(fontSize: 24),
               ),
-              spaceXs,
-              CenteredRow(left: Text('앱 버전 : '), right: Text('$version+$buildNumber')),
               spaceLg,
-              spaceLg,
-              CenteredRow(left: Text('앱 패키지 명 : '), right: Text('$packageName')),
               CenteredRow(left: Text('운영체제 : '), right: Text('$platformName')),
               CenteredRow(left: Text('장치 이름 : '), right: Text('$model')),
               CenteredRow(left: Text('장치 정보 : '), right: Text('$machine')),
+              spaceSm,
+              Divider(color: Colors.blue),
+              spaceSm,
+              CenteredRow(left: Text('배터리 상태 : '), right: Text(level >= 0 ? '$level%' : '알 수 없음')),
             ],
           ),
         ),
-        spaceSm,
-        Divider(color: Colors.blue),
-        spaceSm,
         if (widget.bottom != null) widget.bottom!,
       ],
     );

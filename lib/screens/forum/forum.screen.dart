@@ -20,7 +20,7 @@ class _ForumScreenState extends State<ForumScreen> {
     return Layout(
       title: '게시판',
       back: () => controller.editing ? controller.stopEditing() : Get.back(),
-      create: () => controller.showPostCreateForm(),
+      create: () => controller.togglePostCreateForm(),
       body:
 
           /// 게시판 위젯
@@ -47,42 +47,22 @@ class _ForumScreenState extends State<ForumScreen> {
         categoryId: getArg('categoryId', ''),
         limit: 20,
         fetch: (List<PostModel> posts) {
-          posts[0].open = true;
+          // 첫번째 글 열기. 아래와 같이 `open` 에 true 를 주면 된다.
+          // posts[0].open = true;
         },
         error: (e) => alert('앗!', e),
-
-        /// [titleBuilder] 는 제목을 표시. 생략 가능.
-        /// 제목이 클릭되면, postBuilder, commentBuilder, fileBuilder 등 글 내용을 보여주기 위한 빌더들이 실행된다.
-        // titleBuilder: (PostModel post) {
-        //   Widget child;
-        //   if (post.open) {
-        //     /// 글 읽기 상태
-        //     child = ListTile(
-        //       leading: SizedBox(
-        //         width: 48,
-        //         height: 48,
-        //         child: Avatar(url: post.user.photoUrl),
-        //       ),
-        //       title: Text('${post.idx}. ${post.title}'),
-        //       subtitle: Text('${post.user.nicknameOrName}'),
-        //       trailing: Icon(Icons.arrow_upward),
-        //     );
-        //   } else {
-        //     /// 목록 상태
-        //     child = ListTile(
-        //       title: Text('${post.idx}. ${post.title}'),
-        //       trailing: Icon(Icons.arrow_downward),
-        //     );
-        //   }
-        //   return child;
-        // },
-        // buttonBuilder: (PostModel post) {
-        //   return Row(
-        //     children: [
-        //       TextButton(onPressed: () => post.like(), child: Text('좋아요')),
-        //     ],
-        //   );
-        // },
+        separatorBuilder: () => spaceXxs,
+        closedTitleBuilder: (PostModel post) {
+          return Container(
+            padding: EdgeInsets.all(12),
+            color: Colors.grey[100],
+            child: Row(children: [
+              Text('${post.title}'),
+              Spacer(),
+              Icon(Icons.arrow_downward),
+            ]),
+          );
+        },
         editBuilder: (PostModel post) {
           bool loading = false;
           double progress = 0.0;
@@ -112,8 +92,7 @@ class _ForumScreenState extends State<ForumScreen> {
                     ConstrainedBox(
                       constraints: BoxConstraints(maxHeight: 300),
                       child: TextField(
-                        controller: TextEditingController()
-                          ..text = post.content,
+                        controller: TextEditingController()..text = post.content,
                         onChanged: (v) => post.content = v,
                         onSubmitted: (text) {},
                         maxLines: null,
@@ -134,8 +113,7 @@ class _ForumScreenState extends State<ForumScreen> {
                             progress: (p) => setState(() => progress = p)),
                         Spacer(),
                         ElevatedButton(
-                            onPressed: () => controller.state.edit = null,
-                            child: Text('취소')),
+                            onPressed: () => controller.state.edit = null, child: Text('취소')),
                         SizedBox(width: 6),
                         ElevatedButton(
                             onPressed: loading
@@ -166,8 +144,7 @@ class _ForumScreenState extends State<ForumScreen> {
                         alignment: WrapAlignment.start,
                         children: [
                           for (final FileModel file in post.files)
-                            controller.state.fileEditBuilder(
-                                file, post, () => setState(() {})),
+                            controller.state.fileEditBuilder(file, post, () => setState(() {})),
                         ],
                       ),
                     ),

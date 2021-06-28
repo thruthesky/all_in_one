@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Config.appName,
         body: SingleChildScrollView(
           child: Container(
-            margin: EdgeInsets.all(xs),
+            margin: EdgeInsets.all(sm),
             // color: Colors.white,
             child: Center(
               child: Column(
@@ -57,13 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           BatteryDisplay(),
-                          Text(CalendarConverter.solarToLunar(2020, 12, 14, Timezone.Korean)
-                              .toString()),
+                          Today(),
                         ],
                       ),
-                      spaceMd,
+                      Spacer(),
                       WeatherIcon(onTap: () => service.open(RouteNames.weather)),
                     ],
                   ),
@@ -154,6 +154,29 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Today extends StatelessWidget {
+  const Today({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final lu = CalendarConverter.solarToLunar(2021, 06, 28, Timezone.Korean);
+    final lunarText = "${lu[2]}년 ${lu[1]}월 ${lu[0]}일";
+
+    final to = DateTime.now();
+    final todayText = "${to.year}년 ${to.month}월 ${to.day}일";
+
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text("오늘 날짜: $todayText"),
+          Text("오늘 음력: $lunarText"),
+        ],
       ),
     );
   }
