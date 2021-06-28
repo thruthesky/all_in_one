@@ -68,6 +68,8 @@ dependencies:
 
   about:
     path: packages/features/about
+  about_phone:
+    path: packages/features/about_phone
     
 dependency_overrides:
   # flutter_simple_calculator

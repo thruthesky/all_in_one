@@ -3,6 +3,7 @@ class RouteNames {
   static const String home = 'home';
   static const String screenNotFound = 'screenNotFound';
   static const String about = 'about';
+  static const String aboutPhone = 'aboutPhone';
   static const String register = 'register';
   static const String login = 'login';
   static const String profile = 'profile';

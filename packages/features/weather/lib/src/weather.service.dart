@@ -53,8 +53,14 @@ class WeatherService {
   }
 
   Future<Position> _currentLocation() async {
-    _position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    return _position!;
+    try {
+      _position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      return _position!;
+    } catch (e) {
+// 에러 무시
+// A request for location permissions is already running, please wait for it to complete before doing another request.
+      return _position!;
+    }
   }
 
   Future<WeatherModel> updateWeather() async {

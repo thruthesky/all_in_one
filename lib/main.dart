@@ -1,5 +1,6 @@
 // import 'dart:async';
 
+import 'package:all_in_one/screens/about_phone/about_phone.screen.dart';
 import 'package:all_in_one/screens/beta/beta.screen.dart';
 import 'package:all_in_one/screens/exchange_rate/exchange_rate.screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -124,7 +125,8 @@ class _AioAppState extends State<AioApp> {
         GetPage(name: RouteNames.weather, page: () => WeatherScreen()),
         GetPage(name: RouteNames.countryInfo, page: () => CountryInfoScreen()),
         GetPage(name: RouteNames.exchangeRate, page: () => ExchangeRateScreen()),
-        GetPage(name: RouteNames.beta, page: () => BetaScreen())
+        GetPage(name: RouteNames.beta, page: () => BetaScreen()),
+        GetPage(name: RouteNames.aboutPhone, page: () => AboutPhoneScreen()),
       ],
     );
   }

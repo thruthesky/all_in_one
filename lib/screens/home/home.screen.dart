@@ -1,7 +1,9 @@
+import 'package:about_phone/about_phone.dart';
 import 'package:all_in_one/controllers/app.controller.dart';
 import 'package:all_in_one/services/config.dart';
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
+import 'package:all_in_one/widgets/app.icon.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:calculator/calculator.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +12,7 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:get/get.dart';
+import 'package:services/services.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
@@ -51,7 +54,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   spaceXl,
                   Text('위젯', style: tsSm),
                   Divider(),
-                  WeatherIcon(onTap: () => service.open(RouteNames.weather)),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          BatteryDisplay(),
+                          Text(CalendarConverter.solarToLunar(2020, 12, 14, Timezone.Korean)
+                              .toString()),
+                        ],
+                      ),
+                      spaceMd,
+                      WeatherIcon(onTap: () => service.open(RouteNames.weather)),
+                    ],
+                  ),
                   spaceXl,
                   Text('일상 생활', style: tsSm),
                   Divider(),
@@ -91,9 +106,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppIcon(
                           icon: Typicons.globe_alt, label: '국가 정보', action: RouteNames.countryInfo),
                       AppIcon(
-                          icon: Typicons.globe_alt,
+                          icon: Icons.phonelink_setup_rounded,
                           label: '핸드폰 정보',
-                          action: RouteNames.countryInfo),
+                          action: RouteNames.aboutPhone),
                     ],
                   ),
                   spaceXl,
@@ -141,55 +156,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-}
-
-class AppIcon extends StatelessWidget {
-  const AppIcon({
-    this.icon,
-    this.label = '',
-    this.action,
-    Key? key,
-    this.arguments,
-    this.child,
-  }) : super(key: key);
-  final IconData? icon;
-  final Widget? child;
-  final String label;
-
-  final dynamic action;
-  final Map<String, dynamic>? arguments;
-
-  @override
-  Widget build(BuildContext context) {
-    if (icon != null) {
-      return IconTextButton(icon!, label, () {
-        if (action is String)
-          service.open(action, arguments: arguments);
-        else
-          action();
-      }, size: 40);
-    } else {
-      return GestureDetector(
-        child: Column(
-          children: [
-            SizedBox(height: 2),
-            child!,
-            spaceXs,
-            Text(
-              label,
-              style: TextStyle(fontSize: 15),
-            )
-          ],
-        ),
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          if (action is String)
-            service.open(action, arguments: arguments);
-          else
-            action();
-        },
-      );
-    }
   }
 }
