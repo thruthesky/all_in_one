@@ -90,6 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       AppIcon(
                           icon: Typicons.globe_alt, label: '국가 정보', action: RouteNames.countryInfo),
+                      AppIcon(
+                          icon: Typicons.globe_alt,
+                          label: '핸드폰 정보',
+                          action: RouteNames.countryInfo),
                     ],
                   ),
                   spaceXl,

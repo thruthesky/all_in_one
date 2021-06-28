@@ -14,8 +14,9 @@ dependencies:
     sdk: flutter
     
 
-  package_info: ^2.0.2
-  device_info: ^2.0.2
+  package_info_plus: ^1.0.3
+  device_info_plus: ^2.0.1
+  
 
   widgets:
     path: ../../widgets
@@ -25,4 +26,5 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+
 

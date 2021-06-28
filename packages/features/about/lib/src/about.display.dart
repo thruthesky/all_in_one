@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
-import 'package:device_info/device_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:widgets/widgets.dart';
 
 class AboutDisplay extends StatefulWidget {
@@ -57,15 +57,15 @@ class _AboutDisplayState extends State<AboutDisplay> {
 
         AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
         print(androidInfo);
-        machine = androidInfo.device;
-        model = androidInfo.model;
+        machine = androidInfo.device!;
+        model = androidInfo.model!;
       } else {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
 
-        platformName = iosInfo.systemName + ' ' + iosInfo.systemVersion;
-        model = iosInfo.name;
+        platformName = iosInfo.systemName! + ' ' + iosInfo.systemVersion!;
+        model = iosInfo.name!;
 
-        machine = iosInfo.utsname.machine + ' ' + iosInfo.utsname.release;
+        machine = iosInfo.utsname.machine! + ' ' + iosInfo.utsname.release!;
 
         print(iosInfo);
       }
