@@ -43,6 +43,7 @@ class _ForumScreenState extends State<ForumScreen> {
           /// [error] - 에러가 발생하면 호출되는 콜밸
           /// [fetch] - 글 목록을 가져오면 호출되는 콜백
           ForumWidget(
+        showEditFormOnInit: true,
         controller: controller,
         categoryId: getArg('categoryId', ''),
         limit: 20,

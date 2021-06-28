@@ -63,24 +63,26 @@ class ForumController {
     state.edit = null;
   }
 
-  _showPostEditForm(PostModel p) {
+  ///
+  showPostEditForm(PostModel p) {
     state.edit = p;
   }
 
   /// 코멘트 수정 폼을 열고, 업데이트
-  _showCommentEditForm(CommentModel c) {
-    // c.mode = 'edit';
-    // setState(() => null);
-  }
+  // _showCommentEditForm(CommentModel c) {
+  // c.mode = 'edit';
+  // setState(() => null);
+  // }
 
   /// 글 또는 코멘트 수정 폼을 열때 사용.
-  showEditForm(post) {
-    if (post.isComment) {
-      _showCommentEditForm(post);
-    } else {
-      _showPostEditForm(post);
-    }
-  }
+  // @Deprecated('Use showPostEditForm')
+  // showEditForm(post) {
+  //   if (post.isComment) {
+  //     _showCommentEditForm(post);
+  //   } else {
+  //     _showPostEditForm(post);
+  //   }
+  // }
 
   /// ForumWidget 의 setState() 를 호출하여 화면을 (다시) 랜더링.
   ///
@@ -105,6 +107,8 @@ class ForumController {
 /// [separatorBuilder] 는 각 글 사이에 구분자이다.
 ///
 /// [fetch] 글 페이지를 서버로 부터 가져오면 발생되는 콜백.
+///
+/// [showEditFormOnInit] 이 true 이면, 게시판 글 쓰기 페이지를 먼저 연다.
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
@@ -118,6 +122,7 @@ class ForumWidget extends StatefulWidget {
     this.fetch,
     required this.error,
     this.limit = 10,
+    this.showEditFormOnInit = false,
   }) : super(key: key) {
     controller.state = _state;
   }
@@ -132,6 +137,7 @@ class ForumWidget extends StatefulWidget {
   final Function? fetch;
   final Function error;
   final int limit;
+  final bool showEditFormOnInit;
 
   final _ForumWidgetState _state = _ForumWidgetState();
   @override
@@ -176,7 +182,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   void initState() {
     super.initState();
     controller = widget.controller;
-    controller.showEditForm(PostModel());
+    if (widget.showEditFormOnInit) controller.showPostEditForm(PostModel());
     _fetchPage();
     scrollController.addListener(() {
       if (atBottom) _fetchPage();
@@ -445,7 +451,7 @@ class _ForumWidgetState extends State<ForumWidget> {
                   openCommentEditBuilder(post);
                 } else {
                   /// 글
-                  controller.showEditForm(post);
+                  controller.showPostEditForm(post);
                 }
               }
               if (value == 'delete') {

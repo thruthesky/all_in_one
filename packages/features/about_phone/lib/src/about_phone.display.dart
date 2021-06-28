@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:battery_plus/battery_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:widgets/widgets.dart';
 
@@ -55,14 +54,6 @@ class _AboutPhoneDisplayState extends State<AboutPhoneDisplay> {
     super.initState();
 
     init();
-
-    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      appName = packageInfo.appName;
-      packageName = packageInfo.packageName;
-      version = packageInfo.version;
-      buildNumber = packageInfo.buildNumber;
-      setState(() {});
-    });
 
     () async {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
