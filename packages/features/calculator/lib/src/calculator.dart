@@ -43,6 +43,7 @@ class _CalculatorState extends State<Calculator> {
     );
     return GestureDetector(
       child: widget.child,
+      behavior: HitTestBehavior.opaque,
       onTap: () {
         showModalBottomSheet(
             isScrollControlled: true,

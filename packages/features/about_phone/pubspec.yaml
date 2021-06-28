@@ -16,6 +16,7 @@ dependencies:
   device_info_plus: ^2.0.1
   network_info_plus: ^1.0.2
   battery_plus: ^1.0.2
+  connectivity_plus: ^1.0.4
   
   widgets:
     path: ../../widgets

@@ -1,5 +1,6 @@
 import 'package:about/about.dart';
 import 'package:all_in_one/services/globals.dart';
+import 'package:all_in_one/services/route_names.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
@@ -50,6 +51,9 @@ class _AboutScreenState extends State<AboutScreen> {
                 ),
                 subtitle: Text('원하시는 기능이 있으면 요청해 주세요.'),
                 trailing: Icon(Icons.keyboard_arrow_right_rounded, size: 32),
+                onTap: () {
+                  service.open(RouteNames.forum, arguments: {'categoryId': 'qna', 'edit': true});
+                },
               )
             ],
           ),

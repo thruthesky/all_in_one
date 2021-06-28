@@ -54,12 +54,21 @@ class ForumController {
 
   /// 새 글이 생성된 경우 호출하면 됨.
   ///
+  /// 참고, 새 글을 작성한 후 반드시 이 함수를 호출 해야 함. (코멘트는 아님)
+  ///
   /// 새 글을 맨 위체 추가하고, 읽기 모드로 설정.
   edited(PostModel p) {
     if (state.edit!.idx == 0) {
       // 새 글을 작성했으면, 맨 위에 추가
       state.posts.insert(0, p..open = true);
+    } else {
+      // 글 수정이면, call by reference 로 자동 수정 됨. 아무것도 안함
     }
+
+    if (state.widget.edited != null) {
+      state.widget.edited!(p);
+    }
+    state.editedCount++;
     state.edit = null;
   }
 
@@ -109,6 +118,9 @@ class ForumController {
 /// [fetch] 글 페이지를 서버로 부터 가져오면 발생되는 콜백.
 ///
 /// [showEditFormOnInit] 이 true 이면, 게시판 글 쓰기 페이지를 먼저 연다.
+///
+/// 글(코멘트 아님)을 생성 또는 수정하면 [edited] 콜백이 호출된다.
+/// 글이 생성 또는 수정된 회 수를 [editedCount] 에 저장한다.
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
@@ -121,6 +133,7 @@ class ForumWidget extends StatefulWidget {
     this.separatorBuilder,
     this.fetch,
     required this.error,
+    this.edited,
     this.limit = 10,
     this.showEditFormOnInit = false,
   }) : super(key: key) {
@@ -135,6 +148,7 @@ class ForumWidget extends StatefulWidget {
   final Function? editBuilder;
   final Function? separatorBuilder;
   final Function? fetch;
+  final Function? edited;
   final Function error;
   final int limit;
   final bool showEditFormOnInit;
@@ -149,6 +163,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   Api api = Api.instance;
   List<PostModel> posts = [];
   int page = 0;
+  int editedCount = 0;
   bool loading = false;
   bool noMorePosts = false;
   late final ForumController controller;
@@ -182,7 +197,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   void initState() {
     super.initState();
     controller = widget.controller;
-    if (widget.showEditFormOnInit) controller.showPostEditForm(PostModel());
+    if (widget.showEditFormOnInit) controller.togglePostCreateForm();
     _fetchPage();
     scrollController.addListener(() {
       if (atBottom) _fetchPage();

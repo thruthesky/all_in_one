@@ -62,6 +62,7 @@ const TextStyle tsBlack = TextStyle(color: Colors.black);
 
 // 스크린(페이지) appbar 타이틀
 const TextStyle tsTitle = TextStyle(color: Colors.black, fontSize: 18);
+const TextStyle tsBold = TextStyle(fontWeight: FontWeight.bold);
 
 final themeData = ThemeData(
   primarySwatch: Colors.indigo,
