@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       // AppIcon(icon: Icons.font_download_outlined, label: '구글 폰트', action: () {}),
                       // AppIcon(icon: Icons.font_download_outlined, label: '환율', action: () {}),
                       AppIcon(
-                        child: svg('money-exchange', package: '..', width: 36, height: 36),
+                        child: svg('icon/money-exchange', width: 36, height: 36),
                         label: '환율',
                         action: RouteNames.exchangeRate,
                       ),

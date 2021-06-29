@@ -32,6 +32,11 @@ dependencies:
   # QR 코드 공유
   share_plus: ^2.1.2
 
+  image_gallery_saver: ^1.6.9
+
+  widgets:
+    path: ../../widgets
+
 
 dev_dependencies:
   flutter_test:

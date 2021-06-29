@@ -44,6 +44,14 @@ error(e) {
     } else {
       alert('에러', "${e.code}: ${e.message!}");
     }
+  } else if (e.runtimeType.toString() == '_TypeError') {
+    final errstr = e.toString();
+    if (errstr.contains('Future') && errstr.contains('is not a subtype of type')) {
+      alert(
+          'Await 실수', '개발자 실수입니다.\n\nFuture 에서 async 를 한 다음, await 을 하지 않았습니다.\n\n' + e.toString());
+    } else {
+      alert('개발자 코딩 실수', '타입 에러: ' + e.toString());
+    }
   } else if (e.message != null && e.message is String) {
     alert('Assertion 에러 발생', e.message);
   } else {
