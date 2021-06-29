@@ -7,6 +7,8 @@ class Config {
   static const serverUrl = String.fromEnvironment('SERVER_URL',
       defaultValue: 'https://www.flutterkorea.com/index.php');
 
+  static const anonymousUrl = 'https://flutterkorea.com/assets/icon/anonymous/anonymous.png'
+
   /// iOS 앱을 다운로드 또는 다른 친구에게 공유해서 알려줄 때 사용
   static const iOSAppDownloadUrl = 'https://www.philgo.com';
 
