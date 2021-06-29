@@ -156,6 +156,21 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "00008030-000904C80290802E"
-    }
+    },
+    {
+      "name": "영자 - 수퍼냥 - iPhone 12 Pro Max - 맥북16 - 원격",
+      "program": "projects/my/supercat/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=만능 메인앱",
+        "--dart-define",
+        "SERVER_URL=https://flutterkorea.com/api.php",
+        "--dart-define",
+        "TEST_MODE=firebase=off&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
+    },
   ]
 }
