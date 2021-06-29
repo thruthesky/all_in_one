@@ -16,7 +16,7 @@ class ExchangeRateScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             spaceXl,
-            Text('국가를 선택하시면, 환율을 볼 수 있습니다.'),
+            Text('국가를 선택하신 후, 환율을 계산 할 수 있습니다.'),
             spaceSm,
             ExchangeRateDisplay(),
           ],

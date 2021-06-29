@@ -41,7 +41,7 @@ class AppController extends GetxController {
     try {
       categories = await api.category.gets(Config.categories);
     } catch (e) {
-      alert('에러', '게시판 정보를 가져오지 못했습니다.');
+      alert('에러', '게시판 정보를 가져오지 못했습니다.\n\n$e');
     }
   }
 }

@@ -15,6 +15,7 @@ class Api {
 
   /// [url] 은 [init] 함수에서 초기화 되어야 한다.
   late final String url;
+  String apiKey = '';
   UserApi user = UserApi.instance;
   String get sessionId => user.sessionId;
 
@@ -45,10 +46,12 @@ class Api {
   late final String anonymousIconUrl;
 
   init({
+    String apiKey = '',
     required String url,
     anonymousIconUrl =
         'https://flutterkorea.com/view/flutterkorea/assets/icon/anonymous/anonymous.png',
   }) {
+    this.apiKey = apiKey;
     this.url = url;
     this.anonymousIconUrl = anonymousIconUrl;
   }
@@ -66,6 +69,7 @@ class Api {
     if (data == null) data = {};
     data['route'] = route;
     if (sessionId != '') data['sessionId'] = sessionId;
+    if (apiKey != '') data['apiKey'] = apiKey;
     try {
       final res = await dio.post(
         url,
@@ -96,8 +100,13 @@ class Api {
       // 백엔드로 접속이 되었으나 2xx 또는 304 가 아닌 다른 응답 코드가 발생한 경우.
       if (e.response != null) {
         final res = e.response as Response;
-        print("경고: Dio 에서 이 부분에 에러가 발생하는 경우를 찾지 못하겠다. 에러가 이 부분으로 떨어지면, 디버깅을 해서 처리를 할 것.");
-        throw (res.data);
+        final data = res.data;
+        if (data is String) {
+          if (data.contains('File not found')) {
+            throw "백엔드의 웹서버(Nginx)에서 PHP 스크립트 파일을 찾지 못했습니다. Api 경로가 잘못됨.";
+          }
+        }
+        throw data;
       } else {
         // Something happened in setting up or sending the request that triggered an Error
         print(e.message);

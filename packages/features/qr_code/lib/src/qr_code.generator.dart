@@ -119,6 +119,15 @@ class _QrCodeGeneratorState extends State<QrCodeGenerator> {
                   '2. QR 코드를 저장하거나 공유하시면 됩니다.',
                   style: TextStyle(color: Colors.black),
                 ),
+                spaceSm,
+                Text(
+                  '팁. 전화 번호, URL 및 원하는 문자열이 무엇이든 입력하면 됩니다.',
+                  style: TextStyle(fontSize: 12),
+                ),
+                Text(
+                  '팁. URL 을 입력하실 때에는 http 로 시작하는 URL 전체를 입력해주세요.',
+                  style: TextStyle(fontSize: 12),
+                )
               ],
             ),
           ],

@@ -12,8 +12,8 @@ import 'package:all_in_one/screens/home/home.screen.dart';
 import 'package:all_in_one/screens/map/map.screen.dart';
 import 'package:all_in_one/screens/memo/memo.screen.dart';
 import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
-import 'package:all_in_one/screens/qr_code/qr_code.result.dart';
-import 'package:all_in_one/screens/qr_code/qr_code.scan.dart';
+import 'package:all_in_one/screens/qr_code/qr_code.result.screen.dart';
+import 'package:all_in_one/screens/qr_code/qr_code.scan.screen.dart';
 import 'package:all_in_one/screens/user/login.screen.dart';
 import 'package:all_in_one/screens/user/profile.screen.dart';
 import 'package:all_in_one/screens/user/register.screen.dart';
@@ -117,7 +117,7 @@ class _AioAppState extends State<AioApp> {
         GetPage(name: RouteNames.memo, page: () => MemoScreen()),
         GetPage(name: RouteNames.qrCodeGenerate, page: () => QrCodeGenerateScreen()),
         GetPage(name: RouteNames.qrCodeScan, page: () => QrCodeScanScreen()),
-        GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResult()),
+        GetPage(name: RouteNames.qrCodeResult, page: () => QrCodeResultScreen()),
         GetPage(name: RouteNames.widgetCollection, page: () => WidgetCollectionScreen()),
         GetPage(name: RouteNames.forum, page: () => ForumScreen()),
         GetPage(name: RouteNames.contact, page: () => ContactScreen()),

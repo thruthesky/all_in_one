@@ -22,7 +22,10 @@ class UserRegisterForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text('로그인 이메일:'),
-          TextField(controller: email),
+          TextField(
+            controller: email,
+            keyboardType: TextInputType.emailAddress,
+          ),
           SizedBox(height: 16),
           Text('로그인 비밀번호:'),
           TextField(controller: password),

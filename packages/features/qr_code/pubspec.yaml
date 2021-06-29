@@ -34,8 +34,18 @@ dependencies:
 
   image_gallery_saver: ^1.6.9
 
+  url_launcher: ^6.0.7
+
+
+
+  # 전화걸기. QR 코드 스캔 후 전화 걸기.
+  flutter_phone_direct_caller: ^2.0.0
+
   widgets:
     path: ../../widgets
+
+  services:
+    path: ../../services
 
 
 dev_dependencies:
