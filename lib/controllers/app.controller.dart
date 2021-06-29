@@ -22,9 +22,7 @@ class AppController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    api.init(
-        url: Config.serverUrl,
-        anonymousIconUrl: Config.anonymousUrl);
+    api.init(url: Config.serverUrl, anonymousIconUrl: Config.anonymousUrl);
 
     /// 아래의 코드를 적당한 곳으로 이동.
     /// Matrix 백엔드 기본 정보.

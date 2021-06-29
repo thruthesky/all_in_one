@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>739173176864-vgepdvt0fuhrvljr9pmrgq8mss1qd1c0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.739173176864-vgepdvt0fuhrvljr9pmrgq8mss1qd1c0</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDs0evrvuR_ExBeK0Mza_HJs21suj7Dh2Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>739173176864</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.flutterkorea.study</string>
+	<key>PROJECT_ID</key>
+	<string>flutterkorea-com</string>
+	<key>STORAGE_BUCKET</key>
+	<string>flutterkorea-com.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:739173176864:ios:b2fb146f74b7a81f3f0e45</string>
+	<key>DATABASE_URL</key>
+	<string>https://flutterkorea-com.firebaseio.com</string>
+</dict>
+</plist>

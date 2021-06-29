@@ -40,15 +40,15 @@ void main() async {
   ]);
 
   await GetStorage.init();
-  runApp(AioApp());
+  runApp(StudyApp());
 }
 
-class AioApp extends StatefulWidget {
+class StudyApp extends StatefulWidget {
   @override
-  _AioAppState createState() => _AioAppState();
+  _StudyAppState createState() => _StudyAppState();
 }
 
-class _AioAppState extends State<AioApp> {
+class _StudyAppState extends State<StudyApp> {
   final a = Get.put(app);
 
   @override

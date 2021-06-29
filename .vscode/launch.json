@@ -29,7 +29,7 @@
         "--dart-define",
         "APP_NAME=만능 메인앱",
         "--dart-define",
-        "SERVER_URL=https://study.flutterkorea.com/index.php",
+        "SERVER_URL=http://study.flutterkorea.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
@@ -59,7 +59,7 @@
         "--dart-define",
         "APP_NAME=만능 메인앱",
         "--dart-define",
-        "SERVER_URL=https://study.flutterkorea.com/index.php",
+        "SERVER_URL=http://study.flutterkorea.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
@@ -74,7 +74,7 @@
         "--dart-define",
         "APP_NAME=만능 메인앱",
         "--dart-define",
-        "SERVER_URL=https://study.flutterkorea.com/index.php",
+        "SERVER_URL=http://study.flutterkorea.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
@@ -89,7 +89,7 @@
         "--dart-define",
         "APP_NAME=영자의 만능앱",
         "--dart-define",
-        "SERVER_URL=https://study.flutterkorea.com/index.php",
+        "SERVER_URL=http://study.flutterkorea.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
@@ -104,7 +104,7 @@
         "--dart-define",
         "APP_NAME=만능 메인앱",
         "--dart-define",
-        "SERVER_URL=https://study.flutterkorea.com/index.php",
+        "SERVER_URL=http://study.flutterkorea.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
@@ -119,7 +119,7 @@
         "--dart-define",
         "APP_NAME=영자의 QR 코드 앱",
         "--dart-define",
-        "SERVER_URL=https://study.flutterkorea.com/index.php",
+        "SERVER_URL=http://study.flutterkorea.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
