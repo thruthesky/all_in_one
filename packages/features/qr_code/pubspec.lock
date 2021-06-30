@@ -359,13 +359,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
-  services:
-    dependency: "direct main"
-    description:
-      path: "../../services"
-      relative: true
-    source: path
-    version: "0.0.1"
   share_plus:
     dependency: "direct main"
     description:
@@ -567,6 +560,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  utils:
+    dependency: "direct main"
+    description:
+      path: "../../temp_services/utils"
+      relative: true
+    source: path
+    version: "0.0.1"
   uuid:
     dependency: transitive
     description:
