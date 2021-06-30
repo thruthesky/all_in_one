@@ -1,4 +1,4 @@
-import 'package:all_in_one/services/globals.dart';
+import '../services/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets/widgets.dart';
 

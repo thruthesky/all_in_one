@@ -23,15 +23,15 @@ dependencies:
   
   rxdart: ^0.27.1
 
-
-
   # 아이콘 모음집
   fluttericon: ^2.0.0
 
-
   webview_flutter: ^2.0.8
 
-  
+
+  utils:
+    path: packages/temp_services/utils
+    
 
   x_flutter:
     path: packages/subtrees/x_flutter
@@ -39,8 +39,6 @@ dependencies:
   widgets:
     path: packages/widgets
 
-  services:
-    path: packages/services
 
   calculator:
     path: packages/features/calculator

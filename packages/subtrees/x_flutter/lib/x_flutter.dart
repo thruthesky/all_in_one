@@ -12,6 +12,7 @@ export 'src/models/country.model.dart';
 
 export 'src/defines.dart';
 export 'src/api.dart';
+export 'src/api.translations.dart';
 export 'src/category.api.dart';
 export 'src/user.api.dart';
 export 'src/forum.api.dart';

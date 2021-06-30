@@ -1,8 +1,8 @@
-import 'package:all_in_one/services/globals.dart';
-import 'package:all_in_one/services/route_names.dart';
+import '../services/globals.dart';
+import '../services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:services/services.dart' as s;
+import 'package:utils/utils.dart' as s;
 
 class Service {
   BuildContext get context => Get.context!;
@@ -19,8 +19,7 @@ class Service {
   /// 스크린(페이지) 이동
   ///
   /// [offAll] 에 true 가 지정되면, nav stack 의 중간에 있는 모든 페이지를 없애고 해당 페이지로 이동.
-  Future? open(String routeName,
-      {arguments = const {}, offAll = false, off = false}) {
+  Future? open(String routeName, {arguments = const {}, offAll = false, off = false}) {
     app.routeName.value = routeName;
     if (offAll) {
       return Get.offAllNamed(routeName, arguments: arguments);

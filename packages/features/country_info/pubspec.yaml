@@ -20,8 +20,10 @@ dependencies:
   x_flutter:
     path: ../../subtrees/x_flutter
 
-  services:
-    path: ../../services
+
+
+  utils:
+    path: ../../temp_services/utils
 
     
   widgets:

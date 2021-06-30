@@ -1,7 +1,7 @@
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:services/services.dart';
+import 'package:utils/utils.dart';
 import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
 

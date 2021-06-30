@@ -44,9 +44,9 @@ dependencies:
   widgets:
     path: ../../widgets
 
-  services:
-    path: ../../services
 
+  utils:
+    path: ../../temp_services/utils
 
 dev_dependencies:
   flutter_test:

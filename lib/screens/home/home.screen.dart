@@ -12,7 +12,7 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:get/get.dart';
-import 'package:services/services.dart';
+import 'package:utils/utils.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';

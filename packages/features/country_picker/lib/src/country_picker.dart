@@ -1,7 +1,7 @@
 import 'package:country_currency_pickers/currency_picker_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:country_currency_pickers/country_currency_pickers.dart';
-import 'package:services/services.dart';
+import 'package:utils/utils.dart';
 
 /// [onChanged] 는 defaultCountryCode 가 처음 설정될 때에도 호출된다.
 class CountryPicker extends StatefulWidget {

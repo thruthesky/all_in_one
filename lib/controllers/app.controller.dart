@@ -1,7 +1,7 @@
-import 'package:all_in_one/services/config.dart';
-import 'package:all_in_one/services/route_names.dart';
+import '../services/config.dart';
+import '../services/route_names.dart';
 import 'package:get/get.dart';
-import 'package:services/services.dart';
+import 'package:utils/utils.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class AppController extends GetxController {

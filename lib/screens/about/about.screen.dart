@@ -1,7 +1,7 @@
 import 'package:about/about.dart';
-import 'package:all_in_one/services/globals.dart';
-import 'package:all_in_one/services/route_names.dart';
-import 'package:all_in_one/widgets/layout.dart';
+import '../../services/globals.dart';
+import '../../services/route_names.dart';
+import '../../widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/octicons_icons.dart';

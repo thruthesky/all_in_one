@@ -478,7 +478,7 @@ packages:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.1+1"
+    version: "0.8.1+2"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -778,13 +778,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
-  services:
-    dependency: "direct main"
-    description:
-      path: "packages/services"
-      relative: true
-    source: path
-    version: "0.0.1"
   share_plus:
     dependency: transitive
     description:
@@ -1000,6 +993,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  utils:
+    dependency: "direct main"
+    description:
+      path: "packages/temp_services/utils"
+      relative: true
+    source: path
+    version: "0.0.1"
   uuid:
     dependency: transitive
     description:

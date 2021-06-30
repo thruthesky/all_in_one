@@ -1,32 +1,33 @@
 // import 'dart:async';
 
-import 'package:all_in_one/screens/about_phone/about_phone.screen.dart';
-import 'package:all_in_one/screens/beta/beta.screen.dart';
-import 'package:all_in_one/screens/exchange_rate/exchange_rate.screen.dart';
+import 'package:x_flutter/x_flutter.dart';
+
+import 'screens/about_phone/about_phone.screen.dart';
+import 'screens/beta/beta.screen.dart';
+import 'screens/exchange_rate/exchange_rate.screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:all_in_one/screens/about/about.screen.dart';
-import 'package:all_in_one/screens/contact/contact.screen.dart';
-import 'package:all_in_one/screens/country_info/country_info.screen.dart';
-import 'package:all_in_one/screens/forum/forum.screen.dart';
-import 'package:all_in_one/screens/home/home.screen.dart';
-import 'package:all_in_one/screens/map/map.screen.dart';
-import 'package:all_in_one/screens/memo/memo.screen.dart';
-import 'package:all_in_one/screens/qr_code/qr_code.generate.screen.dart';
-import 'package:all_in_one/screens/qr_code/qr_code.result.screen.dart';
-import 'package:all_in_one/screens/qr_code/qr_code.scan.screen.dart';
-import 'package:all_in_one/screens/user/login.screen.dart';
-import 'package:all_in_one/screens/user/profile.screen.dart';
-import 'package:all_in_one/screens/user/register.screen.dart';
-import 'package:all_in_one/screens/weather/weather.screen.dart';
-import 'package:all_in_one/screens/widget_collection/widget_collection.dart';
-import 'package:all_in_one/services/config.dart';
-import 'package:all_in_one/services/globals.dart';
-import 'package:all_in_one/services/route_names.dart';
+import 'screens/about/about.screen.dart';
+import 'screens/contact/contact.screen.dart';
+import 'screens/country_info/country_info.screen.dart';
+import 'screens/forum/forum.screen.dart';
+import 'screens/home/home.screen.dart';
+import 'screens/map/map.screen.dart';
+import 'screens/memo/memo.screen.dart';
+import 'screens/qr_code/qr_code.generate.screen.dart';
+import 'screens/qr_code/qr_code.result.screen.dart';
+import 'screens/qr_code/qr_code.scan.screen.dart';
+import 'screens/user/login.screen.dart';
+import 'screens/user/profile.screen.dart';
+import 'screens/user/register.screen.dart';
+import 'screens/weather/weather.screen.dart';
+import 'screens/widget_collection/widget_collection.dart';
+import 'services/config.dart';
+import 'services/globals.dart';
+import 'services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:services/services.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
@@ -93,7 +94,7 @@ class _StudyAppState extends State<StudyApp> {
         const Locale('ko', 'KR'),
       ],
       locale: Locale(Get.deviceLocale!.languageCode),
-      translations: AppTranslations(trans: {
+      translations: ApiTranslations(trans: {
         'en': {
           'app_name': 'Yo',
           'apple': 'eat apple',

@@ -1,26 +1,24 @@
-name: about
-description: about packages
-version: 0.0.10
+name: utils
+description: utils packages
+version: 0.0.1
 homepage: https://github.com/thruthesky/all_in_one
 repository: https://github.com/thruthesky/all_in_one
 
+# pub.dev 에 publish 하지 않음
 publish_to: "none"
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-
   
 dependencies:
   flutter:
     sdk: flutter
-    
 
-  package_info_plus: ^1.0.3
-  device_info_plus: ^2.0.1
+  path_provider: ^2.0.2
+  get: ^4.1.4
+
   
 
-  widgets:
-    path: ../../widgets
 
 dev_dependencies:
   flutter_test:
