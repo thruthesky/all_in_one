@@ -84,15 +84,19 @@ class UserApi {
   /// [data] 에는 `email`, `password`, `name` 등의 `_users` 테이블 필드 외에 NoSQL 처럼 임의의 값을 저장 할 수 있다.
   Future register(Map<String, dynamic> data) async {
     final res = await api.request('user.register', data);
-    return _saveUser(res);
+    final user = _saveUser(res);
+    if (api.onRegister != null) api.onRegister!(user);
+    return user;
   }
 
   /// 회원 로그인
   ///
   /// 회원 가입 뿐만아니라, 로그인을 할 때에도 [data] 에 NoSQL 처럼 임의의 값을 저장 할 수 있다.
-  Future login(Map<String, dynamic> data) async {
+  Future<UserModel> login(Map<String, dynamic> data) async {
     final res = await api.request('user.login', data);
-    return _saveUser(res);
+    final user = _saveUser(res);
+    if (api.onLogin != null) api.onLogin!(user);
+    return user;
   }
 
   /// 회원 정보(프로필) 가져오기

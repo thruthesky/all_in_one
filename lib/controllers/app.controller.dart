@@ -1,3 +1,5 @@
+import 'package:analytics/analytics.dart';
+
 import '../services/config.dart';
 import '../services/route_names.dart';
 import 'package:get/get.dart';
@@ -22,7 +24,28 @@ class AppController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    api.init(url: Config.serverUrl, anonymousIconUrl: Config.anonymousUrl);
+
+    /// 파이어베이스 애널리스틱. 앱 시작 할 때 로그.
+    Analytics.logAppOpen();
+
+    ///
+    api.init(
+      url: Config.serverUrl,
+      anonymousIconUrl: Config.anonymousUrl,
+      onLogin: (UserModel u) {
+        /// 파이어베이스 애널리스틱스. 로그인 할 때 로그
+        Analytics.logLogin(loginMethod: 'email');
+      },
+      onRegister: () {
+        /// 파이어베이스 애널리스틱스. 회원 가입 할 때 로그
+        Analytics.logSignUp(signUpMethod: 'email');
+      },
+    );
+
+    routeName.listen((String routeName) {
+      /// 파이어베이스 애널리스틱스. 페이지가 바뀔 때마다 로그
+      Analytics.setCurrentScreen(routeName);
+    });
 
     /// 아래의 코드를 적당한 곳으로 이동.
     /// Matrix 백엔드 기본 정보.

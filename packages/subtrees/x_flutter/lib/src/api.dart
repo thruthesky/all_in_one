@@ -45,15 +45,25 @@ class Api {
   /// init() 에서 이 값을 다르게 지정 할 수 있다.
   late final String anonymousIconUrl;
 
+  /// 로그인을 하면 [onLogin] 콜백이 호출된다.
+  Function? onLogin;
+
+  /// 회원 가입을 하면, [onRegister] 콜백이 호출된다.
+  Function? onRegister;
+
   init({
     String apiKey = '',
     required String url,
     anonymousIconUrl =
         'https://flutterkorea.com/view/flutterkorea/assets/icon/anonymous/anonymous.png',
+    Function? onLogin,
+    Function? onRegister,
   }) {
     this.apiKey = apiKey;
     this.url = url;
     this.anonymousIconUrl = anonymousIconUrl;
+    this.onLogin = onLogin;
+    this.onRegister = onRegister;
   }
 
   // 백엔드에 요청

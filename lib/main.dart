@@ -57,9 +57,6 @@ class _StudyAppState extends State<StudyApp> {
   void initState() {
     super.initState();
 
-    /// 파이어베이스 애널리스틱. 앱 시작.
-    Analytics.logAppOpen();
-
     /// 날씨 초기화
     WeatherService.instance.init(
       apiKey: Config.openWeatherMapApiKey, // Api key
