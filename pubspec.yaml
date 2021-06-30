@@ -29,6 +29,10 @@ dependencies:
   webview_flutter: ^2.0.8
 
 
+  analytics:
+    path: packages/services/firebase/analytics
+    
+    
   utils:
     path: packages/services/utils
 
