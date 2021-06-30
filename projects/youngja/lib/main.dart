@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:youngja/screens/about/about.screen.dart';
-import 'package:youngja/screens/home/home.screen.dart';
-import 'package:youngja/screens/user/login.screen.dart';
-import 'package:youngja/screens/user/profile.screen.dart';
-import 'package:youngja/screens/user/register.screen.dart';
-import 'package:youngja/services/globals.dart';
-import 'package:youngja/services/route_names.dart';
+import 'screens/about/about.screen.dart';
+import 'screens/home/home.screen.dart';
+import 'screens/user/login.screen.dart';
+import 'screens/user/profile.screen.dart';
+import 'screens/user/register.screen.dart';
+import 'services/globals.dart';
+import 'services/route_names.dart';
 
 void main() async {
   await GetStorage.init();

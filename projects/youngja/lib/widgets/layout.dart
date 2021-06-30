@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:youngja/services/config.dart';
-import 'package:youngja/services/globals.dart';
-import 'package:youngja/services/route_names.dart';
+import '../services/config.dart';
+import '../services/globals.dart';
+import '../services/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -98,7 +98,7 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
 
 
 
-// import 'package:youngja/services/globals.dart';
+// import '../services/globals.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter/foundation.dart';
 // import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
