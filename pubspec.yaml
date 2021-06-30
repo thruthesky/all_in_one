@@ -24,8 +24,6 @@ dependencies:
   rxdart: ^0.27.1
 
 
-  # 전화걸기. QR 코드 스캔 후 전화 걸기.
-  flutter_phone_direct_caller: ^2.0.0
 
   # 아이콘 모음집
   fluttericon: ^2.0.0

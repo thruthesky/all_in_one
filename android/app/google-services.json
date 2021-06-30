@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "739173176864",
+    "firebase_url": "https://flutterkorea-com.firebaseio.com",
+    "project_id": "flutterkorea-com",
+    "storage_bucket": "flutterkorea-com.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739173176864:android:4bc28a721b84397e3f0e45",
+        "android_client_info": {
+          "package_name": "com.flutterkorea.study"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739173176864-t2d405msujdm9f25n3tnbegvsq4a0ohl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoTwvS9W6Y6hhEprSKwmb_XtpadlLIcAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739173176864-t2d405msujdm9f25n3tnbegvsq4a0ohl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "739173176864-5vvk4fevn0gr1a85lgt9p5mvu3cst3jn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.flutterkorea.firestore"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.all_in_one">
+    package="com.flutterkorea.study">
    <application
         android:label="all_in_one"
         android:icon="@mipmap/ic_launcher"

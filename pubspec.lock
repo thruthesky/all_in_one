@@ -360,7 +360,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_phone_direct_caller:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_phone_direct_caller
       url: "https://pub.dartlang.org"

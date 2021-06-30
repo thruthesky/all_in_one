@@ -1,4 +1,4 @@
-package com.example.all_in_one
+package com.flutterkorea.study
 
 import io.flutter.embedding.android.FlutterActivity
 
