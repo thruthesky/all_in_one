@@ -37,9 +37,8 @@ dependencies:
   x_flutter:
     path: ../subtrees/x_flutter
 
-
   utils:
-    path: ../temp_services/utils  
+    path: ../services/utils  
     
 dev_dependencies:
   flutter_test:

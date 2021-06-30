@@ -996,7 +996,7 @@ packages:
   utils:
     dependency: "direct main"
     description:
-      path: "packages/temp_services/utils"
+      path: "packages/services/utils"
       relative: true
     source: path
     version: "0.0.1"

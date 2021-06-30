@@ -549,7 +549,7 @@ packages:
   utils:
     dependency: transitive
     description:
-      path: "../../temp_services/utils"
+      path: "../../services/utils"
       relative: true
     source: path
     version: "0.0.1"

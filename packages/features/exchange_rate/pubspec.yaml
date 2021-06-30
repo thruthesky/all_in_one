@@ -19,18 +19,16 @@ dependencies:
     path: ../../subtrees/x_flutter
 
   utils:
-    path: ../../temp_services/utils
+    path: ../../services/utils
     
   widgets:
     path: ../../widgets
 
   country_picker:
     path: ../country_picker
-    
-    
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-

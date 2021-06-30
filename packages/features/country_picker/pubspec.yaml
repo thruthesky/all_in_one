@@ -14,9 +14,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-    
   utils:
-    path: ../../temp_services/utils
+    path: ../../services/utils
 
   country_currency_pickers:
     path: ../../subtrees/country_currency_pickers

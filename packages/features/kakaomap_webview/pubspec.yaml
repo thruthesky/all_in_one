@@ -18,7 +18,6 @@ dependencies:
 
   webview_flutter: ^2.0.8
 
-
   widgets:
     path: ../../widgets
 
@@ -27,4 +26,3 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-
