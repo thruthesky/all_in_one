@@ -1,5 +1,3 @@
-import 'package:analytics/analytics.dart';
-
 import '../services/globals.dart';
 import '../services/route_names.dart';
 import 'package:flutter/material.dart';

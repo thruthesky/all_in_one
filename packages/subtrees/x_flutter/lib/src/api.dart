@@ -123,7 +123,7 @@ class Api {
 
         // 백엔드 호스트 오류. 접속 불가.
         if (e.message.indexOf('Failed host lookup') > -1) {
-          throw "백엔드 - $url - 에 접속 할 수 없습니다. 호스트가 올바른지 확인을 해 주세요.";
+          throw "백엔드 - $url - 에 접속 할 수 없습니다. 호스트가 올바른지, 인터넷이 연결되었는지 확인을 해 주세요.";
         } else if (e.message.indexOf('CERTIFICATE_VERIFY_FAILED') > -1) {
           throw "백엔드 호스트 접속시 인증서 오류가 발생하였습니다. HTTP 또는 HTTPS 접속인지 확인을 해 주세요.\nCERTIFICATE_VERIFY_FAILED: application verification failure";
         } else if (e.message.indexOf('Unexpected character') > -1) {

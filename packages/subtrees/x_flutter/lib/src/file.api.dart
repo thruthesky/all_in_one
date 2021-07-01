@@ -85,6 +85,7 @@ class FileApi {
     formData = FormData.fromMap({
       /// `route` 와 `session_id` 등 추가 파라메타 값을 전달 할 수 있다.
       'route': 'file.upload',
+      'apiKey': api.apiKey,
       'sessionId': api.sessionId,
       'taxonomy': taxonomy,
       'entity': entity.toString(),

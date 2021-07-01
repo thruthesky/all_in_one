@@ -1,6 +1,5 @@
 // import 'dart:async';
 
-import 'package:analytics/analytics.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 import 'screens/about_phone/about_phone.screen.dart';
