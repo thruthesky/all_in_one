@@ -17,18 +17,24 @@ class WeatherDisplay extends StatefulWidget {
 class _WeatherDisplayState extends State<WeatherDisplay> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: [
-        WeatherDisplayMain(),
-        Container(
-          height: 80,
-          child: VerticalDivider(
-            width: 60,
-            thickness: 1,
-            color: Colors.grey[300],
-          ),
+        spaceXl,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            WeatherDisplayMain(),
+            Container(
+              height: 80,
+              child: VerticalDivider(
+                width: 60,
+                thickness: 1,
+                color: Colors.grey[300],
+              ),
+            ),
+            WeatherAirPollution(),
+          ],
         ),
-        WeatherAirPollution(),
       ],
     );
   }

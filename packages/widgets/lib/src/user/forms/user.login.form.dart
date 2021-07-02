@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class UserLoginForm extends StatelessWidget {
@@ -6,31 +7,34 @@ class UserLoginForm extends StatelessWidget {
     Key? key,
     required this.success,
     required this.error,
+    required this.register,
   }) : super(key: key);
 
   final Function success;
   final Function error;
+  final VoidCallback register;
   final email = TextEditingController();
   final password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      color: Colors.orange[50],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('로그인 이메일:'),
-          TextField(
-            controller: email,
-            keyboardType: TextInputType.emailAddress,
-          ),
-          SizedBox(height: 16),
-          Text('로그인 비밀번호:'),
-          TextField(controller: password),
-          SizedBox(height: 16),
-          ElevatedButton(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: email,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(labelText: '로그인 이메일', hintText: '이메일 주소를 입력해 주세요.'),
+        ),
+        spaceLg,
+        TextField(
+          controller: password,
+          decoration: InputDecoration(labelText: '로그인 비밀번호', hintText: '비밀번호를 입력해 주세요.'),
+        ),
+        spaceMd,
+        Row(
+          children: [
+            TextButton(
               onPressed: () async {
                 try {
                   final user = await UserApi.instance
@@ -42,9 +46,13 @@ class UserLoginForm extends StatelessWidget {
                   // service.error(e);
                 }
               },
-              child: Text('회원 로그인'))
-        ],
-      ),
+              child: Text('회원 로그인'),
+            ),
+            Spacer(),
+            TextButton(onPressed: register, child: Text('회원 가입'))
+          ],
+        )
+      ],
     );
   }
 }

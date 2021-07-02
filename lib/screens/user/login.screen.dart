@@ -23,6 +23,7 @@ class LoginScreen extends StatelessWidget {
             UserLoginForm(
               success: (user) => service.openHome(),
               error: service.error,
+              register: service.openRegister,
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widgets/widgets.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 /// 회원 가입 양식
@@ -15,40 +16,45 @@ class UserRegisterForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(16.0),
-      color: Colors.grey[200],
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('로그인 이메일:'),
-          TextField(
-            controller: email,
-            keyboardType: TextInputType.emailAddress,
-          ),
-          SizedBox(height: 16),
-          Text('로그인 비밀번호:'),
-          TextField(controller: password),
-          SizedBox(height: 16),
-          Text('사용자 이름:'),
-          TextField(controller: name),
-          SizedBox(height: 16),
-          ElevatedButton(
-              onPressed: () async {
-                try {
-                  final user = await UserApi.instance.register({
-                    'email': email.text,
-                    'password': password.text,
-                    'name': name.text,
-                  });
-                  success(user);
-                } catch (e) {
-                  error(e);
-                }
-              },
-              child: Text('회원 가입'))
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: email,
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(labelText: '로그인 이메일', hintText: '이메일 주소를 입력해주세요.'),
+        ),
+        spaceMd,
+        TextField(
+          controller: password,
+          decoration: InputDecoration(labelText: '로그인 비밀번호', hintText: '비밀번호를 입력해주세요.'),
+        ),
+        spaceMd,
+        TextField(
+          controller: name,
+          decoration: InputDecoration(labelText: '사용자 이름', hintText: '사용자 이름을 입력해주세요.'),
+        ),
+        spaceMd,
+        Row(
+          children: [
+            Spacer(),
+            TextButton(
+                onPressed: () async {
+                  try {
+                    final user = await UserApi.instance.register({
+                      'email': email.text,
+                      'password': password.text,
+                      'name': name.text,
+                    });
+                    success(user);
+                  } catch (e) {
+                    error(e);
+                  }
+                },
+                child: Text('회원 가입')),
+          ],
+        )
+      ],
     );
   }
 }

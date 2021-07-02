@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
 
+/// 날씨를 보여주는 아이콘
+///
+/// 만약, 날씨 정보를 가져오지 못하거나, 로딩 상태이면 [defaultChild] 를 표시 할 수 있다.
 class WeatherIcon extends StatefulWidget {
-  WeatherIcon({this.onTap});
+  WeatherIcon({this.onTap, this.defaultChild});
   final VoidCallback? onTap;
+  final Widget? defaultChild;
   @override
   _WeatherIconState createState() => _WeatherIconState();
 }
@@ -44,7 +48,7 @@ class _WeatherIconState extends State<WeatherIcon> {
         child: Column(
           children: [
             data?.current?.icon == null
-                ? Spinner()
+                ? (widget.defaultChild ?? Spinner())
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [

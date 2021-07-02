@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Divider(),
                   Wrap(
                     spacing: md,
+                    runSpacing: md,
                     children: [
                       Calculator(
                         child: IconText(
@@ -90,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Divider(),
                   Wrap(
                     spacing: md,
+                    runSpacing: md,
                     children: [
                       AppIcon(icon: Elusive.qrcode, label: 'QR 코드', action: RouteNames.qrCodeScan),
                       AppIcon(
