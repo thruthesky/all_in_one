@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:battery_plus/battery_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 
 class BatteryDisplay extends StatefulWidget {
@@ -30,8 +31,12 @@ class _BatteryDisplayState extends State<BatteryDisplay> {
 
 // Be informed when the state (full, charging, discharging) changes
     subscription = battery.onBatteryStateChanged.listen((BatteryState state) async {
-      level = await battery.batteryLevel;
-      if (mounted) setState(() {});
+      try {
+        level = await battery.batteryLevel;
+        if (mounted) setState(() {});
+      } on PlatformException catch (e) {
+        if (e.message == 'Battery info unavailable') {}
+      }
     });
   }
 

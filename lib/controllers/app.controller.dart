@@ -36,7 +36,7 @@ class AppController extends GetxController {
         /// 파이어베이스 애널리스틱스. 로그인 할 때 로그
         Analytics.logLogin(loginMethod: 'email');
       },
-      onRegister: () {
+      onRegister: (UserModel u) {
         /// 파이어베이스 애널리스틱스. 회원 가입 할 때 로그
         Analytics.logSignUp(signUpMethod: 'email');
       },

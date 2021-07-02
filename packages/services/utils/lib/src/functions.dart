@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' as S;
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 // import 'package:x_flutter/x_flutter.dart';
 
@@ -36,7 +36,7 @@ error(e) {
     } else {
       alert('에러', e);
     }
-  } else if (e is S.PlatformException) {
+  } else if (e is PlatformException) {
     /// 사용자가 취소를 한 경우, 에러 표시 하지 않음.
     ///
     /// 사진 업로드 등에서, 여러 차례 취소를 한 경우.
@@ -52,8 +52,16 @@ error(e) {
     } else {
       alert('개발자 코딩 실수', '타입 에러: ' + e.toString());
     }
-  } else if (e.message != null && e.message is String) {
-    alert('Assertion 에러 발생', e.message);
+  } else if (e.runtimeType.toString() == "NoSuchMethodError") {
+    if (e.toString().contains("Closure call with mismatched arguments")) {
+      alert('개발자 실수', '클로져 함수가 받아들이는 인자 개 수와 호출 함수의 파라미터 개 수가 다릅니다.\n\n$e');
+    } else {
+      alert('개발자 실수', "NoSuchMethodError; $e");
+    }
+  } else if (e?.message != null) {
+    if (e.message is String) {
+      alert('Assertion 에러 발생', e.message);
+    }
   } else {
     alert('에러', e);
   }
