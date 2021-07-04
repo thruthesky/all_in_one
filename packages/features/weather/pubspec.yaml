@@ -24,6 +24,10 @@ dependencies:
   widgets:
     path: ../../widgets
 
+  utils:
+    path: ../../services/utils
+    
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

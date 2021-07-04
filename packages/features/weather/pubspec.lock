@@ -547,7 +547,7 @@ packages:
     source: hosted
     version: "2.0.0"
   utils:
-    dependency: transitive
+    dependency: "direct main"
     description:
       path: "../../services/utils"
       relative: true

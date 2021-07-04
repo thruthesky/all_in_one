@@ -69,6 +69,7 @@ dependencies:
     path: packages/features/about
   about_phone:
     path: packages/features/about_phone
+  geolocator: ^7.2.0+1
     
 dependency_overrides:
   # flutter_simple_calculator
@@ -82,10 +83,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  integration_test:
-    sdk: flutter
+
   flutter_driver:
     sdk: flutter
+
+  integration_test:
+    sdk: flutter
+
+
 
 
 
