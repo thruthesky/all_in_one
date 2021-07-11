@@ -13,6 +13,7 @@ class FileModel {
   int createdAt;
   int updatedAt;
   String url;
+  String thumbnailUrl;
 
   FileModel({
     this.idx = 0,
@@ -27,6 +28,7 @@ class FileModel {
     this.createdAt = 0,
     this.updatedAt = 0,
     this.url = '',
+    this.thumbnailUrl = '',
   });
 
   @override
@@ -48,6 +50,7 @@ class FileModel {
       createdAt: json['createdAt'] ?? 0,
       updatedAt: json['updatedAt'] ?? 0,
       url: json['url'] ?? '',
+      thumbnailUrl: json['thumbnailUrl'] ?? '',
     );
   }
 
@@ -65,6 +68,7 @@ class FileModel {
       'createdAt': createdAt,
       'updatedAt': updatedAt,
       'url': url,
+      'thumbnailUrl': thumbnailUrl,
     };
   }
 
