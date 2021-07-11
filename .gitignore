@@ -1,4 +1,3 @@
-x_flutter
 
 
 # Miscellaneous
@@ -24,6 +23,7 @@ x_flutter
 #.vscode/
 
 # Flutter/Dart/Pub related
+./doc/
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/

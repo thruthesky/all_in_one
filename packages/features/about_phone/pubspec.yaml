@@ -1,0 +1,34 @@
+name: about_phone
+description: about_phone packages
+version: 0.0.10
+homepage: https://github.com/thruthesky/all_in_one
+repository: https://github.com/thruthesky/all_in_one
+
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  device_info_plus: ^2.0.1
+  network_info_plus: ^1.0.2
+  battery_plus: ^1.0.2
+  connectivity_plus: ^1.0.4
+
+
+  # 배터리 아이콘
+  fluttericon: ^2.0.0
+  
+  widgets:
+    path: ../../widgets
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+
