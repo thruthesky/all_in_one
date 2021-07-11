@@ -129,6 +129,7 @@ class _StudyAppState extends State<StudyApp> {
         GetPage(name: RouteNames.exchangeRate, page: () => ExchangeRateScreen()),
         GetPage(name: RouteNames.beta, page: () => BetaScreen()),
         GetPage(name: RouteNames.aboutPhone, page: () => AboutPhoneScreen()),
+        GetPage(name: RouteNames.voiceRecorder, page: () => VoiceRecorderScreen())
       ],
     );
   }

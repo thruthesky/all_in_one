@@ -1,0 +1,28 @@
+name: voice_recorder
+description: voice_recorder packages
+version: 0.0.1
+homepage: https://github.com/thruthesky/all_in_one
+repository: https://github.com/thruthesky/all_in_one
+
+# pub.dev 에 publish 하지 않음
+publish_to: "none"
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 음성 녹음 및 재생
+  flutter_sound: ^8.1.9
+
+  # 마이크 권한 획득
+  permission_handler: ^8.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
