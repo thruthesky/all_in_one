@@ -111,6 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           icon: Icons.phonelink_setup_rounded,
                           label: '핸드폰 정보',
                           action: RouteNames.aboutPhone),
+                      AppIcon(
+                        icon: Icons.record_voice_over,
+                        label: '음성 녹음',
+                        action: RouteNames.voiceRecorder,
+                      )
                     ],
                   ),
                   spaceXl,

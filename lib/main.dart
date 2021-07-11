@@ -1,7 +1,7 @@
 // import 'dart:async';
 
 import 'package:x_flutter/x_flutter.dart';
-
+import 'screens/voice_recorder/voice_recorder.screen.dart';
 import 'screens/about_phone/about_phone.screen.dart';
 import 'screens/beta/beta.screen.dart';
 import 'screens/exchange_rate/exchange_rate.screen.dart';
@@ -30,7 +30,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
-
 import 'package:country_code_picker/country_localizations.dart';
 
 void main() async {
@@ -129,6 +128,7 @@ class _StudyAppState extends State<StudyApp> {
         GetPage(name: RouteNames.exchangeRate, page: () => ExchangeRateScreen()),
         GetPage(name: RouteNames.beta, page: () => BetaScreen()),
         GetPage(name: RouteNames.aboutPhone, page: () => AboutPhoneScreen()),
+        GetPage(name: RouteNames.voiceRecorder, page: () => VoiceRecorderScreen())
       ],
     );
   }

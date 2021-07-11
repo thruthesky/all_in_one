@@ -70,7 +70,10 @@ dependencies:
   about_phone:
     path: packages/features/about_phone
   geolocator: ^7.2.0+1
-    
+
+  voice_recorder:
+    path: packages/features/voice_recorder
+
 dependency_overrides:
   # flutter_simple_calculator
   expressions: ^0.2.2
