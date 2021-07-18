@@ -2,7 +2,7 @@ import 'file_player_page.dart';
 import 'package:flutter/material.dart';
 
 class FileListPage extends StatefulWidget {
-  final _fileNameList;
+  final List<dynamic> _fileNameList;
   FileListPage(this._fileNameList);
 
   @override
@@ -33,7 +33,7 @@ class _FileListPageState extends State<FileListPage> {
             itemCount: widget._fileNameList.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(widget._fileNameList[index].uri.base),
+                title: Text(widget._fileNameList[index].path.split('/').last),
                 onTap: () {
                   Navigator.push(
                       context,

@@ -25,7 +25,7 @@ class _FilePlayerPageState extends State<FilePlayerPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget._file.uri.base),
+        title: Text(widget._file.path.split('/').last),
       ),
       body: Column(
         children: [player],

@@ -20,6 +20,8 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
   String _fileName = '';
   List<dynamic> _fileNameList = [];
 
+  // typedef Func = void Function;
+
   @override
   void initState() {
     super.initState();
@@ -92,6 +94,9 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
         ),
         TextButton(
             onPressed: () async {
+              setState(() {
+                getFileNameList();
+              });
               _fileNameList = await Navigator.push(
                   context, MaterialPageRoute(builder: (context) => FileListPage(_fileNameList)));
             },
