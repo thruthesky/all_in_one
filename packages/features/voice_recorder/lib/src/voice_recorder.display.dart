@@ -25,7 +25,7 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
   @override
   void initState() {
     super.initState();
-
+    getFileNameList();
     _openTheRecord();
   }
 
@@ -63,11 +63,13 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
   void _record() async {
     _path = await _localPath;
     _fileName = '$_path/${DateTime.now().toString().replaceAll(RegExp(r'\D'), '')}.acc';
+    print('_fileName; $_fileName');
     _recorder!.startRecorder(toFile: _fileName).then((value) => setState(() {}));
   }
 
   void _stopRecorder() async {
     await _recorder!.stopRecorder().then((value) => setState(() {}));
+    getFileNameList();
   }
 
   void _getRecorder() {
