@@ -2,6 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io' as io;
+import 'file_list_page.dart';
 
 class VoiceRecorderDisplay extends StatefulWidget {
   const VoiceRecorderDisplay({Key? key}) : super(key: key);
@@ -11,20 +14,15 @@ class VoiceRecorderDisplay extends StatefulWidget {
 }
 
 class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
-  FlutterSoundPlayer? _player = FlutterSoundPlayer();
   FlutterSoundRecorder? _recorder = FlutterSoundRecorder();
-  bool _isPlayerInited = false;
   bool _isRecorderInited = false;
-  bool _isPlaybackReady = false;
-  final String _path = 'voice_recorder_example.aac';
+  String _path = '';
+  String _fileName = '';
+  List<dynamic> _fileNameList = [];
 
   @override
   void initState() {
     super.initState();
-
-    _player!.openAudioSession().then((value) => setState(() {
-          _isPlayerInited = true;
-        }));
 
     _openTheRecord();
   }
@@ -33,10 +31,20 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
   void dispose() {
     super.dispose();
 
-    _player!.closeAudioSession();
-    _player = null;
     _recorder!.closeAudioSession();
     _recorder = null;
+  }
+
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
+    return directory.path;
+  }
+
+  void getFileNameList() async {
+    var filePath = await _localPath;
+    setState(() {
+      _fileNameList = io.Directory('$filePath/').listSync();
+    });
   }
 
   Future<void> _openTheRecord() async {
@@ -50,37 +58,21 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
     _isRecorderInited = true;
   }
 
-  void _record() {
-    _recorder!.startRecorder(toFile: _path).then((value) => setState(() {}));
+  void _record() async {
+    _path = await _localPath;
+    _fileName = '$_path/${DateTime.now().toString().replaceAll(RegExp(r'\D'), '')}.acc';
+    _recorder!.startRecorder(toFile: _fileName).then((value) => setState(() {}));
   }
 
   void _stopRecorder() async {
-    await _recorder!.stopRecorder().then((value) => setState(() {
-          _isPlaybackReady = true;
-        }));
-  }
-
-  void _play() {
-    assert(_isPlayerInited && _isPlaybackReady && _recorder!.isStopped && _player!.isStopped);
-    _player!.startPlayer(fromURI: _path, whenFinished: () => setState(() {}));
-  }
-
-  void _stopPlayer() {
-    _player!.stopPlayer().then((value) => setState(() {}));
+    await _recorder!.stopRecorder().then((value) => setState(() {}));
   }
 
   void _getRecorder() {
-    if (!_isRecorderInited || !_player!.isStopped) {
+    if (!_isRecorderInited) {
       return;
     }
     _recorder!.isStopped ? _record() : _stopRecorder();
-  }
-
-  void _getPlayback() {
-    if (!_isPlayerInited || !_isPlaybackReady || !_recorder!.isStopped) {
-      return;
-    }
-    _player!.isStopped ? _play() : _stopPlayer();
   }
 
   @override
@@ -98,15 +90,12 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
             Text(_recorder!.isRecording ? '녹음 중입니다' : '버튼을 누르시면 녹음됩니다')
           ],
         ),
-        Row(
-          children: [
-            IconButton(
-                icon: Icon(_player!.isPlaying ? Icons.stop : Icons.play_arrow),
-                color: _player!.isPlaying ? Colors.grey : Colors.blue,
-                onPressed: _getPlayback),
-            Text(_player!.isPlaying ? '재생 중입니다' : '버튼을 누르시면 재생됩니다')
-          ],
-        )
+        TextButton(
+            onPressed: () async {
+              _fileNameList = await Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => FileListPage(_fileNameList)));
+            },
+            child: Text('File List'))
       ],
     );
   }
