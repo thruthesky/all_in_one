@@ -4,7 +4,7 @@
 class Config {
   static const appName = String.fromEnvironment('APP_NAME', defaultValue: '앱 이름 없음');
   static const serverUrl =
-      String.fromEnvironment('SERVER_URL', defaultValue: 'https://www.flutterkorea.com/index.php');
+      String.fromEnvironment('SERVER_URL', defaultValue: 'http://study.flutterkorea.com/index.php');
 
   static const anonymousUrl = 'https://flutterkorea.com/assets/icon/anonymous/anonymous.png';
 
