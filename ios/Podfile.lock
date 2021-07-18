@@ -68,6 +68,10 @@ PODS:
     - SDWebImageWebPCoder
   - flutter_phone_direct_caller (0.0.1):
     - Flutter
+  - flutter_sound (8.1.9):
+    - Flutter
+    - mobile-ffmpeg-full (= 4.4.LTS)
+    - tau_core (= 8.1.9)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
@@ -127,6 +131,7 @@ PODS:
   - Mantle (2.1.6):
     - Mantle/extobjc (= 2.1.6)
   - Mantle/extobjc (2.1.6)
+  - mobile-ffmpeg-full (4.4.LTS)
   - MTBBarcodeScanner (5.0.11)
   - nanopb (2.30908.0):
     - nanopb/decode (= 2.30908.0)
@@ -138,6 +143,8 @@ PODS:
   - package_info_plus (0.4.5):
     - Flutter
   - path_provider (0.0.1):
+    - Flutter
+  - "permission_handler (5.1.0+2)":
     - Flutter
   - PromisesObjC (1.2.12)
   - qr_code_scanner (0.2.0):
@@ -155,6 +162,7 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
+  - tau_core (8.1.9)
   - url_launcher (0.0.1):
     - Flutter
   - webview_flutter (0.0.1):
@@ -169,6 +177,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_phone_direct_caller (from `.symlinks/plugins/flutter_phone_direct_caller/ios`)
+  - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - geolocator (from `.symlinks/plugins/geolocator/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
@@ -176,6 +185,7 @@ DEPENDENCIES:
   - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -196,12 +206,14 @@ SPEC REPOS:
     - GoogleUtilities
     - libwebp
     - Mantle
+    - mobile-ffmpeg-full
     - MTBBarcodeScanner
     - nanopb
     - PromisesObjC
     - Reachability
     - SDWebImage
     - SDWebImageWebPCoder
+    - tau_core
 
 EXTERNAL SOURCES:
   battery_plus:
@@ -220,6 +232,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
   flutter_phone_direct_caller:
     :path: ".symlinks/plugins/flutter_phone_direct_caller/ios"
+  flutter_sound:
+    :path: ".symlinks/plugins/flutter_sound/ios"
   geolocator:
     :path: ".symlinks/plugins/geolocator/ios"
   image_gallery_saver:
@@ -234,6 +248,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  permission_handler:
+    :path: ".symlinks/plugins/permission_handler/ios"
   qr_code_scanner:
     :path: ".symlinks/plugins/qr_code_scanner/ios"
   share_plus:
@@ -261,6 +277,7 @@ SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_image_compress: 082f8daaf6c1b0c9fe798251c750ef0ecd98d7ae
   flutter_phone_direct_caller: bd2ffd297f371a8a6c7bfbba0196964ffe3c4358
+  flutter_sound: a23b5cd88c927cd88d0db0e1d8222897809b697e
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   geolocator: f5e3de65e241caba7ce3e8a618803387bda73384
   GoogleAppMeasurement: c6bbc9753d046b5456dd4f940057fbad2c28419e
@@ -271,11 +288,13 @@ SPEC CHECKSUMS:
   integration_test: 6eb66a19f7104200dcfdd62bc0077e1b09686e4f
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
+  mobile-ffmpeg-full: f17c82219b4ff9e4018b5e21f88b78c28a3475db
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   network_info_plus: b78876159360f5580608c2cea620d6ceffabd0ad
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
@@ -284,9 +303,10 @@ SPEC CHECKSUMS:
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  tau_core: 454483d8e963c24dc0f7a4b75281c9b375f1d3f2
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
 
-PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+PODFILE CHECKSUM: a22838b7eeeacb9feb9b0dfc4693580df9e685db
 
 COCOAPODS: 1.10.1
