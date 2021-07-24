@@ -84,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       AppIcon(icon: Typicons.sun, label: '날씨', action: RouteNames.weather),
                       AppIcon(
                           icon: FontAwesome5.map_marked_alt, label: '지도', action: RouteNames.map),
+                      // AppIcon(icon: FontAwesome5.file, label: '메모', action: RouteNames.memo),
                     ],
                   ),
                   spaceXl,

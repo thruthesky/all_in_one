@@ -1,5 +1,5 @@
-import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
+import '../../widgets/layout.dart';
 
 class MemoScreen extends StatelessWidget {
   const MemoScreen({Key? key}) : super(key: key);
