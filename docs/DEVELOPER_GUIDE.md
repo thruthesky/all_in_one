@@ -27,11 +27,6 @@
 - [x_flutter 패키지](#x_flutter-패키지)
 - [상태 관리](#상태-관리)
 - [모델](#모델)
-- [위젯 패키지](#위젯-패키지)
-  - [SVG](#svg)
-- [서브트리, Subtree](#서브트리-subtree)
-- [백엔드](#백엔드)
-  - [x_flutter 패키지 개발 방법](#x_flutter-패키지-개발-방법)
 - [코드 설명](#코드-설명)
   - [실행 및 설정](#실행-및-설정)
   - [스크린 생성](#스크린-생성)
@@ -46,6 +41,11 @@
 - [Mono repo](#mono-repo-1)
   - [각자의 프로젝트 생성](#각자의-프로젝트-생성)
   - [각자의 프로젝트 설정](#각자의-프로젝트-설정)
+- [위젯 패키지](#위젯-패키지)
+  - [SVG](#svg)
+- [서브트리, Subtree](#서브트리-subtree)
+- [백엔드](#백엔드)
+  - [x_flutter 패키지 개발 방법](#x_flutter-패키지-개발-방법)
 - [파이어베이스](#파이어베이스)
   - [파이어베이스 설정](#파이어베이스-설정)
   - [파이어베이스 애널리스틱스](#파이어베이스-애널리스틱스)
@@ -336,69 +336,28 @@
   - `> Null safety? Yes`
 
 
-# 위젯 패키지
-
-## SVG
-- 위젯 패키지에 `assets/svg` 폴더에 SVG 파일들이 저장되어져 있으며, 또 필요한 SVG 파일은 항상 이 위치에 저장을 해야 한다.
-  - svg 사용을 하려면 `svg('face/fair');` 와 같이 하면 된다.
-  - 경로는 `assets/svg/[...].svg` 에서 대괄호 안에 들어가는 경로를 지정하면 된다. 예) `face/fair` 는 `packages/wdigets/assets/svg/face/fair.svg` 가 된다.
-  - 만약, `widgets` 패키지가 아닌 다른 패키지 또는 앱 폴더의 assets 경로에서 사용하고 싶다면, `svg('face/fair', '패키지 경로')` 와 같이 사용하면 된다.
-  
-예제)
-```dart
-svg('face/devil')
-svg(uviIcon(current.uvi), width: 20, height: 20)
-svg('money-exchange', package: '..'), // 앱 assets 경로
-```
-
-# 서브트리, Subtree
-
-- 패키지(소스 코드)를 pub.dev 에 배포하는 것 보다 로컬(개발) 컴퓨터에서 수정하여 작업하는 것이 편합니다. 자신이 만든 패키지를 세상에 공개해서 널리 쓰게 할 목적이 아니라면, 굳이 pub.dev 에 배포 할 필요 없습니다.
-- 로컬(개발) 컴퓨터에서 수정을 하는 것이 편한데, 때로는 소스 코드가 git repo 에 있어야 할 때가 있습니다. 즉, 소스 코드가 git repo 로 저장되고 이리 저리 활용이 될 필요가 있을 수 있습니다. 예를 들면, 다른 프로젝트의 submodule 로 들어갈 수 있습니다.
-  - 하지만, 이와 같은 경우, git submodule 에 대해서 알지 못하는 개발자가 작업을 하는데 걸림돌이 됩니다.
-
-- 그래서, `git subtree` 로 git repo 의 코드를 가져와서 사용합니다.
-
-- 참고로 `x_flutter` 는 `$ git subtree --prefix=packages/subtrees/x_flutter x_flutter main` 와 같이 지정되어져 있고,
-  `country_currency_pickers` 는 `% git subtree add --prefix=packages/subtrees/country_currency_pickers --squash country_currency_pickers master` 와 같이 지정되어져 있습니다.
-
-# 백엔드
-
-- pub.dev 에 [x_flutter 패키지](https://pub.dev/packages/x_flutter)가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
-- Matrix 가 설치되어져 있는 서버 도메인: flutterkorea.com
-- 접속 설정은 service/config.dart 에 이미 되어져 있어 그대로 사용하면 됩니다.
-- 백엔드 관리자 사용법
-  - 게시판 생성 및 게시판 메뉴를 앱에서 보여주는 방법
-  - 백엔드 관리자가 푸시를 하는 방법
-    - 아이콘 설정
-    - 소리 설정
-
-## x_flutter 패키지 개발 방법
-
-- x_flutter 를 직접 코딩하지 않는다면, 일반적인 사용은 pub.dev 의 최신 버전을 사용하면 된다.
-
-- 만약, x_flutter 를 직접 개발(코딩) 할 것이라면,
-  - `% git submodule update --init` 으로 추가하면 된다.
-    - 참고로, 아래와 같이 서브 모듈로 추가되어져 있으므로, 다시 `submodule add` 는 할 필요 없다.
-      - `% git submodule add https://github.com/withcenter/x_flutter packages/x_flutter`
-
-  - 그리고 `pubspec.yaml` 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pub.dev 에 publish 하고,
-    pubspec.yaml 의 x_flutter 를 pub.dev 의 최신 버전으로 변경하면된다.
-  - 주의 할 점은, pub.dev 의 패키지를 사용하는 경우, x_flutter 를 수정하면, github 에 적용이 안된다.
-
 # 코드 설명
 
 ## 실행 및 설정
 
-- launch.json 사용 방법
+- 앱의 구동 환경에 따라 다양한 설정이 필요합니다.
+  - 예를 들면, 개발할 때에는 백엔드를 개발 전용 백엔드 서버로 연결하고, 실제 서비스에서는 실제 서비스 전용 백엔드 서버로 연결을 해야합니다.
+  - 이와 같은 설정을 `services/config.dart` 에 저장을 합니다. 이것은 `만능앱`의 스타일 가이드일 뿐이며, 꼭 지켜야하는 것은 아닙니다.
+
+- 참고, launch.json 사용 방법을 살펴보세요.
+
+
 ## 스크린 생성
 
 스크린(페이지)를 생성하는 방법에 대해서 설명을 합니다.
 
+스크린 생성은 플러터 개발에 있어서 일반적인 스크린 생성을 위해서 dart 파일을 생성하고 widget 클래스를 만드는 것과 동일합니다. 여러 개발자가 같이 개발을 하는 `만능앱`에서는 `만능앱`만의 코딩 스타일이 필요합니다. 물론 이러한 `만능앱`만의 코딩 스타일이 플러터 스타일 가이드 보다 우선해서는 안 될 것입니다.
 
-- screens 폴더안에 스크린 폴더를 만들고, **.screen.dart 와 같이 dart 파일을 만듭니다.
-  - 예를 들어, 스크린의 이름이 memo 라면, 아래와 같이 만들면 됩니다.
-    - 예: `screens/memo/memo.screen.dart`
+여기서는 `memo` 라는 스크린을 만드는 예를 듭니다.
+
+- 먼저, `screens` 폴더안에 `memo` 폴더를 만들고, `memo.screen.dart` 와 같이 dart 파일을 만듭니다.
+  - 아래와 같이 만들면 됩니다.
+    - `screens/memo/memo.screen.dart`
 
 - 그리고, services/route_name.dart 에 memo 라는 변수를 만듭니다.
 
@@ -549,6 +508,57 @@ flutter:
 ## 각자의 프로젝트 설정
 
 - 루트 프로젝트의 `lib/main.dart` 에 있는 코드를 복사를 해서 쓰거나 비슷하게 쓰면 됩니다.
+
+
+# 위젯 패키지
+
+## SVG
+- 위젯 패키지에 `assets/svg` 폴더에 SVG 파일들이 저장되어져 있으며, 또 필요한 SVG 파일은 항상 이 위치에 저장을 해야 한다.
+  - svg 사용을 하려면 `svg('face/fair');` 와 같이 하면 된다.
+  - 경로는 `assets/svg/[...].svg` 에서 대괄호 안에 들어가는 경로를 지정하면 된다. 예) `face/fair` 는 `packages/wdigets/assets/svg/face/fair.svg` 가 된다.
+  - 만약, `widgets` 패키지가 아닌 다른 패키지 또는 앱 폴더의 assets 경로에서 사용하고 싶다면, `svg('face/fair', '패키지 경로')` 와 같이 사용하면 된다.
+  
+예제)
+```dart
+svg('face/devil')
+svg(uviIcon(current.uvi), width: 20, height: 20)
+svg('money-exchange', package: '..'), // 앱 assets 경로
+```
+
+# 서브트리, Subtree
+
+- 패키지(소스 코드)를 pub.dev 에 배포하는 것 보다 로컬(개발) 컴퓨터에서 수정하여 작업하는 것이 편합니다. 자신이 만든 패키지를 세상에 공개해서 널리 쓰게 할 목적이 아니라면, 굳이 pub.dev 에 배포 할 필요 없습니다.
+- 로컬(개발) 컴퓨터에서 수정을 하는 것이 편한데, 때로는 소스 코드가 git repo 에 있어야 할 때가 있습니다. 즉, 소스 코드가 git repo 로 저장되고 이리 저리 활용이 될 필요가 있을 수 있습니다. 예를 들면, 다른 프로젝트의 submodule 로 들어갈 수 있습니다.
+  - 하지만, 이와 같은 경우, git submodule 에 대해서 알지 못하는 개발자가 작업을 하는데 걸림돌이 됩니다.
+
+- 그래서, `git subtree` 로 git repo 의 코드를 가져와서 사용합니다.
+
+- 참고로 `x_flutter` 는 `$ git subtree --prefix=packages/subtrees/x_flutter x_flutter main` 와 같이 지정되어져 있고,
+  `country_currency_pickers` 는 `% git subtree add --prefix=packages/subtrees/country_currency_pickers --squash country_currency_pickers master` 와 같이 지정되어져 있습니다.
+
+# 백엔드
+
+- pub.dev 에 [x_flutter 패키지](https://pub.dev/packages/x_flutter)가 있습니다. 그 패키지를 사용하여 백엔드와 통신을 합니다.
+- Matrix 가 설치되어져 있는 서버 도메인: flutterkorea.com
+- 접속 설정은 service/config.dart 에 이미 되어져 있어 그대로 사용하면 됩니다.
+- 백엔드 관리자 사용법
+  - 게시판 생성 및 게시판 메뉴를 앱에서 보여주는 방법
+  - 백엔드 관리자가 푸시를 하는 방법
+    - 아이콘 설정
+    - 소리 설정
+
+## x_flutter 패키지 개발 방법
+
+- x_flutter 를 직접 코딩하지 않는다면, 일반적인 사용은 pub.dev 의 최신 버전을 사용하면 된다.
+
+- 만약, x_flutter 를 직접 개발(코딩) 할 것이라면,
+  - `% git submodule update --init` 으로 추가하면 된다.
+    - 참고로, 아래와 같이 서브 모듈로 추가되어져 있으므로, 다시 `submodule add` 는 할 필요 없다.
+      - `% git submodule add https://github.com/withcenter/x_flutter packages/x_flutter`
+
+  - 그리고 `pubspec.yaml` 에서 경로 수정해서 개발하면 된다. 개발 완료 후, pub.dev 에 publish 하고,
+    pubspec.yaml 의 x_flutter 를 pub.dev 의 최신 버전으로 변경하면된다.
+  - 주의 할 점은, pub.dev 의 패키지를 사용하는 경우, x_flutter 를 수정하면, github 에 적용이 안된다.
 
 
 # 파이어베이스
