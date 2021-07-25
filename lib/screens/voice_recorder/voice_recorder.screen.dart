@@ -12,6 +12,9 @@ class VoiceRecorderScreen extends StatefulWidget {
 class _VoiceRecorderScreenState extends State<VoiceRecorderScreen> {
   @override
   Widget build(BuildContext context) {
-    return Layout(body: VoiceRecorderDisplay());
+    return Layout(
+      title: '음성 녹음',
+      body: VoiceRecorderDisplay(),
+    );
   }
 }

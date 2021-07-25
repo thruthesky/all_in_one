@@ -21,6 +21,12 @@ dependencies:
   # 마이크 권한 획득
   permission_handler: ^8.1.2
 
+  widgets:
+    path: ../../widgets
+
+  utils:
+    path: ../../services/utils
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

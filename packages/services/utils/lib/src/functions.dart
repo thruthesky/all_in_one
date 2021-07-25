@@ -10,6 +10,32 @@ dynamic getArg(String name, [dynamic defaultValue]) {
   return Get.arguments == null || Get.arguments[name] == null ? defaultValue : Get.arguments[name];
 }
 
+Future<bool> confirm(String title, String content) async {
+  final re = await showDialog<bool>(
+    context: Get.context!,
+    builder: (context) {
+      return AlertDialog(
+        content: Text('선택한 파일을 삭제하시겠습니까?'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(result: true),
+            child: Text('예'),
+          ),
+          TextButton(
+            onPressed: () => Get.back(result: false),
+            child: Text('아니오'),
+          )
+        ],
+      );
+    },
+  );
+  if (re == true) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 // 알림창을 띄운다
 //
 // 알림창은 예/아니오의 선택이 없다. 그래서 리턴값이 필요없다.

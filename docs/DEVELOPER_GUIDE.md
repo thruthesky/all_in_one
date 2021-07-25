@@ -480,10 +480,12 @@ class MemoScreen extends StatelessWidget {
 ### 알림창
 
 - `packages/services/utils/lib/src/functions.dart` 에는 `alert` 함수가 있습니다. 이 함수는 알림창 다이얼로그를 화면에 표시합니다.
+- `utils` 패키지를 포함하고, `alert` 함수를 사용하면 됩니다.
 
 ### 에러 알림창
 
 - `packages/services/utils/lib/src/functions.dart` 에는 `error` 함수가 있습니다. 이 함수는 `alert` 함수를 사용하여 에러 다이얼로그를 화면에 표시합니다.
+- `utils` 패키지를 포함하고, `error` 함수를 사용하면 됩니다.
 
 
 ## 게시판
@@ -646,7 +648,12 @@ svg('money-exchange', package: '..'), // 앱 assets 경로
 
 ## 파이어베이스 설정
 
-- 자세한 사항은 파이어베이스 패키지(`packages/x_firebase`)의 README.md 를 참고합니다.
+- 자세한 사항은 파이어베이스 패키지(`packages/firebase`)의 README.md 를 참고합니다.
+
+- `packages/firebase` 폴더 안에 각각의 기능 별 firebase 패키지가 있습니다.
+  - Firebase 의 모든 기능을 하나의 패키지로 만들지 않고, 기능 별로 따로 패키지를 만드는 이유는 설정을 쉽게하기 위해서입니다.
+  - 예를 들어, Firebase 의 Auth 를 통해서 Facebook 로그인을 한다면, Facebook sign-in 패키지를 추가하면 반드시 설정을 해야합니다. 패키지 추가만 해 놓고 설정을 하지 않으면 에러가 발생하는데, Facebook 로그인을 사용하지 않아도, 일일히 설정을 해 주어야하는 번거로움이 발생합니다.
+    - 이런 이유로 기능별로 세부적인 패키지를 만들게 됩니다.
 
 - 안드로이드의 경우 파이어베이스 프로젝트 SDK key 파일만 추가하면, 나머지 설정은 비교적 쉽습니다.
 

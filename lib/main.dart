@@ -1,5 +1,6 @@
 // import 'dart:async';
 
+import 'package:all_in_one/screens/voice_recorder/voce_recorder_player.screen.dart';
 import 'package:x_flutter/x_flutter.dart';
 import 'screens/voice_recorder/voice_recorder.screen.dart';
 import 'screens/about_phone/about_phone.screen.dart';
@@ -128,7 +129,8 @@ class _StudyAppState extends State<StudyApp> {
         GetPage(name: RouteNames.exchangeRate, page: () => ExchangeRateScreen()),
         GetPage(name: RouteNames.beta, page: () => BetaScreen()),
         GetPage(name: RouteNames.aboutPhone, page: () => AboutPhoneScreen()),
-        GetPage(name: RouteNames.voiceRecorder, page: () => VoiceRecorderScreen())
+        GetPage(name: RouteNames.voiceRecorder, page: () => VoiceRecorderScreen()),
+        GetPage(name: RouteNames.voiceRecorderPlayer, page: () => VoiceRecorderPlayerScreen())
       ],
     );
   }

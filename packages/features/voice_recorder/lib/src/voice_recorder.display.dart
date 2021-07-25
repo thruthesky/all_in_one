@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:widgets/widgets.dart';
 import 'file_list_page.dart';
 
 class VoiceRecorderDisplay extends StatefulWidget {
@@ -38,7 +39,12 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
   }
 
   Future<String> get _localPath async {
-    final directory = await getApplicationDocumentsDirectory();
+    final appDir = await getApplicationDocumentsDirectory();
+
+    String temp = appDir.path + '/recordings';
+
+    var directory = await io.Directory(temp).create();
+
     return directory.path;
   }
 
@@ -72,7 +78,7 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
     getFileNameList();
   }
 
-  void _getRecorder() {
+  void startOrStopRecording() {
     if (!_isRecorderInited) {
       return;
     }
@@ -83,26 +89,41 @@ class _VoiceRecorderDisplayState extends State<VoiceRecorderDisplay> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          children: [
-            IconButton(
-                icon: Icon(_recorder!.isRecording ? Icons.stop : Icons.circle),
-                color: _recorder!.isRecording ? Colors.grey : Colors.red,
-                onPressed: () {
-                  _getRecorder();
-                }),
-            Text(_recorder!.isRecording ? '녹음 중입니다' : '버튼을 누르시면 녹음됩니다')
-          ],
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: startOrStopRecording,
+          child: Padding(
+            padding: const EdgeInsets.all(xl),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  _recorder!.isRecording ? Icons.stop : Icons.circle,
+                  color: _recorder!.isRecording ? Colors.grey : Colors.red,
+                ),
+                SizedBox(width: xs),
+                Text(_recorder!.isRecording ? '녹음 중입니다' : '버튼을 누르시면 녹음됩니다')
+              ],
+            ),
+          ),
         ),
-        TextButton(
-            onPressed: () async {
-              setState(() {
-                getFileNameList();
-              });
-              _fileNameList = await Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => FileListPage(_fileNameList)));
-            },
-            child: Text('File List'))
+        Expanded(
+          child: Container(
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: sm),
+                  child: Text('녹화된 파일 목록'),
+                ),
+                Expanded(
+                  child: FileListPage(_fileNameList),
+                ),
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }

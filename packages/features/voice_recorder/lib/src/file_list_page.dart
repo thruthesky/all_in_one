@@ -1,5 +1,9 @@
-import 'file_player_page.dart';
+import 'package:utils/utils.dart';
+import 'package:widgets/widgets.dart';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+// import 'package:widgets/widgets.dart';
 
 class FileListPage extends StatefulWidget {
   final List<dynamic> _fileNameList;
@@ -21,55 +25,40 @@ class _FileListPageState extends State<FileListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text('File List'),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Navigator.pop(context, widget._fileNameList),
-          )),
-      body: Container(
-        child: ListView.builder(
-            itemCount: widget._fileNameList.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(widget._fileNameList[index].path.split('/').last),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => FilePlayerPage(widget._fileNameList[index])));
-                },
-                onLongPress: () => showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        content: Text('선택한 파일을 삭제하시겠습니까?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: Text('Cancel'),
-                          ),
-                          TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  _deleteFile(index);
-                                  widget._fileNameList.removeAt(index);
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    content: Text('삭제되었습니다.'),
-                                    duration: Duration(milliseconds: 500),
-                                  ));
-                                });
-                                Navigator.pop(context);
-                              },
-                              child: Text('Delete'))
-                        ],
-                      );
-                    }),
-              );
-            }),
+    if (widget._fileNameList.length == 0) {
+      return Padding(
+        padding: EdgeInsets.all(sm),
+        child: Text('녹화된 파일이 없습니다.'),
+      );
+    }
+    return Container(
+      child: ListView.builder(
+        itemCount: widget._fileNameList.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(widget._fileNameList[index].path.split('/').last),
+            onTap: () => Get.toNamed('voiceRecorderPlayer',
+                arguments: {'file': widget._fileNameList[index]}),
+            // {
+            //   Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //           builder: (context) => FilePlayerPage(widget._fileNameList[index])));
+            // },
+            trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () async {
+                final fileName = widget._fileNameList.elementAt(index);
+                final re = await confirm('녹음 파일 삭제', '선택한 파일 - $fileName - 을 삭제하시겠습니까?');
+                if (re) {
+                  _deleteFile(index);
+                  widget._fileNameList.removeAt(index);
+                  setState(() {});
+                }
+              },
+            ),
+          );
+        },
       ),
     );
   }
