@@ -18,6 +18,6 @@ class Config {
   static const List<String> categories = ['qna', 'discussion', 'reminder'];
 
   /// 날씨 정보. API Key 와 업데이트 주기
-  static String openWeatherMapApiKey = '7cb555e44cdaac586538369ac275a33b';
+  static String openWeatherMapApiKey = '7cb555e44cdaac586538369ac275a33b---0000';
   static const int openWeatherMapUpdateInterval = 180;
 }

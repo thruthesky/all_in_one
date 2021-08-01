@@ -40,15 +40,26 @@ class WeatherService {
 
   Position? _position;
 
-  init({required String apiKey, int updateInterval = 1000}) {
+  init({required String apiKey, int updateInterval = 1000}) async {
     _apiKey = apiKey;
     _updateInterval = updateInterval;
 
-    updateWeather();
-    updateAir();
-    Timer.periodic(Duration(seconds: _updateInterval), (t) {
-      updateWeather();
-      updateAir();
+    try {
+      await updateWeather();
+      await updateAir();
+    } on DioError catch (e) {
+      print('------> 에러 발생: weather.service.dart::init() catch;');
+      print('------> 에러 원인: ' + e.response?.data['message']);
+    }
+
+    Timer.periodic(Duration(seconds: _updateInterval), (t) async {
+      try {
+        await updateWeather();
+        await updateAir();
+      } catch (e) {
+        print('------> weather.service.dart::init() catch;');
+        print(e);
+      }
     });
   }
 
@@ -72,7 +83,7 @@ class WeatherService {
       weatherChanges.add(model);
       return model;
     } catch (e) {
-      print('@error $e');
+      print('-----> updateWeather() error $e');
       rethrow;
     }
   }
