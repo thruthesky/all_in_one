@@ -19,7 +19,7 @@ class Api {
 
   @Deprecated('Use UserApi.instance directly')
   UserApi user = UserApi.instance;
-  String get sessionId => user.sessionId;
+  String get sessionId => UserApi.instance.sessionId;
 
   @Deprecated('User FileApi.instance')
   FileApi file = FileApi();
@@ -27,9 +27,16 @@ class Api {
   @Deprecated('Use CategoryApi.instance')
   CategoryApi category = CategoryApi();
 
+  @Deprecated('Use PostApi.instance')
   PostApi post = PostApi();
+
+  @Deprecated('Use CommentApi.instance')
   CommentApi comment = CommentApi();
+
+  @Deprecated('Use CountryApi.instance')
   CountryApi country = CountryApi();
+
+  @Deprecated('Use CurrencyApi.instance')
   CurrencyApi currency = CurrencyApi();
 
   // Api Singleton

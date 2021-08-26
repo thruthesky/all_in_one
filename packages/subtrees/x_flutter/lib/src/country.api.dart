@@ -4,6 +4,14 @@ import 'package:x_flutter/x_flutter.dart';
 class CountryApi {
   Api get api => Api.instance;
 
+  static CountryApi? _instance;
+  static CountryApi get instance {
+    if (_instance == null) {
+      _instance = CountryApi();
+    }
+    return _instance!;
+  }
+
   /// 국가 정보 하나를 가져온다.
   ///
   /// 예)

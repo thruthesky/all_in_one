@@ -1,6 +1,14 @@
 import 'package:x_flutter/x_flutter.dart';
 
 class CommentApi extends ForumApi {
+  static CommentApi? _instance;
+  static CommentApi get instance {
+    if (_instance == null) {
+      _instance = CommentApi();
+    }
+    return _instance!;
+  }
+
   /// 백엔드로 부터 코멘트 1개를 가져와서 리턴한다.
   ///
   /// [idx] 는 코멘트 번호

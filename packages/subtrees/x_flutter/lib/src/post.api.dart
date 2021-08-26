@@ -1,6 +1,14 @@
 import 'package:x_flutter/x_flutter.dart';
 
 class PostApi extends ForumApi {
+  static PostApi? _instance;
+  static PostApi get instance {
+    if (_instance == null) {
+      _instance = PostApi();
+    }
+    return _instance!;
+  }
+
   /// 백엔드로 부터 글 1개를 가져와서 리턴한다.
   ///
   /// [idx] 는 글 번호 또는 글 path 이다.
