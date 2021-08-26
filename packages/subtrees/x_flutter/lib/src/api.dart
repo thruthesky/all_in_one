@@ -16,11 +16,17 @@ class Api {
   /// [url] 은 [init] 함수에서 초기화 되어야 한다.
   late final String url;
   String apiKey = '';
+
+  @Deprecated('Use UserApi.instance directly')
   UserApi user = UserApi.instance;
   String get sessionId => user.sessionId;
 
+  @Deprecated('User FileApi.instance')
   FileApi file = FileApi();
+
+  @Deprecated('Use CategoryApi.instance')
   CategoryApi category = CategoryApi();
+
   PostApi post = PostApi();
   CommentApi comment = CommentApi();
   CountryApi country = CountryApi();

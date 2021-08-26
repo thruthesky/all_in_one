@@ -12,6 +12,15 @@ import 'package:x_flutter/x_flutter.dart';
 class FileApi {
   Api get api => Api.instance;
 
+  /// Singleton
+  static FileApi? _instance;
+  static FileApi get instance {
+    if (_instance == null) {
+      _instance = FileApi();
+    }
+    return _instance!;
+  }
+
   /// 사진업로드
   ///
   ///

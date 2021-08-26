@@ -5,6 +5,8 @@ class Analytics {
   // static FirebaseAnalyticsObserver _observer = FirebaseAnalyticsObserver(analytics: _analytics);
 
   /// 'app_open' 이라는 표준 이벤트를 파이어베이스 애널리스틱로 전송한다.
+  /// Use this method on app start up.
+  /// If you are using Getx controller for the app, then Getx::onInit() is a good place to call this method.
   static Future<void> logAppOpen() {
     return _analytics.logAppOpen();
   }
@@ -43,6 +45,8 @@ class Analytics {
   /// 사용자가 특정 컨텐츠를 선택(읽기) 했을 때 호출
   ///
   /// 컨텐츠에 제한은 없다. 예를 들어, 글 읽와 같은 경우에 해도 되지만, 글 읽기나 사진 보기와 같이 매우 간단한 것은 `logViewItem()` 을 사용한다.
+  ///
+  /// When user tapped on a button(or list) to read/open post view page.
   static Future<void> logSelectContent({
     required String contentType,
     required String itemId,
@@ -50,6 +54,7 @@ class Analytics {
     return _analytics.logSelectContent(contentType: contentType, itemId: itemId);
   }
 
+  /// Similar to logSelectContent
   static Future<void> logViewItem({
     required String itemId,
     required String itemName,
@@ -60,6 +65,8 @@ class Analytics {
 
   /// 사용자가 앱 공유를 했을 때, 호출
   /// 어떤 데이터를 공유하는지 알 수 있음.
+  ///
+  /// When user shared a content.
   static Future<void> logShare({
     required String contentType,
     required String itemId,

@@ -4,6 +4,14 @@ import 'package:x_flutter/x_flutter.dart';
 class CategoryApi {
   Api get api => Api.instance;
 
+  static CategoryApi? _instance;
+  static CategoryApi get instance {
+    if (_instance == null) {
+      _instance = CategoryApi();
+    }
+    return _instance!;
+  }
+
   /// 백엔드로 부터 카테고리 1개를 가져와서 리턴한다.
   ///
   /// ```dart
