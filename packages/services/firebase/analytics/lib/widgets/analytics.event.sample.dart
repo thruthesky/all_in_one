@@ -27,6 +27,12 @@ class AnalyticsEventSample extends StatelessWidget {
           },
           child: Text('logSignUp(signUpMethod: "email")'),
         ),
+        TextButton(
+          onPressed: () {
+            Analytics.logSelectContent(contentType: 'post', itemId: '123');
+          },
+          child: Text("logSelectContent(contentType: 'post', itemId: '123')"),
+        ),
       ],
     );
   }
