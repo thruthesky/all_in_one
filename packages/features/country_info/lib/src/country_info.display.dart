@@ -16,7 +16,7 @@ class _CountryInfoDisplayState extends State<CountryInfoDisplay> {
   getCountry(CountryCode cc) async {
     try {
       dialCode = cc.dialCode;
-      country = await Api.instance.country.get(countryCode: cc.code);
+      country = await CountryApi.instance.get(countryCode: cc.code);
       setState(() {});
     } catch (e) {
       error(e);
