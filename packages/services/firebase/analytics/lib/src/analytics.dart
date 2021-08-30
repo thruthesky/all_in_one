@@ -74,4 +74,22 @@ class Analytics {
   }) {
     return _analytics.logShare(contentType: contentType, itemId: itemId, method: method);
   }
+
+  /// Sets a user property to a given value.
+  ///
+  /// Up to 25 user property names are supported. Once set, user property
+  /// values persist throughout the app lifecycle and across sessions.
+  ///
+  /// [name] is the name of the user property to set. Should contain 1 to 24
+  /// alphanumeric characters or underscores and must start with an alphabetic
+  /// character. The "firebase_" prefix is reserved and should not be used for
+  /// user property names.
+  ///
+  /// Setting a null [value] removes the user property.
+  static Future<void> setUserProperty({
+    required String name,
+    required String? value,
+  }) {
+    return _analytics.setUserProperty(name: name, value: value);
+  }
 }
