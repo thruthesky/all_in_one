@@ -19,7 +19,7 @@ class AppController extends GetxController {
   /// ```
   /// if (_.categories != null) for (final cat in _.categories!) Text('${cat.title}'),
   /// ```
-  List<CategoryModel>? categories;
+  late CategoriesModel categories;
 
   @override
   onInit() {

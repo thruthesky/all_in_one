@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:x_flutter/src/category.api.dart';
-import 'package:x_flutter/src/comment.api.dart';
-import 'package:x_flutter/src/currency.api.dart';
-import 'package:x_flutter/src/file.api.dart';
 import 'package:x_flutter/src/models/time.model.dart';
 import 'package:x_flutter/src/models/version.model.dart';
 import 'package:x_flutter/src/post.api.dart';
@@ -17,12 +14,12 @@ class Api {
   late final String url;
   String apiKey = '';
 
-  @Deprecated('Use UserApi.instance directly')
-  UserApi user = UserApi.instance;
+  // @Deprecated('Use UserApi.instance directly')
+  // UserApi user = UserApi.instance;
   String get sessionId => UserApi.instance.sessionId;
 
-  @Deprecated('User FileApi.instance')
-  FileApi file = FileApi();
+  // @Deprecated('User FileApi.instance')
+  // FileApi file = FileApi();
 
   @Deprecated('Use CategoryApi.instance')
   CategoryApi category = CategoryApi();
@@ -30,14 +27,14 @@ class Api {
   @Deprecated('Use PostApi.instance')
   PostApi post = PostApi();
 
-  @Deprecated('Use CommentApi.instance')
-  CommentApi comment = CommentApi();
+  // @Deprecated('Use CommentApi.instance')
+  // CommentApi comment = CommentApi();
 
   @Deprecated('Use CountryApi.instance')
   CountryApi country = CountryApi();
 
-  @Deprecated('Use CurrencyApi.instance')
-  CurrencyApi currency = CurrencyApi();
+  // @Deprecated('Use CurrencyApi.instance')
+  // CurrencyApi currency = CurrencyApi();
 
   // Api Singleton
   static Api? _instance;

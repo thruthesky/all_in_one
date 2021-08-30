@@ -39,7 +39,10 @@ Future<bool> confirm(String title, String content) async {
 // 알림창을 띄운다
 //
 // 알림창은 예/아니오의 선택이 없다. 그래서 리턴값이 필요없다.
-Future<void> alert(String title, String content) async {
+Future<void> alert(String title, dynamic content) async {
+  if (!(content is String)) {
+    content = content.toString();
+  }
   return showDialog(
     context: Get.context!,
     builder: (_) => AlertDialog(

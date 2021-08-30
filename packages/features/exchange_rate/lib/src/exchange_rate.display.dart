@@ -79,7 +79,7 @@ class _ExchangeRateDisplayState extends State<ExchangeRateDisplay> {
 
     try {
       currencies =
-          await Api.instance.currency.get(leftCountry!.currencyCode!, rightCountry!.currencyCode!);
+          await CurrencyApi.instance.get(leftCountry!.currencyCode!, rightCountry!.currencyCode!);
       print('reloadCurrency; $currencies');
 
       if (firstTimeLoadingCurrency) {

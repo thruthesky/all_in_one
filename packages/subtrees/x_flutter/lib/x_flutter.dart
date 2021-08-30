@@ -26,3 +26,4 @@ export 'src/widgets/logged_in.dart';
 export 'src/widgets/not_logged_in.dart';
 
 export 'src/country.api.dart';
+export 'src/currency.api.dart';

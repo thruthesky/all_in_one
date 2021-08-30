@@ -1,3 +1,4 @@
+import 'package:x_flutter/src/comment.api.dart';
 import 'package:x_flutter/src/models/forum.model.dart';
 import 'package:x_flutter/x_flutter.dart';
 
@@ -37,7 +38,7 @@ class CommentModel extends ForumModel {
 
   /// 코멘트 작성 또는 수정
   Future<CommentModel> edit(PostModel post) async {
-    CommentModel comment = await api.comment.edit(toEdit());
+    CommentModel comment = await CommentApi.instance.edit(toEdit());
 
     if (idx == 0) {
       /// 새 코멘트 작성

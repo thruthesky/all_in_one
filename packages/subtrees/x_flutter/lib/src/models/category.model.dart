@@ -159,3 +159,15 @@ class CategoryModel {
         'subcategoriesArray': subcategoriesArray,
       };
 }
+
+class CategoriesModel {
+  Map<String, CategoryModel> categories;
+  CategoriesModel(this.categories);
+  factory CategoriesModel.fromJson(Map<String, dynamic> json) {
+    Map<String, CategoryModel> cats = {};
+    for (final id in json.keys) {
+      cats[id] = CategoryModel.fromJson(json[id]);
+    }
+    return CategoriesModel(cats);
+  }
+}

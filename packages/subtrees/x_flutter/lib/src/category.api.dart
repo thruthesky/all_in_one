@@ -37,13 +37,15 @@ class CategoryApi {
   /// final cs = await api.category.gets('qna,2');
   /// print(cs);
   /// ```
-  Future<List<CategoryModel>> gets(dynamic input) async {
-    assert(input is String || input is List, '문자열 또는 배열을 입력하셔야 합니다.');
+  Future<CategoriesModel> gets(dynamic input) async {
+    assert(input is String || input is List, 'Input a string or an array of string.');
     final res = await Api.instance.request('category.gets', {'ids': input});
-    List<CategoryModel> cats = [];
-    for (final j in res) {
-      cats.add(CategoryModel.fromJson(j));
-    }
-    return cats;
+    return CategoriesModel.fromJson(res);
+
+    // List<CategoryModel> cats = [];
+    // for (final j in res) {
+    //   cats.add(CategoryModel.fromJson(j));
+    // }
+    // return cats;
   }
 }

@@ -44,7 +44,7 @@
         "--dart-define",
         "APP_NAME=만능 메인앱",
         "--dart-define",
-        "SERVER_URL=https://local.sonub.com/index.php",
+        "SERVER_URL=https://main.sonub.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=off&in_app_purchase=off"
       ],
@@ -231,6 +231,21 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
+    },
+    {
+      "name": "영자 - Sonub - Emulator Pixel3a - iMac - Local",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5554"
     }
   ]
 }

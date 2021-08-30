@@ -247,11 +247,13 @@ class _ForumWidgetState extends State<ForumWidget> {
       if (loading || noMorePosts) return;
       setState(() => loading = true);
       page++;
-      final _posts = await Api.instance.post.search({
+      final searchOptions = {
         'categoryId': widget.categoryId,
         'page': page,
         'limit': widget.limit,
-      });
+      };
+
+      final _posts = await PostApi.instance.search(searchOptions);
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
         /// 각 글 별 전처리를 여기서 할 수 있음.
