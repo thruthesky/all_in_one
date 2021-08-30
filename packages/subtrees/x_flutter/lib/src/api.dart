@@ -43,9 +43,9 @@ class Api {
   static Api? _instance;
   // Api instance 를 리턴
   // ```dart
-  // print('user: ${Api.instance.user.runtimeType}');
-  // print('user: ${Api.instance.user.runtimeType}');
-  // print('user: ${Api.instance.user.runtimeType}');
+  // print('user: ${UserApi.instance.runtimeType}');
+  // print('user: ${UserApi.instance.runtimeType}');
+  // print('user: ${UserApi.instance.runtimeType}');
   // ```
   static Api get instance {
     if (_instance == null) {

@@ -30,6 +30,7 @@ class Analytics {
   /// 회원 가입
   ///
   /// 회원 가입을 할 때 호출하면 된다.
+  /// `signUpMethod` could be 'email', 'google', 'facebook', 'apple', 'kakao', etc.
   static Future<void> logSignUp({
     required String signUpMethod,
   }) {

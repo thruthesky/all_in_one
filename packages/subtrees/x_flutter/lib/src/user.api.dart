@@ -20,7 +20,7 @@ class UserApi {
   ///
   /// 사용법
   /// ```dart
-  /// Api.instance.user.name // Api.instance 를 통한 참조
+  /// UserApi.instance.name // Api.instance 를 통한 참조
   /// UserApi.instance.name // UserApi.instance 를 통한 참조
   /// ```
   String get name => model.name;

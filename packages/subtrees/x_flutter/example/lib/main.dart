@@ -218,8 +218,8 @@ class Profile extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final name = TextEditingController(text: Api.instance.user.name);
-  final address = TextEditingController(text: Api.instance.user.address);
+  final name = TextEditingController(text: UserApi.instance.name);
+  final address = TextEditingController(text: UserApi.instance.address);
 
   @override
   Widget build(BuildContext context) {
@@ -240,7 +240,7 @@ class Profile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('로그인 이메일'),
-                Text(Api.instance.user.email),
+                Text(UserApi.instance.email),
                 SizedBox(height: 16),
                 Text('사용자 이름'),
                 TextField(controller: name),
@@ -251,8 +251,7 @@ class Profile extends StatelessWidget {
                 ElevatedButton(
                     onPressed: () async {
                       try {
-                        await Api.instance.user
-                            .update({'name': name.text, 'address': address.text});
+                        await UserApi.instance.update({'name': name.text, 'address': address.text});
                       } catch (e) {
                         alert(context, e.toString());
                       }

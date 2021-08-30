@@ -36,7 +36,7 @@ class FileUploadIcon extends StatelessWidget {
           try {
             ImageSource? re = await _choiceBuilder(context);
             if (re == null) return;
-            FileModel f = await Api.instance.file.pickUpload(
+            FileModel f = await FileApi.instance.pickUpload(
               source: re,
               quality: quality,
               progress: progress,
