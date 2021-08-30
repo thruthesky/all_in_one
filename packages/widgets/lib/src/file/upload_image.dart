@@ -60,7 +60,7 @@ class _UploadImageState extends State<UploadImage> {
     () async {
       try {
         /// 주의: 회원 로그인이 필요한 경우, Api 에서 sessionId 가 초기화 된 후 호출 되어야 함. 그렇지 않으면 entity_not_found 에러 발생.
-        fileModel = await Api.instance.file
+        fileModel = await FileApi.instance
             .get(taxonomy: widget.taxonomy, entity: widget.entity, code: widget.code);
         setState(() {});
       } catch (e) {
@@ -80,7 +80,7 @@ class _UploadImageState extends State<UploadImage> {
         try {
           ImageSource? re = await widget.choiceBuilder(context);
           if (re == null) return;
-          fileModel = await Api.instance.file.pickUpload(
+          fileModel = await FileApi.instance.pickUpload(
             source: re,
             quality: widget.quality,
             progress: widget.progress,

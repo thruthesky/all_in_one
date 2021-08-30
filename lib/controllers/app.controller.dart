@@ -59,7 +59,7 @@ class AppController extends GetxController {
 
   initForum() async {
     try {
-      categories = await api.category.gets(Config.categories);
+      categories = await CategoryApi.instance.gets(Config.categories);
     } catch (e) {
       alert('에러', '게시판 정보를 가져오지 못했습니다.\n\n$e');
     }

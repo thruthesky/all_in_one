@@ -76,6 +76,6 @@ class FileModel {
   ///
   ///
   Future delete([dynamic postOrComment]) {
-    return Api.instance.file.delete(idx, postOrComment);
+    return FileApi.instance.delete(idx, postOrComment);
   }
 }
