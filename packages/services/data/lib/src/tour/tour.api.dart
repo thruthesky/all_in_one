@@ -37,11 +37,12 @@ class TourApi {
     return "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$_apiKey&MobileApp=$_appName&MobileOS=ETC&_type=json";
   }
 
-  Future<TourApiListModel> areaBasedList() async {
+  Future<TourApiListModel> areaBasedList({required int pageNo, required int numOfRows}) async {
     final path = _queryUrl('areaBasedList') +
-        "&contentTypeId=78&areaCode=1&sigunguCode=1&cat1=&cat2=&cat3=&listYN=Y&arrange=A&numOfRows=20&pageNo=1";
+        "&contentTypeId=78&areaCode=&sigunguCode=1&cat1=&cat2=&cat3=&listYN=Y&arrange=A&numOfRows=$numOfRows&pageNo=$pageNo";
 
     final json = await _request(path);
+    print('json; $json');
     final model = TourApiListModel.fromJson(json);
     return model;
   }
