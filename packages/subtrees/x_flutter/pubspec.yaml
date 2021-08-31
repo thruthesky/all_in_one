@@ -25,6 +25,7 @@ dependencies:
   http_parser: ^4.0.0
 
   cached_network_image: ^3.0.0
+  
   firebase_messaging: ^10.0.6
 
 dev_dependencies:
