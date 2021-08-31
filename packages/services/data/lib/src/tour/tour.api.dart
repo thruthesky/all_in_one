@@ -1,10 +1,11 @@
+import 'package:data/src/tour/tour.api.list.model.dart';
 import 'package:dio/dio.dart';
 
 class TourApi {
-  final dio = Dio();
+  final _dio = Dio();
 
-  String apiKey = '';
-  String appName = '';
+  String _apiKey = '';
+  String _appName = '';
 
   /// TourApi Singleton
   static TourApi? _instance;
@@ -20,17 +21,28 @@ class TourApi {
     required String apiKey,
     required String appName,
   }) {
-    this.apiKey = apiKey;
+    _apiKey = apiKey;
+    _appName = appName;
   }
 
-  String queryUrl(String operation) {
-    return "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$apiKey&MobileApp=$appName&MobileOS=ETC&_type=json";
+  Future _request(String path) async {
+    Response response;
+
+    response = await _dio.get(path);
+
+    return response.data;
   }
 
-  areaBasedList() {
-    final path = queryUrl('areaBasedList') +
+  String _queryUrl(String operation) {
+    return "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$_apiKey&MobileApp=$_appName&MobileOS=ETC&_type=json";
+  }
+
+  Future<TourApiListModel> areaBasedList() async {
+    final path = _queryUrl('areaBasedList') +
         "&contentTypeId=78&areaCode=1&sigunguCode=1&cat1=&cat2=&cat3=&listYN=Y&arrange=A&numOfRows=20&pageNo=1";
 
-    return dio.get(path);
+    final json = await _request(path);
+    final model = TourApiListModel.fromJson(json);
+    return model;
   }
 }
