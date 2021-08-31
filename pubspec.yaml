@@ -20,7 +20,7 @@ dependencies:
   get: ^4.1.4
   get_storage: ^2.0.2
   flutter_zoom_drawer: ^2.0.2+4
-  
+
   rxdart: ^0.27.1
 
   # 아이콘 모음집
@@ -28,11 +28,9 @@ dependencies:
 
   webview_flutter: ^2.0.8
 
-
   analytics:
     path: packages/services/firebase/analytics
-    
-    
+
   utils:
     path: packages/services/utils
 
@@ -41,7 +39,6 @@ dependencies:
 
   widgets:
     path: packages/widgets
-
 
   calculator:
     path: packages/features/calculator
@@ -60,7 +57,6 @@ dependencies:
 
   exchange_rate:
     path: packages/features/exchange_rate
-
 
   connection:
     path: packages/features/connection
@@ -81,21 +77,15 @@ dependency_overrides:
   # expressions
   rxdart: ^0.27.1
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
   flutter_driver:
     sdk: flutter
 
   integration_test:
     sdk: flutter
-
-
-
-
 
 flutter:
   uses-material-design: true

@@ -19,6 +19,8 @@ export 'src/forum.api.dart';
 export 'src/post.api.dart';
 export 'src/file.api.dart';
 
+export 'src/messaging.api.dart';
+
 export 'src/widgets/user.change.dart';
 export 'src/widgets/forum.widget.dart';
 export 'src/widgets/file_upload_icon.dart';
