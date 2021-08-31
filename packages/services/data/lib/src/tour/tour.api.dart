@@ -1,4 +1,7 @@
-import 'package:data/src/tour/tour.api.list.model.dart';
+import 'dart:io';
+
+import 'package:data/src/tour/models/tour.api.area_code.model.dart';
+import 'package:data/src/tour/models/tour.api.list.model.dart';
 import 'package:dio/dio.dart';
 
 class TourApi {
@@ -34,15 +37,40 @@ class TourApi {
   }
 
   String _queryUrl(String operation) {
-    return "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$_apiKey&MobileApp=$_appName&MobileOS=ETC&_type=json";
+    String os = 'ETC';
+    if (Platform.isAndroid)
+      os = 'AND';
+    else if (Platform.isIOS) os = 'IOS';
+    return "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$_apiKey&MobileApp=$_appName&MobileOS=$os&_type=json";
   }
 
-  Future<TourApiListModel> areaBasedList({required int pageNo, required int numOfRows}) async {
-    final path = _queryUrl('areaBasedList') +
-        "&contentTypeId=78&areaCode=&sigunguCode=1&cat1=&cat2=&cat3=&listYN=Y&arrange=A&numOfRows=$numOfRows&pageNo=$pageNo";
-
+  Future<List<TourApiAreaCodeModel>> areaCode({required int areaCode}) async {
+    final path = _queryUrl('areaCode') + "&areaCode=$areaCode&numOfRows=9999&pageNo=1";
     final json = await _request(path);
-    print('json; $json');
+    final List<TourApiAreaCodeModel> area = [];
+    for (final item in json['response']['body']['items']['item']) {
+      area.add(TourApiAreaCodeModel.fromJson(item));
+    }
+    return area;
+  }
+
+  Future<TourApiListModel> areaBasedList({
+    required int areaCode,
+    required int sigunguCode,
+    required int contentTypeId,
+    required int pageNo,
+    required int numOfRows,
+  }) async {
+    String ac = '';
+    String subAc = '';
+    if (areaCode > 0) ac = areaCode.toString();
+    if (sigunguCode > 0) subAc = sigunguCode.toString();
+    final path = _queryUrl('areaBasedList') +
+        "&contentTypeId=$contentTypeId&areaCode=$ac&sigunguCode=$subAc&cat1=&cat2=&cat3=&listYN=Y&arrange=O&numOfRows=$numOfRows&pageNo=$pageNo";
+
+    // print('path; $path');
+    final json = await _request(path);
+    // print('json; $json');
     final model = TourApiListModel.fromJson(json);
     return model;
   }

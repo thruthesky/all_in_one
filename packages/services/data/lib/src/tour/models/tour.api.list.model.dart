@@ -1,4 +1,4 @@
-import '../../data.functions.dart';
+import '../../../data.functions.dart';
 
 /// 리스트 결과를 그대로 modeling 한 것이다.
 class TourApiListModel {
