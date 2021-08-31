@@ -32,7 +32,7 @@ class CommentModel extends ForumModel {
       if (rootIdx > 0) 'rootIdx': rootIdx,
       if (parentIdx > 0) 'parentIdx': parentIdx,
       'content': content,
-      'files': files.map((file) => file.idx).toSet().join(','),
+      'fileIdxes': files.map((file) => file.idx).toSet().join(','),
     };
   }
 
@@ -59,5 +59,12 @@ class CommentModel extends ForumModel {
     }
 
     return comment;
+  }
+
+  Future<CommentModel> delete() async {
+    CommentModel p = await CommentApi.instance.delete(idx);
+    content = p.content;
+    deletedAt = p.deletedAt;
+    return this;
   }
 }

@@ -350,7 +350,7 @@ class _ForumWidgetState extends State<ForumWidget> {
               children: [
                 commentMetaBuilder(comment),
                 commentContentBuilder(comment),
-                commentButtonBuilder(comment),
+                buttonBuilder(comment),
                 if (comment.mode == 'reply') ...[
                   commentEditBuilder(post, CommentModel(), parent: comment),
                 ],
@@ -389,7 +389,7 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
-  buttonBuilder(PostModel post) {
+  buttonBuilder(dynamic post) {
     if (widget.buttonBuilder != null) return widget.buttonBuilder!(post);
     return postAndCommentButtonBuilder(post);
   }
@@ -527,6 +527,7 @@ class _ForumWidgetState extends State<ForumWidget> {
               Row(
                 children: [
                   FileUploadIcon(
+                      entity: post.idx,
                       success: (FileModel file) {
                         progress = 0;
                         setState(() => post.files.add(file));
@@ -648,6 +649,7 @@ class _ForumWidgetState extends State<ForumWidget> {
           Row(
             children: [
               FileUploadIcon(
+                  entity: comment.idx,
                   success: (FileModel file) {
                     progress = 0;
                     setState(() => comment.files.add(file));

@@ -64,7 +64,7 @@ class PostModel extends ForumModel {
       'title': title,
       'content': content,
       'subcategory': subcategory,
-      'files': files.map((file) => file.idx).toSet().join(','),
+      'fileIdxes': files.map((file) => file.idx).toSet().join(','),
       'code': code,
     };
   }
