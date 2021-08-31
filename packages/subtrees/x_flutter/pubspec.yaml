@@ -6,31 +6,27 @@ repository: https://github.com/withcenter/x_flutter
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  
 
 dependencies:
   flutter:
     sdk: flutter
 
   dio: ^4.0.0
-  
+
   get: ^4.1.4
 
-  
   shared_preferences: ^2.0.6
   rxdart: ^0.27.1
-
 
   #
   path_provider: ^2.0.2
   image_picker: ^0.8.0+3
   flutter_image_compress: ^1.0.0
   http_parser: ^4.0.0
-  
-  
-  
+
   cached_network_image: ^3.0.0
-  
+  firebase_messaging: ^10.0.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
