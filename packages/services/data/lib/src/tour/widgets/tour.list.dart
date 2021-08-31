@@ -6,13 +6,7 @@ import 'package:waterfall_flow/waterfall_flow.dart';
 class TourList extends StatefulWidget {
   TourList({
     Key? key,
-  }) : super(key: key) {
-    /// 맨 밑으로 스크롤 되면, onBottom 콜백 호출
-    /// [onBottom] 스크롤 이벤트는 중복으로 많이 호출 될 수 있음.
-    // scrollController.addListener(() {
-    //   if (atBottom) onBottom();
-    // });
-  }
+  }) : super(key: key);
 
   @override
   _TourListState createState() => _TourListState();
@@ -71,8 +65,6 @@ class _TourListState extends State<TourList> {
   Widget build(BuildContext context) {
     return WaterfallFlow.builder(
       controller: scrollController,
-      //cacheExtent: 0.0,
-      //reverse: true,
       padding: const EdgeInsets.all(5.0),
       gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
