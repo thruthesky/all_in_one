@@ -41,23 +41,30 @@ class TourApiListHeader {
 
 class TourApiListBody {
   TourApiListBody({
-    this.items,
-    this.numOfRows,
-    this.pageNo,
-    this.totalCount,
+    required this.items,
+    required this.numOfRows,
+    required this.pageNo,
+    required this.totalCount,
   });
 
-  final Items? items;
-  final int? numOfRows;
-  final int? pageNo;
-  final int? totalCount;
+  final Items items;
+  final int numOfRows;
+  final int pageNo;
+  final int totalCount;
 
-  factory TourApiListBody.fromJson(Map<String, dynamic> json) => TourApiListBody(
-        items: json["items"] == null ? null : Items.fromJson(json["items"]),
-        numOfRows: json["numOfRows"] == null ? null : json["numOfRows"],
-        pageNo: json["pageNo"] == null ? null : json["pageNo"],
-        totalCount: json["totalCount"] == null ? null : json["totalCount"],
-      );
+  factory TourApiListBody.fromJson(Map<String, dynamic> json) {
+    Map<String, dynamic> items = {};
+    if (json['items'] is String) {
+    } else {
+      items = json['items'];
+    }
+    return TourApiListBody(
+      items: Items.fromJson(items),
+      numOfRows: json["numOfRows"] == null ? 0 : json["numOfRows"],
+      pageNo: json["pageNo"] == null ? 0 : json["pageNo"],
+      totalCount: json["totalCount"] == null ? 0 : json["totalCount"],
+    );
+  }
 }
 
 class Items {
@@ -65,15 +72,18 @@ class Items {
     required this.item,
   });
 
-  final List<Item> item;
+  final List<TourApiListItem> item;
 
-  factory Items.fromJson(Map<String, dynamic> json) => Items(
-        item: List<Item>.from(json["item"].map((x) => Item.fromJson(x))),
-      );
+  factory Items.fromJson(Map<String, dynamic> json) {
+    if (json['item'] == null) return Items(item: []);
+    return Items(
+      item: List<TourApiListItem>.from(json["item"].map((x) => TourApiListItem.fromJson(x))),
+    );
+  }
 }
 
-class Item {
-  Item({
+class TourApiListItem {
+  TourApiListItem({
     this.addr1,
     this.addr2,
     this.areacode,
@@ -93,7 +103,7 @@ class Item {
     this.readcount,
     this.sigungucode,
     this.tel,
-    this.title,
+    required this.title,
     this.zipcode,
   });
 
@@ -116,10 +126,10 @@ class Item {
   final int? readcount;
   final int? sigungucode;
   final String? tel;
-  final String? title;
+  final String title;
   final String? zipcode;
 
-  factory Item.fromJson(Map<String, dynamic> json) => Item(
+  factory TourApiListItem.fromJson(Map<String, dynamic> json) => TourApiListItem(
         addr1: json["addr1"] == null ? null : json["addr1"],
         addr2: json["addr2"] == null ? null : json["addr2"],
         areacode: json["areacode"] == null ? null : json["areacode"],
@@ -139,7 +149,7 @@ class Item {
         readcount: json["readcount"] == null ? null : json["readcount"],
         sigungucode: json["sigungucode"] == null ? null : json["sigungucode"],
         tel: json["tel"] == null ? null : json["tel"],
-        title: json["title"] == null ? null : json["title"],
-        zipcode: json["zipcode"] == null ? null : json["zipcode"],
+        title: json["title"] == null ? '' : json["title"],
+        zipcode: toString(json['zipcode']),
       );
 }

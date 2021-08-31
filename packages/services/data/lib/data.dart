@@ -1,2 +1,5 @@
 export 'src/tour/tour.api.dart';
 export 'src/tour/tour.api.test.dart';
+export 'src/tour/tour.api.list.model.dart';
+export 'src/tour/widgets/tour.list.dart';
+export 'src/tour/widgets/tour.card.dart';
