@@ -128,6 +128,8 @@ class ForumWidget extends StatefulWidget {
     this.categoryId = '',
     this.closedTitleBuilder,
     this.openedTitleBuilder,
+    this.commentMetaBuilder,
+    this.commentContentBuilder,
     this.buttonBuilder,
     this.editBuilder,
     this.separatorBuilder,
@@ -144,6 +146,8 @@ class ForumWidget extends StatefulWidget {
   final String categoryId;
   final Function? closedTitleBuilder;
   final Function? openedTitleBuilder;
+  final Function? commentMetaBuilder;
+  final Function? commentContentBuilder;
   final Function? buttonBuilder;
   final Function? editBuilder;
   final Function? separatorBuilder;
@@ -350,7 +354,7 @@ class _ForumWidgetState extends State<ForumWidget> {
               children: [
                 commentMetaBuilder(comment),
                 commentContentBuilder(comment),
-                commentButtonBuilder(comment),
+                buttonBuilder(comment),
                 if (comment.mode == 'reply') ...[
                   commentEditBuilder(post, CommentModel(), parent: comment),
                 ],
@@ -389,7 +393,7 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
-  buttonBuilder(PostModel post) {
+  buttonBuilder(dynamic post) {
     if (widget.buttonBuilder != null) return widget.buttonBuilder!(post);
     return postAndCommentButtonBuilder(post);
   }
@@ -527,6 +531,7 @@ class _ForumWidgetState extends State<ForumWidget> {
               Row(
                 children: [
                   FileUploadIcon(
+                      entity: post.idx,
                       success: (FileModel file) {
                         progress = 0;
                         setState(() => post.files.add(file));
@@ -648,6 +653,7 @@ class _ForumWidgetState extends State<ForumWidget> {
           Row(
             children: [
               FileUploadIcon(
+                  entity: comment.idx,
                   success: (FileModel file) {
                     progress = 0;
                     setState(() => comment.files.add(file));
@@ -722,32 +728,41 @@ class _ForumWidgetState extends State<ForumWidget> {
   }
 
   commentMetaBuilder(CommentModel comment) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(16),
-      color: Colors.black54,
-      child: Text(
-        'Comment No. ${comment.idx}: depth: ${comment.depth}, ${comment.shortDate}',
-        style: TextStyle(color: Colors.white),
-      ),
-    );
+    if (widget.commentMetaBuilder == null) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16),
+        color: Colors.black54,
+        child: Text(
+          'Comment No. ${comment.idx}: depth: ${comment.depth}, ${comment.shortDate}',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+    } else {
+      return widget.commentMetaBuilder!(comment);
+    }
   }
 
   commentContentBuilder(CommentModel comment) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(16),
-      color: Colors.black54,
-      child: Column(
-        children: [
-          Text(
-            '${comment.content}',
-            style: TextStyle(color: Colors.white),
-          ),
-          for (final f in comment.files) CacheImage(f.url, width: double.infinity, height: null),
-        ],
-      ),
-    );
+    if (widget.commentContentBuilder == null) {
+      return Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16),
+        color: Colors.black54,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              '${comment.content}',
+              style: TextStyle(color: Colors.white),
+            ),
+            for (final f in comment.files) CacheImage(f.url, width: double.infinity, height: null),
+          ],
+        ),
+      );
+    } else {
+      return widget.commentContentBuilder!(comment);
+    }
   }
 
   double commentLeftMargin(CommentModel comment) {
