@@ -13,9 +13,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  get: ^4.3.8
   dio: ^4.0.0
   cached_network_image: ^3.1.0
-
   waterfall_flow: ^3.0.1
 
 dev_dependencies:
