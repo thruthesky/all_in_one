@@ -8,7 +8,7 @@ publish_to: "none"
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  
+
 dependencies:
   flutter:
     sdk: flutter
@@ -18,13 +18,8 @@ dependencies:
 
   waterfall_flow: ^3.0.1
 
-  
-
-
-  
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-
