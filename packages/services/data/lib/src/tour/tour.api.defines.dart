@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:data/src/tour/models/tour.api.area_code.model.dart';
 
 class ContentTypeId {
@@ -32,3 +33,48 @@ const List<TourApiAreaCodeModel> tourCityList = [
   const TourApiAreaCodeModel(code: 38, name: 'Jeollanam-do', rnum: 16),
   const TourApiAreaCodeModel(code: 39, name: 'Jeju-do', rnum: 17),
 ];
+
+class TourApiOperations {
+  static final String areaBasedList = 'areaBasedList';
+  static final String locationBasedList = 'locationBasedList';
+  static final String searchKeyword = 'searchKeyword';
+  static final String searchFestival = 'searchFestival';
+  static final String searchStay = 'searchStay';
+}
+
+class TourApiOperationOption {
+  final String code;
+  final String label;
+  const TourApiOperationOption(this.code, this.label);
+}
+
+const List<TourApiOperationOption> tourApiSearchOparations = [
+  const TourApiOperationOption('areaBasedList', 'Cty'),
+  const TourApiOperationOption('locationBasedList', 'My location'),
+  const TourApiOperationOption('searchKeyword', 'Keyword'),
+  const TourApiOperationOption('searchFestival', 'Festival'),
+  const TourApiOperationOption('searchStay', 'Accommodation'),
+];
+
+class TourApiContentType {
+  final int id;
+  final String label;
+  const TourApiContentType(this.id, this.label);
+}
+
+final List<TourApiContentType> tourApiSearchTypes = [
+  TourApiContentType(ContentTypeId.travel, 'Travel Spot'),
+  TourApiContentType(ContentTypeId.culture, 'Culture/History'),
+  TourApiContentType(ContentTypeId.festivalEvents, 'Festival/Event'),
+  TourApiContentType(ContentTypeId.leisureSports, 'Leisure/Sports'),
+  TourApiContentType(ContentTypeId.accommodation, 'Accommodation'),
+  TourApiContentType(ContentTypeId.shopping, 'Shopping'),
+  TourApiContentType(ContentTypeId.restaurant, 'Restaurant'),
+  TourApiContentType(ContentTypeId.transportation, 'Transporation'),
+  TourApiContentType(1, 'My location'),
+  TourApiContentType(2, 'Keyword'),
+];
+
+TextStyle captionMd = TextStyle(fontSize: 16);
+TextStyle captionSm = TextStyle(fontSize: 12);
+TextStyle captionXs = TextStyle(fontSize: 8);
