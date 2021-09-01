@@ -261,6 +261,21 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "emulator-5554"
+    },
+    {
+      "name": "ASUS X00TDB J8AXB761J32888A",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "J8AXB761J32888A"
     }
   ]
 }
