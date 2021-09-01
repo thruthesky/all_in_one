@@ -1,7 +1,6 @@
 import 'package:data/data.dart';
 import 'package:data/src/tour/widgets/tour.list.controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class TourListMenu extends StatelessWidget {
