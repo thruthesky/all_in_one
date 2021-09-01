@@ -48,7 +48,7 @@ class MessagingApi {
   /// Initialize Messaging
   _initMessaging() async {
     /// Permission request for iOS only. For Android, the permission is granted by default.
-    if (kIsWeb || Platform.isIOS) {
+    if (Platform.isIOS) {
       NotificationSettings settings = await FirebaseMessaging.instance.requestPermission(
         alert: true,
         announcement: false,
@@ -93,18 +93,18 @@ class MessagingApi {
     // Get the token each time the application loads and save it to database.
     token = (await FirebaseMessaging.instance.getToken())!;
     print('_initMessaging:: Getting token: $token');
-    await this.saveAndSubscribeToDefaultTokens();
+    await this.saveTokenAndSubscribeToDefaultTopics();
 
     // Any time the token refreshes, store this in the database too.
     FirebaseMessaging.instance.onTokenRefresh.listen((token) {
       this.token = token;
-      this.saveAndSubscribeToDefaultTokens();
+      this.saveTokenAndSubscribeToDefaultTopics();
     });
 
     // When ever user logs in, update the token with user Id.
     // authChanges.listen((user) {
     //   if (user == null) return;
-    //   this.saveAndSubscribeToDefaultTokens();
+    //   this.saveTokenAndSubscribeToDefaultTopics();
     // });
   }
 
@@ -115,7 +115,7 @@ class MessagingApi {
     });
   }
 
-  Future<dynamic> saveAndSubscribeToDefaultTokens() {
+  Future<dynamic> saveTokenAndSubscribeToDefaultTopics() {
     return this.saveToken(this.token, topic: this.defaultTopic);
   }
 
