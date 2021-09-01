@@ -1,6 +1,7 @@
 import 'package:data/data.dart';
 import 'package:data/src/tour/widgets/tour.list.controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class TourListMenu extends StatelessWidget {
@@ -16,7 +17,7 @@ class TourListMenu extends StatelessWidget {
             width: 120,
             child: DropdownButton<int>(
               isExpanded: true,
-              value: _.operationType,
+              value: _.contentTypeId,
               items: [
                 DropdownMenuItem(value: 0, child: Text('Search By', style: captionSm)),
                 for (final type in tourApiSearchTypes)
@@ -30,10 +31,24 @@ class TourListMenu extends StatelessWidget {
                     ),
                   ),
               ],
-              onChanged: (int? v) => _.changeOperationType(v!),
+              onChanged: (int? v) => _.changeContentTypeId(v!),
             ),
           ),
-          if (_.operation != '')
+          if (_.displaySearchBox) ...[
+            Expanded(
+              child: TextField(
+                onChanged: (v) {
+                  _.onKeywordChange(v);
+                },
+                decoration: InputDecoration(hintText: 'Input search keyword'),
+              ),
+            ),
+            IconButton(
+              icon: Icon(Icons.close),
+              onPressed: () => _.onCancelSearch(),
+            )
+          ],
+          if (_.displaySearchBox == false && _.operation != '')
             Container(
               width: 130,
               child: DropdownButton<int>(
@@ -54,7 +69,7 @@ class TourListMenu extends StatelessWidget {
                 onChanged: (int? v) => _.reset(areaCode: v!, sigunguCode: 0),
               ),
             ),
-          if (_.operation != '' && _.areaCode != 0)
+          if (_.displaySearchBox == false && _.operation != '' && _.areaCode != 0)
             Container(
               width: 130,
               child: DropdownButton<int>(
@@ -64,13 +79,14 @@ class TourListMenu extends StatelessWidget {
                   DropdownMenuItem(value: 0, child: Text('Select town', style: captionSm)),
                   for (final city in _.cities)
                     DropdownMenuItem(
-                        value: city.code,
-                        child: Text(
-                          city.name,
-                          style: captionSm,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 1,
-                        )),
+                      value: city.code,
+                      child: Text(
+                        city.name,
+                        style: captionSm,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
                 ],
                 onChanged: (int? v) => _.reset(sigunguCode: v!),
               ),

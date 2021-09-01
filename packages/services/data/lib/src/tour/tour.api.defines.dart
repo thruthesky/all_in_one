@@ -12,6 +12,10 @@ class ContentTypeId {
   static int shopping = 79;
   static int restaurant = 82;
   static int transportation = 77;
+
+  /// 아래의 두 Content Type Id 는 실제 존재하지 않는 것이다.
+  static int myLocation = 1;
+  static int searchKeyword = 2;
 }
 
 const List<TourApiAreaCodeModel> tourCityList = [
@@ -71,8 +75,8 @@ final List<TourApiContentType> tourApiSearchTypes = [
   TourApiContentType(ContentTypeId.shopping, 'Shopping'),
   TourApiContentType(ContentTypeId.restaurant, 'Restaurant'),
   TourApiContentType(ContentTypeId.transportation, 'Transporation'),
-  TourApiContentType(1, 'My location'),
-  TourApiContentType(2, 'Keyword'),
+  TourApiContentType(ContentTypeId.myLocation, 'My location'),
+  TourApiContentType(ContentTypeId.searchKeyword, 'Keyword'),
 ];
 
 TextStyle captionMd = TextStyle(fontSize: 16);

@@ -12,6 +12,7 @@ class TourApiTest {
       contentTypeId: ContentTypeId.travel,
       pageNo: 1,
       numOfRows: 20,
+      keyword: '',
     );
 
     print('res; $res');

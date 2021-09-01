@@ -135,8 +135,8 @@ class TourApiListItem {
   final String? zipcode;
 
   factory TourApiListItem.fromJson(Map<String, dynamic> json) => TourApiListItem(
-        addr1: json["addr1"] == null ? null : json["addr1"],
-        addr2: json["addr2"] == null ? null : json["addr2"],
+        addr1: json["addr1"] == null ? null : toString(json["addr1"]),
+        addr2: json["addr2"] == null ? null : toString(json["addr2"]),
         areacode: json["areacode"] == null ? null : json["areacode"],
         cat1: json["cat1"] == null ? null : json["cat1"],
         cat2: json["cat2"] == null ? null : json["cat2"],

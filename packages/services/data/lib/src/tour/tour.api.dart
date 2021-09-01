@@ -69,6 +69,7 @@ class TourApi {
     return area;
   }
 
+  /// 만약, contentTypeId 가 선택되지 않았거나, 0,1,2 이면 전체 콘텐츠 타입을 가져온다.
   Future<TourApiListModel> search({
     required String operation,
     required int areaCode,
@@ -76,15 +77,17 @@ class TourApi {
     required int contentTypeId,
     required int pageNo,
     required int numOfRows,
+    required String keyword,
   }) async {
     final path = _queryUrl(
           operation: operation == '' ? TourApiOperations.areaBasedList : operation,
-          contentTypeId: contentTypeId.toString(),
+          contentTypeId: contentTypeId < 3 ? '' : contentTypeId.toString(),
           areaCode: areaCode > 0 ? areaCode.toString() : '',
           sigunguCode: sigunguCode > 0 ? sigunguCode.toString() : '',
           pageNo: pageNo,
           numOfRows: numOfRows,
         ) +
+        (operation == TourApiOperations.searchKeyword ? "&keyword=$keyword" : "") +
         "&cat1=&cat2=&cat3=&listYN=Y&arrange=O";
 
     // print('path; $path');
