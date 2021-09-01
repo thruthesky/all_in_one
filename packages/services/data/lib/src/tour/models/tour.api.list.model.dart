@@ -76,6 +76,11 @@ class Items {
 
   factory Items.fromJson(Map<String, dynamic> json) {
     if (json['item'] == null) return Items(item: []);
+
+    /// ! 검색 결과가 1개 뿐인 경우, json['item'] 이 배열이 아니라, 맵에 바로 데이터가 전달되어 온다.
+    if (json['item'] is Map) {
+      return Items(item: [TourApiListItem.fromJson(json['item'])]);
+    }
     return Items(
       item: List<TourApiListItem>.from(json["item"].map((x) => TourApiListItem.fromJson(x))),
     );
@@ -130,8 +135,8 @@ class TourApiListItem {
   final String? zipcode;
 
   factory TourApiListItem.fromJson(Map<String, dynamic> json) => TourApiListItem(
-        addr1: json["addr1"] == null ? null : json["addr1"],
-        addr2: json["addr2"] == null ? null : json["addr2"],
+        addr1: json["addr1"] == null ? null : toString(json["addr1"]),
+        addr2: json["addr2"] == null ? null : toString(json["addr2"]),
         areacode: json["areacode"] == null ? null : json["areacode"],
         cat1: json["cat1"] == null ? null : json["cat1"],
         cat2: json["cat2"] == null ? null : json["cat2"],
