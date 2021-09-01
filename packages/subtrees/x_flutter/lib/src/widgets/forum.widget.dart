@@ -107,6 +107,13 @@ class ForumController {
   }
 }
 
+typedef PostWidgetBuilder = Widget Function(PostModel post);
+typedef CommentWidgetBuilder = Widget Function(CommentModel comment);
+typedef CommentViewWidgetBuilder = Widget Function(PostModel post, CommentModel comment);
+typedef ForumButtonBuilder = Widget Function(dynamic entity);
+typedef WidgetCallback = Widget Function();
+typedef FileEditBuilder = Widget Function(FileModel file, dynamic parent, Function deleted);
+
 /// 게시판 목록 및 글 작성/수정
 ///
 /// 여러 게시판(카테고리)가 한번에 열릴 수 있다. 그래서 질문게시판->자유게시판에서 백 버튼을 눌러 질문게시판 되돌아 갈 때,
@@ -126,10 +133,15 @@ class ForumWidget extends StatefulWidget {
     Key? key,
     required this.controller,
     this.categoryId = '',
+    this.viewBuilder,
+    this.contentBuilder,
     this.closedTitleBuilder,
     this.openedTitleBuilder,
     this.commentMetaBuilder,
     this.commentContentBuilder,
+    this.commentEditBuilder,
+    this.commentViewBuilder,
+    this.fileEditBuilder,
     this.buttonBuilder,
     this.editBuilder,
     this.separatorBuilder,
@@ -144,13 +156,18 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String categoryId;
-  final Function? closedTitleBuilder;
-  final Function? openedTitleBuilder;
-  final Function? commentMetaBuilder;
-  final Function? commentContentBuilder;
-  final Function? buttonBuilder;
-  final Function? editBuilder;
-  final Function? separatorBuilder;
+  final PostWidgetBuilder? viewBuilder;
+  final PostWidgetBuilder? contentBuilder;
+  final PostWidgetBuilder? closedTitleBuilder;
+  final PostWidgetBuilder? openedTitleBuilder;
+  final PostWidgetBuilder? editBuilder;
+  final CommentWidgetBuilder? commentMetaBuilder;
+  final CommentWidgetBuilder? commentContentBuilder;
+  final CommentViewWidgetBuilder? commentViewBuilder;
+  final ForumButtonBuilder? buttonBuilder;
+  final FileEditBuilder? fileEditBuilder;
+  final WidgetCallback? separatorBuilder;
+  final Function? commentEditBuilder;
   final Function? fetch;
   final Function? edited;
   final Function error;
@@ -279,7 +296,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   }
 
   /// 글이 닫힌 경우, 제목 빌더
-  closedTitleBuilder(PostModel post) {
+  Widget closedTitleBuilder(PostModel post) {
     Widget child;
     if (widget.closedTitleBuilder == null) {
       /// 기본 디자인
@@ -307,21 +324,24 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
-  openedTitleBuilder(PostModel post) {
+  Widget openedTitleBuilder(PostModel post) {
     /// 기본 빌더
     Widget child;
     if (widget.openedTitleBuilder == null) {
       child = Container(
         padding: EdgeInsets.all(16),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CircleAvatar(child: Icon(Icons.person)),
             SizedBox(width: 16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text('${post.idx}. ${post.title}'), Text('${post.user.nicknameOrName}')],
+            Expanded(
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text('${post.idx}. ${post.title}'),
+                Text('${post.user.nicknameOrName}')
+              ]),
             ),
-            Spacer(),
+            SizedBox(width: 16),
             Icon(Icons.arrow_upward),
           ],
         ),
@@ -340,39 +360,45 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
-  viewBuilder(PostModel post) {
+  Widget viewBuilder(PostModel post) {
+    if (widget.viewBuilder != null) return widget.viewBuilder!(post);
     return Column(
       children: [
         openedTitleBuilder(post),
         contentBuilder(post),
         buttonBuilder(post),
         commentEditBuilder(post, CommentModel()), // 부모 글의 코멘트 창. 항상 보여 줌.
-        for (final comment in post.comments)
-          Container(
-            margin: EdgeInsets.only(left: commentLeftMargin(comment)),
-            child: Column(
-              children: [
-                commentMetaBuilder(comment),
-                commentContentBuilder(comment),
-                buttonBuilder(comment),
-                if (comment.mode == 'reply') ...[
-                  commentEditBuilder(post, CommentModel(), parent: comment),
-                ],
-              ],
-            ),
-          )
+        for (final comment in post.comments) commentViewBuilder(post, comment)
       ],
     );
   }
 
-  commentButtonBuilder(CommentModel comment) {
+  Widget commentViewBuilder(PostModel post, CommentModel comment) {
+    if (widget.commentViewBuilder != null) return widget.commentViewBuilder!(post, comment);
+    return Container(
+      margin: EdgeInsets.only(left: commentLeftMargin(comment)),
+      child: Column(
+        children: [
+          commentMetaBuilder(comment),
+          commentContentBuilder(comment),
+          commentButtonBuilder(comment),
+          if (comment.mode == 'reply') ...[
+            commentEditBuilder(post, CommentModel(), parent: comment),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget commentButtonBuilder(CommentModel comment) {
     return postAndCommentButtonBuilder(comment);
   }
 
   /// 글 내용 표시 빌더
   ///
   /// 텍스트와 사진(파일)의 위치를 아래/위로 변경 할 수 있도록 하나의 빌더에서 같이 표현한다.
-  contentBuilder(PostModel post) {
+  Widget contentBuilder(PostModel post) {
+    if (widget.contentBuilder != null) return widget.contentBuilder!(post);
     return Container(
       padding: EdgeInsets.all(16),
       width: double.infinity,
@@ -393,13 +419,13 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
-  buttonBuilder(dynamic post) {
-    if (widget.buttonBuilder != null) return widget.buttonBuilder!(post);
+  Widget buttonBuilder(PostModel post) {
     return postAndCommentButtonBuilder(post);
   }
 
   /// 글과 코멘트 둘다 쓰이는 버튼 빌더
   postAndCommentButtonBuilder(dynamic post) {
+    if (widget.buttonBuilder != null) return widget.buttonBuilder!(post);
     return Row(
       children: [
         if (post.isComment)
@@ -492,7 +518,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   ///
   /// 직접 디자인하려면, 아래의 함수를 복사해서 callback builder 로 만들면 된다.
   /// 새 글 쓰기의 경우, post.idx = 0 이고, post.categoryId 에는 게시판 카테고리가 들어가 있다.
-  editBuilder(PostModel post) {
+  Widget editBuilder(PostModel post) {
     if (widget.editBuilder != null) return widget.editBuilder!(post);
     bool loading = false;
     double progress = 0.0;
@@ -617,114 +643,122 @@ class _ForumWidgetState extends State<ForumWidget> {
   /// [post] 부모 글. 참고로, 코멘트 수정을 하는 경우, [post] 는 빈 PostModel() 의 객체라도 상관 없다.
   /// [comment] 현재 생성되는 또는 수정되는 코멘트. 생성을 하는 경우, 빈 CommentModel() 의 객체를 만들어 전달하면 된다.
   /// [parent] 현재 코멘트의 부모 코멘트. 즉, 코멘트의 코멘트를 작성하는 경우 필요.
-  commentEditBuilder(PostModel post, CommentModel comment,
-      {CommentModel? parent, Function? edited}) {
-    bool loading = false;
-    bool focus = true;
-    double progress = 0.0;
+  Widget commentEditBuilder(
+    PostModel post,
+    CommentModel comment, {
+    CommentModel? parent,
+    Function? edited,
+  }) {
+    if (widget.commentEditBuilder == null) {
+      bool loading = false;
+      bool focus = true;
+      double progress = 0.0;
 
-    if (comment.idx == 0) {
-      // 새 코멘트 작성
-      comment.rootIdx = post.idx;
-      if (parent == null) {
-        // 부모 글 바로 밑에 (1단계) 코멘트 작성. 즉, 부모글 내용 아래에 항상 보이는 코멘트 작성 폼.
-        comment.parentIdx = post.idx;
-        focus = false;
-      } else {
-        // 코멘트 밑에 코멘트 작성
-        comment.parentIdx = parent.idx;
+      if (comment.idx == 0) {
+        // 새 코멘트 작성
+        comment.rootIdx = post.idx;
+        if (parent == null) {
+          // 부모 글 바로 밑에 (1단계) 코멘트 작성. 즉, 부모글 내용 아래에 항상 보이는 코멘트 작성 폼.
+          comment.parentIdx = post.idx;
+          focus = false;
+        } else {
+          // 코멘트 밑에 코멘트 작성
+          comment.parentIdx = parent.idx;
+        }
       }
-    }
-    final content = TextEditingController(text: comment.content);
-    return StatefulBuilder(builder: (_, setState) {
-      return Column(
-        children: [
-          Container(
-            width: double.infinity,
-            child: Wrap(
-              alignment: WrapAlignment.start,
-              children: [
-                for (final FileModel file in comment.files)
-                  fileEditBuilder(file, comment, () => setState(() {})),
-              ],
-            ),
-          ),
-          if (progress > 0) LinearProgressIndicator(value: progress),
-          Row(
-            children: [
-              FileUploadIcon(
-                  entity: comment.idx,
-                  success: (FileModel file) {
-                    progress = 0;
-                    setState(() => comment.files.add(file));
-                  },
-                  error: controller.error,
-                  progress: (p) => setState(() => progress = p)),
-              Expanded(
-                child: Stack(
-                  children: [
-                    TextField(
-                      autofocus: focus,
-                      controller: content,
-                      maxLines: null,
-                      onChanged: (v) => setState(() => null),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding:
-                            const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 40),
-                        hintText: "코멘트를 입력하세요.",
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3.0),
-                          borderSide: BorderSide(
-                            color: Colors.grey[800]!,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3.0),
-                          borderSide: BorderSide(
-                            color: Colors.blueGrey,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (content.text != '' || comment.files.length > 0)
-                      Positioned(
-                        top: 0,
-                        bottom: 0,
-                        right: -2,
-                        child: IconButton(
-                          onPressed: () async {
-                            setState(() => loading = true);
-                            try {
-                              comment.content = content.text;
-                              await comment.edit(post);
-
-                              /// 코멘트의 코멘트를 쓰는 경우, 코멘트 생성 후, 부모 mode='' 으로 해서, 입력 창 감추기
-                              if (parent != null) parent.mode = '';
-                              comment.mode = '';
-
-                              /// 글 수정 완료 콜백
-                              if (edited != null) edited();
-                              controller.setState(() {});
-                            } catch (e) {
-                              controller.error(e);
-                            }
-
-                            setState(() => loading = false);
-                          },
-                          icon: loading ? Spinner() : Icon(Icons.send),
-                        ),
-                      ),
-                  ],
-                ),
+      final content = TextEditingController(text: comment.content);
+      return StatefulBuilder(builder: (_, setState) {
+        return Column(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Wrap(
+                alignment: WrapAlignment.start,
+                children: [
+                  for (final FileModel file in comment.files)
+                    fileEditBuilder(file, comment, () => setState(() {})),
+                ],
               ),
-              SizedBox(width: 16),
-            ],
-          )
-        ],
-      );
-    });
+            ),
+            if (progress > 0) LinearProgressIndicator(value: progress),
+            Row(
+              children: [
+                FileUploadIcon(
+                    entity: comment.idx,
+                    success: (FileModel file) {
+                      progress = 0;
+                      setState(() => comment.files.add(file));
+                    },
+                    error: controller.error,
+                    progress: (p) => setState(() => progress = p)),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      TextField(
+                        autofocus: focus,
+                        controller: content,
+                        maxLines: null,
+                        onChanged: (v) => setState(() => null),
+                        decoration: InputDecoration(
+                          isDense: true,
+                          contentPadding:
+                              const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 40),
+                          hintText: "코멘트를 입력하세요.",
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(3.0),
+                            borderSide: BorderSide(
+                              color: Colors.grey[800]!,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(3.0),
+                            borderSide: BorderSide(
+                              color: Colors.blueGrey,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      if (content.text != '' || comment.files.length > 0)
+                        Positioned(
+                          top: 0,
+                          bottom: 0,
+                          right: -2,
+                          child: IconButton(
+                            onPressed: () async {
+                              setState(() => loading = true);
+                              try {
+                                comment.content = content.text;
+                                await comment.edit(post);
+
+                                /// 코멘트의 코멘트를 쓰는 경우, 코멘트 생성 후, 부모 mode='' 으로 해서, 입력 창 감추기
+                                if (parent != null) parent.mode = '';
+                                comment.mode = '';
+
+                                /// 글 수정 완료 콜백
+                                if (edited != null) edited();
+                                controller.setState(() {});
+                              } catch (e) {
+                                controller.error(e);
+                              }
+
+                              setState(() => loading = false);
+                            },
+                            icon: loading ? Spinner() : Icon(Icons.send),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 16),
+              ],
+            )
+          ],
+        );
+      });
+    } else {
+      return widget.commentEditBuilder!(post, comment, parent: parent, edited: edited);
+    }
   }
 
   commentMetaBuilder(CommentModel comment) {
@@ -744,25 +778,22 @@ class _ForumWidgetState extends State<ForumWidget> {
   }
 
   commentContentBuilder(CommentModel comment) {
-    if (widget.commentContentBuilder == null) {
-      return Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(16),
-        color: Colors.black54,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '${comment.content}',
-              style: TextStyle(color: Colors.white),
-            ),
-            for (final f in comment.files) CacheImage(f.url, width: double.infinity, height: null),
-          ],
-        ),
-      );
-    } else {
-      return widget.commentContentBuilder!(comment);
-    }
+    if (widget.commentContentBuilder != null) return widget.commentContentBuilder!(comment);
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(16),
+      color: Colors.black54,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${comment.content}',
+            style: TextStyle(color: Colors.white),
+          ),
+          for (final f in comment.files) CacheImage(f.url, width: double.infinity, height: null),
+        ],
+      ),
+    );
   }
 
   double commentLeftMargin(CommentModel comment) {
@@ -786,32 +817,37 @@ class _ForumWidgetState extends State<ForumWidget> {
   /// 글/코멘트 작성 폼에서, 파일을 업로드 한 후, 파일을 표시하고, 삭제 아이콘을 표시한다.
   /// 그리고 삭제 버튼이 눌러지면 삭제하고 [deleted] 콜백을 호출한다. 콜백에서는 화면 랜더링을 하면 된다.
   Widget fileEditBuilder(FileModel file, dynamic parent, Function deleted) {
-    return Stack(
-      children: [
-        CacheImage(file.url),
-        Positioned(
-          top: 0,
-          right: 0,
-          child: IconButton(
-            onPressed: () async {
-              try {
-                final re = await showDialog(
-                    context: context, builder: (_) => confirmDialogBuilder(_, title: '삭제하시겠습니까?'));
-                if (re == false) return;
-                await file.delete(parent);
-                deleted();
-              } catch (e) {
-                controller.error(e);
-              }
-            },
-            icon: Icon(
-              Icons.highlight_remove,
-              color: Colors.red[700],
+    if (widget.fileEditBuilder == null) {
+      return Stack(
+        children: [
+          CacheImage(file.url),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: IconButton(
+              onPressed: () async {
+                try {
+                  final re = await showDialog(
+                      context: context,
+                      builder: (_) => confirmDialogBuilder(_, title: '삭제하시겠습니까?'));
+                  if (re == false) return;
+                  await file.delete(parent);
+                  deleted();
+                } catch (e) {
+                  controller.error(e);
+                }
+              },
+              icon: Icon(
+                Icons.highlight_remove,
+                color: Colors.red[700],
+              ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return widget.fileEditBuilder!(file, parent, deleted);
+    }
   }
 
   /// 예/아니오를 선택하는 확인 창
