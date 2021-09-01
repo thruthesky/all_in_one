@@ -125,4 +125,14 @@ class UserApi {
     model = UserModel();
     changes.add(model);
   }
+
+  /// 파이어베이스 로그인
+  ///
+  /// Matrix README 참고
+  /// [data] 파이어베이스 로그인 정보
+  /// 리턴: 사용자 모델
+  Future<UserModel> firebaseLogin(Map<String, String> data) async {
+    final res = await api.request('user.firebaseLogin', data);
+    return _saveUser(res);
+  }
 }
