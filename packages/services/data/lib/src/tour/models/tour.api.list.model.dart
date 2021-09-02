@@ -1,10 +1,11 @@
 import '../../../data.functions.dart';
+import '../../../data.defines.dart';
 
 /// 리스트 결과를 그대로 modeling 한 것이다.
 class TourApiListModel {
   TourApiListModel({required this.response});
   final TourApiListResponse response;
-  factory TourApiListModel.fromJson(Map<String, dynamic> json) => TourApiListModel(
+  factory TourApiListModel.fromJson(Json json) => TourApiListModel(
         response: TourApiListResponse.fromJson(json['response']),
       );
 }
@@ -18,7 +19,7 @@ class TourApiListResponse {
   final TourApiListHeader header;
   final TourApiListBody body;
 
-  factory TourApiListResponse.fromJson(Map<String, dynamic> json) => TourApiListResponse(
+  factory TourApiListResponse.fromJson(Json json) => TourApiListResponse(
         header: TourApiListHeader.fromJson(json['header']),
         body: TourApiListBody.fromJson(json['body']),
       );
@@ -33,7 +34,7 @@ class TourApiListHeader {
   final String resultCode;
   final String resultMsg;
 
-  factory TourApiListHeader.fromJson(Map<String, dynamic> json) => TourApiListHeader(
+  factory TourApiListHeader.fromJson(Json json) => TourApiListHeader(
         resultCode: json["resultCode"],
         resultMsg: json["resultMsg"],
       );
@@ -52,8 +53,8 @@ class TourApiListBody {
   final int pageNo;
   final int totalCount;
 
-  factory TourApiListBody.fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic> items = {};
+  factory TourApiListBody.fromJson(Json json) {
+    Json items = {};
     if (json['items'] is String) {
     } else {
       items = json['items'];
@@ -74,7 +75,7 @@ class Items {
 
   final List<TourApiListItem> item;
 
-  factory Items.fromJson(Map<String, dynamic> json) {
+  factory Items.fromJson(Json json) {
     if (json['item'] == null) return Items(item: []);
 
     /// ! 검색 결과가 1개 뿐인 경우, json['item'] 이 배열이 아니라, 맵에 바로 데이터가 전달되어 온다.
@@ -134,7 +135,7 @@ class TourApiListItem {
   final String title;
   final String? zipcode;
 
-  factory TourApiListItem.fromJson(Map<String, dynamic> json) => TourApiListItem(
+  factory TourApiListItem.fromJson(Json json) => TourApiListItem(
         addr1: json["addr1"] == null ? null : toString(json["addr1"]),
         addr2: json["addr2"] == null ? null : toString(json["addr2"]),
         areacode: json["areacode"] == null ? null : json["areacode"],
