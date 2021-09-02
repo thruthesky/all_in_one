@@ -134,6 +134,7 @@ class ForumWidget extends StatefulWidget {
     required this.controller,
     this.categoryId = '',
     this.viewBuilder,
+    this.listBuilder,
     this.contentBuilder,
     this.closedTitleBuilder,
     this.openedTitleBuilder,
@@ -141,6 +142,7 @@ class ForumWidget extends StatefulWidget {
     this.commentContentBuilder,
     this.commentEditBuilder,
     this.commentViewBuilder,
+    this.confirmDialogBuilder,
     this.fileEditBuilder,
     this.buttonBuilder,
     this.editBuilder,
@@ -156,6 +158,7 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String categoryId;
+  final WidgetCallback? listBuilder;
   final PostWidgetBuilder? viewBuilder;
   final PostWidgetBuilder? contentBuilder;
   final PostWidgetBuilder? closedTitleBuilder;
@@ -164,6 +167,7 @@ class ForumWidget extends StatefulWidget {
   final CommentWidgetBuilder? commentMetaBuilder;
   final CommentWidgetBuilder? commentContentBuilder;
   final CommentViewWidgetBuilder? commentViewBuilder;
+  final WidgetCallback? confirmDialogBuilder;
   final ForumButtonBuilder? buttonBuilder;
   final FileEditBuilder? fileEditBuilder;
   final WidgetCallback? separatorBuilder;
@@ -228,11 +232,13 @@ class _ForumWidgetState extends State<ForumWidget> {
   @override
   Widget build(BuildContext context) {
     if (edit != null) return editBuilder(edit!);
+    if (widget.listBuilder != null) return widget.listBuilder!();
     return ListView.separated(
       separatorBuilder: (_, i) =>
           widget.separatorBuilder == null ? Divider() : widget.separatorBuilder!(),
       itemBuilder: (_, i) {
         PostModel post = posts[i];
+
         if (post.noMorePosts) {
           return ListTile(
             title: Text('더 이상 글이 없습니다.'),
@@ -852,6 +858,7 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// 예/아니오를 선택하는 확인 창
   confirmDialogBuilder(BuildContext context, {String title = '제목'}) {
+    if (widget.confirmDialogBuilder != null) return widget.confirmDialogBuilder!();
     return AlertDialog(
       title: Text(title, style: TextStyle(fontSize: 16)),
       content: Column(
