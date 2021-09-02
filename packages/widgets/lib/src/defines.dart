@@ -29,7 +29,8 @@ const TextStyle tsMd = TextStyle(fontSize: 16);
 const TextStyle tsLg = TextStyle(fontSize: 24);
 const TextStyle tsXl = TextStyle(fontSize: 32);
 
-const double pagePadding = xsm;
+const double pagePadding = sm;
+const pageInset = EdgeInsets.all(sm);
 
 final spaceXxs = SizedBox(width: xxs, height: xxs);
 final spaceXs = SizedBox(width: xs, height: xs);
@@ -53,6 +54,7 @@ TextStyle get subtitle2 => Theme.of(Get.context!).textTheme.subtitle2!; //14.0
 TextStyle get bodyText1 => Theme.of(Get.context!).textTheme.bodyText1!; //20.0,
 TextStyle get bodyText2 => Theme.of(Get.context!).textTheme.bodyText2!; //16.0,
 
+/// 실제 Theme 에는 존재하지 않는 것.
 TextStyle bodyText3 = TextStyle(fontSize: 14);
 TextStyle bodyText4 = TextStyle(fontSize: 12);
 TextStyle bodyText5 = TextStyle(fontSize: 10);

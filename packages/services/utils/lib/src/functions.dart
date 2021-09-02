@@ -63,7 +63,7 @@ error(e) {
     // 사진 업로드에서, 사용자가 사진을 선택하지 않은 경우, 에러 표시하지 않음.
     if (e == 'error_image_not_selected') {
     } else {
-      alert('에러', e);
+      alert('Error', e);
     }
   } else if (e is PlatformException) {
     /// 사용자가 취소를 한 경우, 에러 표시 하지 않음.
@@ -71,7 +71,7 @@ error(e) {
     /// 사진 업로드 등에서, 여러 차례 취소를 한 경우.
     if (e.code == 'multiple_request') {
     } else {
-      alert('에러', "${e.code}: ${e.message!}");
+      alert('Error', "${e.code}: ${e.message!}");
     }
   } else if (e.runtimeType.toString() == '_TypeError') {
     final errstr = e.toString();
@@ -96,7 +96,7 @@ error(e) {
       alert('Assertion 에러 발생', e.message);
     }
   } else {
-    alert('에러', e);
+    alert('Error', e);
   }
 }
 
