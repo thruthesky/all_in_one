@@ -248,6 +248,21 @@
       "deviceId": "emulator-5554"
     },
     {
+      "name": "영자 - Sonub - iPhone11MaxPro - iMac - Local",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "00008030-000904C80290802E"
+    },
+    {
       "name": "Android Pixel emulator-5554",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
