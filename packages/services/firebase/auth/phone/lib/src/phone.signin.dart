@@ -9,13 +9,15 @@ class FirebaseAuthPhone {
   /// PhoneAuthCredential 이 전화번호 로그인 완료 후 얻게 되는 객체이다.
   ///
   static verifyPhoneNumber({
+    required String phoneNumber,
     required Function verificationCompleted,
     required Function verificationFailed,
     required Function codeSent,
     required Function codeAutoRetrievalTimeout,
   }) async {
+    print('    ==> verifyPhoneNumber; number; $phoneNumber');
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber: '+44 7444 555666',
+      phoneNumber: phoneNumber,
       timeout: const Duration(seconds: 60),
       verificationCompleted: (PhoneAuthCredential credential) {
         /// Android 에서만 자동으로 SMS code 를 입력 콜백.
