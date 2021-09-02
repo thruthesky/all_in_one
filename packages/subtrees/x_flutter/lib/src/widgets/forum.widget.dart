@@ -147,6 +147,7 @@ class ForumWidget extends StatefulWidget {
     this.buttonBuilder,
     this.editBuilder,
     this.separatorBuilder,
+    this.postOnTop,
     this.fetch,
     required this.error,
     this.edited,
@@ -174,6 +175,7 @@ class ForumWidget extends StatefulWidget {
   final Function? commentEditBuilder;
   final Function? fetch;
   final Function? edited;
+  final PostModel? postOnTop;
   final Function error;
   final int limit;
   final bool showEditFormOnInit;
@@ -223,6 +225,7 @@ class _ForumWidgetState extends State<ForumWidget> {
     super.initState();
     controller = widget.controller;
     if (widget.showEditFormOnInit) controller.togglePostCreateForm();
+    if (widget.postOnTop != null) posts.insert(0, widget.postOnTop!);
     _fetchPage();
     scrollController.addListener(() {
       if (atBottom) _fetchPage();
@@ -283,6 +286,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       final _posts = await PostApi.instance.search(searchOptions);
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
+        if (widget.postOnTop != null && widget.postOnTop!.idx == p.idx) return;
         /// 각 글 별 전처리를 여기서 할 수 있음.
         /// 참고, 기본 전 처리는 PostModel 에서 되며, 여기서는 추가적인 작업을 할 수 있음.
         posts.add(p);
