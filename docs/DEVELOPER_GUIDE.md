@@ -589,16 +589,20 @@ flutter:
 # 위젯 패키지
 
 ## SVG
-- 위젯 패키지에 `assets/svg` 폴더에 SVG 파일들이 저장되어져 있으며, 또 필요한 SVG 파일은 항상 이 위치에 저장을 해야 한다.
-  - svg 사용을 하려면 `svg('face/fair');` 와 같이 하면 된다.
-  - 경로는 `assets/svg/[...].svg` 에서 대괄호 안에 들어가는 경로를 지정하면 된다. 예) `face/fair` 는 `packages/wdigets/assets/svg/face/fair.svg` 가 된다.
-  - 만약, `widgets` 패키지가 아닌 다른 패키지 또는 앱 폴더의 assets 경로에서 사용하고 싶다면, `svg('face/fair', '패키지 경로')` 와 같이 사용하면 된다.
+- 2021년 9월 3일 변경 사항.
+  - `packages/widgets/pubspec.yaml`에서 `assets` 등록을 뺐다. 여기에 등록하면 사용하지 않아도 앱에 같이 번들되기 때문이다.
+  - 또한 `svg` 함수에 `package` 옵션을 빼고, `path` 에 실제 svg 파일 경로를 지정 하도록 했다.
+
+- ~~위젯 패키지에 `packages/widgets/assets/svg` 폴더에 SVG 파일들이 저장되어져 있으며, 또 필요한 SVG 파일은 항상 이 위치에 저장을 해야 한다.~~
+  - ~~svg 사용을 하려면 `svg('face/fair');` 와 같이 하면 된다.~~
+  - ~~경로는 `assets/svg/[...].svg` 에서 대괄호 안에 들어가는 경로를 지정하면 된다. 예) `face/fair` 는 `packages/wdigets/assets/svg/face/fair.svg` 가 된다.~~
+
+- ~~만약, `widgets` 패키지가 아닌 다른 패키지 또는 앱 폴더의 assets 경로에서 사용하고 싶다면, `svg('face/fair', '패키지 경로')` 와 같이 사용하면 된다.~~
   
 예제)
 ```dart
-svg('face/devil')
-svg(uviIcon(current.uvi), width: 20, height: 20)
-svg('money-exchange', package: '..'), // 앱 assets 경로
+svg('assets/svg/plane.svg');
+svg('assets/svg/plane.svg', width: 100, height: 100);
 ```
 
 # 서브트리, Subtree

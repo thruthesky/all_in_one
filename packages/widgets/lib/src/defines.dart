@@ -22,6 +22,7 @@ const double md = 24;
 const double lg = 32;
 const double xl = 40;
 const double xxl = 56;
+const double xxxl = 126;
 
 const TextStyle tsXs = TextStyle(fontSize: 10);
 const TextStyle tsSm = TextStyle(fontSize: 12);
@@ -40,6 +41,8 @@ final spaceMd = SizedBox(width: md, height: md);
 final spaceLg = SizedBox(width: lg, height: lg);
 final spaceXl = SizedBox(width: xl, height: xl);
 final spaceXxl = SizedBox(width: xxl, height: xxl);
+final space2xl = spaceXxl;
+final space3xl = SizedBox(width: xxxl, height: xxxl);
 
 TextStyle get headline1 => Theme.of(Get.context!).textTheme.headline1!; //112.0  bold,
 TextStyle get headline2 => Theme.of(Get.context!).textTheme.headline2!; //56.0   normal
