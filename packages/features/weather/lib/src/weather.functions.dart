@@ -1,3 +1,4 @@
+/// UVI(오존 층) index 에 따른 텍스트 출력.
 String uviText(num? uvi) {
   if (uvi == null)
     return '...';
@@ -13,6 +14,7 @@ String uviText(num? uvi) {
     return '위험';
 }
 
+/// UVI(오존 층) index 에 따른 아이콘 출력.
 String uviIcon(num? uvi) {
   if (uvi == null)
     return 'face/smiling';
