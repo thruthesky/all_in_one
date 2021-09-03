@@ -107,12 +107,13 @@ class ForumController {
   }
 }
 
+typedef WidgetCallback = Widget Function();
 typedef PostWidgetBuilder = Widget Function(PostModel post);
+typedef ForumButtonBuilder = Widget Function(dynamic entity);
 typedef CommentWidgetBuilder = Widget Function(CommentModel comment);
 typedef CommentViewWidgetBuilder = Widget Function(PostModel post, CommentModel comment);
-typedef ForumButtonBuilder = Widget Function(dynamic entity);
-typedef WidgetCallback = Widget Function();
 typedef FileEditBuilder = Widget Function(FileModel file, dynamic parent, Function deleted);
+typedef CommentEditBuilder = Widget Function(PostModel post, CommentModel comment, CommentModel? parent, Function? edited);
 
 /// 게시판 목록 및 글 작성/수정
 ///
@@ -168,11 +169,11 @@ class ForumWidget extends StatefulWidget {
   final CommentWidgetBuilder? commentMetaBuilder;
   final CommentWidgetBuilder? commentContentBuilder;
   final CommentViewWidgetBuilder? commentViewBuilder;
+  final CommentEditBuilder? commentEditBuilder;
   final WidgetCallback? confirmDialogBuilder;
   final ForumButtonBuilder? buttonBuilder;
   final FileEditBuilder? fileEditBuilder;
   final WidgetCallback? separatorBuilder;
-  final Function? commentEditBuilder;
   final Function? fetch;
   final Function? edited;
   final int? postIdxOnTop;
@@ -788,7 +789,7 @@ class _ForumWidgetState extends State<ForumWidget> {
         );
       });
     } else {
-      return widget.commentEditBuilder!(post, comment, parent: parent, edited: edited);
+      return widget.commentEditBuilder!(post, comment, parent, edited);
     }
   }
 
