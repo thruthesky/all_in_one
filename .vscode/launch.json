@@ -263,6 +263,36 @@
       "deviceId": "00008030-000904C80290802E"
     },
     {
+      "name": "영자 - Sonub - Galaxy Wide 3 - iMac - main.sonub.com",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "5200960c4e1e5577"
+    },
+    {
+      "name": "영자 - Sonub - Galaxy Wide 2 - iMac - main.sonub.com",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "3300a275cab914b9"
+    },
+    {
       "name": "Android Pixel emulator-5554",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [

@@ -45,7 +45,7 @@ class ForumController {
     // 현재 글 수정 상태
     if (state.edit == null) {
       // 수정 상태가 아니면, 글 작성 상태로 변경. 카테고리 지정.
-      state.edit = PostModel()..categoryId = state.widget.categoryId;
+      state.edit = PostModel()..categoryId = state.categoryId;
     } else {
       // 수정 상태이면, 글 작성 폼 닫기
       state.edit = null;
@@ -107,12 +107,13 @@ class ForumController {
   }
 }
 
+typedef WidgetCallback = Widget Function();
 typedef PostWidgetBuilder = Widget Function(PostModel post);
+typedef ForumButtonBuilder = Widget Function(dynamic entity);
 typedef CommentWidgetBuilder = Widget Function(CommentModel comment);
 typedef CommentViewWidgetBuilder = Widget Function(PostModel post, CommentModel comment);
-typedef ForumButtonBuilder = Widget Function(dynamic entity);
-typedef WidgetCallback = Widget Function();
 typedef FileEditBuilder = Widget Function(FileModel file, dynamic parent, Function deleted);
+typedef CommentEditBuilder = Widget Function(PostModel post, CommentModel comment, CommentModel? parent, Function? edited);
 
 /// 게시판 목록 및 글 작성/수정
 ///
@@ -134,6 +135,7 @@ class ForumWidget extends StatefulWidget {
     required this.controller,
     this.categoryId = '',
     this.viewBuilder,
+    this.listBuilder,
     this.contentBuilder,
     this.closedTitleBuilder,
     this.openedTitleBuilder,
@@ -141,10 +143,12 @@ class ForumWidget extends StatefulWidget {
     this.commentContentBuilder,
     this.commentEditBuilder,
     this.commentViewBuilder,
+    this.confirmDialogBuilder,
     this.fileEditBuilder,
     this.buttonBuilder,
     this.editBuilder,
     this.separatorBuilder,
+    this.postIdxOnTop,
     this.fetch,
     required this.error,
     this.edited,
@@ -156,6 +160,7 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String categoryId;
+  final WidgetCallback? listBuilder;
   final PostWidgetBuilder? viewBuilder;
   final PostWidgetBuilder? contentBuilder;
   final PostWidgetBuilder? closedTitleBuilder;
@@ -164,12 +169,14 @@ class ForumWidget extends StatefulWidget {
   final CommentWidgetBuilder? commentMetaBuilder;
   final CommentWidgetBuilder? commentContentBuilder;
   final CommentViewWidgetBuilder? commentViewBuilder;
+  final CommentEditBuilder? commentEditBuilder;
+  final WidgetCallback? confirmDialogBuilder;
   final ForumButtonBuilder? buttonBuilder;
   final FileEditBuilder? fileEditBuilder;
   final WidgetCallback? separatorBuilder;
-  final Function? commentEditBuilder;
   final Function? fetch;
   final Function? edited;
+  final int? postIdxOnTop;
   final Function error;
   final int limit;
   final bool showEditFormOnInit;
@@ -187,6 +194,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   int editedCount = 0;
   bool loading = false;
   bool noMorePosts = false;
+  String categoryId = '';
   late final ForumController controller;
 
   final scrollController = ScrollController();
@@ -219,7 +227,14 @@ class _ForumWidgetState extends State<ForumWidget> {
     super.initState();
     controller = widget.controller;
     if (widget.showEditFormOnInit) controller.togglePostCreateForm();
-    _fetchPage();
+
+    /// If `widget.postIdxOnTop` is not null, we fetch it first, then fetch for the list with the fetched post's categoryId.
+    if (widget.postIdxOnTop != null) {
+      _fetchPostOnTop();
+    } else {
+      categoryId = widget.categoryId;
+      _fetchPage();
+    }
     scrollController.addListener(() {
       if (atBottom) _fetchPage();
     });
@@ -228,11 +243,13 @@ class _ForumWidgetState extends State<ForumWidget> {
   @override
   Widget build(BuildContext context) {
     if (edit != null) return editBuilder(edit!);
+    if (widget.listBuilder != null) return widget.listBuilder!();
     return ListView.separated(
       separatorBuilder: (_, i) =>
           widget.separatorBuilder == null ? Divider() : widget.separatorBuilder!(),
       itemBuilder: (_, i) {
         PostModel post = posts[i];
+
         if (post.noMorePosts) {
           return ListTile(
             title: Text('더 이상 글이 없습니다.'),
@@ -269,7 +286,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       setState(() => loading = true);
       page++;
       final searchOptions = {
-        'categoryId': widget.categoryId,
+        'categoryId': categoryId,
         'page': page,
         'limit': widget.limit,
       };
@@ -277,6 +294,8 @@ class _ForumWidgetState extends State<ForumWidget> {
       final _posts = await PostApi.instance.search(searchOptions);
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
+        if (widget.postIdxOnTop != null && widget.postIdxOnTop == p.idx) return;
+
         /// 각 글 별 전처리를 여기서 할 수 있음.
         /// 참고, 기본 전 처리는 PostModel 에서 되며, 여기서는 추가적인 작업을 할 수 있음.
         posts.add(p);
@@ -292,6 +311,19 @@ class _ForumWidgetState extends State<ForumWidget> {
     } catch (e) {
       setState(() => loading = false);
       widget.error(e);
+    }
+  }
+
+  _fetchPostOnTop() async {
+    try {
+      final post = await PostApi.instance.get(widget.postIdxOnTop);
+      posts.insert(0, post);
+      post.open = true;
+      categoryId = post.categoryId;
+      _fetchPage();
+    } catch (e) {
+      categoryId = '';
+      _fetchPage();
     }
   }
 
@@ -757,7 +789,7 @@ class _ForumWidgetState extends State<ForumWidget> {
         );
       });
     } else {
-      return widget.commentEditBuilder!(post, comment, parent: parent, edited: edited);
+      return widget.commentEditBuilder!(post, comment, parent, edited);
     }
   }
 
@@ -852,6 +884,7 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// 예/아니오를 선택하는 확인 창
   confirmDialogBuilder(BuildContext context, {String title = '제목'}) {
+    if (widget.confirmDialogBuilder != null) return widget.confirmDialogBuilder!();
     return AlertDialog(
       title: Text(title, style: TextStyle(fontSize: 16)),
       content: Column(
