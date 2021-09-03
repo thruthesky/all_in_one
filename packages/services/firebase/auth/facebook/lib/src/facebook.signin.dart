@@ -30,7 +30,7 @@ class FirebaseAuthFacebook {
       'email': user.email ?? '',
       'nickname': user.displayName ?? '',
       'photoUrl': user.photoURL ?? '',
-      'provider': 'apple',
+      'provider': 'facebook',
       'domain': 'app.sonub.com',
     };
   }

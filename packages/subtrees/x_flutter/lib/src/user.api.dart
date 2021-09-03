@@ -27,6 +27,7 @@ class UserApi {
   int get idx => model.idx;
   String get sessionId => model.sessionId;
   String get email => model.email;
+  String get provider => model.provider;
   int get point => model.point;
   String get address => model.address;
 

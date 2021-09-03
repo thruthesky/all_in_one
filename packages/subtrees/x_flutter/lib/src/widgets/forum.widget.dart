@@ -113,7 +113,8 @@ typedef ForumButtonBuilder = Widget Function(dynamic entity);
 typedef CommentWidgetBuilder = Widget Function(CommentModel comment);
 typedef CommentViewWidgetBuilder = Widget Function(PostModel post, CommentModel comment);
 typedef FileEditBuilder = Widget Function(FileModel file, dynamic parent, Function deleted);
-typedef CommentEditBuilder = Widget Function(PostModel post, CommentModel comment, CommentModel? parent, Function? edited);
+typedef CommentEditBuilder = Widget Function(
+    PostModel post, CommentModel comment, CommentModel? parent, Function? edited);
 
 /// 게시판 목록 및 글 작성/수정
 ///
@@ -392,6 +393,9 @@ class _ForumWidgetState extends State<ForumWidget> {
     );
   }
 
+  /// Display post view widget(s) for reading the post.
+  ///
+  /// When user tap on closed title widget, [post.opened] becomes true and this callback method will be called.
   Widget viewBuilder(PostModel post) {
     if (widget.viewBuilder != null) return widget.viewBuilder!(post);
     return Column(
