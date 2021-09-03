@@ -45,7 +45,7 @@ class ForumController {
     // 현재 글 수정 상태
     if (state.edit == null) {
       // 수정 상태가 아니면, 글 작성 상태로 변경. 카테고리 지정.
-      state.edit = PostModel()..categoryId = state.widget.categoryId;
+      state.edit = PostModel()..categoryId = state.categoryId;
     } else {
       // 수정 상태이면, 글 작성 폼 닫기
       state.edit = null;
@@ -147,7 +147,7 @@ class ForumWidget extends StatefulWidget {
     this.buttonBuilder,
     this.editBuilder,
     this.separatorBuilder,
-    this.postOnTop,
+    this.postIdxOnTop,
     this.fetch,
     required this.error,
     this.edited,
@@ -175,7 +175,7 @@ class ForumWidget extends StatefulWidget {
   final Function? commentEditBuilder;
   final Function? fetch;
   final Function? edited;
-  final PostModel? postOnTop;
+  final int? postIdxOnTop;
   final Function error;
   final int limit;
   final bool showEditFormOnInit;
@@ -193,6 +193,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   int editedCount = 0;
   bool loading = false;
   bool noMorePosts = false;
+  String categoryId = '';
   late final ForumController controller;
 
   final scrollController = ScrollController();
@@ -225,8 +226,14 @@ class _ForumWidgetState extends State<ForumWidget> {
     super.initState();
     controller = widget.controller;
     if (widget.showEditFormOnInit) controller.togglePostCreateForm();
-    if (widget.postOnTop != null) posts.insert(0, widget.postOnTop!);
-    _fetchPage();
+
+    /// If `widget.postIdxOnTop` is not null, we fetch it first, then fetch for the list with the fetched post's categoryId.
+    if (widget.postIdxOnTop != null) {
+      _fetchPostOnTop();
+    } else {
+      categoryId = widget.categoryId;
+      _fetchPage();
+    }
     scrollController.addListener(() {
       if (atBottom) _fetchPage();
     });
@@ -278,7 +285,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       setState(() => loading = true);
       page++;
       final searchOptions = {
-        'categoryId': widget.categoryId,
+        'categoryId': categoryId,
         'page': page,
         'limit': widget.limit,
       };
@@ -286,7 +293,8 @@ class _ForumWidgetState extends State<ForumWidget> {
       final _posts = await PostApi.instance.search(searchOptions);
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
-        if (widget.postOnTop != null && widget.postOnTop!.idx == p.idx) return;
+        if (widget.postIdxOnTop != null && widget.postIdxOnTop == p.idx) return;
+
         /// 각 글 별 전처리를 여기서 할 수 있음.
         /// 참고, 기본 전 처리는 PostModel 에서 되며, 여기서는 추가적인 작업을 할 수 있음.
         posts.add(p);
@@ -302,6 +310,19 @@ class _ForumWidgetState extends State<ForumWidget> {
     } catch (e) {
       setState(() => loading = false);
       widget.error(e);
+    }
+  }
+
+  _fetchPostOnTop() async {
+    try {
+      final post = await PostApi.instance.get(widget.postIdxOnTop);
+      posts.insert(0, post);
+      post.open = true;
+      categoryId = post.categoryId;
+      _fetchPage();
+    } catch (e) {
+      categoryId = '';
+      _fetchPage();
     }
   }
 
