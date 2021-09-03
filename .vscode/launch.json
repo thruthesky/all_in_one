@@ -291,6 +291,21 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "J8AXB761J32888A"
+    },
+    {
+      "name": "Iphone7 096a885ba083f01af93963a8661720cf9e67cb86",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86"
     }
   ]
 }
