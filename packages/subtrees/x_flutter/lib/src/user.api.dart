@@ -36,7 +36,7 @@ class UserApi {
   /// 회원 가입, 로그인, 로그아웃, 서버로 부터 프로필 읽기, 프로필 수정 등, 회원 정보 상태의 변경이 있으면 이벤트가 발생한다.
   BehaviorSubject<UserModel> changes = BehaviorSubject.seeded(UserModel());
   UserApi() {
-    print("UserApi::constructor");
+    // print("---> UserApi::constructor;");
     _initUserLogin();
   }
 
@@ -44,7 +44,6 @@ class UserApi {
   static UserApi? _instance;
   static UserApi get instance {
     if (_instance == null) {
-      print("static UserApi constructor for Singleton");
       _instance = UserApi();
     }
 
@@ -132,7 +131,7 @@ class UserApi {
   /// Matrix README 참고
   /// [data] 파이어베이스 로그인 정보
   /// 리턴: 사용자 모델
-  Future<UserModel> firebaseLogin(Map<String, String> data) async {
+  Future<UserModel> firebaseLogin(Map<String, dynamic> data) async {
     final res = await api.request('user.firebaseLogin', data);
     return _saveUser(res);
   }

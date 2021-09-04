@@ -8,6 +8,12 @@ class FirebaseAuthFacebook {
     // Need to logout to avoid 'User logged in as different Facebook user'
     LoginResult loginResult = await FacebookAuth.instance.login();
 
+    if (loginResult.status == LoginStatus.cancelled) {
+      throw 'user-cancelled-facebook-sign-in';
+    } else if (loginResult.status == LoginStatus.failed) {
+      throw 'facebook-sign-in-failed';
+    }
+
     // Create a credential from the access token
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
