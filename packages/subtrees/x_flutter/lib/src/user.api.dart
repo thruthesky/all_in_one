@@ -11,9 +11,9 @@ class UserApi {
   Api get api => Api.instance;
 
   /// 사용자 정보
-  UserModel model = UserModel();
+  UserModel user = UserModel();
 
-  bool get loggedIn => model.loggedIn;
+  bool get loggedIn => user.loggedIn;
   bool get notLoggedIn => !loggedIn;
 
   /// 사용자 이름
@@ -23,13 +23,17 @@ class UserApi {
   /// UserApi.instance.name // Api.instance 를 통한 참조
   /// UserApi.instance.name // UserApi.instance 를 통한 참조
   /// ```
-  String get name => model.name;
-  int get idx => model.idx;
-  String get sessionId => model.sessionId;
-  String get email => model.email;
-  String get provider => model.provider;
-  int get point => model.point;
-  String get address => model.address;
+  // String get name => user.name;
+  // int get idx => user.idx;
+  // String get sessionId => user.sessionId;
+  // String get email => user.email;
+  // String get provider => user.provider;
+  // int get point => user.point;
+  // String get address => user.address;
+  // String get displayName => user.displayName;
+  // String get phoneNo => user.phoneNo;
+  // String get gender => user.gender;
+  // int get birthdate => user.birthdate;
 
   /// [changes] 이벤트는 회원 정보의 변경에 따라 발생
   ///
@@ -51,13 +55,13 @@ class UserApi {
   }
 
   _initUserLogin() async {
-    model = await _loadUser();
+    user = await _loadUser();
 
     /// 로컬 캐시에 있는 데이터가 로드되는데로 changes 가 호출된다.
-    changes.add(model);
+    changes.add(user);
     if (loggedIn) {
       await profile();
-      changes.add(model);
+      changes.add(user);
     }
   }
 
@@ -72,11 +76,11 @@ class UserApi {
 
   /// 회원 정보를 앱내에 저장하고, [changes] 이벤트를 발생한다.
   Future<UserModel> _saveUser(dynamic res) async {
-    model = UserModel.fromJson(res);
-    changes.add(model);
+    user = UserModel.fromJson(res);
+    changes.add(user);
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('user', jsonEncode(model.toJson()));
-    return model;
+    prefs.setString('user', jsonEncode(user.toJson()));
+    return user;
   }
 
   /// 회원 가입
@@ -106,7 +110,7 @@ class UserApi {
   /// 참고, 현재 로그인한 사용자의 프로필을 가져온다. 만약, [sessionId] 에 사용자 세션 정보가 없으면 에러가 난다.
   /// 그래서, 이 함수를 호출 하기 전에 [sessionId] 에 값을 넣어 주어야 한다.
   Future profile() async {
-    assert(sessionId != '', "앗, 사용자 세션 아이디가 지정되지 않았습니다.");
+    assert(user.sessionId != '', "앗, 사용자 세션 아이디가 지정되지 않았습니다.");
     final res = await api.request('user.profile');
     return _saveUser(res);
   }
@@ -122,8 +126,8 @@ class UserApi {
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('user');
-    model = UserModel();
-    changes.add(model);
+    user = UserModel();
+    changes.add(user);
   }
 
   /// 파이어베이스 로그인

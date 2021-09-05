@@ -16,7 +16,7 @@ class Api {
 
   // @Deprecated('Use UserApi.instance directly')
   // UserApi user = UserApi.instance;
-  String get sessionId => UserApi.instance.sessionId;
+  String get sessionId => UserApi.instance.user.sessionId;
 
   // @Deprecated('User FileApi.instance')
   // FileApi file = FileApi();

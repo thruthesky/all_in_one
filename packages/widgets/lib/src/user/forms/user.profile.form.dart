@@ -16,8 +16,8 @@ class UserProfileForm extends StatefulWidget {
 
 class _UserProfileFormState extends State<UserProfileForm> {
   double p = 0.0;
-  final name = TextEditingController(text: UserApi.instance.name);
-  final address = TextEditingController(text: UserApi.instance.address);
+  final name = TextEditingController(text: UserApi.instance.user.name);
+  final address = TextEditingController(text: UserApi.instance.user.address);
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
       children: [
         UploadImage(
           taxonomy: 'users',
-          entity: UserApi.instance.idx,
+          entity: UserApi.instance.user.idx,
           code: 'photoUrl',
           quality: 70,
           deletePreviousUpload: true,
@@ -83,10 +83,10 @@ class _UserProfileFormState extends State<UserProfileForm> {
         ],
         spaceMd,
         Text('로그인 이메일'),
-        Text(UserApi.instance.email),
+        Text(UserApi.instance.user.email),
         spaceMd,
         Text('포인트'),
-        Text(UserApi.instance.point.toString()),
+        Text(UserApi.instance.user.point.toString()),
         spaceMd,
         Text('사용자 이름'),
         TextField(controller: name),

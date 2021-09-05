@@ -369,10 +369,9 @@ class _ForumWidgetState extends State<ForumWidget> {
             CircleAvatar(child: Icon(Icons.person)),
             SizedBox(width: 16),
             Expanded(
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('${post.idx}. ${post.title}'),
-                Text('${post.user.nicknameOrName}')
-              ]),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [Text('${post.idx}. ${post.title}'), Text('${post.user.displayName}')]),
             ),
             SizedBox(width: 16),
             Icon(Icons.arrow_upward),
