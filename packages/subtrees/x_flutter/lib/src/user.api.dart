@@ -121,7 +121,7 @@ class UserApi {
 
   Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('user');
+    await prefs.remove('user');
     model = UserModel();
     changes.add(model);
   }

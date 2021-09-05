@@ -23,7 +23,7 @@ class AppController extends GetxController {
 
   @override
   onInit() {
-    print('AppController::onInit()');
+    // print('---> AppController::onInit()');
     super.onInit();
 
     /// 파이어베이스 애널리스틱. 앱 시작 할 때 로그.
