@@ -33,7 +33,7 @@ class _UserProfileFormState extends State<UserProfileForm> {
         UploadImage(
           taxonomy: 'users',
           entity: UserApi.instance.user.idx,
-          code: 'photoUrl',
+          code: 'profilePhoto',
           quality: 70,
           deletePreviousUpload: true,
           defaultChild: Column(

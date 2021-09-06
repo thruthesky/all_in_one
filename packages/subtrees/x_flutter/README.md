@@ -93,7 +93,7 @@ UserChange(
 UploadImage(
   taxonomy: 'users',
   entity: UserApi.instance.idx,
-  code: 'photoUrl',
+  code: 'profilePhoto',
   quality: 70,
   deletePreviousUpload: true,
   defaultChild: Text("프로필 사진 업로드"), // 업로드를 위한 기본 표시 위젯

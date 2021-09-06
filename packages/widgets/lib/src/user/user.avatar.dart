@@ -11,7 +11,7 @@ class UserAvatar extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: UserChange(
-        loginBuilder: (user) => Avatar(
+        loginBuilder: (UserModel user) => Avatar(
           url: user.hasPhoto ? user.photoUrl : Api.instance.anonymousIconUrl,
           size: size,
         ),
