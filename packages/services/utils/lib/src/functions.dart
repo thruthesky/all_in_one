@@ -15,15 +15,16 @@ Future<bool> confirm(String title, String content) async {
     context: Get.context!,
     builder: (context) {
       return AlertDialog(
-        content: Text('선택한 파일을 삭제하시겠습니까?'),
+        title: Text(title),
+        content: Text(content),
         actions: [
           TextButton(
             onPressed: () => Get.back(result: true),
-            child: Text('예'),
+            child: Text('Yes'),
           ),
           TextButton(
             onPressed: () => Get.back(result: false),
-            child: Text('아니오'),
+            child: Text('No'),
           )
         ],
       );
