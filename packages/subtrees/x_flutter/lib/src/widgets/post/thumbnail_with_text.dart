@@ -32,7 +32,7 @@ class ThumbnailWithText extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${post.title}", overflow: TextOverflow.ellipsis, style: titleStyle),
+                Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle),
                 SizedBox(height: 8),
                 Text("${post.content.replaceAll('\n', '')}", overflow: TextOverflow.ellipsis, style: contentStyle),
               ],

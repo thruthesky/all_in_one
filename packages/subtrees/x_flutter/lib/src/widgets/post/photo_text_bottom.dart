@@ -31,7 +31,7 @@ class PhotoTextBottom extends StatelessWidget {
             child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
           ),
           SizedBox(height: 4),
-          Text('${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle)
+          Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle)
         ],
       ),
     );

@@ -3,6 +3,8 @@ import 'package:x_flutter/src/models/post.model.dart';
 import 'package:x_flutter/src/post.api.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+typedef PostModelCallBack = void Function(PostModel post);
+
 class PostTitleList extends StatelessWidget {
   const PostTitleList({
     this.categoryId,
@@ -11,6 +13,7 @@ class PostTitleList extends StatelessWidget {
     this.titleStyle,
     this.loaderBuilder,
     this.separatorBuilder,
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -22,6 +25,7 @@ class PostTitleList extends StatelessWidget {
   final TextStyle? titleStyle;
   final Function? loaderBuilder;
   final Function? separatorBuilder;
+  final PostModelCallBack? onTap;
 
   Future<List<PostModel>> _fetchPosts() async {
     if (categoryId == null) return posts;
@@ -45,7 +49,21 @@ class PostTitleList extends StatelessWidget {
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
               PostModel post = snapshot.data![index];
-              return Text('${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle);
+
+              Widget widget = Text(
+                '${post.idx} - ${post.title}',
+                overflow: TextOverflow.ellipsis,
+                style: titleStyle,
+              );
+
+              if (onTap != null) {
+                widget = GestureDetector(
+                  child: widget,
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => onTap!(post),
+                );
+              }
+              return widget;
             },
           );
         }
