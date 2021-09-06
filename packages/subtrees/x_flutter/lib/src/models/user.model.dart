@@ -6,6 +6,7 @@
 class UserModel {
   int idx;
   String email;
+  String orgEmail;
   String firebaseUid;
   String name;
   String nickname;
@@ -28,13 +29,14 @@ class UserModel {
   int updatedAt;
   String sessionId;
   String admin;
-  String nicknameOrName;
+  String displayName;
   int age;
   String verified;
 
   UserModel({
     this.idx = 0,
     this.email = '',
+    this.orgEmail = '',
     this.firebaseUid = '',
     this.name = '',
     this.nickname = '',
@@ -57,13 +59,26 @@ class UserModel {
     this.updatedAt = 0,
     this.sessionId = '',
     this.admin = '',
-    this.nicknameOrName = '',
+    this.displayName = '',
     this.age = 0,
     this.verified = '',
   });
 
   bool get loggedIn => idx > 0;
   bool get hasPhoto => photoIdx > 0;
+
+  String get signIn {
+    if (provider.contains('google'))
+      return 'google';
+    else if (provider.contains('apple'))
+      return 'apple';
+    else if (provider.contains('facebook'))
+      return 'facebook';
+    else if (provider.contains('anonymous'))
+      return 'anonymous';
+    else
+      return '';
+  }
 
   /// JSON 을 문자열로 변환한 것으로, JSON encode 용도로 사용하지 않도록 주의 한다.
   /// 즉, encode 가 필요한 경우는 jsonEncode(user.toJson()) 와 같이 한다.
@@ -72,13 +87,11 @@ class UserModel {
     return toJson().toString();
   }
 
-  @Deprecated('UserMode()을 사용 할 것.')
-  UserModel.init() : this();
-
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       idx: json['idx'] as int,
       email: json['email'] ?? '',
+      orgEmail: json['orgEmail'] ?? '',
       firebaseUid: json['firebaseUid'] ?? '',
       name: json['name'] ?? '',
       nickname: json['nickname'] ?? '',
@@ -101,7 +114,7 @@ class UserModel {
       updatedAt: json['updatedAt'] ?? 0,
       sessionId: json['sessionId'] ?? '',
       admin: json['admin'] ?? '',
-      nicknameOrName: json['nicknameOrName'] ?? '',
+      displayName: json['displayName'] ?? '',
       age: json['age'] ?? 0,
       verified: json['verified'] ?? '',
     );
@@ -111,6 +124,7 @@ class UserModel {
     return {
       'idx': idx,
       'email': email,
+      'orgEmail': orgEmail,
       'firebaseUid': firebaseUid,
       'name': name,
       'nickname': nickname,
@@ -133,7 +147,7 @@ class UserModel {
       'updatedAt': updatedAt,
       'sessionId': sessionId,
       'admin': admin,
-      'nicknameOrName': nicknameOrName,
+      'displayName': displayName,
       'age': age,
       'verified': verified,
     };

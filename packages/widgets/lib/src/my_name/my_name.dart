@@ -8,7 +8,7 @@ class MyName extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.amber,
-      child: Text('My name is: ${UserApi.instance.name}'),
+      child: Text('My name is: ${UserApi.instance.user.name}'),
     );
   }
 }

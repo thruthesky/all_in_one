@@ -87,3 +87,6 @@ final themeData = ThemeData(
     bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
   ),
 );
+
+/// A widget to display nothing.
+final Widget emptyWidget = SizedBox.shrink();

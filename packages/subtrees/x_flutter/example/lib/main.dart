@@ -218,8 +218,8 @@ class Profile extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final name = TextEditingController(text: UserApi.instance.name);
-  final address = TextEditingController(text: UserApi.instance.address);
+  final name = TextEditingController(text: UserApi.instance.user.name);
+  final address = TextEditingController(text: UserApi.instance.user.address);
 
   @override
   Widget build(BuildContext context) {
@@ -240,7 +240,7 @@ class Profile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('로그인 이메일'),
-                Text(UserApi.instance.email),
+                Text(UserApi.instance.user.email),
                 SizedBox(height: 16),
                 Text('사용자 이름'),
                 TextField(controller: name),

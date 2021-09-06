@@ -49,22 +49,7 @@ class FirebaseAuthApple {
     return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
   }
 
-  /// 애플 로그인을 하고, Matrix 에 로그인을 하기 위해서, Map Json 데이터를 리턴한다.
-  /// 리턴 예)
-  /// ```json
-  /// {uid: 4Xa...G3, email: thru...@gmail.com, nickname: JaeHo Song, photoUrl: https://...com/a/AA...c, provider: google, domain: app.sonub.com}
-  /// ```
-  static Future<Map<String, String>> signIn() async {
-    UserCredential credential = await signInWithApple();
-    User user = credential.user!;
-
-    return {
-      'firebaseUid': user.uid,
-      'email': user.email ?? '',
-      'nickname': user.displayName ?? '',
-      'photoUrl': user.photoURL ?? '',
-      'provider': 'apple',
-      'domain': 'app.sonub.com',
-    };
+  static Future<UserCredential> signIn() {
+    return signInWithApple();
   }
 }
