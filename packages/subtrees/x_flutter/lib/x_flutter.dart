@@ -31,3 +31,4 @@ export 'src/country.api.dart';
 export 'src/currency.api.dart';
 
 export 'src/widgets/upload_image.v2.dart';
+export 'src/widgets/push_notification_icon.dart';

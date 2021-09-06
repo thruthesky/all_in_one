@@ -118,15 +118,19 @@ class MessagingApi {
   }
 
   Future<dynamic> sendMessageToTopic(dynamic data) {
-    return Api.instance.request("notification.sendMessageToTopic", {'data': data});
+    return Api.instance.request("notification.sendMessageToTopic", data);
   }
 
   Future<dynamic> sendMessageToTokens(dynamic data) {
-    return Api.instance.request("notification.sendMessageToTokens", {'data': data});
+    return Api.instance.request("notification.sendMessageToTokens", data);
   }
 
   Future<dynamic> topicSubscription(dynamic data) {
-    return Api.instance.request("notification.topicSubscription", {'data': data});
+    return Api.instance.request("notification.topicSubscription", data);
+  }
+
+  Future<dynamic> subscribeOrUnsubscribeTopic(String topic) {
+    return topicSubscription({'topic': topic});
   }
 
   ///
