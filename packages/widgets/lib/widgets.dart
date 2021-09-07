@@ -23,3 +23,4 @@ export 'src/icon_text_button/icon_text_button.dart';
 export 'src/centered_row/centered_row.dart';
 export 'src/country_picker/country_picker.dart';
 export 'src/widget_collection/widget_collection.dart';
+export 'src/tabs/tabs.dart';
