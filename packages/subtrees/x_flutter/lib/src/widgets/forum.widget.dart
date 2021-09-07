@@ -246,7 +246,11 @@ class _ForumWidgetState extends State<ForumWidget> {
       _fetchPage();
     }
     scrollController.addListener(() {
-      if (atBottom) _fetchPage();
+      print('forum.widget::scrollController is scrolling');
+      if (atBottom) {
+        print('forum.widget::scrollController is at bottom.');
+        _fetchPage();
+      }
     });
   }
 
