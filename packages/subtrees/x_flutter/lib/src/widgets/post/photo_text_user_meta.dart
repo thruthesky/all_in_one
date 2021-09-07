@@ -5,12 +5,13 @@ import 'package:x_flutter/src/widgets/cache_image.dart';
 class PhotoTextUserMeta extends StatelessWidget {
   const PhotoTextUserMeta({
     required this.post,
-    this.photoHeight = 200,
+    this.photoHeight = 150,
     this.photoWidth = double.infinity,
     this.thumbnailBorderRadius = BorderRadius.zero,
     this.centeredTitle = false,
     this.categoryStyle = const TextStyle(color: Colors.indigo, fontSize: 18),
     this.titleStyle,
+    this.showCategory = false,
     Key? key,
   }) : super(key: key);
 
@@ -21,25 +22,26 @@ class PhotoTextUserMeta extends StatelessWidget {
   final bool centeredTitle;
   final TextStyle categoryStyle;
   final TextStyle? titleStyle;
+  final bool showCategory;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: thumbnailBorderRadius,
-            child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
-          ),
-          SizedBox(height: 8),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ClipRRect(
+          borderRadius: thumbnailBorderRadius,
+          child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
+        ),
+        SizedBox(height: 8),
+        if (showCategory) ...[
           Text('${post.categoryId}', style: categoryStyle),
           SizedBox(height: 4),
-          Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle),
-          SizedBox(height: 4),
-          Text('${post.user.displayName} ∙ ${post.shortDate}', style: TextStyle(color: Colors.grey)),
         ],
-      ),
+        Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle),
+        SizedBox(height: 4),
+        Text('${post.user.displayName} ∙ ${post.shortDate}', style: TextStyle(color: Colors.grey)),
+      ],
     );
   }
 }
