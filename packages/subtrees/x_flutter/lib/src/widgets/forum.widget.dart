@@ -303,7 +303,9 @@ class _ForumWidgetState extends State<ForumWidget> {
       });
       if (mounted) setState(() => loading = false);
       if (_posts.length < widget.limit) {
-        // last page
+        /// Add an empty post at the end when there is no more post.
+        /// It may be the last post or last page.
+        /// By adding empty post with `noMorePosts` at the end, the app can display no more posts on ui.
         noMorePosts = true;
         posts.add(PostModel({})..setNoMorePosts());
       }
