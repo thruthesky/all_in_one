@@ -6,6 +6,10 @@ import 'package:x_flutter/x_flutter.dart';
 
 /// ForumWidget controller
 ///
+/// This is to manage the state of ForumWidget.
+/// You may use it whenever you need to do drilling to pass some variable or action over the widget tree.
+/// You can do [setState], chaging states or calling methods.
+///
 /// ForumWidget 내부적으로 상태 관리를 하는데, 드릴링이 발생하는 경우, controller 를 통해서
 /// 코드를 간편하게 한다.
 /// 특히, [state] 나 [setState], [erorr] 를 통해서 간편한 코딩을 할 수 있다.
@@ -29,6 +33,11 @@ import 'package:x_flutter/x_flutter.dart';
 ///
 /// ! 주의, ForumWidget 이 먼저 랜더링된 후, controller 를 사용해야 한다. ForumWidget 이 랜더링되지 않았는데,
 /// ! controller.togglePostCreateForm() 등을 사용한다면, 얘기치 않은 동작을 할 수 있다.
+///
+/// @example
+/// ```ts
+/// controller.setState(() {});
+/// ```
 class ForumController {
   late _ForumWidgetState state;
 
@@ -107,7 +116,8 @@ class ForumController {
   }
 }
 
-typedef WidgetCallback = Widget Function();
+typedef WidgetBuilder = Widget Function();
+typedef WidgetWidgetIndexBuilder = Widget Function(Widget, int);
 typedef PostWidgetBuilder = Widget Function(PostModel post);
 typedef ForumButtonBuilder = Widget Function(dynamic entity);
 typedef CommentWidgetBuilder = Widget Function(CommentModel comment);
@@ -130,13 +140,24 @@ typedef CommentEditBuilder = Widget Function(
 ///
 /// 글(코멘트 아님)을 생성 또는 수정하면 [edited] 콜백이 호출된다.
 /// 글이 생성 또는 수정된 회 수를 [editedCount] 에 저장한다.
+///
+/// [closedTitleBuilder], [openedTitleBuilder], [viewBuilder] are for displaying posts on the list.
+/// [listPostBuilder] is the widget builder for displaying a post on the list.
+/// It takes a widget that comes from one of [closedTitleBuilder], [openedTitleBuilder], [viewBuilder].
+/// You can use this builder to re-design(or customize) the look of the post on the list.
+/// One example of this builder is to display a menu on top of list. See the example below.
+/// ```dart
+/// listPostBuilder: (Widget child, int i) => Column( children: [if (i == 0) Text('Forum top'), child],),
+/// ```
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
     required this.controller,
     this.categoryId = '',
+    this.loaderBuilder,
     this.viewBuilder,
     this.listBuilder,
+    this.listPostBuilder,
     this.contentBuilder,
     this.closedTitleBuilder,
     this.openedTitleBuilder,
@@ -161,7 +182,9 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String categoryId;
-  final WidgetCallback? listBuilder;
+  final WidgetBuilder? loaderBuilder;
+  final WidgetWidgetIndexBuilder? listPostBuilder;
+  final WidgetBuilder? listBuilder;
   final PostWidgetBuilder? viewBuilder;
   final PostWidgetBuilder? contentBuilder;
   final PostWidgetBuilder? closedTitleBuilder;
@@ -171,10 +194,10 @@ class ForumWidget extends StatefulWidget {
   final CommentWidgetBuilder? commentContentBuilder;
   final CommentViewWidgetBuilder? commentViewBuilder;
   final CommentEditBuilder? commentEditBuilder;
-  final WidgetCallback? confirmDialogBuilder;
+  final WidgetBuilder? confirmDialogBuilder;
   final ForumButtonBuilder? buttonBuilder;
   final FileEditBuilder? fileEditBuilder;
-  final WidgetCallback? separatorBuilder;
+  final WidgetBuilder? separatorBuilder;
   final Function? fetch;
   final Function? edited;
   final int? postIdxOnTop;
@@ -237,14 +260,34 @@ class _ForumWidgetState extends State<ForumWidget> {
       _fetchPage();
     }
     scrollController.addListener(() {
-      if (atBottom) _fetchPage();
+      if (atBottom) {
+        _fetchPage();
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
     if (edit != null) return editBuilder(edit!);
+    return listBuilder();
+
+    // return SingleChildScrollView(
+    //   child: Column(
+    //     children: [
+    //       if (widget.topBuilder != null) widget.topBuilder!(),
+    //       Expanded(child: listBuilder()),
+    //     ],
+    //   ),
+    // );
+  }
+
+  Widget listBuilder() {
     if (widget.listBuilder != null) return widget.listBuilder!();
+
+    if (loading && page == 1) {
+      if (widget.loaderBuilder != null) return widget.loaderBuilder!();
+    }
+
     return ListView.separated(
       separatorBuilder: (_, i) =>
           widget.separatorBuilder == null ? Divider() : widget.separatorBuilder!(),
@@ -253,7 +296,7 @@ class _ForumWidgetState extends State<ForumWidget> {
 
         if (post.noMorePosts) {
           return ListTile(
-            title: Text('더 이상 글이 없습니다.'),
+            title: Text('No more posts'),
           );
         } else {
           Widget child;
@@ -265,15 +308,16 @@ class _ForumWidgetState extends State<ForumWidget> {
           // print('${post.idx}: ${post.title}');
           if (loading && i == posts.length - 1) {
             /// 글을 가져오는 중이면, 각 페이지별 맨 밑마지막 글 아래에 로더 표시
-            return Column(
+            child = Column(
               children: [
                 child,
-                Spinner(),
+                if (widget.loaderBuilder != null) widget.loaderBuilder!(),
               ],
             );
-          } else {
-            return child;
           }
+
+          if (widget.listPostBuilder != null) return widget.listPostBuilder!(child, i);
+          return child;
         }
       },
       itemCount: posts.length,
@@ -303,7 +347,9 @@ class _ForumWidgetState extends State<ForumWidget> {
       });
       if (mounted) setState(() => loading = false);
       if (_posts.length < widget.limit) {
-        // last page
+        /// Add an empty post at the end when there is no more post.
+        /// It may be the last post or last page.
+        /// By adding empty post with `noMorePosts` at the end, the app can display no more posts on ui.
         noMorePosts = true;
         posts.add(PostModel({})..setNoMorePosts());
       }
