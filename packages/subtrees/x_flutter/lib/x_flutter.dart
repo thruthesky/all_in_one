@@ -32,3 +32,11 @@ export 'src/currency.api.dart';
 
 export 'src/widgets/upload_image.v2.dart';
 export 'src/widgets/push_notification_icon.dart';
+
+export 'src/widgets/post/post_title_list.dart';
+export 'src/widgets/post/thumbnail_with_text.dart';
+export 'src/widgets/post/thumbnail_with_text_list.dart';
+export 'src/widgets/post/photo_text_bottom.dart';
+export 'src/widgets/post/one_by_one_photo_text_bottom.dart';
+export 'src/widgets/post/photo_inline_text_bottom.dart';
+export 'src/widgets/post/one_by_one_photo_inline_text_bottom.dart';
