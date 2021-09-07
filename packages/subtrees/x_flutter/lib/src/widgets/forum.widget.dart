@@ -123,6 +123,7 @@ typedef ForumButtonBuilder = Widget Function(dynamic entity);
 typedef CommentWidgetBuilder = Widget Function(CommentModel comment);
 typedef CommentViewWidgetBuilder = Widget Function(PostModel post, CommentModel comment);
 typedef FileEditBuilder = Widget Function(FileModel file, dynamic parent, Function deleted);
+typedef FilesDisplayBuilder = Widget Function(List<FileModel> files);
 typedef CommentEditBuilder = Widget Function(
     PostModel post, CommentModel comment, CommentModel? parent, Function? edited);
 
@@ -143,12 +144,19 @@ typedef CommentEditBuilder = Widget Function(
 ///
 /// [closedTitleBuilder], [openedTitleBuilder], [viewBuilder] are for displaying posts on the list.
 /// [listPostBuilder] is the widget builder for displaying a post on the list.
-///   You can use this build to customize the look of a post on the list.
+/// It takes a widget that comes from one of [closedTitleBuilder], [openedTitleBuilder], [viewBuilder].
+/// You can use this builder to re-design(or customize) the look of the post on the list.
+/// One example of this builder is to display a menu on top of list. See the example below.
+/// ```dart
+/// listPostBuilder: (Widget child, int i) => Column( children: [if (i == 0) Text('Forum top'), child],),
+/// ```
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
     required this.controller,
     this.categoryId = '',
+    this.noMorePostBuilder,
+    this.deletedTitleBuilder,
     this.loaderBuilder,
     this.viewBuilder,
     this.listBuilder,
@@ -177,6 +185,8 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String categoryId;
+  final WidgetBuilder? noMorePostBuilder;
+  final WidgetBuilder? deletedTitleBuilder;
   final WidgetBuilder? loaderBuilder;
   final WidgetWidgetIndexBuilder? listPostBuilder;
   final WidgetBuilder? listBuilder;
@@ -255,9 +265,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       _fetchPage();
     }
     scrollController.addListener(() {
-      print('forum.widget::scrollController is scrolling');
       if (atBottom) {
-        print('forum.widget::scrollController is at bottom.');
         _fetchPage();
       }
     });
@@ -292,12 +300,15 @@ class _ForumWidgetState extends State<ForumWidget> {
         PostModel post = posts[i];
 
         if (post.noMorePosts) {
-          return ListTile(
-            title: Text('No more posts'),
-          );
+          return noMorePostBuilder();
         } else {
           Widget child;
-          if (post.close) {
+
+          if (post.deleted) {
+            child = widget.deletedTitleBuilder != null
+                ? widget.deletedTitleBuilder!()
+                : Text('deleted');
+          } else if (post.close) {
             child = closedTitleBuilder(post);
           } else {
             child = viewBuilder(post);
@@ -320,6 +331,12 @@ class _ForumWidgetState extends State<ForumWidget> {
       itemCount: posts.length,
       controller: scrollController,
     );
+  }
+
+  Widget noMorePostBuilder() {
+    if (widget.noMorePostBuilder != null) return widget.noMorePostBuilder!();
+
+    return ListTile(title: Text('No more posts'));
   }
 
   _fetchPage() async {
