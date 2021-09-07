@@ -11,7 +11,11 @@ class PhotoTextUserMeta extends StatelessWidget {
     this.centeredTitle = false,
     this.categoryStyle = const TextStyle(color: Colors.indigo, fontSize: 18),
     this.titleStyle,
+    this.contentStyle,
     this.showCategory = false,
+    this.showContent = false,
+    this.maxTitleLine = 1,
+    this.maxContentLine = 3,
     Key? key,
   }) : super(key: key);
 
@@ -22,11 +26,16 @@ class PhotoTextUserMeta extends StatelessWidget {
   final bool centeredTitle;
   final TextStyle categoryStyle;
   final TextStyle? titleStyle;
+  final TextStyle? contentStyle;
   final bool showCategory;
+  final bool showContent;
+  final int maxTitleLine;
+  final int maxContentLine;
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ClipRRect(
@@ -38,8 +47,22 @@ class PhotoTextUserMeta extends StatelessWidget {
           Text('${post.categoryId}', style: categoryStyle),
           SizedBox(height: 4),
         ],
-        Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle),
+        Text(
+          '${post.idx} - ${post.title}',
+          overflow: TextOverflow.ellipsis,
+          maxLines: maxTitleLine,
+          style: titleStyle,
+        ),
         SizedBox(height: 4),
+        if (showContent) ...[
+          Text(
+            '${post.content}',
+            maxLines: maxContentLine,
+            style: contentStyle,
+            overflow: TextOverflow.ellipsis,
+          ),
+          SizedBox(height: 4),
+        ],
         Text('${post.user.displayName} ∙ ${post.shortDate}', style: TextStyle(color: Colors.grey)),
       ],
     );
