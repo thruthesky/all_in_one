@@ -6,6 +6,10 @@ import 'package:x_flutter/x_flutter.dart';
 
 /// ForumWidget controller
 ///
+/// This is to manage the state of ForumWidget.
+/// You may use it whenever you need to do drilling to pass some variable or action over the widget tree.
+/// You can do [setState], chaging states or calling methods.
+///
 /// ForumWidget 내부적으로 상태 관리를 하는데, 드릴링이 발생하는 경우, controller 를 통해서
 /// 코드를 간편하게 한다.
 /// 특히, [state] 나 [setState], [erorr] 를 통해서 간편한 코딩을 할 수 있다.
@@ -29,6 +33,11 @@ import 'package:x_flutter/x_flutter.dart';
 ///
 /// ! 주의, ForumWidget 이 먼저 랜더링된 후, controller 를 사용해야 한다. ForumWidget 이 랜더링되지 않았는데,
 /// ! controller.togglePostCreateForm() 등을 사용한다면, 얘기치 않은 동작을 할 수 있다.
+///
+/// @example
+/// ```ts
+/// controller.setState(() {});
+/// ```
 class ForumController {
   late _ForumWidgetState state;
 
