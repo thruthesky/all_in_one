@@ -116,7 +116,8 @@ class ForumController {
   }
 }
 
-typedef WidgetCallback = Widget Function();
+typedef WidgetBuilder = Widget Function();
+typedef WidgetWidgetIndexBuilder = Widget Function(Widget, int);
 typedef PostWidgetBuilder = Widget Function(PostModel post);
 typedef ForumButtonBuilder = Widget Function(dynamic entity);
 typedef CommentWidgetBuilder = Widget Function(CommentModel comment);
@@ -139,13 +140,19 @@ typedef CommentEditBuilder = Widget Function(
 ///
 /// 글(코멘트 아님)을 생성 또는 수정하면 [edited] 콜백이 호출된다.
 /// 글이 생성 또는 수정된 회 수를 [editedCount] 에 저장한다.
+///
+/// [closedTitleBuilder], [openedTitleBuilder], [viewBuilder] are for displaying posts on the list.
+/// [listPostBuilder] is the widget builder for displaying a post on the list.
+///   You can use this build to customize the look of a post on the list.
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
     required this.controller,
     this.categoryId = '',
+    this.loaderBuilder,
     this.viewBuilder,
     this.listBuilder,
+    this.listPostBuilder,
     this.contentBuilder,
     this.closedTitleBuilder,
     this.openedTitleBuilder,
@@ -170,7 +177,9 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String categoryId;
-  final WidgetCallback? listBuilder;
+  final WidgetBuilder? loaderBuilder;
+  final WidgetWidgetIndexBuilder? listPostBuilder;
+  final WidgetBuilder? listBuilder;
   final PostWidgetBuilder? viewBuilder;
   final PostWidgetBuilder? contentBuilder;
   final PostWidgetBuilder? closedTitleBuilder;
@@ -180,10 +189,10 @@ class ForumWidget extends StatefulWidget {
   final CommentWidgetBuilder? commentContentBuilder;
   final CommentViewWidgetBuilder? commentViewBuilder;
   final CommentEditBuilder? commentEditBuilder;
-  final WidgetCallback? confirmDialogBuilder;
+  final WidgetBuilder? confirmDialogBuilder;
   final ForumButtonBuilder? buttonBuilder;
   final FileEditBuilder? fileEditBuilder;
-  final WidgetCallback? separatorBuilder;
+  final WidgetBuilder? separatorBuilder;
   final Function? fetch;
   final Function? edited;
   final int? postIdxOnTop;
@@ -257,7 +266,25 @@ class _ForumWidgetState extends State<ForumWidget> {
   @override
   Widget build(BuildContext context) {
     if (edit != null) return editBuilder(edit!);
+    return listBuilder();
+
+    // return SingleChildScrollView(
+    //   child: Column(
+    //     children: [
+    //       if (widget.topBuilder != null) widget.topBuilder!(),
+    //       Expanded(child: listBuilder()),
+    //     ],
+    //   ),
+    // );
+  }
+
+  Widget listBuilder() {
     if (widget.listBuilder != null) return widget.listBuilder!();
+
+    if (loading && page == 1) {
+      if (widget.loaderBuilder != null) return widget.loaderBuilder!();
+    }
+
     return ListView.separated(
       separatorBuilder: (_, i) =>
           widget.separatorBuilder == null ? Divider() : widget.separatorBuilder!(),
@@ -266,7 +293,7 @@ class _ForumWidgetState extends State<ForumWidget> {
 
         if (post.noMorePosts) {
           return ListTile(
-            title: Text('더 이상 글이 없습니다.'),
+            title: Text('No more posts'),
           );
         } else {
           Widget child;
@@ -278,15 +305,16 @@ class _ForumWidgetState extends State<ForumWidget> {
           // print('${post.idx}: ${post.title}');
           if (loading && i == posts.length - 1) {
             /// 글을 가져오는 중이면, 각 페이지별 맨 밑마지막 글 아래에 로더 표시
-            return Column(
+            child = Column(
               children: [
                 child,
-                Spinner(),
+                if (widget.loaderBuilder != null) widget.loaderBuilder!(),
               ],
             );
-          } else {
-            return child;
           }
+
+          if (widget.listPostBuilder != null) return widget.listPostBuilder!(child, i);
+          return child;
         }
       },
       itemCount: posts.length,
