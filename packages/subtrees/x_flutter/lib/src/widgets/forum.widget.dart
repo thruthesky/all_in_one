@@ -143,7 +143,12 @@ typedef CommentEditBuilder = Widget Function(
 ///
 /// [closedTitleBuilder], [openedTitleBuilder], [viewBuilder] are for displaying posts on the list.
 /// [listPostBuilder] is the widget builder for displaying a post on the list.
-///   You can use this build to customize the look of a post on the list.
+/// It takes a widget that comes from one of [closedTitleBuilder], [openedTitleBuilder], [viewBuilder].
+/// You can use this builder to re-design(or customize) the look of the post on the list.
+/// One example of this builder is to display a menu on top of list. See the example below.
+/// ```dart
+/// listPostBuilder: (Widget child, int i) => Column( children: [if (i == 0) Text('Forum top'), child],),
+/// ```
 class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
@@ -255,9 +260,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       _fetchPage();
     }
     scrollController.addListener(() {
-      print('forum.widget::scrollController is scrolling');
       if (atBottom) {
-        print('forum.widget::scrollController is at bottom.');
         _fetchPage();
       }
     });
