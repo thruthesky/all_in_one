@@ -4,6 +4,7 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+
     {
       "name": "all_in_one",
       "request": "launch",
@@ -306,6 +307,20 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "emulator-5554"
+    },    {
+      "name": "Android RMX1991 (Ace's Device)",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "9c59f12e"
     },
     {
       "name": "ASUS X00TDB J8AXB761J32888A",

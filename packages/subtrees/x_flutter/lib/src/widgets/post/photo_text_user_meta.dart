@@ -5,12 +5,18 @@ import 'package:x_flutter/src/widgets/cache_image.dart';
 class PhotoTextUserMeta extends StatelessWidget {
   const PhotoTextUserMeta({
     required this.post,
-    this.photoHeight = 200,
+    this.photoHeight = 150,
     this.photoWidth = double.infinity,
     this.thumbnailBorderRadius = BorderRadius.zero,
     this.centeredTitle = false,
     this.categoryStyle = const TextStyle(color: Colors.indigo, fontSize: 18),
     this.titleStyle,
+    this.contentStyle,
+    this.showCategory = false,
+    this.showContent = false,
+    this.maxTitleLine = 1,
+    this.maxContentLine = 3,
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -21,11 +27,20 @@ class PhotoTextUserMeta extends StatelessWidget {
   final bool centeredTitle;
   final TextStyle categoryStyle;
   final TextStyle? titleStyle;
+  final TextStyle? contentStyle;
+  final bool showCategory;
+  final bool showContent;
+  final int maxTitleLine;
+  final int maxContentLine;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap != null ? () => onTap!() : null,
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ClipRRect(
@@ -33,11 +48,28 @@ class PhotoTextUserMeta extends StatelessWidget {
             child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
           ),
           SizedBox(height: 8),
-          Text('${post.categoryId}', style: categoryStyle),
+          if (showCategory) ...[
+            Text('${post.categoryId}', style: categoryStyle),
+            SizedBox(height: 4),
+          ],
+          Text(
+            '${post.idx} - ${post.title}',
+            overflow: TextOverflow.ellipsis,
+            maxLines: maxTitleLine,
+            style: titleStyle,
+          ),
           SizedBox(height: 4),
-          Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle),
-          SizedBox(height: 4),
-          Text('${post.user.displayName} ∙ ${post.shortDate}', style: TextStyle(color: Colors.grey)),
+          if (showContent) ...[
+            Text(
+              '${post.content}',
+              maxLines: maxContentLine,
+              style: contentStyle,
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(height: 4),
+          ],
+          Text('${post.user.displayName} ∙ ${post.shortDate}',
+              style: TextStyle(color: Colors.grey)),
         ],
       ),
     );

@@ -12,6 +12,7 @@ class PhotoInlineTextBottom extends StatelessWidget {
     this.centeredTitle = true,
     this.titleStyle = const TextStyle(color: Colors.white),
     this.textBGColor = const Color(0xaa000000),
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -25,6 +26,8 @@ class PhotoInlineTextBottom extends StatelessWidget {
 
   final Color textBGColor;
 
+  final Function? onTap;
+
   @override
   Widget build(BuildContext context) {
     Widget title = Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle);
@@ -36,18 +39,22 @@ class PhotoInlineTextBottom extends StatelessWidget {
       child: title,
     );
 
-    return Container(
-      child: ClipRRect(
-        borderRadius: thumbnailBorderRadius,
-        child: Stack(children: [
-          CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: title,
-          )
-        ]),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap != null ? () => onTap!() : null,
+      child: Container(
+        child: ClipRRect(
+          borderRadius: thumbnailBorderRadius,
+          child: Stack(children: [
+            CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: title,
+            )
+          ]),
+        ),
       ),
     );
   }

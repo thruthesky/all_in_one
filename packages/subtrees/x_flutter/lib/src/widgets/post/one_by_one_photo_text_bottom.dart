@@ -5,7 +5,7 @@ class OneByOnePhotoTextBottom extends StatelessWidget {
   const OneByOnePhotoTextBottom({
     Key? key,
     this.categoryId,
-    this.posts = const [],
+    required this.posts,
     this.photoHeight = 150,
     this.photoWidth = double.infinity,
     this.thumbnailBorderRadius = BorderRadius.zero,
@@ -24,51 +24,34 @@ class OneByOnePhotoTextBottom extends StatelessWidget {
   final TextStyle? titleStyle;
   final Function? loaderBuilder;
 
-  Future<List<PostModel>> _fetchPosts() async {
-    if (categoryId == null) return posts;
-    return await PostApi.instance.search({
-      'categoryId': categoryId,
-      'files': "Y",
-      'limit': 2,
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _fetchPosts(),
-      builder: (context, AsyncSnapshot<List<PostModel>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-          return Container(
-            child: Row(
-              children: [
-                Expanded(
-                  child: PhotoTextBottom(
-                    post: snapshot.data![0],
-                    centeredTitle: centeredTitle,
-                    photoHeight: photoHeight,
-                    photoWidth: photoWidth,
-                    thumbnailBorderRadius: thumbnailBorderRadius,
-                    titleStyle: titleStyle,
-                  ),
-                ),
-                SizedBox(width: 8),
-                Expanded(
-                  child: PhotoTextBottom(
-                    post: snapshot.data![1],
-                    centeredTitle: centeredTitle,
-                    photoHeight: photoHeight,
-                    photoWidth: photoWidth,
-                    thumbnailBorderRadius: thumbnailBorderRadius,
-                    titleStyle: titleStyle,
-                  ),
-                ),
-              ],
+    return Container(
+      child: Row(
+        children: [
+          Expanded(
+            child: PhotoTextBottom(
+              post: posts[0],
+              centeredTitle: centeredTitle,
+              photoHeight: photoHeight,
+              photoWidth: photoWidth,
+              thumbnailBorderRadius: thumbnailBorderRadius,
+              titleStyle: titleStyle,
             ),
-          );
-        }
-        return loaderBuilder != null ? loaderBuilder!() : SizedBox.shrink();
-      },
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: PhotoTextBottom(
+              post: posts[1],
+              centeredTitle: centeredTitle,
+              photoHeight: photoHeight,
+              photoWidth: photoWidth,
+              thumbnailBorderRadius: thumbnailBorderRadius,
+              titleStyle: titleStyle,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -14,6 +14,7 @@ class OneByOnePhotoInlineTextBottom extends StatelessWidget {
     this.titleStyle = const TextStyle(color: Colors.white),
     this.textBGColor = const Color(0xaa000000),
     this.loaderBuilder,
+    this.onItemTap,
   }) : super(key: key);
 
   final String? categoryId;
@@ -29,55 +30,42 @@ class OneByOnePhotoInlineTextBottom extends StatelessWidget {
 
   final Function? loaderBuilder;
 
-  Future<List<PostModel>> _fetchPosts() async {
-    if (categoryId == null) return posts;
-    return await PostApi.instance.search({
-      'categoryId': categoryId,
-      'files': "Y",
-      'limit': 2,
-    });
-  }
+  final Function(PostModel)? onItemTap;
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _fetchPosts(),
-      builder: (context, AsyncSnapshot<List<PostModel>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-          return Container(
-            child: Row(
-              children: [
-                Expanded(
-                  child: PhotoInlineTextBottom(
-                    post: snapshot.data![0],
-                    centeredTitle: centeredTitle,
-                    photoHeight: photoHeight,
-                    photoWidth: photoWidth,
-                    thumbnailBorderRadius: thumbnailBorderRadius,
-                    titleStyle: titleStyle,
-                    textBGColor: textBGColor,
-                    titlePadding: titlePadding,
-                  ),
-                ),
-                SizedBox(width: 8),
-                Expanded(
-                  child:PhotoInlineTextBottom(
-                    post: snapshot.data![1],
-                    centeredTitle: centeredTitle,
-                    photoHeight: photoHeight,
-                    photoWidth: photoWidth,
-                    thumbnailBorderRadius: thumbnailBorderRadius,
-                    titleStyle: titleStyle,
-                    textBGColor: textBGColor,
-                    titlePadding: titlePadding,
-                  ),
-                ),
-              ],
+    return Container(
+      child: Row(
+        children: [
+          Expanded(
+            child: PhotoInlineTextBottom(
+              post: posts[0],
+              centeredTitle: centeredTitle,
+              photoHeight: photoHeight,
+              photoWidth: photoWidth,
+              thumbnailBorderRadius: thumbnailBorderRadius,
+              titleStyle: titleStyle,
+              textBGColor: textBGColor,
+              titlePadding: titlePadding,
+              onTap: onItemTap != null ? () => onItemTap!(posts[0]) : null,
             ),
-          );
-        }
-        return loaderBuilder != null ? loaderBuilder!() : SizedBox.shrink();
-      },
+          ),
+          SizedBox(width: 8),
+          Expanded(
+            child: PhotoInlineTextBottom(
+              post: posts[1],
+              centeredTitle: centeredTitle,
+              photoHeight: photoHeight,
+              photoWidth: photoWidth,
+              thumbnailBorderRadius: thumbnailBorderRadius,
+              titleStyle: titleStyle,
+              textBGColor: textBGColor,
+              titlePadding: titlePadding,
+              onTap: onItemTap != null ? () => onItemTap!(posts[1]) : null,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
