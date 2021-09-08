@@ -14,8 +14,11 @@ class ContentTypeId {
   static int transportation = 77;
 
   /// 아래의 두 Content Type Id 는 실제 존재하지 않는 것이다.
+  /// 메뉴에 나타내기 위해서 임시로 표시한 것이다.
+  /// 나중에는 Category 도 추가해서, 사용자가 Search By Category 도 할 수 있도록 해야 한다.
   static int myLocation = 1;
   static int searchKeyword = 2;
+  static int category = 3;
 }
 
 const List<TourApiAreaCodeModel> tourCityList = [
@@ -75,8 +78,9 @@ final List<TourApiContentType> tourApiSearchTypes = [
   TourApiContentType(ContentTypeId.shopping, 'Shopping'),
   TourApiContentType(ContentTypeId.restaurant, 'Restaurant'),
   TourApiContentType(ContentTypeId.transportation, 'Transporation'),
-  TourApiContentType(ContentTypeId.myLocation, 'My location'),
+  // TourApiContentType(ContentTypeId.myLocation, 'My location'),
   TourApiContentType(ContentTypeId.searchKeyword, 'Keyword'),
+  // TourApiContentType(ContentTypeId.category, 'Category'),
 ];
 
 TextStyle captionMd = TextStyle(fontSize: 16);

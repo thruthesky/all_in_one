@@ -170,6 +170,7 @@ class TourController extends GetxController {
   }
 
   view(int index) {
+    print('index; $index');
     Get.toNamed(routeView, arguments: {'index': index});
   }
 }
