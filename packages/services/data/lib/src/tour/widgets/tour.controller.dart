@@ -168,4 +168,8 @@ class TourController extends GetxController {
       update();
     }
   }
+
+  view(int index) {
+    Get.toNamed(routeView, arguments: {'index': index});
+  }
 }

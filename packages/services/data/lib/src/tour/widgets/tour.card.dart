@@ -10,7 +10,7 @@ class TourCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () => TourController.to.view(index),
       behavior: HitTestBehavior.opaque,
       child: Container(
         color: index % 2 == 0 ? Colors.grey : Colors.amber,
