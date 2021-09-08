@@ -14,6 +14,7 @@ class OneByOnePhotoInlineTextBottom extends StatelessWidget {
     this.titleStyle = const TextStyle(color: Colors.white),
     this.textBGColor = const Color(0xaa000000),
     this.loaderBuilder,
+    this.onItemTap,
   }) : super(key: key);
 
   final String? categoryId;
@@ -28,6 +29,8 @@ class OneByOnePhotoInlineTextBottom extends StatelessWidget {
   final Color textBGColor;
 
   final Function? loaderBuilder;
+
+  final Function(PostModel)? onItemTap;
 
   Future<List<PostModel>> _fetchPosts() async {
     if (categoryId == null) return posts;
@@ -57,11 +60,12 @@ class OneByOnePhotoInlineTextBottom extends StatelessWidget {
                     titleStyle: titleStyle,
                     textBGColor: textBGColor,
                     titlePadding: titlePadding,
+                    onTap: onItemTap != null ? () => onItemTap!(snapshot.data![0]) : null,
                   ),
                 ),
                 SizedBox(width: 8),
                 Expanded(
-                  child:PhotoInlineTextBottom(
+                  child: PhotoInlineTextBottom(
                     post: snapshot.data![1],
                     centeredTitle: centeredTitle,
                     photoHeight: photoHeight,
@@ -70,6 +74,7 @@ class OneByOnePhotoInlineTextBottom extends StatelessWidget {
                     titleStyle: titleStyle,
                     textBGColor: textBGColor,
                     titlePadding: titlePadding,
+                    onTap: onItemTap != null ? () => onItemTap!(snapshot.data![1]) : null,
                   ),
                 ),
               ],

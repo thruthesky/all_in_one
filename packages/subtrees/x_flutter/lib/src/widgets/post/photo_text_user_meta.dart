@@ -16,6 +16,7 @@ class PhotoTextUserMeta extends StatelessWidget {
     this.showContent = false,
     this.maxTitleLine = 1,
     this.maxContentLine = 3,
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -31,40 +32,46 @@ class PhotoTextUserMeta extends StatelessWidget {
   final bool showContent;
   final int maxTitleLine;
   final int maxContentLine;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ClipRRect(
-          borderRadius: thumbnailBorderRadius,
-          child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
-        ),
-        SizedBox(height: 8),
-        if (showCategory) ...[
-          Text('${post.categoryId}', style: categoryStyle),
-          SizedBox(height: 4),
-        ],
-        Text(
-          '${post.idx} - ${post.title}',
-          overflow: TextOverflow.ellipsis,
-          maxLines: maxTitleLine,
-          style: titleStyle,
-        ),
-        SizedBox(height: 4),
-        if (showContent) ...[
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap != null ? () => onTap!() : null,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: thumbnailBorderRadius,
+            child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
+          ),
+          SizedBox(height: 8),
+          if (showCategory) ...[
+            Text('${post.categoryId}', style: categoryStyle),
+            SizedBox(height: 4),
+          ],
           Text(
-            '${post.content}',
-            maxLines: maxContentLine,
-            style: contentStyle,
+            '${post.idx} - ${post.title}',
             overflow: TextOverflow.ellipsis,
+            maxLines: maxTitleLine,
+            style: titleStyle,
           ),
           SizedBox(height: 4),
+          if (showContent) ...[
+            Text(
+              '${post.content}',
+              maxLines: maxContentLine,
+              style: contentStyle,
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(height: 4),
+          ],
+          Text('${post.user.displayName} ∙ ${post.shortDate}',
+              style: TextStyle(color: Colors.grey)),
         ],
-        Text('${post.user.displayName} ∙ ${post.shortDate}', style: TextStyle(color: Colors.grey)),
-      ],
+      ),
     );
   }
 }

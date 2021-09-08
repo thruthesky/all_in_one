@@ -8,12 +8,15 @@ class ThumbnailWithTextList extends StatelessWidget {
     this.categoryId,
     this.posts = const [],
     this.limit = 3,
-    this.thumbnailSize = 50.0,
+    this.thumbnailSize = 60.0,
     this.thumbnailBorderRadius = BorderRadius.zero,
     this.titleStyle,
     this.contentStyle,
     this.loaderBuilder,
     this.separatorBuilder,
+    this.onItemTap,
+    this.maxTitleLines = 1,
+    this.maxContentLines = 2,
     Key? key,
   }) : super(key: key);
 
@@ -28,6 +31,11 @@ class ThumbnailWithTextList extends StatelessWidget {
   final TextStyle? contentStyle;
   final Function? loaderBuilder;
   final Function? separatorBuilder;
+
+  final Function(PostModel)? onItemTap;
+
+  final int maxTitleLines;
+  final int maxContentLines;
 
   Future<List<PostModel>> _fetchPosts() async {
     if (categoryId == null) return posts;
@@ -58,6 +66,9 @@ class ThumbnailWithTextList extends StatelessWidget {
                 thumbnailBorderRadius: thumbnailBorderRadius,
                 titleStyle: titleStyle,
                 contentStyle: contentStyle,
+                onTap: onItemTap != null ? () => onItemTap!(post) : null,
+                maxTitleLines: maxTitleLines,
+                maxContentLines: maxContentLines,
               );
             },
           );

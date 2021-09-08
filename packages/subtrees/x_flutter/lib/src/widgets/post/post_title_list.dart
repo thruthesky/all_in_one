@@ -60,7 +60,7 @@ class PostTitleList extends StatelessWidget {
                 widget = GestureDetector(
                   child: widget,
                   behavior: HitTestBehavior.opaque,
-                  onTap: () => onTap!(post),
+                  onTap: onTap != null ? () => onTap!(post) : null,
                 );
               }
               return widget;

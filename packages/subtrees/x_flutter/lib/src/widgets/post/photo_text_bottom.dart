@@ -10,6 +10,8 @@ class PhotoTextBottom extends StatelessWidget {
     this.thumbnailBorderRadius = BorderRadius.zero,
     this.centeredTitle = false,
     this.titleStyle,
+    this.maxTitleLine = 1,
+    this.onTap,
     Key? key,
   }) : super(key: key);
 
@@ -19,20 +21,31 @@ class PhotoTextBottom extends StatelessWidget {
   final thumbnailBorderRadius;
   final bool centeredTitle;
   final TextStyle? titleStyle;
+  final int maxTitleLine;
+
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: centeredTitle ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-        children: [
-          ClipRRect(
-            borderRadius: thumbnailBorderRadius,
-            child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
-          ),
-          SizedBox(height: 4),
-          Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle)
-        ],
+    return GestureDetector(
+      onTap: onTap != null ? () => onTap!() : null,
+      child: Container(
+        child: Column(
+          crossAxisAlignment: centeredTitle ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: thumbnailBorderRadius,
+              child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
+            ),
+            SizedBox(height: 4),
+            Text(
+              '${post.idx} - ${post.title}',
+              overflow: TextOverflow.ellipsis,
+              style: titleStyle,
+              maxLines: maxTitleLine,
+            )
+          ],
+        ),
       ),
     );
   }
