@@ -90,7 +90,7 @@ class MessagingApi {
 
     // Get the token each time the application loads and save it to database.
     token = (await FirebaseMessaging.instance.getToken())!;
-    // print('---> _initMessaging:: Getting token: $token');
+    print('---> _initMessaging:: Getting token: $token');
     await this.saveTokenAndSubscribeToDefaultTopics();
 
     // Any time the token refreshes, store this in the database too.
