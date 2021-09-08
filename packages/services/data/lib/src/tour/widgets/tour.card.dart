@@ -9,25 +9,29 @@ class TourCard extends StatelessWidget {
   final int index;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: index % 2 == 0 ? Colors.grey : Colors.amber,
-      child: Column(
-        children: [
-          if (item.firstimage2 == null)
-            Icon(
-              Icons.image,
-              size: 100,
-            ),
-          if (item.firstimage2 != null)
-            CachedNetworkImage(
-              width: double.infinity,
-              fit: BoxFit.fill,
-              imageUrl: item.firstimage!,
-              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-              errorWidget: (context, url, error) => Icon(Icons.error),
-            ),
-          Text(item.title),
-        ],
+    return GestureDetector(
+      onTap: () {},
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        color: index % 2 == 0 ? Colors.grey : Colors.amber,
+        child: Column(
+          children: [
+            if (item.firstimage2 == null)
+              Icon(
+                Icons.image,
+                size: 100,
+              ),
+            if (item.firstimage2 != null)
+              CachedNetworkImage(
+                width: double.infinity,
+                fit: BoxFit.fill,
+                imageUrl: item.firstimage!,
+                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            Text(item.title),
+          ],
+        ),
       ),
     );
   }
