@@ -1,5 +1,5 @@
 import 'package:data/data.dart';
-import 'package:data/src/tour/widgets/tour.list.controller.dart';
+import 'package:data/src/tour/widgets/tour.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,7 +8,7 @@ class TourListMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TourListController>(
+    return GetBuilder<TourController>(
       builder: (_) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

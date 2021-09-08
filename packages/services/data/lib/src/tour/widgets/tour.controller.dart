@@ -2,8 +2,15 @@ import 'package:get/get.dart';
 import 'package:data/data.dart';
 import 'package:data/src/tour/models/tour.api.area_code.model.dart';
 
-class TourListController extends GetxController {
-  static TourListController get to => Get.find<TourListController>();
+/// 상태 관리
+/// 모든 상태과 로직을 이 컨트롤러에서 관리한다.
+/// 로직도 같이 관리하므로, 페이지 이동 등도 여기서 담당한다.
+/// 루트 앱과 완전히 분리하기 위해서, 다음 스크린 이동 등의 정보를 받는다.
+class TourController extends GetxController {
+  TourController({required this.routeView});
+  static TourController get to => Get.find<TourController>();
+
+  final String routeView;
 
   late TourApiListModel listModel;
 
@@ -29,7 +36,7 @@ class TourListController extends GetxController {
   List<TourApiAreaCodeModel> cities = [];
 
   /// 검색 결과를 담는 항목
-  List<TourCard> items = [];
+  List<TourApiListItem> items = [];
 
   /// 검색 박스를 보여 줄지 표시.
   bool displaySearchBox = false;
@@ -136,7 +143,7 @@ class TourListController extends GetxController {
     setLoading(false);
     if (listModel.response.body.items.item.length < numOfRows) noMoreData = true;
     listModel.response.body.items.item.forEach((e) {
-      items.add(TourCard(item: e, index: 0));
+      items.add(e);
     });
     print('items.length; ${items.length}, totalCount; ${listModel.response.body.totalCount}');
   }

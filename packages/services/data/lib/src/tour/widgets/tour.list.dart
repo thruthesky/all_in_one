@@ -1,4 +1,5 @@
-import 'package:data/src/tour/widgets/tour.list.controller.dart';
+import 'package:data/data.dart';
+import 'package:data/src/tour/widgets/tour.controller.dart';
 import 'package:data/src/tour/widgets/tour.list.menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,14 +16,13 @@ class TourList extends StatefulWidget {
 
 class _TourListState extends State<TourList> {
   final scrollController = ScrollController();
-  final tc = Get.put(TourListController());
 
   @override
   void initState() {
     super.initState();
-    tc.loadPage();
+    TourController.to.loadPage();
     scrollController.addListener(() {
-      if (atBottom) tc.loadPage();
+      if (atBottom) TourController.to.loadPage();
     });
   }
 
@@ -32,7 +32,7 @@ class _TourListState extends State<TourList> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<TourListController>(
+    return GetBuilder<TourController>(
       builder: (_) => Column(
         children: [
           TourListMenu(),
@@ -47,7 +47,7 @@ class _TourListState extends State<TourList> {
                 mainAxisSpacing: 5.0,
               ),
               itemBuilder: (BuildContext c, int index) {
-                return _.items[index];
+                return TourCard(item: _.items[index], index: index);
               },
               itemCount: _.items.length,
             ),
