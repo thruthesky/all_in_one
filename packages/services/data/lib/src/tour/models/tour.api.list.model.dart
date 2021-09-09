@@ -176,6 +176,19 @@ class TourApiListItem {
     return _overview;
   }
 
+  String get directionsText {
+    String _directions = directions;
+    _directions = _directions.replaceAll('<br>', "\n");
+    return _directions;
+  }
+
+  String get homepageUrl {
+    if (homepage == '') return '';
+    final match = RegExp(r'http([^\"]*)').firstMatch(homepage);
+    if (match == null) return '';
+    return match.group(0) ?? '';
+  }
+
   factory TourApiListItem.fromJson(Json json) => TourApiListItem(
         addr1: toString(json["addr1"]),
         addr2: toString(json["addr2"]),
