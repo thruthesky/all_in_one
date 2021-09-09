@@ -46,7 +46,7 @@ class PostApi extends ForumApi {
     String? fields,
     String? countryCode,
     String? searchKey,
-    String? userIdx,
+    int? userIdx,
     String? order,
     String? by,
     int page = 1,

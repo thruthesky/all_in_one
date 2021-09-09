@@ -143,4 +143,10 @@ class ForumModel {
 
     return re;
   }
+
+  Future<Map<String, int>> reportCall() async {
+    final Map<String, int> re = await PostApi.instance.report(idx);
+    this.report = re['report'] ?? 0;
+    return re;
+  }
 }
