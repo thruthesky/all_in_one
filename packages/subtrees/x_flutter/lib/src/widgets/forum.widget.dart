@@ -155,6 +155,7 @@ class ForumWidget extends StatefulWidget {
     Key? key,
     required this.controller,
     this.categoryId,
+    this.userIdx,
     this.searchKey,
     this.noMorePostBuilder,
     this.deletedTitleBuilder,
@@ -186,6 +187,7 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String? categoryId;
+  final int? userIdx;
   final WidgetBuilder? noMorePostBuilder;
   final WidgetBuilder? deletedTitleBuilder;
   final WidgetBuilder? loaderBuilder;
@@ -265,6 +267,7 @@ class _ForumWidgetState extends State<ForumWidget> {
     else if (widget.postIdxOnTop != null) {
       _fetchPostOnTop();
     } else {
+      categoryId = widget.categoryId!;
       _fetchPage();
     }
     scrollController.addListener(() {
@@ -350,6 +353,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       final _posts = await PostApi.instance.search(
         searchKey: widget.searchKey,
         fulltextSearch: widget.searchKey != null ? 'Y' : 'N',
+        userIdx: widget.userIdx,
         categoryId: categoryId,
         page: page,
         limit: widget.limit,

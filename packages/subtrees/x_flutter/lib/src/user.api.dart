@@ -139,4 +139,9 @@ class UserApi {
     final res = await api.request('user.firebaseLogin', data);
     return _saveUser(res);
   }
+
+  Future<UserModel> otherUserProfile({required int idx}) async {
+    final res = await api.request('user.get', {'uid': idx});
+    return new UserModel.fromJson(res);
+  }
 }

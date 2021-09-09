@@ -17,6 +17,7 @@ export 'src/category.api.dart';
 export 'src/user.api.dart';
 export 'src/forum.api.dart';
 export 'src/post.api.dart';
+export 'src/comment.api.dart';
 export 'src/file.api.dart';
 
 export 'src/messaging.api.dart';
