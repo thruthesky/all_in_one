@@ -135,6 +135,21 @@ class TourApiListItem {
   final String title;
   final String? zipcode;
 
+  String get englishTitle {
+    /// replaceAll(RegExp('NAME'), 'Bob');
+    return title.replaceAll(RegExp('/가-힣/'), '');
+    // if (title.endsWith(')')) {
+    //   int i = title.lastIndexOf('(');
+    //   if (i > -1) {
+    //     return title.substring(0, i);
+    //   } else {
+    //     return title;
+    //   }
+    // } else {
+    //   return title;
+    // }
+  }
+
   factory TourApiListItem.fromJson(Json json) => TourApiListItem(
         addr1: json["addr1"] == null ? null : toString(json["addr1"]),
         addr2: json["addr2"] == null ? null : toString(json["addr2"]),

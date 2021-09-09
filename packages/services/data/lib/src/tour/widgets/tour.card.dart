@@ -29,7 +29,7 @@ class TourCard extends StatelessWidget {
                 placeholder: (context, url) => Center(child: CircularProgressIndicator()),
                 errorWidget: (context, url, error) => Icon(Icons.error),
               ),
-            Text(item.title),
+            Text(item.englishTitle),
           ],
         ),
       ),
