@@ -299,6 +299,10 @@ class _ForumWidgetState extends State<ForumWidget> {
       if (widget.loaderBuilder != null) return widget.loaderBuilder!();
     }
 
+    if (page == 1 && posts.length < 1) {
+      return Center(child: Text('No posts yet.'));
+    }
+
     return ListView.separated(
       separatorBuilder: (_, i) =>
           widget.separatorBuilder == null ? Divider() : widget.separatorBuilder!(),
