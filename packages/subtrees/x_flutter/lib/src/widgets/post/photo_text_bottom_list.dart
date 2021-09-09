@@ -5,7 +5,7 @@ class PhotoTextBottomList extends StatelessWidget {
   const PhotoTextBottomList({
     Key? key,
     this.categoryId,
-    this.posts = const [],
+    required this.posts,
     this.limit = 3,
     this.photoHeight = 200,
     this.photoWidth = double.infinity,
@@ -29,42 +29,25 @@ class PhotoTextBottomList extends StatelessWidget {
   final Function? loaderBuilder;
   final Function? separatorBuilder;
 
-  Future<List<PostModel>> _fetchPosts() async {
-    if (categoryId == null) return posts;
-    return await PostApi.instance.search({
-      'categoryId': categoryId,
-      'files': "Y",
-      'limit': limit,
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _fetchPosts(),
-      builder: (context, AsyncSnapshot<List<PostModel>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-          return ListView.separated(
-            separatorBuilder: (ctx, idx) {
-              return separatorBuilder == null ? SizedBox(height: 8) : separatorBuilder!();
-            },
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              PostModel post = snapshot.data![index];
-              return PhotoTextBottom(
-                    post: post,
-                    centeredTitle: centeredTitle,
-                    photoHeight: photoHeight,
-                    photoWidth: photoWidth,
-                    thumbnailBorderRadius: thumbnailBorderRadius,
-                    titleStyle: titleStyle,
-              );
-            },
-          );
-        }
-        return loaderBuilder != null ? loaderBuilder!() : SizedBox.shrink();
+    return ListView.separated(
+      separatorBuilder: (ctx, idx) {
+        return separatorBuilder == null ? SizedBox(height: 8) : separatorBuilder!();
+      },
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: posts.length,
+      itemBuilder: (context, index) {
+        PostModel post = posts[index];
+        return PhotoTextBottom(
+          post: post,
+          centeredTitle: centeredTitle,
+          photoHeight: photoHeight,
+          photoWidth: photoWidth,
+          thumbnailBorderRadius: thumbnailBorderRadius,
+          titleStyle: titleStyle,
+        );
       },
     );
   }
