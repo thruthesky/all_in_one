@@ -154,7 +154,8 @@ class ForumWidget extends StatefulWidget {
   ForumWidget({
     Key? key,
     required this.controller,
-    this.categoryId = '',
+    this.categoryId,
+    this.searchKey,
     this.noMorePostBuilder,
     this.deletedTitleBuilder,
     this.loaderBuilder,
@@ -184,7 +185,7 @@ class ForumWidget extends StatefulWidget {
   }
 
   final ForumController controller;
-  final String categoryId;
+  final String? categoryId;
   final WidgetBuilder? noMorePostBuilder;
   final WidgetBuilder? deletedTitleBuilder;
   final WidgetBuilder? loaderBuilder;
@@ -208,6 +209,7 @@ class ForumWidget extends StatefulWidget {
   final int? postIdxOnTop;
   final Function error;
   final int limit;
+  final String? searchKey;
   final bool showEditFormOnInit;
 
   final _ForumWidgetState _state = _ForumWidgetState();
@@ -223,10 +225,11 @@ class _ForumWidgetState extends State<ForumWidget> {
   int editedCount = 0;
   bool loading = false;
   bool noMorePosts = false;
-  String categoryId = '';
   late final ForumController controller;
 
   final scrollController = ScrollController();
+
+  String categoryId = '';
 
   /// 글 작성/수정 상태 관리
   ///
@@ -255,13 +258,13 @@ class _ForumWidgetState extends State<ForumWidget> {
   void initState() {
     super.initState();
     controller = widget.controller;
-    if (widget.showEditFormOnInit) controller.togglePostCreateForm();
+    if (widget.showEditFormOnInit)
+      controller.togglePostCreateForm();
 
     /// If `widget.postIdxOnTop` is not null, we fetch it first, then fetch for the list with the fetched post's categoryId.
-    if (widget.postIdxOnTop != null) {
+    else if (widget.postIdxOnTop != null) {
       _fetchPostOnTop();
     } else {
-      categoryId = widget.categoryId;
       _fetchPage();
     }
     scrollController.addListener(() {
@@ -344,13 +347,13 @@ class _ForumWidgetState extends State<ForumWidget> {
       if (loading || noMorePosts) return;
       setState(() => loading = true);
       page++;
-      final searchOptions = {
-        'categoryId': categoryId,
-        'page': page,
-        'limit': widget.limit,
-      };
-
-      final _posts = await PostApi.instance.search(searchOptions);
+      final _posts = await PostApi.instance.search(
+        searchKey: widget.searchKey,
+        fulltextSearch: widget.searchKey != null ? 'Y' : 'N',
+        categoryId: categoryId,
+        page: page,
+        limit: widget.limit,
+      );
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
         if (widget.postIdxOnTop != null && widget.postIdxOnTop == p.idx) return;
@@ -375,6 +378,8 @@ class _ForumWidgetState extends State<ForumWidget> {
     }
   }
 
+  /// View (Display details) of a post
+  /// Get post to display on top, then posts of the category (of the post).
   _fetchPostOnTop() async {
     try {
       final post = await PostApi.instance.get(widget.postIdxOnTop);
@@ -383,8 +388,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       categoryId = post.categoryId;
       _fetchPage();
     } catch (e) {
-      categoryId = '';
-      _fetchPage();
+      widget.error(e);
     }
   }
 

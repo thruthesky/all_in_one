@@ -36,7 +36,50 @@ class PostApi extends ForumApi {
   /// final res = await api.post.search({});
   /// for (final p in res) print(p);
   /// ```
-  Future<List<PostModel>> search(Map<String, dynamic> data) async {
+  Future<List<PostModel>> search({
+    int? categoryIdx,
+    String? categoryId,
+    String? ids,
+    String? subcategory,
+    String? code,
+    String files = '',
+    String? fields,
+    String? countryCode,
+    String? searchKey,
+    String? userIdx,
+    String? order,
+    String? by,
+    int page = 1,
+    int limit = 10,
+    int? comments,
+    bool minimize = false,
+    String fulltextSearch = '',
+    int? within,
+    int? betweenFrom,
+    int? betweenTo,
+  }) async {
+    final Map<String, dynamic> data = {
+      if (categoryIdx != null) 'categoryIdx': categoryIdx,
+      if (categoryId != null) 'categoryId': categoryId,
+      if (ids != null) 'ids': ids,
+      if (subcategory != null) 'subcategory': subcategory,
+      if (code != null) 'code': code,
+      if (fields != null) 'fields': fields,
+      if (countryCode != null) 'countryCode': countryCode,
+      if (searchKey != null) 'searchKey': searchKey,
+      if (userIdx != null) 'userIdx': userIdx,
+      if (order != null) 'order': order,
+      if (by != null) 'by': by,
+      if (comments != null) 'comments': comments,
+      if (within != null) 'within': within,
+      if (betweenFrom != null) 'betweenFrom': betweenFrom,
+      if (betweenTo != null) 'betweenTo': betweenTo,
+      'limit': limit,
+      'page': page,
+      'files': files,
+      'minimize': minimize ? 'Y' : '',
+      'fulltextSearch': fulltextSearch,
+    };
     final res = await api.request('post.search', data);
     List<PostModel> posts = [];
     for (final j in res) {
