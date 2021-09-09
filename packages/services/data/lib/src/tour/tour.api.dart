@@ -40,17 +40,26 @@ class TourApi {
 
   String _queryUrl({
     required String operation,
-    required String contentTypeId,
-    required String areaCode,
-    required String sigunguCode,
-    required int numOfRows,
-    required int pageNo,
+    String? contentTypeId,
+    int? contentId,
+    String? areaCode,
+    String? sigunguCode,
+    int? numOfRows,
+    int? pageNo,
   }) {
     String os = 'ETC';
     if (Platform.isAndroid)
       os = 'AND';
     else if (Platform.isIOS) os = 'IOS';
-    return "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$_apiKey&MobileApp=$_appName&MobileOS=$os&contentTypeId=$contentTypeId&areaCode=$areaCode&sigunguCode=$sigunguCode&numOfRows=$numOfRows&pageNo=$pageNo&_type=json";
+    String url =
+        "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$_apiKey&MobileApp=$_appName&MobileOS=$os&_type=json";
+    if (contentTypeId != null) url += "&contentTypeId=$contentTypeId";
+    if (contentId != null) url += "&contentId=$contentId";
+    if (areaCode != null) url += "&areaCode=$areaCode";
+    if (sigunguCode != null) url += "&sigunguCode=$sigunguCode";
+    if (numOfRows != null) url += "&numOfRows=$numOfRows";
+    if (pageNo != null) url += "&pageNo=$pageNo";
+    return url;
   }
 
   Future<List<TourApiAreaCodeModel>> areaCode({required int areaCode}) async {
@@ -95,5 +104,15 @@ class TourApi {
     // print('json; $json');
     final model = TourApiListModel.fromJson(json);
     return model;
+  }
+
+  Future<TourApiListModel> detailCommon(int? contentId) async {
+    final path = _queryUrl(operation: 'detailCommon', contentId: contentId) +
+        '&defaultYN=Y&firstImageYN=Y' +
+        '&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
+    final json = await _request(path);
+    print('json;');
+    print(json);
+    return TourApiListModel.fromJson(json);
   }
 }
