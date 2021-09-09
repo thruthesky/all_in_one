@@ -90,87 +90,119 @@ class Items {
 
 class TourApiListItem {
   TourApiListItem({
-    this.addr1,
-    this.addr2,
-    this.areacode,
-    this.cat1,
-    this.cat2,
-    this.cat3,
-    this.contentid,
-    this.contenttypeid,
-    this.createdtime,
-    this.firstimage,
-    this.firstimage2,
-    this.mapx,
-    this.mapy,
-    this.masterid,
-    this.mlevel,
-    this.modifiedtime,
-    this.readcount,
-    this.sigungucode,
-    this.tel,
+    required this.addr1,
+    required this.addr2,
+    required this.areacode,
+    required this.cat1,
+    required this.cat2,
+    required this.cat3,
+    required this.contentid,
+    required this.contenttypeid,
+    required this.createdtime,
+    required this.firstimage,
+    required this.firstimage2,
+    required this.mapx,
+    required this.mapy,
+    required this.masterid,
+    required this.mlevel,
+    required this.modifiedtime,
+    required this.readcount,
+    required this.sigungucode,
+    required this.tel,
     required this.title,
-    this.zipcode,
+    required this.zipcode,
+    required this.homepage,
+    required this.telname,
+    required this.overview,
+    required this.directions,
   });
 
-  final String? addr1;
-  final String? addr2;
-  final int? areacode;
-  final String? cat1;
-  final String? cat2;
-  final String? cat3;
-  final int? contentid;
-  final int? contenttypeid;
-  final int? createdtime;
-  final String? firstimage;
-  final String? firstimage2;
-  final double? mapx;
-  final double? mapy;
-  final int? masterid;
-  final int? mlevel;
-  final int? modifiedtime;
-  final int? readcount;
-  final int? sigungucode;
-  final String? tel;
+  final String addr1;
+  final String addr2;
+  final int areacode;
+  final String cat1;
+  final String cat2;
+  final String cat3;
+  final int contentid;
+  final int contenttypeid;
+  final int createdtime;
+  final String firstimage;
+  final String firstimage2;
+  final double mapx;
+  final double mapy;
+  final int masterid;
+  final int mlevel;
+  final int modifiedtime;
+  final int readcount;
+  final int sigungucode;
+  final String tel;
   final String title;
-  final String? zipcode;
+  final String zipcode;
+  final String homepage;
+  final String telname;
+  final String overview;
+  final String directions;
 
+  /// 문자열 끝에 한글이 같이 출력된다.
+  /// 예)
+  ///   14 abc [14가나다]
+  ///   14 abc (14 가나다)
+  /// 로직)
+  /// 위에서 14 abc 부분만 출력 하도록 한다.
+  /// 먼저 맨 끝의 괄호 부분을 없애고,
+  /// 그리고, 한글을 모두 제거하고,
+  /// 맨 끝에 특수문자, 숫자가 없을 때 까지 제거한다.
+  ///
+  /// @note 완벽하지는 않지만, 안정적으로(큰 문제를 일으키지 않고), 한글을 제거한다.
   String get englishTitle {
     /// replaceAll(RegExp('NAME'), 'Bob');
-    return title.replaceAll(RegExp('/가-힣/'), '');
-    // if (title.endsWith(')')) {
-    //   int i = title.lastIndexOf('(');
-    //   if (i > -1) {
-    //     return title.substring(0, i);
-    //   } else {
-    //     return title;
-    //   }
-    // } else {
-    //   return title;
-    // }
+    String _title = title;
+
+    if (_title.endsWith(')')) {
+      int i = _title.lastIndexOf('(');
+      if (i > -1) {
+        _title = _title.substring(0, i);
+      }
+    }
+
+    _title = _title.replaceAll(RegExp('[가-힣]+'), '');
+    _title = _title.replaceAll(RegExp(r'\s[\[\]\/\(\) 0-9]+$'), '');
+    return _title;
+  }
+
+  String get overviewText {
+    String _overview = overview;
+    _overview = _overview.replaceAll('<br>', "\n");
+    return _overview;
   }
 
   factory TourApiListItem.fromJson(Json json) => TourApiListItem(
-        addr1: json["addr1"] == null ? null : toString(json["addr1"]),
-        addr2: json["addr2"] == null ? null : toString(json["addr2"]),
-        areacode: json["areacode"] == null ? null : json["areacode"],
-        cat1: json["cat1"] == null ? null : json["cat1"],
-        cat2: json["cat2"] == null ? null : json["cat2"],
-        cat3: json["cat3"] == null ? null : json["cat3"],
-        contentid: json["contentid"] == null ? null : json["contentid"],
-        contenttypeid: json["contenttypeid"] == null ? null : json["contenttypeid"],
-        createdtime: json["createdtime"] == null ? null : json["createdtime"],
-        firstimage: json["firstimage"] == null ? null : json["firstimage"],
-        firstimage2: json["firstimage2"] == null ? null : json["firstimage2"],
-        mapx: json["mapx"] == null ? 0 : toDouble(json['mapx']),
-        mapy: json["mapy"] == null ? 0 : toDouble(json['mapy']),
-        masterid: json["masterid"] == null ? null : json["masterid"],
-        mlevel: json["mlevel"] == null ? null : json["mlevel"],
-        modifiedtime: json["modifiedtime"] == null ? null : json["modifiedtime"],
-        readcount: json["readcount"] == null ? null : json["readcount"],
-        sigungucode: json["sigungucode"] == null ? null : json["sigungucode"],
-        tel: json["tel"] == null ? null : json["tel"],
-        title: json["title"] == null ? '' : json["title"],
+        addr1: toString(json["addr1"]),
+        addr2: toString(json["addr2"]),
+        areacode: toInt(json["areacode"]),
+        cat1: toString(json["cat1"]),
+        cat2: toString(json["cat2"]),
+        cat3: toString(json["cat3"]),
+        contentid: toInt(json["contentid"]),
+        contenttypeid: toInt(json["contenttypeid"]),
+        createdtime: toInt(json["createdtime"]),
+        firstimage: toString(json["firstimage"]),
+        firstimage2: toString(json["firstimage2"]),
+        mapx: toDouble(json['mapx']),
+        mapy: toDouble(json['mapy']),
+        masterid: toInt(json["masterid"]),
+        mlevel: toInt(json["mlevel"]),
+        modifiedtime: toInt(json["modifiedtime"]),
+        readcount: toInt(json["readcount"]),
+        sigungucode: toInt(json["sigungucode"]),
+        tel: toString(json["tel"]),
+        title: toString(json["title"]),
         zipcode: toString(json['zipcode']),
+
+        /// detailCommon
+        homepage: tourApiHomepage(json['homepage']),
+        telname: toString(json['telname']),
+        overview: toString(json['overview']),
+        directions: toString(json['directions']),
       );
 }

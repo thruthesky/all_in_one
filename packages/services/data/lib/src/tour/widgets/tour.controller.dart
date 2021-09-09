@@ -1,3 +1,4 @@
+import 'package:data/src/tour/tour.api.dart';
 import 'package:get/get.dart';
 import 'package:data/data.dart';
 import 'package:data/src/tour/models/tour.api.area_code.model.dart';
@@ -7,10 +8,11 @@ import 'package:data/src/tour/models/tour.api.area_code.model.dart';
 /// 로직도 같이 관리하므로, 페이지 이동 등도 여기서 담당한다.
 /// 루트 앱과 완전히 분리하기 위해서, 다음 스크린 이동 등의 정보를 받는다.
 class TourController extends GetxController {
-  TourController({required this.routeView});
+  TourController({required this.routeView, required this.error});
   static TourController get to => Get.find<TourController>();
 
   final String routeView;
+  final Function error;
 
   late TourApiListModel listModel;
 
@@ -46,6 +48,8 @@ class TourController extends GetxController {
 
   /// 검색 박스에 단어가 입력이 되었으면 true 가 된다.
   bool dirty = false;
+
+  TourApiListItem detail = TourApiListItem.fromJson({});
 
   reset({
     int? contentTypeId,
@@ -116,6 +120,7 @@ class TourController extends GetxController {
     update();
   }
 
+  /// Content Type Id 별로 관광지 정보를 가져온다.
   loadPage() async {
     print('loading; $loading, noMoreData; $noMoreData');
     if (loading || noMoreData) {
@@ -170,7 +175,16 @@ class TourController extends GetxController {
   }
 
   view(int index) {
-    print('index; $index');
     Get.toNamed(routeView, arguments: {'index': index});
+  }
+
+  loadDetailCommon(int index) async {
+    try {
+      final re = await TourApi.instance.detailCommon(items[index].contentid);
+      detail = re.response.body.items.item[0];
+      update();
+    } catch (e) {
+      error(e);
+    }
   }
 }
