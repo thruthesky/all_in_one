@@ -37,7 +37,9 @@ class TourListMenu extends StatelessWidget {
             Expanded(
               child: TextField(
                 onChanged: (v) {
-                  _.onKeywordChange(v);
+                  if (v.length > 1) {
+                    _.onKeywordChange(v);
+                  }
                 },
                 decoration: InputDecoration(hintText: 'Input search keyword'),
               ),

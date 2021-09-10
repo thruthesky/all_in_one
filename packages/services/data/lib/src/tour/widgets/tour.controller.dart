@@ -144,13 +144,14 @@ class TourController extends GetxController {
       keyword: keyword,
     );
 
-    pageNo++;
-    setLoading(false);
     if (listModel.response.body.items.item.length < numOfRows) noMoreData = true;
     listModel.response.body.items.item.forEach((e) {
       items.add(e);
     });
     print('items.length; ${items.length}, totalCount; ${listModel.response.body.totalCount}');
+
+    pageNo++;
+    setLoading(false);
   }
 
   onKeywordChange(String keyword) {

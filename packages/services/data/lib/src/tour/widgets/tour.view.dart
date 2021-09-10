@@ -29,7 +29,7 @@ class TourView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(_.detail.addr1),
-                    if (_.detail.addr2 != '') Text(_.detail.addr2),
+                    if (_.detail.englishAddr2 != '') Text(_.detail.englishAddr2),
                     Text('Open map'),
                   ],
                 ),
@@ -98,7 +98,8 @@ class TourView extends StatelessWidget {
               Text('Homepage: ${_.detail.homepageUrl}'),
               // Text('Manager: ${_.detail.telname}'),
               Text('Phone No.: ${_.detail.tel}'),
-              Text('Directions: ${_.detail.directionsText}')
+              space,
+              space
             ],
           ),
         ),

@@ -143,6 +143,9 @@ class TourApiListItem {
   final String overview;
   final String directions;
 
+  String get englishTitle => _removeKorean(title);
+  String get englishAddr2 => _removeKorean(addr2);
+
   /// 문자열 끝에 한글이 같이 출력된다.
   /// 예)
   ///   14 abc [14가나다]
@@ -154,9 +157,9 @@ class TourApiListItem {
   /// 맨 끝에 특수문자, 숫자가 없을 때 까지 제거한다.
   ///
   /// @note 완벽하지는 않지만, 안정적으로(큰 문제를 일으키지 않고), 한글을 제거한다.
-  String get englishTitle {
+  String _removeKorean(String s) {
     /// replaceAll(RegExp('NAME'), 'Bob');
-    String _title = title;
+    String _title = s;
 
     if (_title.endsWith(')')) {
       int i = _title.lastIndexOf('(');
