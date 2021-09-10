@@ -86,6 +86,7 @@ class _StudyAppState extends State<StudyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       localizationsDelegates: [
+        /// Country 전화 코드 때문에 추가
         CountryLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -109,7 +110,6 @@ class _StudyAppState extends State<StudyApp> {
       // defaultTransition: Transition.noTransition,
       theme: themeData,
       initialRoute: RouteNames.home,
-
       getPages: [
         GetPage(name: RouteNames.home, page: () => HomeScreen()),
         GetPage(name: RouteNames.about, page: () => AboutScreen()),
