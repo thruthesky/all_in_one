@@ -69,6 +69,7 @@ class TourApiContentType {
   const TourApiContentType(this.id, this.label);
 }
 
+/// 관광 정보 검색 타입 & 기타 항목.
 final List<TourApiContentType> tourApiSearchTypes = [
   TourApiContentType(ContentTypeId.travel, 'Travel Spot'),
   TourApiContentType(ContentTypeId.culture, 'Culture/History'),
@@ -81,6 +82,19 @@ final List<TourApiContentType> tourApiSearchTypes = [
   // TourApiContentType(ContentTypeId.myLocation, 'My location'),
   TourApiContentType(ContentTypeId.searchKeyword, 'Keyword'),
   // TourApiContentType(ContentTypeId.category, 'Category'),
+];
+
+/// 관광 정보 검색(목록)에서, 타입으로만 선택 하도록 할 때 사용.
+/// 검색, 내 위치 기반, 기타 서브 카테고리를 뺀, 오로지, ContentTypeId 로만 목록 할 때 사용.
+final List<TourApiContentType> tourApiContentTypes = [
+  TourApiContentType(ContentTypeId.travel, 'Travel Spot'),
+  TourApiContentType(ContentTypeId.culture, 'Culture/History'),
+  TourApiContentType(ContentTypeId.festivalEvents, 'Festival/Event'),
+  TourApiContentType(ContentTypeId.leisureSports, 'Leisure/Sports'),
+  TourApiContentType(ContentTypeId.accommodation, 'Accommodation'),
+  TourApiContentType(ContentTypeId.shopping, 'Shopping'),
+  TourApiContentType(ContentTypeId.restaurant, 'Restaurant'),
+  TourApiContentType(ContentTypeId.transportation, 'Transporation'),
 ];
 
 TextStyle captionMd = TextStyle(fontSize: 16);

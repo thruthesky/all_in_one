@@ -74,7 +74,7 @@ final themeData = ThemeData(
   // Define the default brightness and colors.
   brightness: Brightness.light,
   primaryColor: Colors.lightBlue[800],
-  accentColor: Colors.cyan[600],
+  // accentColor: Colors.cyan[600],
 
   // Define the default font family.
   fontFamily: 'Roboto',

@@ -1,4 +1,5 @@
 import 'package:data/src/tour/tour.api.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:data/data.dart';
 import 'package:data/src/tour/models/tour.api.area_code.model.dart';
@@ -10,9 +11,12 @@ import 'package:data/src/tour/models/tour.api.area_code.model.dart';
 class TourController extends GetxController {
   TourController({required this.routeView, required this.error});
   static TourController get to => Get.find<TourController>();
+  static TourController get of => Get.find<TourController>();
 
   final String routeView;
   final Function error;
+
+  final scrollController = ScrollController();
 
   late TourApiListModel listModel;
 
