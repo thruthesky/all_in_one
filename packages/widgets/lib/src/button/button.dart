@@ -37,6 +37,7 @@ class Button extends StatelessWidget {
               )
             : (child != null ? child : SizedBox.shrink()),
       ),
+      behavior: HitTestBehavior.opaque,
     );
   }
 }
