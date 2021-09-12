@@ -126,7 +126,7 @@ class TourController extends GetxController {
 
   /// Content Type Id 별로 관광지 정보를 가져온다.
   loadPage() async {
-    print('loading; $loading, noMoreData; $noMoreData');
+    // print('loading; $loading, noMoreData; $noMoreData');
     if (loading || noMoreData) {
       print('loading on page; $pageNo');
       return;

@@ -11,8 +11,8 @@ import '../spinner/spinner.dart';
 class CacheImage extends StatelessWidget {
   CacheImage(
     this.url, {
-    this.width = 100,
-    this.height = 100,
+    this.width = double.infinity,
+    this.height,
     this.onLoadComplete,
     this.fit = BoxFit.cover,
   });
