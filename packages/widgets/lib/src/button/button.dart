@@ -4,8 +4,9 @@ class Button extends StatelessWidget {
   const Button({
     Key? key,
     this.text,
-    this.color = Colors.white,
-    this.backgroundColor = Colors.black87,
+    this.child,
+    this.color = Colors.black,
+    this.backgroundColor = Colors.transparent,
     this.margin = const EdgeInsets.all(6.0),
     this.padding = const EdgeInsets.all(6.0),
     this.radius = 3.0,
@@ -13,6 +14,7 @@ class Button extends StatelessWidget {
   }) : super(key: key);
 
   final String? text;
+  final Widget? child;
   final Color color;
   final Color backgroundColor;
   final EdgeInsets margin;
@@ -28,15 +30,12 @@ class Button extends StatelessWidget {
         padding: padding,
         decoration:
             BoxDecoration(color: backgroundColor, borderRadius: BorderRadius.circular(radius)),
-        child: Row(
-          children: [
-            if (text != null)
-              Text(
+        child: text != null
+            ? Text(
                 text!,
                 style: TextStyle(color: color),
-              ),
-          ],
-        ),
+              )
+            : (child != null ? child : SizedBox.shrink()),
       ),
     );
   }
