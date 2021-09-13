@@ -19,6 +19,7 @@ dependencies:
   waterfall_flow: ^3.0.1
   map_launcher: ^2.1.1
   flutter_svg: ^0.22.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
