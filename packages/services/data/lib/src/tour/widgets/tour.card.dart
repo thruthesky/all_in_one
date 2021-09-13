@@ -39,7 +39,7 @@ class TourCard extends StatelessWidget {
                         baseColor: Colors.grey.shade50,
                         highlightColor: Colors.grey.shade200,
                         child: Container(
-                          height: 125,
+                          height: index % 2 == 0 ? 125 : 95,
                           width: double.infinity,
                           color: Colors.grey.shade50,
                         ),
@@ -54,7 +54,7 @@ class TourCard extends StatelessWidget {
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(20),
+                    bottom: Radius.circular(10),
                   ),
                   gradient: LinearGradient(
                     colors: [Colors.black, Colors.transparent],
