@@ -294,6 +294,36 @@
       "deviceId": "3300a275cab914b9"
     },
     {
+      "name": "영자 - Sonub - Simulator - Macbook 16 inch - main.sonub.com",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
+    },
+    {
+      "name": "영자 - Sonub - Simulator - Macbook 16 inch - sonub.com",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
+    },
+    {
       "name": "Android Pixel emulator-5554",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
