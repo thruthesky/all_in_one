@@ -13,6 +13,9 @@ const Color grey = Colors.grey;
 const Color red = Colors.red;
 const Color danger = Color(0xFFDD2020);
 final Color warning = Colors.yellow[900]!;
+final Color gold = Color(0xFFFFD700);
+final Color maroon = Color(0xFF800000);
+final Color slateGray = Color(0xFF708090);
 
 const double xxs = 4;
 const double xs = 8;
