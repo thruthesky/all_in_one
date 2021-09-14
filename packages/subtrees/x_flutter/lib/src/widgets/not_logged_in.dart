@@ -6,7 +6,7 @@ class NotLoggedIn extends StatelessWidget {
 
   final VoidCallback? onTap;
 
-  final Function builder;
+  final UserChangeBuilder builder;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -14,7 +14,7 @@ class NotLoggedIn extends StatelessWidget {
       onTap: onTap,
       child: UserChange(
         loginBuilder: (UserModel user) => SizedBox.shrink(),
-        logoutBuilder: builder,
+        logoutBuilder: (u) => builder(u),
       ),
     );
   }

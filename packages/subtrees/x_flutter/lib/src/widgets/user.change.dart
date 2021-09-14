@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+typedef UserChangeBuilder = Widget Function(UserModel);
+
 /// 사용자 정보 변경을 감지하는 위젯
 ///
 /// x_flutter/README.md 참고
@@ -8,9 +10,9 @@ import 'package:x_flutter/x_flutter.dart';
 /// [loginBuilder] 는 사용자가 로그인을 했을 때, 실행되는 콜백. 로그인 시, 화면에 표시할 위젯을 빌드하면 됩니다.
 /// [logoutBuilder] 는 사용자가 로그아웃을 했을 때, 실행되는 콜백. 로그아웃 시 또는 로그인(가입)을 하지 않은 경우, 화면에 표시할 위젯을 빌드하면 됩니다.
 class UserChange extends StatelessWidget {
-  UserChange({required this.loginBuilder, required this.logoutBuilder});
-  final Function loginBuilder;
-  final Function logoutBuilder;
+  UserChange({required this.loginBuilder, this.logoutBuilder});
+  final UserChangeBuilder loginBuilder;
+  final UserChangeBuilder? logoutBuilder;
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
@@ -24,7 +26,11 @@ class UserChange extends StatelessWidget {
         if (user.loggedIn) {
           return this.loginBuilder(user);
         } else {
-          return this.logoutBuilder(user);
+          if (this.logoutBuilder != null) {
+            return this.logoutBuilder!(user);
+          } else {
+            return SizedBox.shrink();
+          }
         }
       },
     );
