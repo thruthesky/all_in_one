@@ -22,6 +22,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+		<string>https</string>
+		<string>http</string>
 		<string>tel</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
@@ -64,6 +66,6 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
-
+</array>
 </dict>
 </plist>

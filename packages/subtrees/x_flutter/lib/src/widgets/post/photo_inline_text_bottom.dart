@@ -30,7 +30,7 @@ class PhotoInlineTextBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget title = Text('${post.idx} - ${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle);
+    Widget title = Text('${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle);
     if (centeredTitle) title = Center(child: title);
 
     title = Container(

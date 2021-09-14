@@ -15,7 +15,7 @@ class TourCard extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       child: Container(
         decoration: BoxDecoration(
-          color: index % 2 == 0 ? Colors.grey : Colors.amber,
+          // color: index % 2 == 0 ? Colors.grey : Colors.amber,
           borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
         child: Stack(
@@ -31,6 +31,7 @@ class TourCard extends StatelessWidget {
                 child: Hero(
                   tag: item.firstimage,
                   child: CachedNetworkImage(
+                    height: double.infinity,
                     width: double.infinity,
                     fit: BoxFit.fill,
                     imageUrl: item.firstimage,
@@ -39,7 +40,7 @@ class TourCard extends StatelessWidget {
                         baseColor: Colors.grey.shade50,
                         highlightColor: Colors.grey.shade200,
                         child: Container(
-                          height: index % 2 == 0 ? 125 : 95,
+                          height: double.infinity,
                           width: double.infinity,
                           color: Colors.grey.shade50,
                         ),
@@ -64,7 +65,8 @@ class TourCard extends StatelessWidget {
                 ),
                 child: Text(
                   item.englishTitle,
-                  style: TextStyle(color: Colors.white),
+                  maxLines: 2,
+                  style: TextStyle(color: Colors.white, overflow: TextOverflow.ellipsis),
                 ),
               ),
               left: 0,
