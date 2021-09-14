@@ -12,7 +12,7 @@ class LoggedIn extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
       child: UserChange(
-        loginBuilder: builder,
+        loginBuilder: (u) => builder(u),
         logoutBuilder: (_) => SizedBox.shrink(),
       ),
     );
