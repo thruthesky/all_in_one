@@ -27,3 +27,4 @@ export 'src/tabs/tabs.dart';
 
 export 'src/page_padding/page_padding.dart';
 export 'src/text_chip/text_chip.dart';
+export 'src/gradient_card/gradient_card.dart';

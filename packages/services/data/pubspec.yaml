@@ -22,6 +22,11 @@ dependencies:
   shimmer: ^2.0.0
   url_launcher: ^6.0.10
 
+
+  widgets:
+    path: ../../widgets
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

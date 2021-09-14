@@ -36,12 +36,7 @@ class TourView extends StatelessWidget {
               Hero(
                 transitionOnUserGestures: true,
                 tag: _.detail.firstimage,
-                child: ClipRRect(
-                  child: CachedNetworkImage(imageUrl: _.detail.firstimage),
-                  borderRadius: BorderRadius.vertical(
-                    bottom: Radius.circular(24),
-                  ),
-                ),
+                child: CachedNetworkImage(imageUrl: _.detail.firstimage),
               ),
               Container(
                 padding: EdgeInsets.all(16),
@@ -141,7 +136,8 @@ class TourView extends StatelessWidget {
                       child: Row(children: [
                         Icon(Icons.settings, size: 30, color: Colors.blueAccent),
                         VerticalDivider(),
-                        Expanded(child: Text('${_.detail.homepageUrl}', overflow: TextOverflow.ellipsis))
+                        Expanded(
+                            child: Text('${_.detail.homepageUrl}', overflow: TextOverflow.ellipsis))
                       ]),
                     ),
                   ),
