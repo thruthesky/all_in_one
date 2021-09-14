@@ -20,7 +20,10 @@ class TourView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CachedNetworkImage(imageUrl: _.detail.firstimage),
+              Hero(
+                  transitionOnUserGestures: true,
+                  tag: _.detail.firstimage,
+                  child: CachedNetworkImage(imageUrl: _.detail.firstimage)),
               space,
               Text(_.detail.overviewText),
               space,

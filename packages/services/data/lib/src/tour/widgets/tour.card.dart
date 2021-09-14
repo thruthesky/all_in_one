@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class TourCard extends StatelessWidget {
   const TourCard({Key? key, required this.item, required this.index}) : super(key: key);
@@ -13,8 +14,11 @@ class TourCard extends StatelessWidget {
       onTap: () => TourController.to.view(index),
       behavior: HitTestBehavior.opaque,
       child: Container(
-        color: index % 2 == 0 ? Colors.grey : Colors.amber,
-        child: Column(
+        decoration: BoxDecoration(
+          color: index % 2 == 0 ? Colors.grey : Colors.amber,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Stack(
           children: [
             if (item.firstimage2 == '')
               Icon(
@@ -22,14 +26,51 @@ class TourCard extends StatelessWidget {
                 size: 100,
               ),
             if (item.firstimage2 != '')
-              CachedNetworkImage(
-                width: double.infinity,
-                fit: BoxFit.fill,
-                imageUrl: item.firstimage,
-                placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+              ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                child: Hero(
+                  tag: item.firstimage,
+                  child: CachedNetworkImage(
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                    imageUrl: item.firstimage,
+                    placeholder: (context, url) => Center(
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey.shade50,
+                        highlightColor: Colors.grey.shade200,
+                        child: Container(
+                          height: index % 2 == 0 ? 125 : 95,
+                          width: double.infinity,
+                          color: Colors.grey.shade50,
+                        ),
+                      ),
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
               ),
-            Text(item.englishTitle),
+            Positioned(
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(10),
+                  ),
+                  gradient: LinearGradient(
+                    colors: [Colors.black, Colors.transparent],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                  ),
+                ),
+                child: Text(
+                  item.englishTitle,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              left: 0,
+              right: 0,
+              bottom: 0,
+            ),
           ],
         ),
       ),
