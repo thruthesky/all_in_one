@@ -32,7 +32,7 @@ import 'package:x_flutter/x_flutter.dart';
 /// 그래서 수정을 하는 경우, 그냥 다이얼로그를 띄워서 수정을 한다.
 ///
 /// ! 주의, ForumWidget 이 먼저 랜더링된 후, controller 를 사용해야 한다. ForumWidget 이 랜더링되지 않았는데,
-/// ! controller.togglePostCreateForm() 등을 사용한다면, 얘기치 않은 동작을 할 수 있다.
+/// ! controller.togglePostEditForm() 등을 사용한다면, 얘기치 않은 동작을 할 수 있다.
 ///
 /// @example
 /// ```ts
@@ -50,7 +50,7 @@ class ForumController {
   /// 글 작성
   ///
   /// 글 작성을 위한 상태를 만든다. 글 작성 폼 열기 등.
-  togglePostCreateForm() {
+  togglePostEditForm() {
     // 현재 글 수정 상태
     if (state.edit == null) {
       // 수정 상태가 아니면, 글 작성 상태로 변경. 카테고리 지정.
@@ -155,6 +155,7 @@ class ForumWidget extends StatefulWidget {
     Key? key,
     required this.controller,
     this.categoryId,
+    this.editableCategories,
     this.userIdx,
     this.searchKey,
     this.noMorePostBuilder,
@@ -187,6 +188,7 @@ class ForumWidget extends StatefulWidget {
 
   final ForumController controller;
   final String? categoryId;
+  final Map<String, String>? editableCategories;
   final int? userIdx;
   final WidgetBuilder? noMorePostBuilder;
   final WidgetBuilder? deletedTitleBuilder;
@@ -236,10 +238,15 @@ class _ForumWidgetState extends State<ForumWidget> {
   /// 글 작성/수정 상태 관리
   ///
   /// [edit] 변수를 통해, 글 작성/수정 양식을 보여주거나 숨긴다.
-  ///
-  /// null 이면, 글 작성/수정이 아님.
-  /// edit.idx = 0 이면, 글 작성.
-  /// edit.idx != 0 이면, 글 수정.
+  /// [edit] 이 null 이면, 글 작성/수정이 아님.
+  /// [edit] 은 PostModel 의 값을 가지는데,
+  ///   - edit.idx = 0 이면, 글 작성.
+  ///   - edit.idx != 0 이면, 글 수정.
+  /// ForumWidget 이 초기화 될 때, [showEditFormOnInit] 이 true 의 값을 가진다면,
+  /// [togglePostEditForm]을 호출 해서, 글 작성 폼을 보여준다.
+  /// 이 때, [categoryId] 값을 이용해서, 그 카테고리에 글을 작성한다.
+  /// 만약, 글 작성 폼을 보여줄 때, 수정할 글이나 [categoryId] 값이 없다면,
+  ///   [editableCategories] 에 지정된 카테고리를 사용자가 선택 할 수 있도록 한다.
   PostModel? _edit;
   PostModel? get edit => _edit;
 
@@ -260,8 +267,9 @@ class _ForumWidgetState extends State<ForumWidget> {
   void initState() {
     super.initState();
     controller = widget.controller;
-    if (widget.showEditFormOnInit)
-      controller.togglePostCreateForm();
+    if (widget.showEditFormOnInit) {
+      controller.togglePostEditForm();
+    }
 
     /// If `widget.postIdxOnTop` is not null, we fetch it first, then fetch for the list with the fetched post's categoryId.
     else if (widget.postIdxOnTop != null) {

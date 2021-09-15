@@ -28,7 +28,7 @@ class _ForumScreenState extends State<ForumScreen> {
         if (getArg('edit') == true && controller.state.editedCount == 0) Get.back();
         return controller.editing ? controller.stopEditing() : Get.back();
       },
-      create: () => controller.togglePostCreateForm(),
+      create: () => controller.togglePostEditForm(),
       body:
 
           /// 게시판 위젯
@@ -54,6 +54,7 @@ class _ForumScreenState extends State<ForumScreen> {
         showEditFormOnInit: getArg('edit', false),
         controller: controller,
         categoryId: getArg('categoryId', ''),
+        editableCategories: {'qna': 'QnA', 'discussion': 'Discussion', 'travel': 'Travel'},
         limit: 20,
         fetch: (List<PostModel> posts) {
           // 첫번째 글 열기. 아래와 같이 `open` 에 true 를 주면 된다.
