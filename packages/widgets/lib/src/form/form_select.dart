@@ -42,6 +42,7 @@ class _FormSelectState extends State<FormSelect> {
         setState(() {
           v = value;
         });
+        widget.onChanged(v);
       },
     );
   }
