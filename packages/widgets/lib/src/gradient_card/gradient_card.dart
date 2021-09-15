@@ -2,14 +2,23 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class GradientCard extends StatelessWidget {
-  const GradientCard(
-      {required this.title, required this.imageUrl, this.onTap, this.borderRadius = 0.0, Key? key})
-      : super(key: key);
+  const GradientCard({
+    required this.title,
+    required this.imageUrl,
+    this.onTap,
+    this.borderRadius = 0.0,
+    this.imageLoader = const SizedBox.shrink(),
+    this.imageErrorWidget = const Icon(Icons.error),
+    Key? key,
+  }) : super(key: key);
 
   final String title;
   final String imageUrl;
   final VoidCallback? onTap;
   final double borderRadius;
+  final Widget imageLoader;
+  final Widget imageErrorWidget;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -25,11 +34,10 @@ class GradientCard extends StatelessWidget {
               child: Hero(
                 tag: imageUrl,
                 child: CachedNetworkImage(
-                  // height: double.infinity,
-                  // width: double.infinity,
                   fit: BoxFit.fill,
                   imageUrl: imageUrl,
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  placeholder: (ctx, url) => imageLoader,
+                  errorWidget: (context, url, error) => imageErrorWidget,
                 ),
               ),
             ),
