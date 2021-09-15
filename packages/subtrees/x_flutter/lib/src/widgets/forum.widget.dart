@@ -139,8 +139,22 @@ typedef CommentEditBuilder = Widget Function(
 ///
 /// [showEditFormOnInit] 이 true 이면, 게시판 글 쓰기 페이지를 먼저 연다.
 ///
+/// 글을 쓸 때, 사용자가 카테고리 변경을 할 수 있다.
+///   카테고리를 [editableCategories] 에 지정하고
+///   적절하게 표현(디자인)을 하여 사용자가 카테고리 변경을 할 수 이께 해 주면 된다.
+///   빠져 있는 카테고리는 기본적으로 선택을 해 주도록 한다.
+///   예를 들어 qna, discussion 이 지정되었는데, job 카테고리에서 글 쓰기를 하면,
+///   기본적으로 job 이 선택되게 해 준다. 하지만, label 이 지정되지 않았으므로, label 이
+///   categoryId 로 되기 때문에, 보기 좋지 않다. 그래서 가능한 모든 카테고리를
+///   [editableCategories] 에 넣어 주는 것이 좋다.
+///
 /// 글(코멘트 아님)을 생성 또는 수정하면 [edited] 콜백이 호출된다.
 /// 글이 생성 또는 수정된 회 수를 [editedCount] 에 저장한다.
+///
+/// [postIdxOnTop] 에 글 번호를 입력하면 해당 글을 먼저 로드하여 읽기 모드로 표시하고, 그 글의
+///   카테고리의 글들을 목록한다.
+/// [postOnTop] 에는 PostModel 값을 지정 할 수 있는데, 이렇게하면 글을 서버로 부터 가져오지 않고
+///   곧 바로 그 글의 카테고리를 목록한다.
 ///
 /// [closedTitleBuilder], [openedTitleBuilder], [viewBuilder] are for displaying posts on the list.
 /// [listPostBuilder] is the widget builder for displaying a post on the list.
@@ -177,6 +191,7 @@ class ForumWidget extends StatefulWidget {
     this.editBuilder,
     this.separatorBuilder,
     this.postIdxOnTop,
+    this.postOnTop,
     this.fetch,
     required this.error,
     this.edited,
@@ -211,6 +226,7 @@ class ForumWidget extends StatefulWidget {
   final Function? fetch;
   final Function? edited;
   final int? postIdxOnTop;
+  final PostModel? postOnTop;
   final Function error;
   final int limit;
   final String? searchKey;
@@ -273,7 +289,9 @@ class _ForumWidgetState extends State<ForumWidget> {
 
     /// If `widget.postIdxOnTop` is not null, we fetch it first, then fetch for the list with the fetched post's categoryId.
     else if (widget.postIdxOnTop != null) {
-      _fetchPostOnTop();
+      _fetchPostOnTop(widget.postIdxOnTop!);
+    } else if (widget.postOnTop != null) {
+      _setPostViewAndFetchPage(widget.postOnTop!);
     } else {
       categoryId = widget.categoryId!;
       _fetchPage();
@@ -373,6 +391,7 @@ class _ForumWidgetState extends State<ForumWidget> {
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
         if (widget.postIdxOnTop != null && widget.postIdxOnTop == p.idx) return;
+        if (widget.postOnTop != null && widget.postOnTop!.idx == p.idx) return;
 
         /// 각 글 별 전처리를 여기서 할 수 있음.
         /// 참고, 기본 전 처리는 PostModel 에서 되며, 여기서는 추가적인 작업을 할 수 있음.
@@ -396,16 +415,23 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// View (Display details) of a post
   /// Get post to display on top, then posts of the category (of the post).
-  _fetchPostOnTop() async {
+  _fetchPostOnTop(int idx) async {
     try {
-      final post = await PostApi.instance.get(widget.postIdxOnTop);
-      posts.insert(0, post);
-      post.open = true;
-      categoryId = post.categoryId;
-      _fetchPage();
+      final post = await PostApi.instance.get(idx);
+      _setPostViewAndFetchPage(post);
     } catch (e) {
       widget.error(e);
     }
+  }
+
+  /// Sets the top post in view mode.
+  ///   Or land forum list screen with a post in view mode on top.
+  _setPostViewAndFetchPage(PostModel post) {
+    // posts.insert(0, post);
+    post.open = true;
+    categoryId = post.categoryId;
+    posts.add(post);
+    _fetchPage();
   }
 
   /// 글이 닫힌 경우, 제목 빌더

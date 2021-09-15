@@ -1,6 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+/// Image card
+///
+///
+/// [titleAlign] can be any value of TextAline. Like TextAling.center.
+/// [titleWidthFactor] can be 0 to 1 in double. 1 is the 100%.
+/// [borderRadius] can be any double number. It's for the border radius.
+///
 class GradientCard extends StatelessWidget {
   const GradientCard({
     required this.title,
@@ -10,6 +17,8 @@ class GradientCard extends StatelessWidget {
     this.imageLoader = const SizedBox.shrink(),
     this.imageErrorWidget = const Icon(Icons.error),
     Key? key,
+    this.titleWidthFactor = 0.7,
+    this.titleAlign = TextAlign.center,
   }) : super(key: key);
 
   final String title;
@@ -18,7 +27,8 @@ class GradientCard extends StatelessWidget {
   final double borderRadius;
   final Widget imageLoader;
   final Widget imageErrorWidget;
-
+  final double titleWidthFactor;
+  final TextAlign titleAlign;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -34,7 +44,8 @@ class GradientCard extends StatelessWidget {
               child: Hero(
                 tag: imageUrl,
                 child: CachedNetworkImage(
-                  fit: BoxFit.fill,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                   imageUrl: imageUrl,
                   placeholder: (ctx, url) => imageLoader,
                   errorWidget: (context, url, error) => imageErrorWidget,
@@ -51,10 +62,17 @@ class GradientCard extends StatelessWidget {
                     end: Alignment.topCenter,
                   ),
                 ),
-                child: Text(
-                  title,
-                  maxLines: 1,
-                  style: TextStyle(color: Colors.white, overflow: TextOverflow.ellipsis),
+                child: FractionallySizedBox(
+                  widthFactor: titleWidthFactor,
+                  child: Text(
+                    title,
+                    maxLines: 1,
+                    textAlign: titleAlign,
+                    style: TextStyle(
+                      color: Colors.white,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
               ),
               left: 0,
