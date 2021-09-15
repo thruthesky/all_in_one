@@ -19,6 +19,8 @@ class GradientCard extends StatelessWidget {
     Key? key,
     this.titleWidthFactor = 0.7,
     this.titleAlign = TextAlign.center,
+    this.addHeroTag = true,
+    this.heroTag,
   }) : super(key: key);
 
   final String title;
@@ -29,8 +31,21 @@ class GradientCard extends StatelessWidget {
   final Widget imageErrorWidget;
   final double titleWidthFactor;
   final TextAlign titleAlign;
+  final bool addHeroTag;
+  final Object? heroTag;
+
   @override
   Widget build(BuildContext context) {
+    Widget image = CachedNetworkImage(
+      width: double.infinity,
+      fit: BoxFit.cover,
+      imageUrl: imageUrl,
+      placeholder: (ctx, url) => imageLoader,
+      errorWidget: (context, url, error) => imageErrorWidget,
+    );
+
+    if (addHeroTag) image = Hero(tag: heroTag != null ? heroTag! : imageUrl, child: image);
+
     return GestureDetector(
       onTap: () {
         if (onTap != null) onTap!();
@@ -40,18 +55,7 @@ class GradientCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         child: Stack(
           children: [
-            Container(
-              child: Hero(
-                tag: imageUrl,
-                child: CachedNetworkImage(
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                  imageUrl: imageUrl,
-                  placeholder: (ctx, url) => imageLoader,
-                  errorWidget: (context, url, error) => imageErrorWidget,
-                ),
-              ),
-            ),
+            Container(child: image),
             Positioned(
               child: Container(
                 padding: EdgeInsets.all(8),
