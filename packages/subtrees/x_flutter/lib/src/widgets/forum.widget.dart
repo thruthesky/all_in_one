@@ -321,7 +321,7 @@ class _ForumWidgetState extends State<ForumWidget> {
   Widget listBuilder() {
     if (widget.listBuilder != null) return widget.listBuilder!();
 
-    if (loading && page == 1) {
+    if (posts.length == 0 && loading && page == 1) {
       if (widget.loaderBuilder != null) return widget.loaderBuilder!();
     }
 
