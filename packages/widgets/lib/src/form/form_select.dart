@@ -49,8 +49,14 @@ class _FormSelectState extends State<FormSelect> {
     if (widget.selectedValue != null) {
       v = widget.selectedValue;
 
+      /// If defaultValue is '' and selectedValue is '', then do nothing.
+      /// This means, that there is no selectedValue.
+      if (widget.defaultValue == widget.selectedValue) {
+        ///
+      }
+
       /// If the selectedValue is not in options, add one.
-      if (widget.options.entries.where((e) => e.key == v).length != 1) {
+      else if (widget.options.entries.where((e) => e.key == v).length != 1) {
         widget.options[v] = v;
       }
     }

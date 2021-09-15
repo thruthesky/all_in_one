@@ -19,3 +19,30 @@ Column(
 flag('hk', width: 32),
 ```
 
+
+
+
+## Button
+
+```dart
+    return Button(
+      onTap: () {
+        service.openForum('', arguments: {'edit': true});
+      },
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Column(
+          children: [
+            spaceXxs,
+            Text(
+              'Or create a post',
+              style: descriptionStyle,
+            ),
+            spaceXxs,
+          ],
+        ),
+      ),
+      padding: EdgeInsets.all(0),
+    );
+  }
+```

@@ -41,8 +41,8 @@ class GradientCard extends StatelessWidget {
                 tag: imageUrl,
                 child: CachedNetworkImage(
                   // height: double.infinity,
-                  // width: double.infinity,
-                  fit: BoxFit.fill,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
                   imageUrl: imageUrl,
                   errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
