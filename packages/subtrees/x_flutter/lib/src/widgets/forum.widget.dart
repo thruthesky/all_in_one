@@ -139,6 +139,15 @@ typedef CommentEditBuilder = Widget Function(
 ///
 /// [showEditFormOnInit] 이 true 이면, 게시판 글 쓰기 페이지를 먼저 연다.
 ///
+/// 글을 쓸 때, 사용자가 카테고리 변경을 할 수 있다.
+///   카테고리를 [editableCategories] 에 지정하고
+///   적절하게 표현(디자인)을 하여 사용자가 카테고리 변경을 할 수 이께 해 주면 된다.
+///   빠져 있는 카테고리는 기본적으로 선택을 해 주도록 한다.
+///   예를 들어 qna, discussion 이 지정되었는데, job 카테고리에서 글 쓰기를 하면,
+///   기본적으로 job 이 선택되게 해 준다. 하지만, label 이 지정되지 않았으므로, label 이
+///   categoryId 로 되기 때문에, 보기 좋지 않다. 그래서 가능한 모든 카테고리를
+///   [editableCategories] 에 넣어 주는 것이 좋다.
+///
 /// 글(코멘트 아님)을 생성 또는 수정하면 [edited] 콜백이 호출된다.
 /// 글이 생성 또는 수정된 회 수를 [editedCount] 에 저장한다.
 ///
