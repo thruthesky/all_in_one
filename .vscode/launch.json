@@ -323,6 +323,23 @@
       "type": "dart",
       "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
     },
+
+    {
+      "name": "영자 - Sonub - 아이폰11 - MacBook16 - 원격",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=소너브",
+        "--dart-define",
+        "SERVER_URL=https://sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=off&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "00008030-000904C80290802E"
+    },
+
     {
       "name": "Android Pixel emulator-5554",
       "program": "projects/my/sonub/lib/main.dart",

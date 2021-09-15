@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+typedef StringCallback = Function(String);
+
 final Color primaryColor = Colors.yellow[700]!;
 
 const Color white = Colors.white;
