@@ -157,12 +157,12 @@ typedef CommentEditBuilder = Widget Function(
 ///   곧 바로 그 글의 카테고리를 목록한다.
 ///
 /// [closedTitleBuilder], [openedTitleBuilder], [viewBuilder] are for displaying posts on the list.
-/// [listPostBuilder] is the widget builder for displaying a post on the list.
+/// [decoratePostWidget] is the widget builder for displaying a post on the list.
 /// It takes a widget that comes from one of [closedTitleBuilder], [openedTitleBuilder], [viewBuilder].
 /// You can use this builder to re-design(or customize) the look of the post on the list.
 /// One example of this builder is to display a menu on top of list. See the example below.
 /// ```dart
-/// listPostBuilder: (Widget child, int i) => Column( children: [if (i == 0) Text('Forum top'), child],),
+/// decoratePostWidget: (Widget child, int i) => Column( children: [if (i == 0) Text('Forum top'), child],),
 /// ```
 class ForumWidget extends StatefulWidget {
   ForumWidget({
@@ -177,7 +177,7 @@ class ForumWidget extends StatefulWidget {
     this.loaderBuilder,
     this.viewBuilder,
     this.listBuilder,
-    this.listPostBuilder,
+    this.decoratePostWidget,
     this.contentBuilder,
     this.closedTitleBuilder,
     this.openedTitleBuilder,
@@ -208,7 +208,7 @@ class ForumWidget extends StatefulWidget {
   final WidgetBuilder? noMorePostBuilder;
   final WidgetBuilder? deletedTitleBuilder;
   final WidgetBuilder? loaderBuilder;
-  final WidgetWidgetIndexBuilder? listPostBuilder;
+  final WidgetWidgetIndexBuilder? decoratePostWidget;
   final WidgetBuilder? listBuilder;
   final PostWidgetBuilder? viewBuilder;
   final PostWidgetBuilder? contentBuilder;
@@ -321,6 +321,9 @@ class _ForumWidgetState extends State<ForumWidget> {
   Widget listBuilder() {
     if (widget.listBuilder != null) return widget.listBuilder!();
 
+    /// Loader
+    /// Show loader for the first time on forum listing.
+    /// This won't be displayed if there is a post opened on top.
     if (posts.length == 0 && loading && page == 1) {
       if (widget.loaderBuilder != null) return widget.loaderBuilder!();
     }
@@ -338,30 +341,35 @@ class _ForumWidgetState extends State<ForumWidget> {
         if (post.noMorePosts) {
           return noMorePostBuilder();
         } else {
-          Widget child;
+          Widget postWidget;
 
           if (post.deleted) {
-            child = widget.deletedTitleBuilder != null
+            postWidget = widget.deletedTitleBuilder != null
                 ? widget.deletedTitleBuilder!()
                 : Text('deleted');
           } else if (post.close) {
-            child = closedTitleBuilder(post);
+            postWidget = closedTitleBuilder(post);
           } else {
-            child = viewBuilder(post);
+            postWidget = viewBuilder(post);
           }
-          // print('${post.idx}: ${post.title}');
+
+          /// Loader
+          /// This will be shown on the first page loading if a post is open on the top.
           if (loading && i == posts.length - 1) {
             /// 글을 가져오는 중이면, 각 페이지별 맨 밑마지막 글 아래에 로더 표시
-            child = Column(
+            postWidget = Column(
               children: [
-                child,
+                postWidget,
                 if (widget.loaderBuilder != null) widget.loaderBuilder!(),
               ],
             );
           }
 
-          if (widget.listPostBuilder != null) return widget.listPostBuilder!(child, i);
-          return child;
+          /// Decorate the post widget.
+          if (widget.decoratePostWidget != null) {
+            return widget.decoratePostWidget!(postWidget, i);
+          }
+          return postWidget;
         }
       },
       itemCount: posts.length,
