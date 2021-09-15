@@ -33,10 +33,10 @@ class TourView extends StatelessWidget {
           // padding: EdgeInsets.all(16),
           child: Column(
             children: [
-              if (_.detail.firstimage != '')
+              if (_.items[index].firstimage != '')
                 Hero(
                   transitionOnUserGestures: true,
-                  tag: _.detail.firstimage,
+                  tag: _.items[index].firstimage,
                   child: CachedNetworkImage(imageUrl: _.items[index].firstimage),
                 ),
               if (_.detail.contentid == _.items[index].contentid)
@@ -62,14 +62,6 @@ class TourView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // Column(
-                      //   crossAxisAlignment: CrossAxisAlignment.start,
-                      //   children: [
-                      //     Text(_.detail.addr1),
-                      //     if (_.detail.englishAddr2 != '') Text(_.detail.englishAddr2),
-                      //     Text('Open map'),
-                      //   ],
-                      // ),
                       behavior: HitTestBehavior.opaque,
                       onTap: () async {
                         try {
