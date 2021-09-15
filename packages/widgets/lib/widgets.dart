@@ -29,3 +29,5 @@ export 'src/page_padding/page_padding.dart';
 export 'src/text_chip/text_chip.dart';
 export 'src/gradient_card/gradient_card.dart';
 export 'src/form/form_select.dart';
+
+export 'src/row_tap/row_tap.dart';

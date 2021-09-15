@@ -8,6 +8,7 @@ class FormSelect extends StatefulWidget {
     this.defaultLabel = 'Select option',
     required this.options,
     required this.onChanged,
+    this.selectedValue,
     Key? key,
   }) : super(key: key);
 
@@ -15,6 +16,7 @@ class FormSelect extends StatefulWidget {
   final String defaultLabel;
   final dynamic defaultValue;
   final StringCallback onChanged;
+  final dynamic selectedValue;
 
   @override
   _FormSelectState createState() => _FormSelectState();
@@ -22,6 +24,15 @@ class FormSelect extends StatefulWidget {
 
 class _FormSelectState extends State<FormSelect> {
   dynamic v;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.selectedValue != null) {
+      v = widget.selectedValue;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return DropdownButton<dynamic>(
