@@ -32,3 +32,4 @@ export 'src/shadowed_container/shadowed_container.dart';
 export 'src/form/form_select.dart';
 
 export 'src/row_tap/row_tap.dart';
+export 'src/column_tap/column_tap.dart';

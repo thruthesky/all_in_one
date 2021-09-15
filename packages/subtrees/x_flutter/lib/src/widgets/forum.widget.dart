@@ -151,7 +151,7 @@ typedef CommentEditBuilder = Widget Function(
 /// 글(코멘트 아님)을 생성 또는 수정하면 [edited] 콜백이 호출된다.
 /// 글이 생성 또는 수정된 회 수를 [editedCount] 에 저장한다.
 ///
-/// [postIdxOnTop] 에 글 번호를 입력하면 해당 글을 먼저 로드하여 읽기 모드로 표시하고, 그 글의
+/// [postIdxOnTop] 에 글 번호(또는 SEO URL, path)를 입력하면 해당 글을 먼저 로드하여 읽기 모드로 표시하고, 그 글의
 ///   카테고리의 글들을 목록한다.
 /// [postOnTop] 에는 PostModel 값을 지정 할 수 있는데, 이렇게하면 글을 서버로 부터 가져오지 않고
 ///   곧 바로 그 글의 카테고리를 목록한다.
@@ -225,7 +225,7 @@ class ForumWidget extends StatefulWidget {
   final WidgetBuilder? separatorBuilder;
   final Function? fetch;
   final Function? edited;
-  final int? postIdxOnTop;
+  final dynamic postIdxOnTop;
   final PostModel? postOnTop;
   final Function error;
   final int limit;
@@ -398,7 +398,11 @@ class _ForumWidgetState extends State<ForumWidget> {
       );
       // posts = [...posts, ..._posts];
       _posts.forEach((PostModel p) {
-        if (widget.postIdxOnTop != null && widget.postIdxOnTop == p.idx) return;
+        if (widget.postIdxOnTop != null) {
+          if (widget.postIdxOnTop is int && widget.postIdxOnTop == p.idx)
+            return;
+          else if (widget.postIdxOnTop == p.path) return;
+        }
         if (widget.postOnTop != null && widget.postOnTop!.idx == p.idx) return;
 
         /// 각 글 별 전처리를 여기서 할 수 있음.
@@ -423,7 +427,7 @@ class _ForumWidgetState extends State<ForumWidget> {
 
   /// View (Display details) of a post
   /// Get post to display on top, then posts of the category (of the post).
-  _fetchPostOnTop(int idx) async {
+  _fetchPostOnTop(dynamic idx) async {
     try {
       final post = await PostApi.instance.get(idx);
       _setPostViewAndFetchPage(post);
