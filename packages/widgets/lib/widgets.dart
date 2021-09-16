@@ -28,6 +28,8 @@ export 'src/tabs/tabs.dart';
 export 'src/page_padding/page_padding.dart';
 export 'src/text_chip/text_chip.dart';
 export 'src/gradient_card/gradient_card.dart';
+export 'src/shadowed_container/shadowed_container.dart';
 export 'src/form/form_select.dart';
 
 export 'src/row_tap/row_tap.dart';
+export 'src/column_tap/column_tap.dart';

@@ -19,12 +19,12 @@ class PostApi extends ForumApi {
   /// ```
   Future<PostModel> get(dynamic idx) async {
     assert(idx is int || idx is String, '글 idx 또는 path 를 입력하셔야합니다.');
-    final Map<String, dynamic> data = {};
-    if (idx is int) {
-      data['idx'] = idx;
-    } else if (idx is String) {
-      data['path'] = idx;
-    }
+    final Map<String, dynamic> data = {'idx': idx};
+    // if (idx is int) {
+    //   data['idx'] = idx;
+    // } else if (idx is String) {
+    //   data['path'] = idx;
+    // }
     final res = await api.request('post.get', data);
     return PostModel.fromJson(res);
   }
