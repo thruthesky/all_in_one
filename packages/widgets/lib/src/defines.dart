@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:widgets/src/empty_widget/empty_widget.dart';
 
 typedef StringCallback = Function(String);
 
@@ -94,4 +95,6 @@ final themeData = ThemeData(
 );
 
 /// A widget to display nothing.
-final Widget emptyWidget = SizedBox.shrink();
+final Widget emptyWidget = EmptyWidget();
+
+final descriptionStyle = TextStyle(color: Colors.grey[700], fontSize: 12);
