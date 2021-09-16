@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 /// Image card
 ///
+/// [titleStyle] is the TextStyle for title.
 ///
 /// [titleAlign] can be any value of TextAline. Like TextAling.center.
 /// [titleWidthFactor] can be 0 to 1 in double. 1 is the 100%.
@@ -23,6 +24,7 @@ import 'package:flutter/material.dart';
 class GradientCard extends StatelessWidget {
   const GradientCard({
     required this.title,
+    this.titleStyle = const TextStyle(color: Colors.white),
     required this.imageUrl,
     this.onTap,
     this.borderRadius = 0.0,
@@ -38,6 +40,7 @@ class GradientCard extends StatelessWidget {
   }) : super(key: key);
 
   final String title;
+  final titleStyle;
   final String imageUrl;
   final VoidCallback? onTap;
   final double borderRadius;
@@ -89,10 +92,8 @@ class GradientCard extends StatelessWidget {
                     title,
                     maxLines: 1,
                     textAlign: titleAlign,
-                    style: TextStyle(
-                      color: Colors.white,
-                      overflow: TextOverflow.ellipsis,
-                    ),
+                    overflow: TextOverflow.ellipsis,
+                    style: titleStyle,
                   ),
                 ),
               ),
