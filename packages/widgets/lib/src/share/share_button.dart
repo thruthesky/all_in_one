@@ -18,6 +18,7 @@ class ShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       child: Container(
         child: child,
       ),
