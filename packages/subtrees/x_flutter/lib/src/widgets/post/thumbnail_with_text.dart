@@ -12,6 +12,7 @@ class ThumbnailWithText extends StatelessWidget {
     this.onTap,
     this.maxTitleLines = 1,
     this.maxContentLines = 1,
+    this.hero = false,
     Key? key,
   }) : super(key: key);
 
@@ -26,18 +27,20 @@ class ThumbnailWithText extends StatelessWidget {
   final int maxTitleLines;
   final int maxContentLines;
 
+  final bool hero;
+
   @override
   Widget build(BuildContext context) {
+    Widget image = CacheImage(post.files.first.url, width: thumbnailSize, height: thumbnailSize);
+    if (hero) image = Hero(tag: post.files.first.url, child: image, transitionOnUserGestures: true);
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap != null ? () => onTap!() : null,
       child: Container(
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: thumbnailBorderRadius,
-              child: CacheImage(post.files.first.url, width: thumbnailSize, height: thumbnailSize),
-            ),
+            ClipRRect(borderRadius: thumbnailBorderRadius, child: image),
             SizedBox(width: 8),
             Flexible(
               child: Column(

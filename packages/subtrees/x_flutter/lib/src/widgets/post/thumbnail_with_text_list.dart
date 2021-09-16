@@ -16,6 +16,7 @@ class ThumbnailWithTextList extends StatelessWidget {
     this.onItemTap,
     this.maxTitleLines = 1,
     this.maxContentLines = 2,
+    this.hero = false,
     Key? key,
   }) : super(key: key);
 
@@ -35,6 +36,8 @@ class ThumbnailWithTextList extends StatelessWidget {
 
   final int maxTitleLines;
   final int maxContentLines;
+
+  final bool hero;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +59,7 @@ class ThumbnailWithTextList extends StatelessWidget {
           onTap: onItemTap != null ? () => onItemTap!(post) : null,
           maxTitleLines: maxTitleLines,
           maxContentLines: maxContentLines,
+          hero: hero,
         );
       },
     );
