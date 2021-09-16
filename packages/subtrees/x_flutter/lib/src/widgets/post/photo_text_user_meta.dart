@@ -17,6 +17,7 @@ class PhotoTextUserMeta extends StatelessWidget {
     this.maxTitleLine = 1,
     this.maxContentLine = 3,
     this.onTap,
+    this.hero = false,
     Key? key,
   }) : super(key: key);
 
@@ -33,9 +34,14 @@ class PhotoTextUserMeta extends StatelessWidget {
   final int maxTitleLine;
   final int maxContentLine;
   final Function? onTap;
+  final bool hero;
 
   @override
   Widget build(BuildContext context) {
+    Widget image = CacheImage(post.files.first.url, width: photoWidth, height: photoHeight);
+
+    if (hero) image = Hero(tag: post.files.first.url, child: image);
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap != null ? () => onTap!() : null,
@@ -43,10 +49,7 @@ class PhotoTextUserMeta extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: thumbnailBorderRadius,
-            child: CacheImage(post.files.first.url, width: photoWidth, height: photoHeight),
-          ),
+          ClipRRect(borderRadius: thumbnailBorderRadius, child: image),
           SizedBox(height: 8),
           if (showCategory) ...[
             Text('${post.categoryId}', style: categoryStyle),
