@@ -6,7 +6,9 @@ class ShadowedContainer extends StatelessWidget {
     this.shadowColor = Colors.grey,
     this.elevation = 4,
     this.borderRadius = 15,
-    this.padding = const EdgeInsets.all(0),
+    this.padding,
+    this.margin, 
+    this.decoration,
     this.width,
     this.height,
     Key? key,
@@ -17,19 +19,24 @@ class ShadowedContainer extends StatelessWidget {
   final Color shadowColor;
   final double elevation;
   final double borderRadius;
-  final EdgeInsets padding;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
   final double? width;
   final double? height;
+  final BoxDecoration? decoration;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       elevation: elevation,
       shadowColor: shadowColor,
+
       child: Container(
         width: width,
         height: height,
+        margin: margin,
         padding: padding,
+        decoration: decoration,
         child: child,
       ),
       borderRadius: BorderRadius.circular(borderRadius),
