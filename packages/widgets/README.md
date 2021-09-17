@@ -27,7 +27,7 @@ flag('hk', width: 32),
 ```dart
     return Button(
       onTap: () {
-        service.openForum('', arguments: {'edit': true});
+        service.openForumList('', arguments: {'edit': true});
       },
       child: Align(
         alignment: Alignment.centerRight,

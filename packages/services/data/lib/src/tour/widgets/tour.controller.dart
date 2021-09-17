@@ -55,12 +55,23 @@ class TourController extends GetxController {
 
   TourApiListItem detail = TourApiListItem.fromJson({});
 
-  reset({
+  resetSearchList({
     int? contentTypeId,
     int? areaCode,
     required int sigunguCode,
     String? keyword,
   }) {
+    resetSearchOptions(contentTypeId, areaCode, sigunguCode, keyword);
+    loadPage();
+    loadArea();
+  }
+
+  resetSearchOptions(
+    int? contentTypeId,
+    int? areaCode,
+    int sigunguCode,
+    String? keyword,
+  ) {
     loading = false;
     noMoreData = false;
     pageNo = 1;
@@ -70,14 +81,11 @@ class TourController extends GetxController {
     this.sigunguCode = sigunguCode;
     if (keyword != null) this.keyword = keyword;
     update();
-    loadPage();
-    loadArea();
   }
 
+  /// Operation 에는 areaBasedList, searchKeyword 등이 있다.
   String get operation {
-    if (contentTypeId == 1)
-      return TourApiOperations.locationBasedList;
-    else if (contentTypeId == 2)
+    if (keyword != '')
       return TourApiOperations.searchKeyword;
     else
       return TourApiOperations.areaBasedList;
@@ -97,7 +105,7 @@ class TourController extends GetxController {
 
     /// GeoLocation 기반 목록이면, 목록 초기화. GeoLocation 기반 결과를 보여 줘야 함.
     if (contentTypeId == ContentTypeId.myLocation) {
-      reset(contentTypeId: contentTypeId, areaCode: 0, sigunguCode: 0);
+      resetSearchList(contentTypeId: contentTypeId, areaCode: 0, sigunguCode: 0);
     } else if (contentTypeId == ContentTypeId.searchKeyword) {
       /// 키워드 검색을 선택했으면, 현재 화면(목록 내용)을 그대로 유지한채, 검색 박스만 보여준다.
       dirty = false;
@@ -109,7 +117,7 @@ class TourController extends GetxController {
       update();
     } else {
       /// 그 외, 관광지, 쇼핑몰, 음식점 등이면,
-      reset(contentTypeId: contentTypeId, areaCode: areaCode, sigunguCode: sigunguCode);
+      resetSearchList(contentTypeId: contentTypeId, areaCode: areaCode, sigunguCode: sigunguCode);
     }
   }
 
@@ -158,21 +166,43 @@ class TourController extends GetxController {
     setLoading(false);
   }
 
+  /// Search Keyword changes
+  ///
+  /// Call this mehod on search keyword change.
+  ///
+  /// Note, when search keyword changes and the keyword is empty, then it will
+  /// remove all the search result. And that may lead to display empty screen or
+  /// default screen.
+  ///
+  /// 키워드 변경
+  ///
+  /// 입력된 키워드가 모두 지워지면, 모든 검색 옵션을 초기화 한다.
   onKeywordChange(String keyword) {
     dirty = true;
-    reset(
-      contentTypeId: ContentTypeId.searchKeyword,
-      areaCode: 0,
-      sigunguCode: 0,
-      keyword: keyword,
-    );
+    keyword = keyword.trim();
+    if (keyword == '') {
+      resetSearchOptions(0, 0, 0, '');
+    } else {
+      resetSearchList(
+        contentTypeId: contentTypeId,
+        areaCode: areaCode,
+        sigunguCode: sigunguCode,
+        keyword: keyword,
+      );
+    }
   }
 
+  /// Cancel search
+  ///
+  /// Call this method to cancel the search.
+  /// If [dirty] is true, it will reset all the search result.
+  /// Or if [dirty] is false, then it will not reset the search result.
+  /// You have to clean the keyword in textbox yourself.
   onCancelSearch() {
     displaySearchBox = false;
 
     if (dirty) {
-      reset(contentTypeId: 0, areaCode: 0, sigunguCode: 0, keyword: '');
+      resetSearchList(contentTypeId: 0, areaCode: 0, sigunguCode: 0, keyword: '');
     } else {
       contentTypeId = previousContentTypeId;
       update();
