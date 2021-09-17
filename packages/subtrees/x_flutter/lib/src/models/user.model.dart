@@ -13,6 +13,8 @@ class UserModel {
   int photoIdx;
   String photoUrl;
   int point;
+  int level;
+  int levelPercentage;
   String block;
   String phoneNo;
   String gender;
@@ -35,36 +37,39 @@ class UserModel {
 
   Map<String, dynamic> data;
 
-  UserModel(
-      {this.idx = 0,
-      this.email = '',
-      this.orgEmail = '',
-      this.firebaseUid = '',
-      this.name = '',
-      this.nickname = '',
-      this.photoIdx = 0,
-      this.photoUrl = '',
-      this.point = 0,
-      this.block = '',
-      this.phoneNo = '',
-      this.gender = '',
-      this.birthdate = 0,
-      this.domain = '',
-      this.countryCode = '',
-      this.province = '',
-      this.city = '',
-      this.address = '',
-      this.zipcode = '',
-      this.provider = '',
-      this.verifier = '',
-      this.createdAt = 0,
-      this.updatedAt = 0,
-      this.sessionId = '',
-      this.admin = '',
-      this.displayName = '',
-      this.age = 0,
-      this.verified = '',
-      this.data = const {}});
+  UserModel({
+    this.idx = 0,
+    this.email = '',
+    this.orgEmail = '',
+    this.firebaseUid = '',
+    this.name = '',
+    this.nickname = '',
+    this.photoIdx = 0,
+    this.photoUrl = '',
+    this.point = 0,
+    this.level = 0,
+    this.levelPercentage = 0,
+    this.block = '',
+    this.phoneNo = '',
+    this.gender = '',
+    this.birthdate = 0,
+    this.domain = '',
+    this.countryCode = '',
+    this.province = '',
+    this.city = '',
+    this.address = '',
+    this.zipcode = '',
+    this.provider = '',
+    this.verifier = '',
+    this.createdAt = 0,
+    this.updatedAt = 0,
+    this.sessionId = '',
+    this.admin = '',
+    this.displayName = '',
+    this.age = 0,
+    this.verified = '',
+    this.data = const {},
+  });
 
   bool get loggedIn => idx > 0;
   bool get hasPhoto => photoIdx > 0;
@@ -105,6 +110,8 @@ class UserModel {
         photoIdx: json['photoIdx'] ?? 0,
         photoUrl: json['photoUrl'] ?? '',
         point: json['point'] ?? 0,
+        level: json['level'] ?? 0,
+        levelPercentage: json['level'] ?? 0,
         block: json['block'] ?? '',
         phoneNo: json['phoneNo'] ?? '',
         gender: json['gender'] ?? '',
@@ -138,6 +145,8 @@ class UserModel {
       'photoIdx': photoIdx,
       'photoUrl': photoUrl,
       'point': point,
+      'level': level,
+      'levelPercentage': levelPercentage,
       'block': block,
       'phoneNo': phoneNo,
       'gender': gender,
