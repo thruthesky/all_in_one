@@ -67,7 +67,7 @@ class TourListMenu extends StatelessWidget {
                           maxLines: 1,
                         )),
                 ],
-                onChanged: (int? v) => _.reset(areaCode: v!, sigunguCode: 0),
+                onChanged: (int? v) => _.resetSearchList(areaCode: v!, sigunguCode: 0),
               ),
             ),
           if (_.displaySearchBox == false && _.operation != '' && _.areaCode != 0)
@@ -89,7 +89,7 @@ class TourListMenu extends StatelessWidget {
                       ),
                     ),
                 ],
-                onChanged: (int? v) => _.reset(sigunguCode: v!),
+                onChanged: (int? v) => _.resetSearchList(sigunguCode: v!),
               ),
             ),
         ],

@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 ///   title: post.title,
 ///   imageUrl: post.files.first.url,
 ///   borderRadius: 16,
-///   onTap: () => service.openForum('', arguments: {'postOnTop': post}),
+///   onTap: () => service.openForumList('', arguments: {'postOnTop': post}),
 ///   height: double.infinity,
 ///   children: [Positioned(child: Text('Touch to enlarge'), top: 0, right: 10)],
 /// );
