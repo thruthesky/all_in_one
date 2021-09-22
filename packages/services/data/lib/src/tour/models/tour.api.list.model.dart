@@ -12,10 +12,12 @@ class TourApiListModel {
 
   addMoreImages(Json json) {
     final List<TourImage> images = [];
-    // print('addMoreImages: $json');
+
     if (json['response'] != null &&
         json['response']['body'] != null &&
-        json['response']['body']['items'] != null) {
+        json['response']['body']['items'] != null &&
+        json['response']['body']['items'] != "" &&
+        json['response']['body']['totalCount'] > 0) {
       final items = json['response']['body']['items'];
       // print('items; $items');
       if (items['item'] is Map) {
@@ -33,7 +35,6 @@ class TourApiListModel {
       }
       response.body.items.item.first.images = images;
     }
-    // print('images; $images');
   }
 }
 
@@ -160,7 +161,9 @@ class TourApiListItem {
   final int contentid;
   final int contenttypeid;
   final int createdtime;
-  final String firstimage;
+
+  /// View 에서, 다른 이미지를 보여 줄 수 있도록, 변경 가능해야 한다.
+  String firstimage;
   final String firstimage2;
   final double mapx;
   final double mapy;
@@ -212,6 +215,8 @@ class TourApiListItem {
   String get overviewText {
     String _overview = overview;
     _overview = _overview.replaceAll('<br>', "\n");
+    _overview = _overview.replaceAll('<em>', "'");
+    _overview = _overview.replaceAll('</em>', "'");
     return _overview;
   }
 

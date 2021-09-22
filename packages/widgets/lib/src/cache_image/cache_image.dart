@@ -48,3 +48,37 @@ class CacheImage extends StatelessWidget {
     );
   }
 }
+
+/// CacheImage 를 Tap 할 수 있도록 해 주는 Wrapper 이다.
+class CacheImageTap extends StatelessWidget {
+  const CacheImageTap(this.url,
+      {this.width = double.infinity,
+      this.height,
+      this.onLoadComplete,
+      this.fit = BoxFit.cover,
+      required this.onTap,
+      Key? key})
+      : super(key: key);
+
+  final String url;
+  final double width;
+  final double? height;
+  final Function? onLoadComplete;
+  final BoxFit fit;
+
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: CacheImage(
+        this.url,
+        width: width,
+        height: height,
+        onLoadComplete: onLoadComplete,
+        fit: fit,
+      ),
+    );
+  }
+}

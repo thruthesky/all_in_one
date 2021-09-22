@@ -215,8 +215,9 @@ class TourController extends GetxController {
     Get.toNamed(routeView, arguments: {'index': index});
   }
 
-  loadDetails(int index) async {
+  Future<void> loadDetails(int index) async {
     try {
+      detail = TourApiListItem.fromJson({});
       final re = await TourApi.instance.details(items[index].contentid);
       detail = re.response.body.items.item[0];
       update();
