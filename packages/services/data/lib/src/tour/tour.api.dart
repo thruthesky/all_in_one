@@ -32,7 +32,7 @@ class TourApi {
   Future _request(String path) async {
     Response response;
 
-    print('_request path; $path');
+    // print('tour.api.dart :: _request path; $path');
     response = await _dio.get(path);
 
     return response.data;
@@ -106,13 +106,22 @@ class TourApi {
     return model;
   }
 
-  Future<TourApiListModel> detailCommon(int? contentId) async {
-    final path = _queryUrl(operation: 'detailCommon', contentId: contentId) +
+  Future<TourApiListModel> details(int? contentId) async {
+    List<Future> futures = [];
+    final pathDetailCommon = _queryUrl(operation: 'detailCommon', contentId: contentId) +
         '&defaultYN=Y&firstImageYN=Y' +
         '&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
-    final json = await _request(path);
-    print('json;');
-    print(json);
-    return TourApiListModel.fromJson(json);
+    final pathDetailIntro = _queryUrl(operation: 'detailImage', contentId: contentId);
+
+    // final json = await _request(path);
+
+    futures.add(_request(pathDetailCommon));
+    futures.add(_request(pathDetailIntro));
+
+    final res = await Future.wait(futures);
+
+    final model = TourApiListModel.fromJson(res[0]);
+    model.addMoreImages(res[1]);
+    return model;
   }
 }

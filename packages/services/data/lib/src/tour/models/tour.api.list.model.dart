@@ -1,13 +1,46 @@
 import '../../../data.functions.dart';
 import '../../../data.defines.dart';
 
-/// 리스트 결과를 그대로 modeling 한 것이다.
+/// 리스트 결과를 그대로 modeling 한 것으로,
+/// 검색, detail common, detail intro 등에서 같이 사용한다.
 class TourApiListModel {
   TourApiListModel({required this.response});
   final TourApiListResponse response;
   factory TourApiListModel.fromJson(Json json) => TourApiListModel(
         response: TourApiListResponse.fromJson(json['response']),
       );
+
+  addMoreImages(Json json) {
+    final List<TourImage> images = [];
+    // print('addMoreImages: $json');
+    if (json['response'] != null &&
+        json['response']['body'] != null &&
+        json['response']['body']['items'] != null) {
+      final items = json['response']['body']['items'];
+      // print('items; $items');
+      if (items['item'] is Map) {
+        images.add(
+          TourImage(
+              smallimageurl: items['item']['smallimageurl'],
+              originimgurl: items['item']['originimgurl']),
+        );
+      } else if (items['item'] is List) {
+        for (final img in items['item']) {
+          images.add(
+            TourImage(smallimageurl: img['smallimageurl'], originimgurl: img['originimgurl']),
+          );
+        }
+      }
+      response.body.items.item.first.images = images;
+    }
+    // print('images; $images');
+  }
+}
+
+class TourImage {
+  String smallimageurl;
+  String originimgurl;
+  TourImage({required this.smallimageurl, required this.originimgurl});
 }
 
 class TourApiListResponse {
@@ -79,6 +112,7 @@ class Items {
     if (json['item'] == null) return Items(item: []);
 
     /// ! 검색 결과가 1개 뿐인 경우, json['item'] 이 배열이 아니라, 맵에 바로 데이터가 전달되어 온다.
+    /// ! 이 것을 첫번째 배열로 바꾸어 준다.
     if (json['item'] is Map) {
       return Items(item: [TourApiListItem.fromJson(json['item'])]);
     }
@@ -142,6 +176,8 @@ class TourApiListItem {
   final String telname;
   final String overview;
   final String directions;
+
+  List<TourImage> images = [];
 
   String get englishTitle => _removeKorean(title);
   String get englishAddr2 => _removeKorean(addr2);
