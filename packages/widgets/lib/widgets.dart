@@ -4,6 +4,7 @@ export 'src/widgets.functions.dart';
 export 'src/layout/default/default.layout.dart';
 export 'src/layout/zoom_drawer/zoom_drawer.layout.dart';
 export 'src/share/share_button.dart';
+export 'src/share/future_share_button.dart';
 
 export 'src/avatar/avatar.dart';
 export 'src/user/user.avatar.dart';
