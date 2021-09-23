@@ -46,6 +46,9 @@ class TourApi {
     String? sigunguCode,
     int? numOfRows,
     int? pageNo,
+    String cat1 = '',
+    String cat2 = '',
+    String cat3 = '',
   }) {
     String os = 'ETC';
     if (Platform.isAndroid)
@@ -57,8 +60,13 @@ class TourApi {
     if (contentId != null) url += "&contentId=$contentId";
     if (areaCode != null) url += "&areaCode=$areaCode";
     if (sigunguCode != null) url += "&sigunguCode=$sigunguCode";
+    if (cat1 != '') url += "&cat1=$cat1";
+    if (cat2 != '') url += "&cat2=$cat2";
+    if (cat3 != '') url += "&cat3=$cat3";
+
     if (numOfRows != null) url += "&numOfRows=$numOfRows";
     if (pageNo != null) url += "&pageNo=$pageNo";
+
     return url;
   }
 
@@ -87,6 +95,9 @@ class TourApi {
     required int pageNo,
     required int numOfRows,
     required String keyword,
+    String cat1 = '',
+    String cat2 = '',
+    String cat3 = '',
   }) async {
     final path = _queryUrl(
           operation: operation == '' ? TourApiOperations.areaBasedList : operation,
@@ -95,6 +106,9 @@ class TourApi {
           sigunguCode: sigunguCode > 0 ? sigunguCode.toString() : '',
           pageNo: pageNo,
           numOfRows: numOfRows,
+          cat1: cat1,
+          cat2: cat2,
+          cat3: cat3,
         ) +
         (operation == TourApiOperations.searchKeyword ? "&keyword=$keyword" : "") +
         "&cat1=&cat2=&cat3=&listYN=Y&arrange=O";
