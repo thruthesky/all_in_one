@@ -14,6 +14,8 @@ class TourController extends GetxController {
   static TourController get of => Get.find<TourController>();
 
   final String routeView;
+
+  /// 에러가 발생한 경우 이 함수를 호출하면 된다.
   final Function error;
 
   final scrollController = ScrollController();
@@ -213,9 +215,10 @@ class TourController extends GetxController {
     Get.toNamed(routeView, arguments: {'index': index});
   }
 
-  loadDetailCommon(int index) async {
+  Future<void> loadDetails(int index) async {
     try {
-      final re = await TourApi.instance.detailCommon(items[index].contentid);
+      detail = TourApiListItem.fromJson({});
+      final re = await TourApi.instance.details(items[index].contentid);
       detail = re.response.body.items.item[0];
       update();
     } catch (e) {

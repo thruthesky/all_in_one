@@ -1,3 +1,6 @@
+import 'package:data/data.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 /// 공공데이터 Tour Api 에서 검색 결과에서 어떤 경우 mapx, mapy 가 문자열로 넘어 온다. 또 어떤 경우는 숫자이다.
 double toDouble(dynamic v) {
   if (v == null)
@@ -48,4 +51,16 @@ testResultCode(String code, {String msg = ''}) {
     testSuccess(msg);
   else
     testError(msg);
+}
+
+launchURL(String uri) async {
+  // final uri = Uri(scheme: scheme, path: path).toString();
+
+  if (await canLaunch(uri)) {
+    try {
+      await launch(uri);
+    } catch (e) {
+      TourController.of.error(e);
+    }
+  }
 }
