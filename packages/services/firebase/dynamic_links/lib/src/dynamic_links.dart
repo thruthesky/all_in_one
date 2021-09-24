@@ -103,11 +103,14 @@ class DynamicLinks {
     String? description,
     String? imageUrl,
   }) async {
+
+    String _link = '$_dynamicLinkWebDomain';
+    if (path != '') _link = '$_link$path';
+
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       /// this should be the same as the one on the firebase console.
       uriPrefix: _dynamicLinkDomain,
-      link: Uri.parse('$_dynamicLinkWebDomain$path'),
-      // googleAnalyticsParameters: GoogleAnalyticsParameters(),
+      link: Uri.parse(_link),
 
       /// android package name can be found at "android/app/build.grade" defaultConfig.applicationId.
       /// set which application minimum version to support dynamic links.
@@ -120,7 +123,7 @@ class DynamicLinks {
       /// set which application minimum version to support dynamic links.
       iosParameters: IosParameters(
         bundleId: _iosBundleId,
-        minimumVersion: _iosMinimumVersion,
+        minimumVersion: _iosBundleId != '' ? _iosMinimumVersion : null,
       ),
 
       dynamicLinkParametersOptions: DynamicLinkParametersOptions(
@@ -131,6 +134,9 @@ class DynamicLinks {
         description: description,
         imageUrl: imageUrl != null ? Uri.parse(imageUrl) : null,
       ),
+
+      /// TODO: analytics
+      // googleAnalyticsParameters: GoogleAnalyticsParameters(),
     );
 
     Uri url;
