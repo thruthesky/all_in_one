@@ -42,6 +42,7 @@ class ChatBase {
 
   Future<ChatUserRoom?> getMyRoom(String roomId) async {
     DataSnapshot snapshot = await myRoom(roomId).get();
+    if (snapshot.exists == false) return null;
     return ChatUserRoom.fromSnapshot(snapshot);
   }
 

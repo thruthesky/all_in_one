@@ -1,5 +1,6 @@
 import 'package:chat/chat.dart';
 import 'package:chat/src/chat.definitions.dart';
+import 'package:firebase_database/firebase_database.dart';
 // import 'package:rxdart/rxdart.dart';
 import 'chat.base.dart';
 
@@ -35,6 +36,9 @@ class ChatRoom extends ChatBase {
 
   ChatUserRoom? currentRoom;
 
+  ChatMessage? isMessageEdit;
+  bool get isCreate => isMessageEdit == null;
+
   /// Enter chat room
   ///
   /// Null or empty string in [users] will be wiped out.
@@ -48,6 +52,10 @@ class ChatRoom extends ChatBase {
 
     currentRoom = await getMyRoom(firebaseUid);
     print(currentRoom);
+
+    if (currentRoom == null) {
+      await ___create(firebaseUid);
+    }
 
     // // fetch latest messages
     // fetchMessages();
@@ -101,5 +109,83 @@ class ChatRoom extends ChatBase {
     //     scrollToBottom(ms: 10);
     //   }
     // });
+  }
+
+  Future<void> ___create(String firebaseUid) async {
+    // String roomId = chatRoomId();
+    // print('roomId: $roomId');
+
+    final info = ChatUserRoom(
+      id: firebaseUid,
+      users: [firebaseUid, loginUserUid!],
+      createdAt: ServerValue.timestamp,
+    );
+    await myRoomListCol.child(firebaseUid).set(info.data);
+
+    currentRoom = ChatUserRoom.fromSnapshot(await myRoomListCol.child(firebaseUid).get());
+
+    await sendMessage(
+      text: ChatProtocol.roomCreated,
+      displayName: displayName!,
+    );
+  }
+
+  /// Send chat message to the users in the room
+  ///
+  /// [displayName] is the name that the sender will use. The default is
+  /// `ff.user.displayName`.
+  ///
+  /// [photoURL] is the sender's photo url. Default is `ff.user.photoURL`.
+  ///
+  /// [type] is the type of the message. It can be `image` or `text` if string only.
+  Future<Map<String, dynamic>> sendMessage({
+    required String text,
+    required String displayName,
+    Map<String, dynamic>? extra,
+    String photoURL = '',
+  }) async {
+    if (displayName.trim() == '') {
+      throw CHAT_DISPLAY_NAME_IS_EMPTY;
+    }
+
+    Map<String, dynamic> message = {
+      'senderUid': loginUserUid,
+      'senderDisplayName': displayName,
+      'senderPhotoURL': photoURL,
+      'text': text,
+
+      // Make [newUsers] empty string for re-setting(removing) from previous
+      // message.
+      'newUsers': [],
+
+      if (extra != null) ...extra,
+    };
+
+    if (isCreate) {
+      // Time that this message(or last message) was created.
+      message['createdAt'] = ServerValue.timestamp;
+
+      await messagesCol(currentRoom!.id).push().set(message);
+      // print(message);
+      message['newMessages'] = ServerValue.increment(1); // To increase, it must be an udpate.
+      List<Future<void>> messages = [];
+
+      /// Just incase there are duplicated UIDs.
+      List<String> roomUsers = [...currentRoom!.users!.toSet()];
+
+      /// Send a message to all users in the room.
+      for (String uid in roomUsers) {
+        // print(chatUserRoomDoc(uid, info['id']).path);
+        messages.add(userRoomDoc(uid, currentRoom!.id).update(message));
+      }
+      // print('send messages to: ${messages.length}');
+      await Future.wait(messages);
+    } else {
+      message['updatedAt'] = ServerValue.timestamp;
+      await messagesCol(currentRoom!.id).child(isMessageEdit!.id).update(message);
+      isMessageEdit = null;
+    }
+
+    return message;
   }
 }

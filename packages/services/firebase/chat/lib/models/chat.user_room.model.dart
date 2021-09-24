@@ -9,14 +9,11 @@ class ChatUserRoom {
   String senderPhotoURL;
   String text;
   List<String>? users;
-  List<String>? moderators;
-  List<String>? blockedUsers;
-  List<String>? newUsers;
 
   /// [createAt] is the time that last message was sent by a user.
-  /// It will be `FieldValue.serverTimestamp()` when it sends the
+  /// It will be `ServerValue.timestamp` when it sends the
   /// message. And it will `Timestamp` when it read the room information.
-  String createdAt;
+  Map<String, String>? createdAt;
 
   /// [newMessages] has the number of new messages for that room.
   String newMessages;
@@ -29,17 +26,13 @@ class ChatUserRoom {
     this.senderDisplayName = '',
     this.senderPhotoURL = '',
     this.users,
-    this.moderators,
-    this.blockedUsers,
-    this.newUsers,
     this.text = '',
-    this.createdAt = '',
+    this.createdAt,
     this.newMessages = '',
     this.isImage = false,
   });
 
   factory ChatUserRoom.fromSnapshot(DataSnapshot snapshot) {
-    if (snapshot.exists == false) return new ChatUserRoom();
     Map<String, dynamic> info = snapshot.value;
     return ChatUserRoom.fromData(info, snapshot.key!);
   }
@@ -59,9 +52,6 @@ class ChatUserRoom {
       senderDisplayName: info['senderDisplayName'],
       senderPhotoURL: info['senderPhotoURL'],
       users: List<String>.from(info['users'] ?? []),
-      moderators: List<String>.from(info['moderators'] ?? []),
-      blockedUsers: List<String>.from(info['blockedUsers'] ?? []),
-      newUsers: List<String>.from(info['newUsers'] ?? []),
       createdAt: info['createdAt'],
       text: _text,
       newMessages: "${info['newMessages']}",
@@ -76,9 +66,6 @@ class ChatUserRoom {
       'senderDisplayName': senderDisplayName,
       'senderPhotoURL': senderPhotoURL,
       'users': this.users,
-      'moderators': this.moderators,
-      'blockedUsers': this.blockedUsers,
-      'newUsers': this.newUsers,
       'text': this.text,
       'createdAt': this.createdAt,
       'newMessages': this.newMessages,
