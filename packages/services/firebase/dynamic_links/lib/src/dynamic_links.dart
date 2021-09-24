@@ -20,9 +20,9 @@ class DynamicLinks {
   /// Initializes the service.
   ///
   /// [dynamicLinkDomain] this must be the same dynamic link domain registered on your firebase console.
-  /// 
+  ///
   /// [dynamicLinkWebDomain] this must be a valid domain, when ever a user generated a link,
-  /// this will used as a redirect on desktop web browsers.  
+  /// this will used as a redirect on desktop web browsers.
   ///
   /// [androidAppId] android package name can be found at "android/app/build.grade" defaultConfig.applicationId.
   ///
@@ -86,7 +86,7 @@ class DynamicLinks {
   ///
   /// [short] true by default.
   /// [path] must be a valid Uri path including the "/", it can also includes query.
-  /// 
+  ///
   /// [title], [description] and [imageUrl] can be provided for social meta tags.
   /// ``` dart
   ///   DynamicLinks.instance.create(
