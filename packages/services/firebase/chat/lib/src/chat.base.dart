@@ -1,3 +1,4 @@
+import 'package:chat/chat.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -39,39 +40,26 @@ class ChatBase {
     return myRoomListCol.child(roomId);
   }
 
-  // text(ChatMessage message) {
-  //   String text = message.text ?? '';
+  Future<ChatUserRoom?> getMyRoom(String roomId) async {
+    DataSnapshot snapshot = await myRoom(roomId).get();
+    return ChatUserRoom.fromSnapshot(snapshot);
+  }
 
-  //   if (text == ChatProtocol.roomCreated) {
-  //     text = message.senderDisplayName + '님이 채팅방을 개설했습니다.';
-  //   }
-  //   if (text == ChatProtocol.add) {
-  //     text = message.senderDisplayName + ' added ' + message.newUsers.join(',');
-  //   }
-  //   if (text == ChatProtocol.kickout) {
-  //     text = message.senderDisplayName + ' kicked ' + message.data['userName'];
-  //   }
-  //   if (text == ChatProtocol.block) {
-  //     text = message.senderDisplayName + ' block  ' + message.data['userName'];
-  //   }
+  text(ChatMessage message) {
+    String text = message.text;
 
-  //   if (text == ChatProtocol.addModerator) {
-  //     text = message.senderDisplayName + ' add moderator ' + message.data['userName'];
-  //   }
-  //   if (text == ChatProtocol.removeModerator) {
-  //     text = message.senderDisplayName + ' remove moderator ' + message.data['userName'];
-  //   }
+    if (text == ChatProtocol.roomCreated) {
+      text = message.senderDisplayName + ' has opened a chat room.';
+    }
 
-  //   if (text == ChatProtocol.titleChanged) {
-  //     text = message.senderDisplayName + ' change room title ';
-  //     text += message.data['newTitle'] != null ? 'to ' + message.data['newTitle'] : '';
-  //   }
+    if (text == ChatProtocol.titleChanged) {
+      text = message.senderDisplayName + ' change room title ';
+      text += message.data!['newTitle'] != null ? 'to ' + message.data!['newTitle'] : '';
+    }
 
-  //   if (text == ChatProtocol.enter) {
-  //     // print(message);
-  //     text = "${message.senderDisplayName} invited ${message.newUsers}";
-  //   }
-  //   return text;
-  // }
-
+    if (text == ChatProtocol.enter) {
+      text = "${message.senderDisplayName} invited ${message.newUsers}";
+    }
+    return text;
+  }
 }
