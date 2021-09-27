@@ -50,7 +50,7 @@ class DynamicLinks {
     int androidMinimumVersion = 0,
     String iosMinimumVersion = '0',
     required Function(Uri)? uriHandler,
-    Function(OnLinkErrorException)? errorHandler,
+    Function(String)? errorHandler,
   }) async {
     _dynamicLinkDomain = dynamicLinkDomain;
     _dynamicLinkWebDomain = dynamicLinkWebDomain;
@@ -68,7 +68,7 @@ class DynamicLinks {
       }
     }, onError: (OnLinkErrorException e) async {
       if (errorHandler != null) {
-        errorHandler(e);
+        errorHandler('${e.code}: ${e.message}');
       } else {
         if (kDebugMode) print(e.toString());
       }
