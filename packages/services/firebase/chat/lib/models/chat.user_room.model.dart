@@ -62,7 +62,7 @@ class ChatUserRoom {
 
   Map<String, dynamic> get data {
     return {
-      'id': roomId,
+      'roomId': roomId,
       'senderUid': senderUid,
       'senderDisplayName': senderDisplayName,
       'senderPhotoURL': senderPhotoURL,

@@ -161,6 +161,7 @@ class ChatRoom extends ChatBase {
 
   Future<void> ___create({required String roomId, required otherFirebaseUid}) async {
     final info = ChatUserRoom(
+      roomId: roomId,
       users: [otherFirebaseUid, loginUserUid!],
       senderDisplayName: _displayName!,
       senderUid: loginUserUid!,
