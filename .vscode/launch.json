@@ -4,7 +4,6 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-
     {
       "name": "all_in_one",
       "request": "launch",
@@ -219,7 +218,7 @@
       "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
     },
     {
-      "name": "영자 - Sonub - Simulator - iMac - Local",
+      "name": "영자 - Sonub - Simulator iPhone 12 Max Pro - iMac - Local",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
         "--dart-define",
@@ -231,7 +230,7 @@
       ],
       "request": "launch",
       "type": "dart",
-      "deviceId": "90BA28F4-9C61-4503-976B-FE04531BD365"
+      "deviceId": "62C87ED8-8EC6-4CE7-A3DC-E7AAF8608CAE"
     },
     {
       "name": "영자 - Sonub - Emulator Pixel3a - iMac - Local",
@@ -368,7 +367,8 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "emulator-5554"
-    },    {
+    },
+    {
       "name": "Android RMX1991 (Ace's Device)",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
