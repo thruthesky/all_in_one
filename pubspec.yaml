@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   flutter_localizations:
     sdk: flutter
 
@@ -90,4 +89,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-

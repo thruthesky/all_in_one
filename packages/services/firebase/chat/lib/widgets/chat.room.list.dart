@@ -5,28 +5,24 @@ import 'package:chat/src/chat.user_room_list.dart';
 import 'package:chat/widgets/chat.room.list.item.dart';
 import 'package:flutter/widgets.dart';
 
-class ChatRoomList extends StatefulWidget {
-  ChatRoomList({
+class ChatRoomListWidget extends StatefulWidget {
+  ChatRoomListWidget({
     required this.onChatRoomTap,
   });
 
   final Function onChatRoomTap;
   @override
-  _ChatRoomListState createState() => _ChatRoomListState();
+  _ChatRoomListWidgetState createState() => _ChatRoomListWidgetState();
 }
 
-class _ChatRoomListState extends State<ChatRoomList> {
-  StreamSubscription? chatUserRoomListSubscription;
+class _ChatRoomListWidgetState extends State<ChatRoomListWidget> {
+  StreamSubscription? chatUserRoomSubscription;
 
   @override
   void initState() {
     super.initState();
-
-    /// When any of the login user's rooms changes, it will be handled here.
-    chatUserRoomListSubscription = ChatUserRoomList.instance.changes.listen((rooms) {
-      print('ChatRoomList:: room list change;');
-      // print(ChatUserRoomList.instance.rooms);
-      if (mounted) setState(() {});
+    chatUserRoomSubscription = ChatUserRoomList.instance.changes.listen((value) {
+      setState(() {});
     });
   }
 
@@ -34,7 +30,7 @@ class _ChatRoomListState extends State<ChatRoomList> {
   void dispose() {
     super.dispose();
     print('ChatRoomScreen::dispose()');
-    chatUserRoomListSubscription?.cancel();
+    chatUserRoomSubscription?.cancel();
   }
 
   @override
@@ -45,7 +41,7 @@ class _ChatRoomListState extends State<ChatRoomList> {
             itemCount: rooms.length,
             itemBuilder: (_, i) {
               final ChatUserRoom room = rooms[i];
-              return ChatRoomListItem(room, onTap: () {
+              return ChatRoomListItemWidget(room, onTap: () {
                 widget.onChatRoomTap(room);
               });
             },

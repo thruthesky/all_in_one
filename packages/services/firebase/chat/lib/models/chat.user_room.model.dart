@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 
 /// [ChatUserRoom] is for documents of `/chat/rooms/{user-id}` collection.
 class ChatUserRoom {
-  String id;
+  String roomId;
   String senderUid;
   String senderDisplayName;
   String senderPhotoURL;
@@ -13,7 +13,8 @@ class ChatUserRoom {
   /// [createAt] is the time that last message was sent by a user.
   /// It will be `ServerValue.timestamp` when it sends the
   /// message. And it will `Timestamp` when it read the room information.
-  Map<String, String>? createdAt;
+  // ignore: unnecessary_question_mark
+  dynamic? createdAt;
 
   /// [newMessages] has the number of new messages for that room.
   String newMessages;
@@ -21,7 +22,7 @@ class ChatUserRoom {
   bool isImage;
 
   ChatUserRoom({
-    this.id = '',
+    this.roomId = '',
     this.senderUid = '',
     this.senderDisplayName = '',
     this.senderPhotoURL = '',
@@ -33,26 +34,26 @@ class ChatUserRoom {
   });
 
   factory ChatUserRoom.fromSnapshot(DataSnapshot snapshot) {
-    Map<String, dynamic> info = snapshot.value;
+    Map<Object?, Object?> info = snapshot.value;
     return ChatUserRoom.fromData(info, snapshot.key!);
   }
 
-  factory ChatUserRoom.fromData(Map<String, dynamic>? info, String id) {
+  factory ChatUserRoom.fromData(Map<Object?, Object?>? info, String roomId) {
     if (info == null) return ChatUserRoom();
 
-    String _text = info['text'];
+    String _text = info['text'] as String;
 
     bool isImage = false;
     if (isImageUrl(_text)) {
       isImage = true;
     }
     return ChatUserRoom(
-      id: id,
-      senderUid: info['senderUid'],
-      senderDisplayName: info['senderDisplayName'],
-      senderPhotoURL: info['senderPhotoURL'],
-      users: List<String>.from(info['users'] ?? []),
-      createdAt: info['createdAt'],
+      roomId: roomId,
+      senderUid: info['senderUid'] as String,
+      senderDisplayName: info['senderDisplayName'] as String,
+      senderPhotoURL: info['senderPhotoURL'] as String,
+      users: List<String>.from(info['users'] as Iterable<dynamic>),
+      createdAt: info['createdAt'] as int,
       text: _text,
       newMessages: "${info['newMessages']}",
       isImage: isImage,
@@ -61,7 +62,7 @@ class ChatUserRoom {
 
   Map<String, dynamic> get data {
     return {
-      'id': id,
+      'id': roomId,
       'senderUid': senderUid,
       'senderDisplayName': senderDisplayName,
       'senderPhotoURL': senderPhotoURL,

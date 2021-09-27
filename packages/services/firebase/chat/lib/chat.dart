@@ -9,3 +9,7 @@ export 'models/chat.user_room.model.dart';
 
 export 'widgets/chat.room.list.dart';
 export 'widgets/chat.room.list.item.dart';
+
+export 'widgets/chat.message.bottom_actions.dart';
+export 'widgets/chat.message.view.dart';
+export 'widgets/chat.message.list.dart';

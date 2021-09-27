@@ -7,21 +7,19 @@ import 'package:chat/src/chat.room.dart';
 /// [isImage] returns bool if the message is image or not.
 class ChatMessage {
   String id;
-  String createdAt;
-  List<String>? newUsers;
+  dynamic createdAt;
   String senderDisplayName;
   String senderPhotoURL;
   String senderUid;
   String text;
   bool isMine;
   bool isImage;
-  Map<String, dynamic>? data;
+  Map<Object?, Object?>? data;
   bool rendered = false;
 
   ChatMessage({
     this.id = '',
-    this.createdAt = '',
-    this.newUsers,
+    this.createdAt,
     this.senderDisplayName = '',
     this.senderPhotoURL = '',
     this.senderUid = '',
@@ -36,19 +34,18 @@ class ChatMessage {
     return false;
   }
 
-  factory ChatMessage.fromData(Map<String, dynamic> data, {required String id}) {
+  factory ChatMessage.fromData(Map<Object?, Object?> data, {required String id}) {
     bool isImage = false;
-    if (data['text'] != null && isImageUrl(data['text'])) {
+    if (data['text'] != null && isImageUrl(data['text'] as String)) {
       isImage = true;
     }
     return ChatMessage(
-      id: data['id'] ?? id ?? '',
+      id: id,
       createdAt: data['createdAt'],
-      newUsers: List<String>.from(data['newUsers'] ?? []),
-      senderDisplayName: data['senderDisplayName'] ?? '',
-      senderPhotoURL: data['senderPhotoURL'] ?? '',
-      senderUid: data['senderUid'] ?? '',
-      text: data['text'] ?? '',
+      senderDisplayName: data['senderDisplayName'] as String,
+      senderPhotoURL: data['senderPhotoURL'] as String,
+      senderUid: data['senderUid'] as String,
+      text: data['text'] as String,
       isMine: data['senderUid'] == ChatRoom.instance.loginUserUid,
       isImage: isImage,
       data: data,

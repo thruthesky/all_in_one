@@ -55,12 +55,9 @@ class ChatBase {
 
     if (text == ChatProtocol.titleChanged) {
       text = message.senderDisplayName + ' change room title ';
-      text += message.data!['newTitle'] != null ? 'to ' + message.data!['newTitle'] : '';
+      text += message.data!['newTitle'] != null ? 'to ' + "${message.data!['newTitle']}" : '';
     }
 
-    if (text == ChatProtocol.enter) {
-      text = "${message.senderDisplayName} invited ${message.newUsers}";
-    }
     return text;
   }
 }

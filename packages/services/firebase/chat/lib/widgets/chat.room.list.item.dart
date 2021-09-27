@@ -1,10 +1,10 @@
 import 'package:chat/models/chat.user_room.model.dart';
+import 'package:chat/src/chat.function.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class ChatRoomListItem extends StatefulWidget {
-  ChatRoomListItem(
+class ChatRoomListItemWidget extends StatefulWidget {
+  ChatRoomListItemWidget(
     this.room, {
     this.onTap,
   });
@@ -13,10 +13,10 @@ class ChatRoomListItem extends StatefulWidget {
   final Function? onTap;
 
   @override
-  _ChatRoomListItemState createState() => _ChatRoomListItemState();
+  _ChatRoomListItemWidgetState createState() => _ChatRoomListItemWidgetState();
 }
 
-class _ChatRoomListItemState extends State<ChatRoomListItem> {
+class _ChatRoomListItemWidgetState extends State<ChatRoomListItemWidget> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -24,7 +24,7 @@ class _ChatRoomListItemState extends State<ChatRoomListItem> {
       //   widget.room.profilePhotoUrl ?? '',
       // ),
       title: Text(
-        widget.room.id,
+        widget.room.roomId,
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(
@@ -39,7 +39,7 @@ class _ChatRoomListItemState extends State<ChatRoomListItem> {
             // style: subtitle1,
           ),
           Spacer(),
-          if (int.parse(widget.room.newMessages) > 0)
+          if (widget.room.newMessages != '' && int.parse(widget.room.newMessages) > 0)
             ConstrainedBox(
               constraints: BoxConstraints(maxHeight: 24),
               child: Chip(
@@ -61,19 +61,5 @@ class _ChatRoomListItemState extends State<ChatRoomListItem> {
         if (widget.onTap != null) widget.onTap!();
       },
     );
-  }
-
-  String shortDateTime(dynamic dt) {
-    /// If it's firestore `FieldValue.serverTimstamp()`, the event may be fired
-    /// twice.
-    if (dt == null) {
-      return '';
-    }
-    DateTime time = DateTime.fromMillisecondsSinceEpoch(dt.seconds * 1000);
-    DateTime today = DateTime.now();
-    if (time.year == today.year && time.month == today.month && time.day == today.day) {
-      return DateFormat.jm().format(time);
-    }
-    return DateFormat('dd/MM/yy').format(time);
   }
 }

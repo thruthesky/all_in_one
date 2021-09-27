@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 bool isImageUrl(String? t) {
   if (t == null || t == '') return false;
   if (t.startsWith('http://') || t.startsWith('https://')) {
@@ -13,4 +15,18 @@ bool isImageUrl(String? t) {
     }
   }
   return false;
+}
+
+String shortDateTime(dynamic dt) {
+  /// If it's firestore `FieldValue.serverTimstamp()`, the event may be fired
+  /// twice.
+  if (dt == null) {
+    return '';
+  }
+  DateTime time = DateTime.fromMillisecondsSinceEpoch(dt);
+  DateTime today = DateTime.now();
+  if (time.year == today.year && time.month == today.month && time.day == today.day) {
+    return DateFormat.jm().format(time);
+  }
+  return DateFormat('dd/MM/yy').format(time);
 }
