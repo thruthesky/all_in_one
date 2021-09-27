@@ -23,3 +23,31 @@
 ## 테스트 방법
 
 - 응답 데이터를 받아서, 모델링하는데 오류가 있을 있는데, 테스트하는 방법은 tour.api.test.dart 에서 해당(특정) 쿼리를 해서, 응답 코드를 모델링하는 것이다.
+
+
+## 관광지 정보 검색 방법
+
+- 카테고리 대,중,소 만으로 검색하는 방법.
+
+```dart
+try {
+  final res = await TourApi.instance.search(
+    operation: '',
+    areaCode: 0,
+    sigunguCode: 0,
+    contentTypeId: 0,
+    pageNo: 1,
+    numOfRows: 10,
+    keyword: '',
+    cat1: 'A02',
+    cat2: 'A0207',
+    cat3: 'A02070200',
+  );
+  print('res; ${res.response.body.items.item}');
+  for (final TourApiListItem item in res.response.body.items.item) {
+    print(item.title);
+  }
+} catch (e) {
+  service.error(e);
+}
+```
