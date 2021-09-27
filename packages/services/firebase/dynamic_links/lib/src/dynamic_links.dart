@@ -87,6 +87,9 @@ class DynamicLinks {
   /// [short] true by default.
   /// [path] must be a valid Uri path including the "/", it can also includes query.
   ///
+  /// [webDomain] web domain that the dynamic link will redirect besides the default [dynamicLinkWebDomain]
+  /// initially set on `init()`, [webDomain] must also be included on the URL whitelist on firebase console dynamic links settings.
+  ///
   /// [title], [description] and [imageUrl] can be provided for social meta tags.
   /// ``` dart
   ///   DynamicLinks.instance.create(
@@ -99,15 +102,21 @@ class DynamicLinks {
   Future<Uri> create({
     bool short = true,
     String path = '',
+    String? webDomain,
     String? title,
     String? description,
     String? imageUrl,
+    // String? campaign,
+    // String? source,
+    // String? medium,
+    // String? content,
+    // String? term,
   }) async {
-
     String _link = '$_dynamicLinkWebDomain';
+    if (webDomain != null) _link = webDomain;
     if (path != '') _link = '$_link$path';
 
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
+    DynamicLinkParameters parameters = DynamicLinkParameters(
       /// this should be the same as the one on the firebase console.
       uriPrefix: _dynamicLinkDomain,
       link: Uri.parse(_link),
@@ -135,8 +144,14 @@ class DynamicLinks {
         imageUrl: imageUrl != null ? Uri.parse(imageUrl) : null,
       ),
 
-      /// TODO: analytics
-      // googleAnalyticsParameters: GoogleAnalyticsParameters(),
+      /// TODO: analytics (if necessary)
+      // googleAnalyticsParameters: GoogleAnalyticsParameters(
+      //   campaign: campaign != null ? campaign : '',
+      //   source: source != null ? source : '',
+      //   medium: medium != null ? medium : '',
+      //   content: content,
+      //   term: term,
+      // ),
     );
 
     Uri url;
