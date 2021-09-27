@@ -22,7 +22,7 @@ class DynamicLinks {
   /// [dynamicLinkDomain] this must be the same dynamic link domain registered on your firebase console.
   ///
   /// [dynamicLinkWebDomain] this must be a valid domain, when ever a user generated a link,
-  /// this will used as a redirect on desktop web browsers.
+  /// this will be used as a redirect on desktop web browsers.
   ///
   /// [androidAppId] android package name can be found at "android/app/build.grade" defaultConfig.applicationId.
   ///
@@ -32,7 +32,7 @@ class DynamicLinks {
   ///
   /// [uriHandler] returns dynamic link Uri.
   ///
-  /// [errorHandler] returns `OnLinkErrorException` object on error.
+  /// [errorHandler] returns error with code and message.
   ///
   /// ``` dart
   /// DynamicLinks.instance.init(
