@@ -15,12 +15,14 @@ class CacheImage extends StatelessWidget {
     this.height,
     this.onLoadComplete,
     this.fit = BoxFit.cover,
+    this.borderRadius = 0,
   });
   final String url;
   final double width;
   final double? height;
   final Function? onLoadComplete;
   final BoxFit fit;
+  final double borderRadius;
   @override
   Widget build(BuildContext context) {
     if (url == '') {
@@ -32,19 +34,22 @@ class CacheImage extends StatelessWidget {
         ),
       );
     }
-    return CachedNetworkImage(
-      imageBuilder: (context, provider) {
-        // execute your onLoad code here
-        // print("Image has been loaded!");
-        if (onLoadComplete != null) Timer(Duration(milliseconds: 100), () => onLoadComplete!());
-        // Return the image that has built by hand.
-        return Image(image: provider, fit: fit);
-      },
-      imageUrl: url,
-      placeholder: (context, url) => Spinner(),
-      errorWidget: (context, url, error) => Icon(Icons.error),
-      width: width,
-      height: height,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(borderRadius),
+      child: CachedNetworkImage(
+        imageBuilder: (context, provider) {
+          // execute your onLoad code here
+          // print("Image has been loaded!");
+          if (onLoadComplete != null) Timer(Duration(milliseconds: 100), () => onLoadComplete!());
+          // Return the image that has built by hand.
+          return Image(image: provider, fit: fit);
+        },
+        imageUrl: url,
+        placeholder: (context, url) => Spinner(),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        width: width,
+        height: height,
+      ),
     );
   }
 }

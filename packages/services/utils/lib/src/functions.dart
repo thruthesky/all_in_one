@@ -80,13 +80,13 @@ error(e) {
       alert(
           'Await 실수', '개발자 실수입니다.\n\nFuture 에서 async 를 한 다음, await 을 하지 않았습니다.\n\n' + e.toString());
     } else {
-      alert('개발자 코딩 실수', '타입 에러: ' + e.toString());
+      alert("Developer's mistake!", 'Type error: ' + e.toString());
     }
   } else if (e.runtimeType.toString() == "NoSuchMethodError") {
     if (e.toString().contains("Closure call with mismatched arguments")) {
-      alert('개발자 실수', '클로져 함수가 받아들이는 인자 개 수와 호출 함수의 파라미터 개 수가 다릅니다.\n\n$e');
+      alert('Developer mistake...!', '클로져 함수가 받아들이는 인자 개 수와 호출 함수의 파라미터 개 수가 다릅니다.\n\n$e');
     } else {
-      alert('개발자 실수', "NoSuchMethodError; $e");
+      alert('Developer mistake.', "NoSuchMethodError; $e");
     }
   } else if (e.code != null && e.message != null) {
     /// 에러 객체에 code 오 message 가 있는 경우,
