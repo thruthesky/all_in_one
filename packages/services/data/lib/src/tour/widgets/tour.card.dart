@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:widgets/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
+///
 class TourCard extends StatelessWidget {
-  const TourCard({Key? key, required this.item, required this.index}) : super(key: key);
+  const TourCard({
+    Key? key,
+    required this.item,
+    required this.index,
+  }) : super(key: key);
 
   final TourApiListItem item;
   final int index;
@@ -12,6 +17,7 @@ class TourCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GradientCard(
       imageUrl: item.firstimage,
+      height: double.infinity,
       title: item.englishTitle,
       onTap: () => TourController.to.view(index),
       borderRadius: 10,
@@ -19,7 +25,7 @@ class TourCard extends StatelessWidget {
         baseColor: Colors.grey.shade50,
         highlightColor: Colors.grey.shade200,
         child: Container(
-          height: index % 2 == 0 ? 125 : 100,
+          // height: index % 2 == 0 ? 125 : 100,
           width: double.infinity,
           decoration: BoxDecoration(
             color: Colors.grey.shade50,

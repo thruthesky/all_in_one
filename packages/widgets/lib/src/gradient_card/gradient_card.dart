@@ -8,8 +8,12 @@ import 'package:flutter/material.dart';
 /// [titleAlign] can be any value of TextAline. Like TextAling.center.
 /// [titleWidthFactor] can be 0 to 1 in double. 1 is the 100%.
 /// [borderRadius] can be any double number. It's for the border radius.
-///
-/// [height] is needed to cover whole display area if there is constraints on parent widget.
+/// [imageUrl] is the background image.
+/// [fit] is the BoxFit for background imgae.
+/// [height] is needed to make the card background image to desired size.
+///   - It can be null with 'fit: BoxFit.cover' for natural look.
+///   - If you want to cover the card with the image, then width, height must be given.
+///     Both of width & height can be [double.inifity] to fit the card size.
 ///
 /// ```dart
 /// GradientCard(
@@ -21,11 +25,40 @@ import 'package:flutter/material.dart';
 ///   children: [Positioned(child: Text('Touch to enlarge'), top: 0, right: 10)],
 /// );
 /// ```
+///
+/// ```dart
+/// GradientCard(
+///   imageUrl: item.firstimage,
+///   height: double.infinity,
+///   title: item.englishTitle,
+///   onTap: () => TourController.to.view(index),
+///   borderRadius: 10,
+///   imageLoader: Shimmer.fromColors(
+///     baseColor: Colors.grey.shade50,
+///     highlightColor: Colors.grey.shade200,
+///     child: Container(
+///     // height: index % 2 == 0 ? 125 : 100,
+///       width: double.infinity,
+///       decoration: BoxDecoration(
+///         color: Colors.grey.shade50,
+///         borderRadius: BorderRadius.circular(10),
+///       ),
+///     ),
+///   ),
+///   imageErrorWidget: Container(
+///     height: index % 2 == 0 ? 125 : 100,
+///     child: Center(
+///       child: Icon(Icons.image_not_supported_outlined),
+///     ),
+///   ),
+/// );
+/// ```
 class GradientCard extends StatelessWidget {
   const GradientCard({
     required this.title,
     this.titleStyle = const TextStyle(color: Colors.white),
     required this.imageUrl,
+    this.fit = BoxFit.cover,
     this.onTap,
     this.borderRadius = 0.0,
     this.imageLoader = const SizedBox.shrink(),
@@ -52,13 +85,14 @@ class GradientCard extends StatelessWidget {
   final TextAlign titleAlign;
   final bool hero;
   final List<Positioned>? children;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
     Widget image = CachedNetworkImage(
       width: width,
       height: height,
-      fit: BoxFit.cover,
+      fit: fit,
       imageUrl: imageUrl,
       placeholder: (ctx, url) => imageLoader,
       errorWidget: (context, url, error) => imageErrorWidget,
@@ -75,7 +109,7 @@ class GradientCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         child: Stack(
           children: [
-            Container(child: image),
+            image,
             Positioned(
               child: Container(
                 padding: EdgeInsets.all(8),
