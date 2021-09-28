@@ -53,10 +53,18 @@ class TourApiListResponse {
   final TourApiListHeader header;
   final TourApiListBody body;
 
-  factory TourApiListResponse.fromJson(Json json) => TourApiListResponse(
-        header: TourApiListHeader.fromJson(json['header']),
-        body: TourApiListBody.fromJson(json['body']),
-      );
+  factory TourApiListResponse.fromJson(Json json) {
+    int resultCode = toInt(json['header']['resultCode']);
+    if (resultCode != 0) {
+      return TourApiListResponse(
+          header: TourApiListHeader.fromJson(json['header']),
+          body: TourApiListBody(items: Items(item: []), numOfRows: 0, pageNo: 0, totalCount: 0));
+    }
+    return TourApiListResponse(
+      header: TourApiListHeader.fromJson(json['header']),
+      body: TourApiListBody.fromJson(json['body']),
+    );
+  }
 }
 
 class TourApiListHeader {
@@ -69,7 +77,7 @@ class TourApiListHeader {
   final String resultMsg;
 
   factory TourApiListHeader.fromJson(Json json) => TourApiListHeader(
-        resultCode: json["resultCode"],
+        resultCode: toString(json["resultCode"]),
         resultMsg: json["resultMsg"],
       );
 }

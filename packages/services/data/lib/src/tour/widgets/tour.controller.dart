@@ -1,3 +1,4 @@
+import 'package:data/data.functions.dart';
 import 'package:data/src/tour/tour.api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class TourController extends GetxController {
 
   bool loading = false;
   bool noMoreData = false;
-  int numOfRows = 20;
+  int numOfRows = 60;
   int pageNo = 1;
 
   /// 테스트 하는 방법. README.md 참고
@@ -34,7 +35,7 @@ class TourController extends GetxController {
 
   /// 사용자가 [operationType] 을 선택하면, 적절한 contentTypeId 지정.
   /// 여기에 기본 값을 지정하면, 화면이 나타나자 마자 검색해서 결과를 가져 올 수 있다.
-  /// 만약, contentTypeId 가 선택되지 않았으면, 전체 콘텐츠 타입 정보를 가져온다.
+  /// 만약, contentTypeId 가 선택되지 않았으면, 0 이 되고, 전체 콘텐츠 타입 정보를 가져온다.
   int contentTypeId = 0;
   int previousContentTypeId = 0;
 
@@ -56,6 +57,17 @@ class TourController extends GetxController {
   bool dirty = false;
 
   TourApiListItem detail = TourApiListItem.fromJson({});
+
+  /// 검색(또는 관광지 정보 목록)이 가능한 상태이면 true 를 리턴한다.
+  /// 이 값이 false 를 리턴하면, 관광지 목록이 아닌, 기본 위젯을 보여주면 된다.
+  /// 특히, Attractions 화면에서, 게시판의 관광 정보를 보여 줄 지, Tour API 의 관광 정보를 보여 줄 지를 이 변수로 판단하면 된다.
+  bool get searchable {
+    if (contentTypeId > 0) return true;
+    if (areaCode > 0) return true;
+    if (sigunguCode > 0) return true;
+    if (keyword != '') return true;
+    return false;
+  }
 
   resetSearchList({
     int? contentTypeId,
@@ -138,9 +150,10 @@ class TourController extends GetxController {
   loadPage() async {
     // print('loading; $loading, noMoreData; $noMoreData');
     if (loading || noMoreData) {
-      print('loading on page; $pageNo');
+      print('if (loading || noMoreData) ; $pageNo');
       return;
     }
+    if (searchable == false) return;
     setLoading(true);
     print('loading pageNo: $pageNo');
 
@@ -157,6 +170,11 @@ class TourController extends GetxController {
       numOfRows: numOfRows,
       keyword: keyword,
     );
+    if (toInt(listModel.response.header.resultCode) != 0) {
+      error(listModel.response.header.resultMsg);
+      setLoading(false);
+      return;
+    }
 
     if (listModel.response.body.items.item.length < numOfRows) noMoreData = true;
     listModel.response.body.items.item.forEach((e) {

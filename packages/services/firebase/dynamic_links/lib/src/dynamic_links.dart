@@ -22,7 +22,7 @@ class DynamicLinks {
   /// [dynamicLinkDomain] this must be the same dynamic link domain registered on your firebase console.
   ///
   /// [dynamicLinkWebDomain] this must be a valid domain, when ever a user generated a link,
-  /// this will used as a redirect on desktop web browsers.
+  /// this will be used as a redirect on desktop web browsers.
   ///
   /// [androidAppId] android package name can be found at "android/app/build.grade" defaultConfig.applicationId.
   ///
@@ -32,7 +32,7 @@ class DynamicLinks {
   ///
   /// [uriHandler] returns dynamic link Uri.
   ///
-  /// [errorHandler] returns `OnLinkErrorException` object on error.
+  /// [errorHandler] returns error with code and message.
   ///
   /// ``` dart
   /// DynamicLinks.instance.init(
@@ -50,7 +50,7 @@ class DynamicLinks {
     int androidMinimumVersion = 0,
     String iosMinimumVersion = '0',
     required Function(Uri)? uriHandler,
-    Function(OnLinkErrorException)? errorHandler,
+    Function(String)? errorHandler,
   }) async {
     _dynamicLinkDomain = dynamicLinkDomain;
     _dynamicLinkWebDomain = dynamicLinkWebDomain;
@@ -68,7 +68,7 @@ class DynamicLinks {
       }
     }, onError: (OnLinkErrorException e) async {
       if (errorHandler != null) {
-        errorHandler(e);
+        errorHandler('${e.code}: ${e.message}');
       } else {
         if (kDebugMode) print(e.toString());
       }
@@ -87,7 +87,12 @@ class DynamicLinks {
   /// [short] true by default.
   /// [path] must be a valid Uri path including the "/", it can also includes query.
   ///
+  /// [webDomain] web domain that the dynamic link will redirect besides the default [dynamicLinkWebDomain]
+  /// initially set on `init()`, [webDomain] must also be included on the URL whitelist on firebase console dynamic links settings.
+  ///
   /// [title], [description] and [imageUrl] can be provided for social meta tags.
+  /// 
+  /// [campaign], [source], [medium], [content] and [term] are used for google analytics.
   /// ``` dart
   ///   DynamicLinks.instance.create(
   ///     path: '/forum?postIdx=123',
@@ -99,15 +104,21 @@ class DynamicLinks {
   Future<Uri> create({
     bool short = true,
     String path = '',
+    String? webDomain,
     String? title,
     String? description,
     String? imageUrl,
+    String? campaign,
+    String? source,
+    String? medium,
+    String? content,
+    String? term,
   }) async {
-
     String _link = '$_dynamicLinkWebDomain';
+    if (webDomain != null) _link = webDomain;
     if (path != '') _link = '$_link$path';
 
-    final DynamicLinkParameters parameters = DynamicLinkParameters(
+    DynamicLinkParameters parameters = DynamicLinkParameters(
       /// this should be the same as the one on the firebase console.
       uriPrefix: _dynamicLinkDomain,
       link: Uri.parse(_link),
@@ -135,8 +146,13 @@ class DynamicLinks {
         imageUrl: imageUrl != null ? Uri.parse(imageUrl) : null,
       ),
 
-      /// TODO: analytics
-      // googleAnalyticsParameters: GoogleAnalyticsParameters(),
+      googleAnalyticsParameters: GoogleAnalyticsParameters(
+        campaign: campaign != null ? campaign : '',
+        source: source != null ? source : '',
+        medium: medium != null ? medium : '',
+        content: content,
+        term: term,
+      ),
     );
 
     Uri url;
