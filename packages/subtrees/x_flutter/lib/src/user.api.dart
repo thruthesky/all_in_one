@@ -140,8 +140,8 @@ class UserApi {
     return _saveUser(res);
   }
 
-  Future<UserModel> otherUserProfile({required int idx}) async {
-    final res = await api.request('user.get', {'uid': idx});
+  Future<UserModel> otherUserProfile({required dynamic uid}) async {
+    final res = await api.request('user.get', {'uid': uid});
     return new UserModel.fromJson(res);
   }
 }
