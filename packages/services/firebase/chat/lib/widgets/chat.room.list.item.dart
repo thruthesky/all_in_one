@@ -24,7 +24,7 @@ class _ChatRoomListItemWidgetState extends State<ChatRoomListItemWidget> {
       //   widget.room.profilePhotoUrl ?? '',
       // ),
       title: Text(
-        widget.room.roomId,
+        widget.room.senderDisplayName != '' ? widget.room.senderDisplayName : widget.room.roomId,
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(

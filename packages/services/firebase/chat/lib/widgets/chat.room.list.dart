@@ -29,7 +29,7 @@ class _ChatRoomListWidgetState extends State<ChatRoomListWidget> {
   @override
   void dispose() {
     super.dispose();
-    print('ChatRoomScreen::dispose()');
+    print('_ChatRoomListWidgetState::chatUserRoomSubscription::dispose()');
     chatUserRoomSubscription?.cancel();
   }
 

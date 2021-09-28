@@ -44,7 +44,6 @@ class _ChatMessageButtomActionsWidgetState extends State<ChatMessageButtomAction
       onError(e);
     }
     setState(() {});
-    // Api.instance.chat.notify();  // Notify changes
   }
 
   onError(dynamic e) {

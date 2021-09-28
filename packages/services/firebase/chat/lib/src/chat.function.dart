@@ -1,3 +1,4 @@
+import 'package:chat/chat.dart';
 import 'package:intl/intl.dart';
 
 bool isImageUrl(String? t) {
@@ -15,6 +16,11 @@ bool isImageUrl(String? t) {
     }
   }
   return false;
+}
+
+List<String> otherUsersUid(List<String>? users) {
+  if (users == null) return [];
+  return users.where((uid) => uid != ChatRoom.instance.loginUserUid).toList();
 }
 
 String shortDateTime(dynamic dt) {

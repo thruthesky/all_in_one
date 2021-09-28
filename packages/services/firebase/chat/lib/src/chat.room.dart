@@ -6,6 +6,8 @@ import 'package:chat/src/chat.definitions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:rxdart/rxdart.dart';
 import 'chat.base.dart';
 
@@ -18,17 +20,12 @@ class ChatRoom extends ChatBase {
   static ChatRoom? _instance;
   static ChatRoom get instance {
     if (_instance == null) {
-      _instance = ChatRoom._internal();
+      _instance = ChatRoom(); //._internal();
     }
     return _instance!;
   }
 
-  ChatRoom._internal() {
-    _notifySubjectSubscription =
-        _notifySubject.debounceTime(Duration(milliseconds: 50)).listen((x) {
-      changes.add(null);
-    });
-  }
+  // ChatRoom._internal() {}
 
   String? _displayName;
 
@@ -69,6 +66,10 @@ class ChatRoom extends ChatBase {
   // StreamSubscription? _childChangedSubscription;
   // StreamSubscription? _childRemovedSubscription;
 
+  /// When user scrolls, this event is posted.
+  /// If it is scroll up, true will be passed over the parameter.s
+  PublishSubject<bool> scrollChanges = PublishSubject();
+
   final textController = TextEditingController();
   final scrollController = ScrollController();
 
@@ -99,28 +100,48 @@ class ChatRoom extends ChatBase {
   PublishSubject _notifySubject = PublishSubject();
   StreamSubscription? _notifySubjectSubscription;
 
+  /// When keyboard(keypad) is open, the app needs to adjust the scroll.
+  final keyboardVisibilityController = KeyboardVisibilityController();
+  StreamSubscription? keyboardSubscription;
+
+  /// The [scrolledUp] becomes true once the user scrolls up the chat room screen.
+  /// Use this to determine if the user has scrolled up the screen.
+  /// This may be used to control the screen to move downward to bottom when there are images on the messages.
+  bool scrolledUp = false;
+
   /// Enter chat room
   ///
   /// Null or empty string in [users] will be wiped out.
   ///
-  Future<void> enter({required String otherFirebaseUid, required String displayName}) async {
+  Future<void> enter(
+      {String? otherFirebaseUid, String? roomId, required String displayName}) async {
     _displayName = displayName;
 
     if (loginUserUid == null) {
       throw LOGIN_FIRST;
     }
 
-    List<String> users = [otherFirebaseUid, loginUserUid!];
-    users.sort();
-    String uids = users.join('');
-    String _id = md5.convert(utf8.encode(uids)).toString();
-    currentRoom = await getMyRoom(_id);
-    print(currentRoom);
-
-    if (currentRoom == null) {
-      await ___create(roomId: _id, otherFirebaseUid: otherFirebaseUid);
+    if (roomId != null && otherFirebaseUid != null) {
+      throw BOTH_OF_ID_AND_USERS_HAVE_VALUE;
     }
 
+    if (roomId == null && otherFirebaseUid == null) {
+      throw EMPTY_ID_AND_USERS;
+    }
+
+    if (roomId != null) {
+      currentRoom = await getMyRoom(roomId);
+    } else {
+      List<String> users = [otherFirebaseUid!, loginUserUid!];
+      users.sort();
+      String uids = users.join('');
+      String _id = md5.convert(utf8.encode(uids)).toString();
+      currentRoom = await getMyRoom(_id);
+      if (currentRoom == null) {
+        await ___create(roomId: _id, otherFirebaseUid: otherFirebaseUid);
+      }
+    }
+    subscribeMessagesChanges();
     // fetch latest messages
     fetchMessages();
 
@@ -136,27 +157,33 @@ class ChatRoom extends ChatBase {
       }
     });
 
-    // // fetch previous chat when user scrolls up
-    // scrollController.addListener(() {
-    //   // mark if scrolled up
-    //   if (scrollUp) {
-    //     scrolledUp = true;
-    //   }
-    //   // fetch previous messages
-    //   if (scrollUp && atTop) {
-    //     fetchMessages();
-    //   }
-    //   scrollChanges.add(scrollUp);
-    // });
+    // fetch previous chat when user scrolls up
+    scrollController.addListener(() {
+      // mark if scrolled up
+      if (scrollUp) {
+        scrolledUp = true;
+      }
+      // fetch previous messages
+      if (scrollUp && atTop) {
+        fetchMessages();
+      }
+      scrollChanges.add(scrollUp);
+    });
+    // Listen to keyboard
+    //
+    // When keyboard opens, scroll to bottom only if needed when user open/hide keyboard.
+    keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
+      if (visible && atBottom) {
+        scrollToBottom(ms: 10);
+      }
+    });
+  }
 
-    // // Listen to keyboard
-    // //
-    // // When keyboard opens, scroll to bottom only if needed when user open/hide keyboard.
-    // keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
-    //   if (visible && atBottom) {
-    //     scrollToBottom(ms: 10);
-    //   }
-    // });
+  subscribeMessagesChanges() {
+    _notifySubjectSubscription =
+        _notifySubject.debounceTime(Duration(milliseconds: 50)).listen((x) {
+      changes.add(null);
+    });
   }
 
   Future<void> ___create({required String roomId, required otherFirebaseUid}) async {
@@ -169,10 +196,11 @@ class ChatRoom extends ChatBase {
     );
     // create current user room
     await myRoomListCol.child(roomId).set(info.data);
-    // get current user room
-    currentRoom = ChatUserRoom.fromSnapshot(await myRoomListCol.child(roomId).get());
     // create other user room
     await userRoomDoc(otherFirebaseUid, roomId).set(info.data);
+
+    // get current user room
+    currentRoom = ChatUserRoom.fromSnapshot(await myRoomListCol.child(roomId).get());
     // send initial create room message
     await sendMessage(
       text: ChatProtocol.roomCreated,
@@ -257,7 +285,7 @@ class ChatRoom extends ChatBase {
     Query q = messagesCol(currentRoom!.roomId).orderByKey();
 
     if (messages.isNotEmpty) {
-      q = q.endAt(messages.first.createdAt);
+      q = q.endAt(messages.first.id);
     }
 
     q = q.limitToLast(_limit);
@@ -312,6 +340,17 @@ class ChatRoom extends ChatBase {
     _childAddedSubscription?.cancel();
     // _childChangedSubscription.cancel();
     // _childRemovedSubscription.cancel();
+    keyboardSubscription?.cancel();
+    resetRoom();
+  }
+
+  resetRoom() {
+    messages = [];
+    page = 0;
+    noMoreMessage = false;
+    scrolledUp = false;
+    _throttling = false;
+    currentRoom = null;
   }
 
   bool isMessageOnEdit(ChatMessage message) {
@@ -335,5 +374,21 @@ class ChatRoom extends ChatBase {
 
   deleteMessage(ChatMessage message) {
     messagesCol(currentRoom!.roomId).child(message.id).remove();
+  }
+
+  bool get atBottom {
+    return scrollController.offset > (scrollController.position.maxScrollExtent - 640);
+  }
+
+  bool get atTop {
+    return scrollController.position.pixels < 200;
+  }
+
+  bool get scrollUp {
+    return scrollController.position.userScrollDirection == ScrollDirection.forward;
+  }
+
+  bool get scrollDown {
+    return scrollController.position.userScrollDirection == ScrollDirection.reverse;
   }
 }

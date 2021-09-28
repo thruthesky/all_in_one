@@ -32,14 +32,18 @@ class _ChatMessageListWidgetState extends State<ChatMessageListWidget> {
   void initState() {
     super.initState();
     chatUserRoomSubscription = ChatRoom.instance.changes.listen((value) {
-      setState(() {});
+      if (mounted) setState(() {});
+
+      if (ChatRoom.instance.atBottom || ChatRoom.instance.page == 1) {
+        ChatRoom.instance.scrollToBottom();
+      }
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-    print('ChatRoomScreen::dispose()');
+    print('ChatRoomScreen::chatUserRoomSubscription::dispose()');
     chatUserRoomSubscription?.cancel();
   }
 
