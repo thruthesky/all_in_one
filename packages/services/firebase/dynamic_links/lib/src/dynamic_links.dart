@@ -29,6 +29,7 @@ class DynamicLinks {
   /// [iosBundleId]
   ///
   /// [androidMinimumVersion] and [iosMinimumVersion] sets which application minimum version to support dynamic links.
+  /// If the app installed on the user's device is lower than this versions, it will redirect to respective application store for update.
   ///
   /// [uriHandler] returns dynamic link Uri.
   ///
@@ -85,7 +86,7 @@ class DynamicLinks {
   /// Create dynamic link
   ///
   /// [short] true by default.
-  /// [path] must be a valid Uri path including the "/", it can also includes query.
+  /// [path] path can also includes query. Just like a URL.
   ///
   /// [webDomain] web domain that the dynamic link will redirect besides the default [dynamicLinkWebDomain]
   /// initially set on `init()`, [webDomain] must also be included on the URL whitelist on firebase console dynamic links settings.
@@ -103,9 +104,9 @@ class DynamicLinks {
   /// ```
   Future<Uri> create({
     bool short = true,
-    String path = '',
+    String path = '/',
     String? webDomain,
-    String? title,
+    String? title, 
     String? description,
     String? imageUrl,
     String? campaign,
@@ -114,8 +115,10 @@ class DynamicLinks {
     String? content,
     String? term,
   }) async {
+
     String _link = '$_dynamicLinkWebDomain';
     if (webDomain != null) _link = webDomain;
+    if (path.split('').first != '/') path = '/$path';
     if (path != '') _link = '$_link$path';
 
     DynamicLinkParameters parameters = DynamicLinkParameters(

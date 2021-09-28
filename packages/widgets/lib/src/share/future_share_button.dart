@@ -3,6 +3,7 @@ import 'package:share_plus/share_plus.dart';
 
 typedef FutureStringCallback = Future<String> Function();
 
+/// This is a clone of [ShareButton] that provides a callback to produce the text( or link ) lazily.
 class FutureShareButton extends StatelessWidget {
   const FutureShareButton({
     Key? key,
