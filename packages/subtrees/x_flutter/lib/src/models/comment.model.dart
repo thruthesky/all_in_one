@@ -5,11 +5,6 @@ import 'package:x_flutter/x_flutter.dart';
 class CommentModel extends ForumModel {
   int depth = 0;
 
-  /// 코멘트 작성 모드
-  ///
-  /// [mode] 가 'edit' 이면 해당 코멘트를 수정한다는 표시.
-  /// [mode] 가 'reply' 이면, 해당 코멘트에 새로운 코멘트를 작성하는 표시.
-  String mode = '';
   @override
   CommentModel([Map<String, dynamic>? json]) : super(json == null ? {} : json);
   String toString() => 'CommentModel(idx: $idx, content: $content, name: $name)';

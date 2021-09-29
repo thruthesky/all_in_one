@@ -20,7 +20,7 @@ class PopUpButton extends StatelessWidget {
     return PopupMenuButton<dynamic>(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20.0))),
       itemBuilder: (context) => items,
-      icon: icon,
+      child: icon,
       offset: Offset(10.0, 10.0),
       onSelected: onSelected,
     );
