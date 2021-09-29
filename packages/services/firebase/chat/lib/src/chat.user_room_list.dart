@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:chat/models/chat.user_room.model.dart';
 import 'package:rxdart/rxdart.dart';
@@ -46,6 +47,7 @@ class ChatUserRoomList extends ChatBase {
 
   /// Login user's whole room list including room id.
   List<ChatUserRoom> rooms = [];
+  Map<String, Map<String, String>> userInfo = {};
 
   int newMessages = 0;
 
@@ -58,14 +60,20 @@ class ChatUserRoomList extends ChatBase {
   /// - users array changes,
   /// - and other properties change.
   _listenRoomList() {
-    _myRoomListSubscription = myRoomListCol.onValue.listen((event) {
+    _myRoomListSubscription = myRoomListCol.orderByChild('updatedAt').onValue.listen((event) {
       fetched = true;
       Map<dynamic, dynamic>? res = event.snapshot.value;
       if (res != null) {
         rooms = [];
+        res = LinkedHashMap.fromEntries(res.entries.toList().reversed);
         res.forEach((key, data) {
-          rooms.add(ChatUserRoom.fromData(data, key));
+          ChatUserRoom room = ChatUserRoom.fromData(data, key);
+          rooms.add(room);
+          String otherUid = otherUsersUid(room.users)[0];
+          userInfo[otherUid] = {};
         });
+
+        print(userInfo);
       }
       changes.add('');
     });

@@ -11,7 +11,8 @@ bool isImageUrl(String? t) {
         t.contains('f=jpg') ||
         t.contains('f=jpeg') ||
         t.contains('f=gif') ||
-        t.contains('f=png')) {
+        t.contains('f=png') ||
+        t.contains('etc/thumbnail.php')) {
       return true;
     }
   }
@@ -24,7 +25,7 @@ List<String> otherUsersUid(List<String>? users) {
 }
 
 String shortDateTime(dynamic dt) {
-  /// If it's firestore `FieldValue.serverTimstamp()`, the event may be fired
+  /// If it's firebase `FieldValue.serverTimstamp()` or `ServeValue.timestamp`, the event may be fired
   /// twice.
   if (dt == null) {
     return '';

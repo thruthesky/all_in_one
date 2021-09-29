@@ -27,15 +27,15 @@ class _ChatMessageViewWidgetState extends State<ChatMessageViewWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (!widget.message.isMine)
-          Container(
-            padding: EdgeInsets.only(left: 8),
-            child: Text(
-              widget.message.senderDisplayName,
-              textAlign: widget.message.isMine ? TextAlign.right : TextAlign.left,
-              style: TextStyle(fontSize: 10),
-            ),
-          ),
+        // if (!widget.message.isMine)
+        //   Container(
+        //     padding: EdgeInsets.only(left: 8),
+        //     child: Text(
+        //       widget.message.senderDisplayName,
+        //       textAlign: widget.message.isMine ? TextAlign.right : TextAlign.left,
+        //       style: TextStyle(fontSize: 10),
+        //     ),
+        //   ),
         ChatBubble(
           clipper: widget.message.isMine
               ? ChatBubbleClipper4(type: BubbleType.sendBubble)
@@ -50,7 +50,9 @@ class _ChatMessageViewWidgetState extends State<ChatMessageViewWidget> {
                 ? CachedImage(
                     widget.message.text,
                     onLoadComplete: () {
-                      ChatRoom.instance.scrollToBottom();
+                      if (ChatRoom.instance.atBottom) {
+                        ChatRoom.instance.scrollToBottom(ms: 10);
+                      }
                     },
                   )
                 : Text(

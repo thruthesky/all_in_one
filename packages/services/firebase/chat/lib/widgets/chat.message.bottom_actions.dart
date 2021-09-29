@@ -34,6 +34,8 @@ class _ChatMessageButtomActionsWidgetState extends State<ChatMessageButtomAction
       if (isMessageEdit == null) {
         await ChatRoom.instance
             .sendMessage(text: text, displayName: ChatRoom.instance.displayName!);
+
+        // send notification or emit for sending notification
       } else {
         await ChatRoom.instance
             .sendMessage(text: text, displayName: ChatRoom.instance.displayName!);
