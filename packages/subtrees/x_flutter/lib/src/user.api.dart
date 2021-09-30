@@ -144,4 +144,14 @@ class UserApi {
     final res = await api.request('user.get', {'uid': uid});
     return new UserModel.fromJson(res);
   }
+
+  Future<List<UserModel>> otherUsersProfile({required String uids}) async {
+    final res = await api.request('user.gets', {'uids': uids});
+
+    List<UserModel> users = [];
+    for (final u in res) {
+      users.add(UserModel.fromJson(u));
+    }
+    return users;
+  }
 }

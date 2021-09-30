@@ -24,9 +24,11 @@ class _ChatRoomListItemWidgetState extends State<ChatRoomListItemWidget> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // leading: widget.avatar != null ? widget.avatar!(ChatUserRoomList.instance.userInfo!['url']) : null,
+      leading: widget.avatar != null
+          ? widget.avatar!(ChatUserRoomList.instance.otherUserProfileUrl(widget.room))
+          : null,
       title: Text(
-        widget.room.roomId,
+        ChatUserRoomList.instance.otherUserProfileName(widget.room),
         overflow: TextOverflow.ellipsis,
       ),
       subtitle: Text(

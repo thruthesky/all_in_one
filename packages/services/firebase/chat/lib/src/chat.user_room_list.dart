@@ -53,6 +53,22 @@ class ChatUserRoomList extends ChatBase {
 
   bool fetched = false;
 
+  otherUserProfileUrl(ChatUserRoom room) {
+    String uid = otherUsersUid(room.users)[0];
+    if (userInfo[uid] == null) return '';
+    if (userInfo[uid]!.isEmpty) return '';
+    if (userInfo[uid]!['url'] != null) return userInfo[uid]!['url'];
+    return '';
+  }
+
+  otherUserProfileName(ChatUserRoom room) {
+    String uid = otherUsersUid(room.users)[0];
+    if (userInfo[uid] == null) return room.roomId;
+    if (userInfo[uid]!.isEmpty) return room.roomId;
+    if (userInfo[uid]!['displayName'] != null) return userInfo[uid]!['displayName'];
+    return room.roomId;
+  }
+
   /// Listen to global room updates.
   ///
   /// Listen for;
