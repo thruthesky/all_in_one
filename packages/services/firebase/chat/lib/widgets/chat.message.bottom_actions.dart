@@ -35,7 +35,9 @@ class _ChatMessageButtomActionsWidgetState extends State<ChatMessageButtomAction
         await ChatRoom.instance
             .sendMessage(text: text, displayName: ChatRoom.instance.displayName!);
 
-        // send notification or emit for sending notification
+        /// Send Push Notification Silently
+        if (Chat.instance.messageCreateCallback != null)
+          Chat.instance.messageCreateCallback!(text, ChatRoom.instance.currentRoom!);
       } else {
         await ChatRoom.instance
             .sendMessage(text: text, displayName: ChatRoom.instance.displayName!);

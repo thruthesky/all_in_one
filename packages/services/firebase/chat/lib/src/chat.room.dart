@@ -25,6 +25,9 @@ class ChatRoom extends ChatBase {
     return _instance!;
   }
 
+  /// push notification topic name
+  String get topic => 'notifyChat-${this.currentRoom!.roomId}';
+
   // ChatRoom._internal() {}
 
   String? _displayName;
@@ -36,7 +39,7 @@ class ChatRoom extends ChatBase {
   ChatMessage? isMessageEdit;
   bool get isCreate => isMessageEdit == null;
 
-  String get otherFirebaseUid => otherUsersUid(currentRoom!.users)[0];
+  String? get otherUserFirebaseUid => otherUsersUid(currentRoom!.users);
 
   /// [loading] becomes true while the app is fetching more messages.
   /// The app should display loader while it is fetching.
@@ -209,6 +212,10 @@ class ChatRoom extends ChatBase {
       text: ChatProtocol.roomCreated,
       displayName: displayName!,
     );
+
+    /// Send Push Notification Silently
+    if (Chat.instance.messageCreateCallback != null)
+      Chat.instance.messageCreateCallback!(ChatProtocol.roomCreated, currentRoom!);
   }
 
   /// Send chat message to the users in the room

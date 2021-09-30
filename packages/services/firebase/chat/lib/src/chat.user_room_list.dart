@@ -39,7 +39,7 @@ class ChatUserRoomList extends ChatBase {
   /// - When global room information changes. it will pass the user room of the global room.
   ///
   /// To get the whole list of room info, use [rooms].
-  BehaviorSubject changes = BehaviorSubject.seeded('');
+  BehaviorSubject<List<ChatUserRoom>?> changes = BehaviorSubject.seeded(null);
 
   StreamSubscription? _myRoomListSubscription;
 
@@ -54,7 +54,8 @@ class ChatUserRoomList extends ChatBase {
   bool fetched = false;
 
   otherUserProfileUrl(ChatUserRoom room) {
-    String uid = otherUsersUid(room.users)[0];
+    String? uid = otherUsersUid(room.users);
+    if (uid == null) return '';
     if (userInfo[uid] == null) return '';
     if (userInfo[uid]!.isEmpty) return '';
     if (userInfo[uid]!['url'] != null) return userInfo[uid]!['url'];
@@ -62,7 +63,8 @@ class ChatUserRoomList extends ChatBase {
   }
 
   otherUserProfileName(ChatUserRoom room) {
-    String uid = otherUsersUid(room.users)[0];
+    String? uid = otherUsersUid(room.users);
+    if (uid == null) return room.roomId;
     if (userInfo[uid] == null) return room.roomId;
     if (userInfo[uid]!.isEmpty) return room.roomId;
     if (userInfo[uid]!['displayName'] != null) return userInfo[uid]!['displayName'];
@@ -85,13 +87,11 @@ class ChatUserRoomList extends ChatBase {
         res.forEach((key, data) {
           ChatUserRoom room = ChatUserRoom.fromData(data, key);
           rooms.add(room);
-          String otherUid = otherUsersUid(room.users)[0];
-          userInfo[otherUid] = {};
+          String? otherUid = otherUsersUid(room.users);
+          if (otherUid != null && userInfo[otherUid] == null) userInfo[otherUid] = {};
         });
-
-        print(userInfo);
       }
-      changes.add('');
+      changes.add(rooms);
     });
   }
 

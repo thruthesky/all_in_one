@@ -27,6 +27,9 @@ class _ChatRoomListItemWidgetState extends State<ChatRoomListItemWidget> {
       leading: widget.avatar != null
           ? widget.avatar!(ChatUserRoomList.instance.otherUserProfileUrl(widget.room))
           : null,
+      // leading: Chat.instance.avatar != null
+      //     ? Chat.instance.avatar!(ChatUserRoomList.instance.otherUserProfileUrl(widget.room))
+      //     : null,
       title: Text(
         ChatUserRoomList.instance.otherUserProfileName(widget.room),
         overflow: TextOverflow.ellipsis,

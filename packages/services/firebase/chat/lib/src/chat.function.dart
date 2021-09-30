@@ -19,9 +19,14 @@ bool isImageUrl(String? t) {
   return false;
 }
 
-List<String> otherUsersUid(List<String>? users) {
+List<String> otherUsersUids(List<String>? users) {
   if (users == null) return [];
   return users.where((uid) => uid != ChatRoom.instance.loginUserUid).toList();
+}
+
+String? otherUsersUid(List<String>? users) {
+  if (users == null) return null;
+  return users.where((uid) => uid != ChatRoom.instance.loginUserUid).first;
 }
 
 String shortDateTime(dynamic dt) {
