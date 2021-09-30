@@ -11,20 +11,26 @@ bool isImageUrl(String? t) {
         t.contains('f=jpg') ||
         t.contains('f=jpeg') ||
         t.contains('f=gif') ||
-        t.contains('f=png')) {
+        t.contains('f=png') ||
+        t.contains('etc/thumbnail.php')) {
       return true;
     }
   }
   return false;
 }
 
-List<String> otherUsersUid(List<String>? users) {
+List<String> otherUsersUids(List<String>? users) {
   if (users == null) return [];
   return users.where((uid) => uid != ChatRoom.instance.loginUserUid).toList();
 }
 
+String? otherUsersUid(List<String>? users) {
+  if (users == null) return null;
+  return users.where((uid) => uid != ChatRoom.instance.loginUserUid).first;
+}
+
 String shortDateTime(dynamic dt) {
-  /// If it's firestore `FieldValue.serverTimstamp()`, the event may be fired
+  /// If it's firebase `FieldValue.serverTimstamp()` or `ServeValue.timestamp`, the event may be fired
   /// twice.
   if (dt == null) {
     return '';

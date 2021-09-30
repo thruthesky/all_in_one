@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class ChatBase {
-  String? get loginUserUid =>
-      FirebaseAuth.instance.currentUser == null ? null : FirebaseAuth.instance.currentUser!.uid;
+  String? get loginUserUid => FirebaseAuth.instance.currentUser == null
+      ? null
+      : FirebaseAuth.instance.currentUser!.isAnonymous
+          ? 'firebaseAnonymousUid'
+          : FirebaseAuth.instance.currentUser!.uid;
 
   bool get isLogin => FirebaseAuth.instance.currentUser != null;
   FirebaseDatabase get db => FirebaseDatabase.instance;

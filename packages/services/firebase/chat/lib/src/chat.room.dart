@@ -25,6 +25,9 @@ class ChatRoom extends ChatBase {
     return _instance!;
   }
 
+  /// push notification topic name
+  String get topic => 'notifyChat-${this.currentRoom!.roomId}';
+
   // ChatRoom._internal() {}
 
   String? _displayName;
@@ -35,6 +38,8 @@ class ChatRoom extends ChatBase {
 
   ChatMessage? isMessageEdit;
   bool get isCreate => isMessageEdit == null;
+
+  String? get otherUserFirebaseUid => otherUsersUid(currentRoom!.users);
 
   /// [loading] becomes true while the app is fetching more messages.
   /// The app should display loader while it is fetching.
@@ -63,8 +68,8 @@ class ChatRoom extends ChatBase {
 
   StreamSubscription? _currentRoomSubscription;
   StreamSubscription? _childAddedSubscription;
-  // StreamSubscription? _childChangedSubscription;
-  // StreamSubscription? _childRemovedSubscription;
+  StreamSubscription? _childChangedSubscription;
+  StreamSubscription? _childRemovedSubscription;
 
   /// When user scrolls, this event is posted.
   /// If it is scroll up, true will be passed over the parameter.s
@@ -193,6 +198,7 @@ class ChatRoom extends ChatBase {
       senderDisplayName: _displayName!,
       senderUid: loginUserUid!,
       createdAt: ServerValue.timestamp,
+      updatedAt: ServerValue.timestamp,
     );
     // create current user room
     await myRoomListCol.child(roomId).set(info.data);
@@ -206,6 +212,10 @@ class ChatRoom extends ChatBase {
       text: ChatProtocol.roomCreated,
       displayName: displayName!,
     );
+
+    /// Send Push Notification Silently
+    if (Chat.instance.messageCreateCallback != null)
+      Chat.instance.messageCreateCallback!(ChatProtocol.roomCreated, currentRoom!);
   }
 
   /// Send chat message to the users in the room
@@ -240,12 +250,16 @@ class ChatRoom extends ChatBase {
     };
 
     if (isCreate) {
+      Map<String, dynamic> _m = message;
       // Time that this message(or last message) was created.
       message['createdAt'] = ServerValue.timestamp;
+      message['updatedAt'] = ServerValue.timestamp;
 
       await messagesCol(currentRoom!.roomId).push().set(message);
       // print(message);
-      message['newMessages'] = ServerValue.increment(1); // To increase, it must be an udpate.
+
+      _m['newMessages'] = ServerValue.increment(1); // To increase, it must be an udpate.
+      _m['updatedAt'] = ServerValue.timestamp;
       List<Future<void>> messages = [];
 
       /// Just incase there are duplicated UIDs.
@@ -254,7 +268,7 @@ class ChatRoom extends ChatBase {
       /// Send a message to all users in the room.
       for (String uid in roomUsers) {
         // print(chatUserRoomDoc(uid, info['id']).path);
-        messages.add(userRoomDoc(uid, currentRoom!.roomId).update(message));
+        messages.add(userRoomDoc(uid, currentRoom!.roomId).update(_m));
       }
 
       // print('send messages to: ${messages.length}');
@@ -262,9 +276,8 @@ class ChatRoom extends ChatBase {
     } else {
       message['updatedAt'] = ServerValue.timestamp;
       await messagesCol(currentRoom!.roomId).child(isMessageEdit!.id).update(message);
-      isMessageEdit = null;
+      cancelEdit();
     }
-
     return message;
   }
 
@@ -289,6 +302,23 @@ class ChatRoom extends ChatBase {
     }
 
     q = q.limitToLast(_limit);
+
+    _childChangedSubscription = q.onChildChanged.listen((Event event) {
+      if (event.snapshot.exists == false) return;
+      int i = messages.indexWhere((ChatMessage m) => m.id == event.snapshot.key);
+      if (i != -1) {
+        messages[i] = ChatMessage.fromData(event.snapshot.value, id: event.snapshot.key!);
+        _notify();
+      }
+    });
+    _childRemovedSubscription = q.onChildRemoved.listen((Event event) {
+      if (event.snapshot.exists == false) return;
+      int i = messages.indexWhere((ChatMessage m) => m.id == event.snapshot.key);
+      if (i != -1) {
+        messages.removeAt(i);
+        _notify();
+      }
+    });
 
     _childAddedSubscription = q.onChildAdded.listen((Event event) {
       loading = false;
@@ -338,8 +368,8 @@ class ChatRoom extends ChatBase {
     _notifySubjectSubscription?.cancel();
     _currentRoomSubscription?.cancel();
     _childAddedSubscription?.cancel();
-    // _childChangedSubscription.cancel();
-    // _childRemovedSubscription.cancel();
+    _childChangedSubscription?.cancel();
+    _childRemovedSubscription?.cancel();
     keyboardSubscription?.cancel();
     resetRoom();
   }

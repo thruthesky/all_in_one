@@ -13,8 +13,8 @@ class ChatUserRoom {
   /// [createAt] is the time that last message was sent by a user.
   /// It will be `ServerValue.timestamp` when it sends the
   /// message. And it will `Timestamp` when it read the room information.
-  // ignore: unnecessary_question_mark
-  dynamic? createdAt;
+  dynamic createdAt;
+  dynamic updatedAt;
 
   /// [newMessages] has the number of new messages for that room.
   String newMessages;
@@ -29,6 +29,7 @@ class ChatUserRoom {
     this.users,
     this.text = '',
     this.createdAt,
+    this.updatedAt,
     this.newMessages = '',
     this.isImage = false,
   });
@@ -54,6 +55,7 @@ class ChatUserRoom {
       senderPhotoURL: info['senderPhotoURL'] as String,
       users: List<String>.from(info['users'] as Iterable<dynamic>),
       createdAt: info['createdAt'] as int,
+      updatedAt: info['updatedAt'] as int,
       text: _text,
       newMessages: "${info['newMessages']}",
       isImage: isImage,
@@ -69,6 +71,7 @@ class ChatUserRoom {
       'users': this.users,
       'text': this.text,
       'createdAt': this.createdAt,
+      'updatedAt': this.updatedAt,
       'newMessages': this.newMessages,
     };
   }

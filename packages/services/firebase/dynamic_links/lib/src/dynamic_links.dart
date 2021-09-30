@@ -92,7 +92,7 @@ class DynamicLinks {
   /// initially set on `init()`, [webDomain] must also be included on the URL whitelist on firebase console dynamic links settings.
   ///
   /// [title], [description] and [imageUrl] can be provided for social meta tags.
-  /// 
+  ///
   /// [campaign], [source], [medium], [content] and [term] are used for google analytics.
   /// ``` dart
   ///   DynamicLinks.instance.create(
@@ -106,7 +106,7 @@ class DynamicLinks {
     bool short = true,
     String path = '/',
     String? webDomain,
-    String? title, 
+    String? title,
     String? description,
     String? imageUrl,
     String? campaign,
@@ -115,7 +115,6 @@ class DynamicLinks {
     String? content,
     String? term,
   }) async {
-
     String _link = '$_dynamicLinkWebDomain';
     if (webDomain != null) _link = webDomain;
     if (path.split('').first != '/') path = '/$path';

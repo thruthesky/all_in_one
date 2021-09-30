@@ -8,9 +8,11 @@ import 'package:flutter/widgets.dart';
 class ChatRoomListWidget extends StatefulWidget {
   ChatRoomListWidget({
     required this.onChatRoomTap,
+    this.avatar,
   });
 
   final Function onChatRoomTap;
+  final Widget Function(String)? avatar;
   @override
   _ChatRoomListWidgetState createState() => _ChatRoomListWidgetState();
 }
@@ -41,9 +43,13 @@ class _ChatRoomListWidgetState extends State<ChatRoomListWidget> {
             itemCount: rooms.length,
             itemBuilder: (_, i) {
               final ChatUserRoom room = rooms[i];
-              return ChatRoomListItemWidget(room, onTap: () {
-                widget.onChatRoomTap(room);
-              });
+              return ChatRoomListItemWidget(
+                room,
+                onTap: () {
+                  widget.onChatRoomTap(room);
+                },
+                avatar: widget.avatar,
+              );
             },
           )
         : Center(
