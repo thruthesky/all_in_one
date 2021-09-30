@@ -92,14 +92,14 @@ class _ForumPushNotificationIconState extends State<ForumPushNotificationIcon> {
                 Positioned(
                   top: 15,
                   left: 5,
-                  child: Icon(Icons.comment, size: 12, color: Colors.greenAccent),
+                  child: Icon(Icons.comment, size: 12, color: Colors.red[900]!.withOpacity(.7)),
                 ),
               if (UserApi.instance.user
                   .isSubscribeTopic(NotificationOptions.comment(widget.categoryId)))
                 Positioned(
                   top: 15,
                   right: 5,
-                  child: Icon(Icons.comment, size: 12, color: Colors.greenAccent),
+                  child: Icon(Icons.comment, size: 12, color: Colors.grey[800]!.withOpacity(.7)),
                 ),
               if (loading)
                 Positioned(

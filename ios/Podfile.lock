@@ -175,7 +175,7 @@ PODS:
   - tau_core (8.3.12)
   - url_launcher (0.0.1):
     - Flutter
-  - webview_flutter (0.0.1):
+  - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
 DEPENDENCIES:
@@ -202,7 +202,7 @@ DEPENDENCIES:
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
+  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
@@ -274,8 +274,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
-  webview_flutter:
-    :path: ".symlinks/plugins/webview_flutter/ios"
+  webview_flutter_wkwebview:
+    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
   battery_plus: 7851ab482c336dd101ae735dc9363f01e1223c7c
@@ -300,7 +300,7 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
-  image_picker: e06f7a68f000bd36f552c1847e33cda96ed31f1f
+  image_picker: 9aa50e1d8cdacdbed739e925b7eea16d014367e6
   integration_test: 7db6d89f336f671dcbc7563ee27a5b08f6f8aee1
   libwebp: e90b9c01d99205d03b6bb8f2c8c415e5a4ef66f0
   Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
@@ -309,7 +309,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   network_info_plus: b78876159360f5580608c2cea620d6ceffabd0ad
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  path_provider: d1e9807085df1f9cc9318206cd649dc0b76be3de
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
@@ -317,12 +317,12 @@ SPEC CHECKSUMS:
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
-  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  shared_preferences: 5033afbb22d372e15aff8ff766df9021b845f273
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   tau_core: 4b7be325f37983d3c74e1692d70e41e12b24d9be
-  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
-  webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
+  url_launcher: b6e016d912f04be9f5bf6e8e82dc599b7ba59649
+  webview_flutter_wkwebview: 44aa025fbcf6730d808f1e0d86a5af5ac25fa8de
 
 PODFILE CHECKSUM: a22838b7eeeacb9feb9b0dfc4693580df9e685db
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2

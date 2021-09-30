@@ -28,6 +28,6 @@ class ForumApi {
   Future<Map<String, int>> report(int idx) async {
     final dynamic re = await api.request('post.report', {'idx': idx});
     final post = PostModel.fromJson(re);
-    return {'report': post.report};
+    return {'report': post.noOfReport};
   }
 }

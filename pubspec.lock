@@ -541,14 +541,14 @@ packages:
       name: geolocator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "7.6.0"
+    version: "7.6.2"
   geolocator_android:
     dependency: transitive
     description:
       name: geolocator_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.2"
   geolocator_apple:
     dependency: transitive
     description:
@@ -562,7 +562,7 @@ packages:
       name: geolocator_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.4"
+    version: "2.3.5"
   geolocator_web:
     dependency: transitive
     description:
@@ -604,14 +604,14 @@ packages:
       name: image_gallery_saver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.9"
+    version: "1.7.0"
   image_picker:
     dependency: transitive
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.8.4"
+    version: "0.8.4+2"
   image_picker_for_web:
     dependency: transitive
     description:
@@ -819,7 +819,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.5"
   path_provider_linux:
     dependency: transitive
     description:
@@ -868,7 +868,7 @@ packages:
       name: permission_handler_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.6.1"
+    version: "3.6.2"
   petitparser:
     dependency: transitive
     description:
@@ -903,7 +903,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.0"
+    version: "6.0.1"
   qr:
     dependency: transitive
     description:
@@ -1008,7 +1008,7 @@ packages:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.7"
+    version: "2.0.8"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -1139,7 +1139,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.10"
+    version: "6.0.12"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -1230,7 +1230,28 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.13"
+    version: "2.1.1"
+  webview_flutter_android:
+    dependency: transitive
+    description:
+      name: webview_flutter_android
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.14"
+  webview_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: webview_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  webview_flutter_wkwebview:
+    dependency: transitive
+    description:
+      name: webview_flutter_wkwebview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.14"
   widgets:
     dependency: "direct main"
     description:
@@ -1268,4 +1289,4 @@ packages:
     version: "5.3.0"
 sdks:
   dart: ">=2.14.0 <3.0.0"
-  flutter: ">=2.0.0"
+  flutter: ">=2.5.0"

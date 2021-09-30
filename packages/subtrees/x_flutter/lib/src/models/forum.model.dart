@@ -2,6 +2,14 @@ import 'package:x_flutter/x_flutter.dart';
 
 class ForumModel {
   Api api = Api.instance;
+
+  /// 코멘트 작성 모드.
+  /// 이 변수는 CommentModel 에 있어야 정상이지만, PostModel 과 호환을 위해서 여기에 둔다.
+  ///
+  /// [mode] 가 'edit' 이면 해당 코멘트를 수정한다는 표시.
+  /// [mode] 가 'reply' 이면, 해당 코멘트에 새로운 코멘트를 작성하는 표시.
+  String mode = '';
+
   int idx;
   int rootIdx;
   int parentIdx;
@@ -23,7 +31,7 @@ class ForumModel {
   List<FileModel> files = [];
   int Y;
   int N;
-  int report;
+  int noOfReport;
   String code;
   String name;
   String companyName;
@@ -71,7 +79,7 @@ class ForumModel {
         listOrder = json['listOrder'] ?? 0,
         Y = json['Y'] ?? 0,
         N = json['N'] ?? 0,
-        report = json['report'] ?? 0,
+        noOfReport = json['report'] ?? 0,
         code = json['code'] ?? '',
         name = json['name'] ?? '',
         companyName = json['companyName'] ?? '',
@@ -145,9 +153,10 @@ class ForumModel {
     return re;
   }
 
-  Future<Map<String, int>> reportCall() async {
+  /// report the post or comment.
+  Future<Map<String, int>> report() async {
     final Map<String, int> re = await PostApi.instance.report(idx);
-    this.report = re['report'] ?? 0;
+    this.noOfReport = re['report'] ?? 0;
     return re;
   }
 }
