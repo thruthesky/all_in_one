@@ -218,21 +218,6 @@
       "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
     },
     {
-      "name": "영자 - Sonub - Simulator iPhone 12 Max Pro - iMac - Local",
-      "program": "projects/my/sonub/lib/main.dart",
-      "args": [
-        "--dart-define",
-        "APP_NAME=Sonub",
-        "--dart-define",
-        "SERVER_URL=https://main.sonub.com/index.php",
-        "--dart-define",
-        "TEST_MODE=firebase=on&in_app_purchase=off"
-      ],
-      "request": "launch",
-      "type": "dart",
-      "deviceId": "62C87ED8-8EC6-4CE7-A3DC-E7AAF8608CAE"
-    },
-    {
       "name": "영자 - Sonub - Emulator Pixel3a - iMac - Local",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
@@ -248,13 +233,43 @@
       "deviceId": "emulator-5554"
     },
     {
-      "name": "영자 - Sonub - iPhone11MaxPro - iMac - Local",
+      "name": "영자 - Sonub - Simulator iPhone 12 Max Pro - iMac - Local",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
         "--dart-define",
         "APP_NAME=Sonub",
         "--dart-define",
         "SERVER_URL=https://main.sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "62C87ED8-8EC6-4CE7-A3DC-E7AAF8608CAE"
+    },
+    {
+      "name": "영자 - Sonub - Simulator iPhone 12 Max Pro - iMac - Remote",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://sonub.com/index.php",
+        "--dart-define",
+        "TEST_MODE=firebase=on&in_app_purchase=off"
+      ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "62C87ED8-8EC6-4CE7-A3DC-E7AAF8608CAE"
+    },
+    {
+      "name": "영자 - Sonub - iPhone11MaxPro - iMac - Remote",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": [
+        "--dart-define",
+        "APP_NAME=Sonub",
+        "--dart-define",
+        "SERVER_URL=https://sonub.com/index.php",
         "--dart-define",
         "TEST_MODE=firebase=on&in_app_purchase=off"
       ],
@@ -338,7 +353,7 @@
       "type": "dart",
       "deviceId": "00008030-000904C80290802E"
     },
-{
+    {
       "name": "영자, Emulator, Android Pixel 3",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
