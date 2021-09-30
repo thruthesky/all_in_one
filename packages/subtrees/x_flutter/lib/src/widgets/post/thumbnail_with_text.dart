@@ -13,6 +13,8 @@ class ThumbnailWithText extends StatelessWidget {
     this.maxTitleLines = 1,
     this.maxContentLines = 1,
     this.hero = false,
+    this.loaderWidget,
+    this.errorWidget,
     Key? key,
   }) : super(key: key);
 
@@ -29,9 +31,18 @@ class ThumbnailWithText extends StatelessWidget {
 
   final bool hero;
 
+  final Widget? loaderWidget;
+  final Widget? errorWidget;
+
   @override
   Widget build(BuildContext context) {
-    Widget image = CacheImage(post.files.first.url, width: thumbnailSize, height: thumbnailSize);
+    Widget image = CacheImage(
+      post.files.first.url,
+      width: thumbnailSize,
+      height: thumbnailSize,
+      errorWidget: errorWidget,
+      loaderWidget: loaderWidget,
+    );
     if (hero) image = Hero(tag: post.files.first.url, child: image, transitionOnUserGestures: true);
 
     return GestureDetector(
