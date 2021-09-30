@@ -17,6 +17,8 @@ class ThumbnailWithTextList extends StatelessWidget {
     this.maxTitleLines = 1,
     this.maxContentLines = 2,
     this.hero = false,
+    this.loaderWidget,
+    this.errorWidget,
     Key? key,
   }) : super(key: key);
 
@@ -39,6 +41,9 @@ class ThumbnailWithTextList extends StatelessWidget {
 
   final bool hero;
 
+  final Widget? loaderWidget;
+  final Widget? errorWidget;
+
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
@@ -60,6 +65,8 @@ class ThumbnailWithTextList extends StatelessWidget {
           maxTitleLines: maxTitleLines,
           maxContentLines: maxContentLines,
           hero: hero,
+          loaderWidget: loaderWidget,
+          errorWidget: errorWidget,
         );
       },
     );

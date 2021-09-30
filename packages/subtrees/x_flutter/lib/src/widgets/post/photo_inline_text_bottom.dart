@@ -14,6 +14,8 @@ class PhotoInlineTextBottom extends StatelessWidget {
     this.textBGColor = const Color(0xaa000000),
     this.onTap,
     this.hero = true,
+    this.errorWidget,
+    this.loaderWidget,
     Key? key,
   }) : super(key: key);
 
@@ -31,10 +33,19 @@ class PhotoInlineTextBottom extends StatelessWidget {
 
   final bool hero;
 
+  final Widget? errorWidget;
+  final Widget? loaderWidget;
+
   @override
   Widget build(BuildContext context) {
     Widget title = Text('${post.title}', overflow: TextOverflow.ellipsis, style: titleStyle);
-    Widget image = CacheImage(post.files.first.url, width: photoWidth, height: photoHeight);
+    Widget image = CacheImage(
+      post.files.first.url,
+      width: photoWidth,
+      height: photoHeight,
+      loaderWidget: loaderWidget,
+      errorWidget: errorWidget,
+    );
     if (centeredTitle) title = Center(child: title);
 
     title = Container(

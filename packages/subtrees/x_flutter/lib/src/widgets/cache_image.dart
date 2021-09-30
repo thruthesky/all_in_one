@@ -15,12 +15,18 @@ class CacheImage extends StatelessWidget {
     this.height = 100,
     this.onLoadComplete,
     this.fit = BoxFit.cover,
+    this.loaderWidget,
+    this.errorWidget,
   });
   final String url;
   final double width;
   final double? height;
   final Function? onLoadComplete;
   final BoxFit fit;
+
+  final Widget? loaderWidget;
+  final Widget? errorWidget;
+
   @override
   Widget build(BuildContext context) {
     if (url == '') {
@@ -41,8 +47,8 @@ class CacheImage extends StatelessWidget {
         return Image(image: provider, fit: fit);
       },
       imageUrl: url,
-      placeholder: (context, url) => Spinner(),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      placeholder: (context, url) => loaderWidget != null ? loaderWidget! : Spinner(),
+      errorWidget: (context, url, error) => errorWidget != null ? errorWidget! : Icon(Icons.error),
       width: width,
       height: height,
     );
