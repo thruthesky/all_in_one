@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 class ShadowedContainer extends StatelessWidget {
   const ShadowedContainer({
     required this.child,
+    this.boxColor,
     this.shadowColor = Colors.grey,
     this.elevation = 4,
     this.borderRadius = 15,
     this.padding,
-    this.margin, 
+    this.margin,
     this.decoration,
     this.width,
     this.height,
@@ -16,6 +17,7 @@ class ShadowedContainer extends StatelessWidget {
 
   final Widget child;
 
+  final Color? boxColor;
   final Color shadowColor;
   final double elevation;
   final double borderRadius;
@@ -30,13 +32,17 @@ class ShadowedContainer extends StatelessWidget {
     return Material(
       elevation: elevation,
       shadowColor: shadowColor,
-
       child: Container(
         width: width,
         height: height,
         margin: margin,
         padding: padding,
-        decoration: decoration,
+        decoration: decoration != null
+            ? decoration
+            : BoxDecoration(
+                borderRadius: BorderRadius.circular(borderRadius),
+                color: boxColor,
+              ),
         child: child,
       ),
       borderRadius: BorderRadius.circular(borderRadius),
