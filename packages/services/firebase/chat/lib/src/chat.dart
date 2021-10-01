@@ -1,13 +1,12 @@
 import 'package:chat/chat.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:rxdart/rxdart.dart';
 
 class Chat {
   /// [firebaseInitialized] will be posted with `true` when it is initialized.
   BehaviorSubject<bool> firebaseInitialized = BehaviorSubject<bool>.seeded(false);
 
-  Widget Function(String)? avatar;
+  // Widget Function(String)? avatar;
 
   Function(String, ChatUserRoom)? messageCreateCallback;
 
@@ -20,10 +19,10 @@ class Chat {
   }
 
   Future<void> init({
-    Widget Function(String)? avatar,
     Function(String, ChatUserRoom)? messageCreateCallback,
+    // Widget Function(String)? avatar,
   }) async {
-    this.avatar = avatar;
+    // this.avatar = avatar;
     this.messageCreateCallback = messageCreateCallback;
     await initializeFirebase();
   }
