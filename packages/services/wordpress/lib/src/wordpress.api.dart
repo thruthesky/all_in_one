@@ -1,15 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import '../models/user.model.dart';
 import 'user.dart';
-import 'wordpress.lib.dart';
+import '../defines.dart';
 
 class WordpressApi {
   final dio = Dio();
 
   /// [url] 은 [init] 함수에서 초기화 되어야 한다.
-  late final String url;
+  String url = '';
 
   String get sessionId => User.instance.currentUser.sessionId;
 
@@ -31,10 +30,6 @@ class WordpressApi {
     return _instance!;
   }
 
-  /// [anonymousIconUrl] 은 사용자가 로그인을 하지 않았을 때, 또는 회원 사진이 없을 때, 보여주는 기본 사진이다.
-  /// init() 에서 이 값을 다르게 지정 할 수 있다.
-  late final String anonymousIconUrl;
-
   /// 로그인을 하면 [onLogin] 콜백이 호출된다.
   Function? onLogin;
 
@@ -42,15 +37,11 @@ class WordpressApi {
   Function? onRegister;
 
   init({
-    String apiKey = '',
     required String url,
-    anonymousIconUrl =
-        'https://flutterkorea.com/view/flutterkorea/assets/icon/anonymous/anonymous.png',
     Function? onLogin,
     Function? onRegister,
   }) {
     this.url = url;
-    this.anonymousIconUrl = anonymousIconUrl;
     this.onLogin = onLogin;
     this.onRegister = onRegister;
   }
@@ -65,6 +56,7 @@ class WordpressApi {
   // print('version: ${res['version']}');
   // ```
   Future<dynamic> request(String route, [Json? data]) async {
+    if (url == '') throw 'Wordpress Api URL is not set.';
     if (data == null) data = {};
     data['route'] = route;
     if (sessionId != '') data['sessionId'] = sessionId;
@@ -83,15 +75,14 @@ class WordpressApi {
         print(res);
         throw "Got response from backend. But the response data is wrong or corrupted. Check if you have proper backend url, or check if the backend produces error.";
       }
-      if (res.data['response'] == null) {
+      if (res.data['code'] != '') {
+        throw res.data['code'];
+      } else if (res.data['response'] == null) {
         throw ("Data inside response object is NULL.");
+      } else {
+        // 성공
+        return res.data['response'];
       }
-      if (res.data['response'] is String) {
-        throw res.data['response'];
-      }
-
-      // 성공
-      return res.data['response'];
     } on DioError catch (e) {
       // 백엔드에서 에러 발생.
       //
