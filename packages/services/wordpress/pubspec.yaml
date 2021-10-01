@@ -1,0 +1,21 @@
+name: wordpress
+description: Wordpress Api for Sonub backend.
+version: 0.0.1
+homepage: https://github.com/withcenter/sonub
+repository: https://github.com/withcenter/sonub
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  dio: ^4.0.0
+  rxdart: ^0.27.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
