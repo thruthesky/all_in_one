@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:x_flutter/x_flutter.dart';
 
 class MessagingApi {
@@ -14,6 +15,7 @@ class MessagingApi {
 
   String token = '';
   String defaultTopic = 'defaultTopic';
+
 
   /// Event handlers on perssion state changes. for iOS only.
   /// These event will be called when permission is denied or not determined.
@@ -41,6 +43,14 @@ class MessagingApi {
     this.onMessageOpenedFromBackground = onMessageOpenedFromBackground;
 
     this._initMessaging();
+  }
+
+  updateBadgeCount(int count) {
+    FlutterAppBadger.updateBadgeCount(count);
+  }
+
+  removeBadgeCount(int count) {
+    FlutterAppBadger.removeBadge();
   }
 
   /// Initialize Messaging
@@ -98,12 +108,6 @@ class MessagingApi {
       this.token = token;
       this.saveTokenAndSubscribeToDefaultTopics();
     });
-
-    // When ever user logs in, update the token with user Id.
-    // authChanges.listen((user) {
-    //   if (user == null) return;
-    //   this.saveTokenAndSubscribeToDefaultTopics();
-    // });
   }
 
   Future<dynamic> saveToken(String token, {String topic: ""}) {
@@ -113,8 +117,15 @@ class MessagingApi {
     });
   }
 
+  String getDefaultTopics() {
+    final topic = [this.defaultTopic];
+    if (Platform.isAndroid) topic.add(this.defaultTopic + 'android');
+    if (Platform.isIOS) topic.add(this.defaultTopic+ 'ios');
+    return topic.join(',');
+  }
+
   Future<dynamic> saveTokenAndSubscribeToDefaultTopics() {
-    return this.saveToken(this.token, topic: this.defaultTopic);
+    return this.saveToken(this.token, topic: this.getDefaultTopics());
   }
 
   Future<dynamic> sendMessageToTopic(dynamic data) {
@@ -140,10 +151,10 @@ class MessagingApi {
   /// - emails is an array of email or string separated by comma
   /// @returns
   Future<dynamic> sendMessageToUsers(dynamic data) {
-    return Api.instance.request("notification.sendMessageToUsers", {'data': data});
+    return Api.instance.request("notification.sendMessageToUsers", data);
   }
 
   Future<dynamic> isSubscribedToTopic(dynamic data) {
-    return Api.instance.request("notification.isSubscribedToTopic", {'data': data});
+    return Api.instance.request("notification.isSubscribedToTopic", data);
   }
 }
