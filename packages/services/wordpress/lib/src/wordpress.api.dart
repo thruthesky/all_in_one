@@ -59,7 +59,7 @@ class WordpressApi {
     if (url == '') throw 'Wordpress Api URL is not set.';
     if (data == null) data = {};
     data['route'] = route;
-    if (sessionId != '') data['sessionId'] = sessionId;
+    if (sessionId != '') data['session_id'] = sessionId;
     try {
       final res = await dio.post(
         url,

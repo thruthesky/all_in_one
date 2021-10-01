@@ -12,6 +12,7 @@ class WPUser {
   String firebaseUid;
   String phoneNo;
   int birthdate;
+  int age;
   String gender;
   String provider;
 
@@ -31,6 +32,7 @@ class WPUser {
     required this.firebaseUid,
     required this.phoneNo,
     required this.birthdate,
+    required this.age,
     required this.gender,
     required this.provider,
   });
@@ -40,13 +42,14 @@ class WPUser {
       id: toInt(json['ID']),
       email: json['user_email'] ?? '',
       verifiedEmail: json['verifiedEmail'] ?? '',
-      displayName: json['displayName'] ?? '',
+      displayName: json['display_name'] ?? '',
       name: json['name'] ?? '',
       photoUrl: json['photo_url'] ?? '',
       sessionId: json['session_id'] ?? '',
       firebaseUid: json['firebase_uid'] ?? '',
       phoneNo: json['phoneNo'] ?? '',
       birthdate: toInt(json['birthdate']),
+      age: toInt(json['age']),
       gender: json['gender'] ?? '',
       provider: json['provider'] ?? '',
     );
@@ -63,6 +66,7 @@ class WPUser {
       'firebaseUid': firebaseUid,
       'phoneNo': phoneNo,
       'birthdate': birthdate,
+      'age': age,
       'gender': gender,
       'provider': provider,
     };
