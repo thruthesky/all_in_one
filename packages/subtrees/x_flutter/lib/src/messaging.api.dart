@@ -16,7 +16,6 @@ class MessagingApi {
   String token = '';
   String defaultTopic = 'defaultTopic';
 
-
   /// Event handlers on perssion state changes. for iOS only.
   /// These event will be called when permission is denied or not determined.
   Function? onNotificationPermissionDenied;
@@ -120,7 +119,7 @@ class MessagingApi {
   String getDefaultTopics() {
     final topic = [this.defaultTopic];
     if (Platform.isAndroid) topic.add(this.defaultTopic + 'android');
-    if (Platform.isIOS) topic.add(this.defaultTopic+ 'ios');
+    if (Platform.isIOS) topic.add(this.defaultTopic + 'ios');
     return topic.join(',');
   }
 
