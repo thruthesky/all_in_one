@@ -4,12 +4,12 @@ import '../models/user.model.dart';
 import 'wordpress.api.dart';
 import '../defines.dart';
 
-class User {
+class UserApi {
   /// User Singleton
-  static User? _instance;
-  static User get instance {
+  static UserApi? _instance;
+  static UserApi get instance {
     if (_instance == null) {
-      _instance = User();
+      _instance = UserApi();
     }
 
     return _instance!;
@@ -71,6 +71,15 @@ class User {
   ///
   Future<WPUser> update(Json data) async {
     final res = await WordpressApi.instance.request('user.update', data);
+    currentUser = WPUser.fromJson(res);
+    changes.add(currentUser);
+    return currentUser;
+  }
+
+  /// Get user profile.
+  ///
+  Future<WPUser> profile() async {
+    final res = await WordpressApi.instance.request('user.profile');
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     return currentUser;

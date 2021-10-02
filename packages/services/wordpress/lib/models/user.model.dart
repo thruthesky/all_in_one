@@ -20,6 +20,7 @@ class WPUser {
   bool get notLoggedIn => !loggedIn;
   bool get hasPhoneNo => phoneNo != '' && phoneNo.toString().length > 7;
   bool get hasDisplayName => displayName != '';
+  bool get hasPhoto => photoUrl != '';
 
   WPUser({
     required this.id,

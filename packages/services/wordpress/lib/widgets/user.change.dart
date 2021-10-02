@@ -19,7 +19,7 @@ class UserChange extends StatelessWidget {
     return StreamBuilder(
       /// ? distinct() 로 하니, 화면이 깜빡거린다. 왜?
       /// 예) .distinct((p, n) => p.idx == n.idx)
-      stream: User.instance.changes,
+      stream: UserApi.instance.changes,
       builder: (_, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) return SizedBox.shrink();
         WPUser user = snapshot.data as WPUser;

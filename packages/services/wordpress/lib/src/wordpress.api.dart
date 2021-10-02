@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-import 'user.dart';
+import 'user.api.dart';
 import '../defines.dart';
 
 class WordpressApi {
@@ -10,7 +10,7 @@ class WordpressApi {
   /// [url] 은 [init] 함수에서 초기화 되어야 한다.
   String url = '';
 
-  String get sessionId => User.instance.currentUser.sessionId;
+  String get sessionId => UserApi.instance.currentUser.sessionId;
 
   // @Deprecated('Use CurrencyApi.instance')
   // CurrencyApi currency = CurrencyApi();
