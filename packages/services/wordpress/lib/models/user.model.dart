@@ -8,6 +8,8 @@ class WPUser {
   String displayName;
   String name;
   String photoUrl;
+  int photoId;
+  String socialLoginPhotoUrl;
   String sessionId;
   String firebaseUid;
   String phoneNo;
@@ -15,6 +17,11 @@ class WPUser {
   int age;
   String gender;
   String provider;
+
+  String firstName;
+  String lastName;
+  String domain;
+  String registered;
 
   bool get loggedIn => id > 0;
   bool get notLoggedIn => !loggedIn;
@@ -29,6 +36,8 @@ class WPUser {
     required this.displayName,
     required this.name,
     required this.photoUrl,
+    required this.photoId,
+    required this.socialLoginPhotoUrl,
     required this.sessionId,
     required this.firebaseUid,
     required this.phoneNo,
@@ -36,6 +45,10 @@ class WPUser {
     required this.age,
     required this.gender,
     required this.provider,
+    required this.firstName,
+    required this.lastName,
+    required this.domain,
+    required this.registered,
   });
 
   factory WPUser.fromJson(Json json) {
@@ -45,14 +58,20 @@ class WPUser {
       verifiedEmail: json['verifiedEmail'] ?? '',
       displayName: json['display_name'] ?? '',
       name: json['name'] ?? '',
-      photoUrl: json['photo_url'] ?? '',
+      photoUrl: json['profile_photo_url'] ?? '',
+      photoId: toInt(json['profile_photo_id']),
+      socialLoginPhotoUrl: json['socialLoginPhotoUrl'] ?? '',
       sessionId: json['session_id'] ?? '',
-      firebaseUid: json['firebase_uid'] ?? '',
+      firebaseUid: json['firebaseUid'] ?? '',
       phoneNo: json['phoneNo'] ?? '',
       birthdate: toInt(json['birthdate']),
       age: toInt(json['age']),
       gender: json['gender'] ?? '',
       provider: json['provider'] ?? '',
+      firstName: json['first_name'] ?? '',
+      lastName: json['last_name'] ?? '',
+      domain: json['domain'] ?? '',
+      registered: json['user_registered'] ?? '',
     );
   }
 
@@ -63,6 +82,8 @@ class WPUser {
       'displayName': displayName,
       'name': name,
       'photoUrl': photoUrl,
+      'photoId': photoId,
+      'socialLoginPhotoUrl': socialLoginPhotoUrl,
       'sessionId': sessionId,
       'firebaseUid': firebaseUid,
       'phoneNo': phoneNo,
@@ -70,6 +91,10 @@ class WPUser {
       'age': age,
       'gender': gender,
       'provider': provider,
+      'firstName': firstName,
+      'lastName': lastName,
+      'domain': domain,
+      'registered': registered,
     };
   }
 

@@ -32,21 +32,25 @@ class FileApi {
     required ImageSource source,
     int quality = 90,
     Function? progress,
+    String postType = '',
   }) async {
+    // print('pickUpload;');
+
     /// Pick image
     final picker = ImagePicker();
 
     final pickedFile = await picker.pickImage(source: source);
-    print('pickedFile; $pickedFile');
+    // print('pickedFile; $pickedFile');
     if (pickedFile == null) throw IMAGE_NOT_SELECTED;
 
-    print('compress with: ${pickedFile.path}');
+    // print('compress with: ${pickedFile.path}');
     File file = await imageCompressor(pickedFile.path, quality);
 
     /// Upload with file
     return await upload(
       file: file,
       progress: progress,
+      postType: postType,
     );
   }
 
@@ -71,6 +75,7 @@ class FileApi {
   Future<WPFile> upload({
     required File file,
     Function? progress,
+    required String postType,
   }) async {
     FormData formData;
 
@@ -78,7 +83,8 @@ class FileApi {
     formData = FormData.fromMap({
       /// `route` 와 `session_id` 등 추가 파라메타 값을 전달 할 수 있다.
       'route': 'file.upload',
-      'sessionId': UserApi.instance.currentUser.sessionId,
+      'session_id': UserApi.instance.currentUser.sessionId,
+      'post_type': postType,
 
       /// 아래에서 `userfile` 이, `$_FILES[userfile]` 와 같이 들어간다.
       'userfile': await MultipartFile.fromFile(
@@ -122,21 +128,12 @@ class FileApi {
   //   return FileModel.fromJson(res);
   // }
 
-  // /// Deletes a file.
-  // ///
-  // /// [idx] is the file idx to delete.
-  // /// [postOrComment] is a post or a comment that the file is attached to.
-  // /// If [postOrComment] is given, then the file will be removed from the `files` array after deletion.
-  // ///
-  // /// It returns deleted file id.
-  // Future<FileModel> delete(int idx, [dynamic postOrComment]) async {
-  //   final res = await api.request('file.delete', {'idx': idx});
-  //   if (postOrComment != null) {
-  //     int i = postOrComment.files.indexWhere((file) => file.idx == idx);
-  //     if (i > -1) {
-  //       postOrComment.files.removeAt(i);
-  //     }
-  //   }
-  //   return FileModel.fromJson(res);
-  // }
+  /// Deletes a file.
+  ///
+  /// It returns deleted file record.
+  Future<WPFile> delete(int id) async {
+    final res = await WordpressApi.instance.request('file.delete', {'ID': id});
+    print('res; $res');
+    return WPFile.fromJson(res);
+  }
 }

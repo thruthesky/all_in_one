@@ -17,11 +17,11 @@ class WPFile {
 
   factory WPFile.fromJson(Json data) {
     return WPFile(
-      url: data['url'],
-      thumbnailUrl: data['thumbnail_url'],
-      id: data['ID'],
-      name: data['name'],
-      type: data['type'],
+      url: data['url'] ?? '',
+      thumbnailUrl: data['thumbnail_url'] ?? '',
+      id: data['ID'] ?? '',
+      name: data['name'] ?? '',
+      type: data['type'] ?? '',
     );
   }
 

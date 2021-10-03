@@ -3,8 +3,9 @@ import 'dart:math';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
-int toInt(String? text) {
+int toInt(dynamic text) {
   if (text == null) return 0;
+  if (text is num) return 0;
   return int.tryParse(text) ?? 0;
 }
 

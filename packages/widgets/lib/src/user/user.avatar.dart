@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widgets/src/avatar/avatar.dart';
 import 'package:x_flutter/x_flutter.dart';
 
+@Deprecated('This is depending on a package when it should NOT be.')
 class UserAvatar extends StatelessWidget {
   const UserAvatar({Key? key, this.size = 80.0, this.onTap}) : super(key: key);
   final double size;
