@@ -68,7 +68,7 @@ class GradientCard extends StatelessWidget {
     this.titleAlign = TextAlign.center,
     this.width = double.infinity,
     this.height,
-    this.hero = true,
+    this.hero = false,
     this.children,
   }) : super(key: key);
 

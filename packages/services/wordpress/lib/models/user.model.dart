@@ -51,7 +51,7 @@ class WPUser {
     required this.registered,
   });
 
-  factory WPUser.fromJson(Json json) {
+  factory WPUser.fromJson(MapStringDynamic json) {
     return WPUser(
       id: toInt(json['ID']),
       email: json['user_email'] ?? '',

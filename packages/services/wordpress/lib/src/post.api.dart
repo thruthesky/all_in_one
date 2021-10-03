@@ -20,6 +20,7 @@ class PostApi {
   /// if [hasPhoto] is set true, then it will get posts that has featured image. If app uploads an image, the first image becomes featured image.
   /// [withAutoP] is to add <p> tags or not.
   /// [stripTags] is to remove all the HTML tags in title, content.
+  /// [minimize] is to retreive minimal post data.
   ///
   /// ```dart
   /// await PostApi.instance.posts();
@@ -36,6 +37,7 @@ class PostApi {
     bool hasPhoto = false,
     bool withAutoP = true,
     bool stripTags = false,
+    bool minimize = false,
   }) async {
     final res = await WordpressApi.instance.request('post.posts', {
       'posts_per_page': postsPerPage,
@@ -53,11 +55,25 @@ class PostApi {
       ],
       'with_autop': withAutoP,
       'strip_tags': stripTags,
+      'minimize': minimize,
     });
     final List<WPPost> posts = [];
     for (final p in res) {
       posts.add(WPPost.fromJson(p));
     }
     return posts;
+  }
+
+  Future<WPPost> get(int id) async {
+    final res = await WordpressApi.instance.request('post.get', {'ID': id});
+    return WPPost.fromJson(res);
+  }
+
+  /// This will make an Http request for editting post.
+  ///
+  /// Editting can either be creating or updating.
+  Future<WPPost> edit(MapStringDynamic data) async {
+    final res = await WordpressApi.instance.request('post.edit', data);
+    return WPPost.fromJson(res);
   }
 }

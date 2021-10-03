@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 class Avatar extends StatelessWidget {
   const Avatar({Key? key, required this.url, this.size = 80.0}) : super(key: key);
@@ -11,19 +10,15 @@ class Avatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late Widget image;
-    String _url = url;
-    if (_url == '') {
-      _url = Api.instance.anonymousIconUrl;
-    }
-    if (_url.startsWith('http')) {
+    if (url.startsWith('http')) {
       image = CachedNetworkImage(
-        imageUrl: _url,
+        imageUrl: url,
         placeholder: (context, url) => CircularProgressIndicator(),
         errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.cover,
       );
     } else {
-      image = Image.asset(_url);
+      image = Image.asset(url);
     }
     return Container(
       child: ClipOval(

@@ -55,7 +55,7 @@ class WordpressApi {
   // final res = await Api.instance.request('app.version');
   // print('version: ${res['version']}');
   // ```
-  Future<dynamic> request(String route, [Json? data]) async {
+  Future<dynamic> request(String route, [MapStringDynamic? data]) async {
     if (url == '') throw 'Wordpress Api URL is not set.';
     if (data == null) data = {};
     data['route'] = route;

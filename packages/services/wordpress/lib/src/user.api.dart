@@ -24,7 +24,7 @@ class UserApi {
 
   /// Register a new user.
   ///
-  Future<WPUser> register(Json data) async {
+  Future<WPUser> register(MapStringDynamic data) async {
     final res = await WordpressApi.instance.request('user.register', data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
@@ -33,7 +33,7 @@ class UserApi {
 
   /// Login a user.
   ///
-  Future<WPUser> login(Json data) async {
+  Future<WPUser> login(MapStringDynamic data) async {
     final res = await WordpressApi.instance.request('user.login', data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
@@ -69,7 +69,7 @@ class UserApi {
 
   /// Update user information.
   ///
-  Future<WPUser> update(Json data) async {
+  Future<WPUser> update(MapStringDynamic data) async {
     final res = await WordpressApi.instance.request('user.update', data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);

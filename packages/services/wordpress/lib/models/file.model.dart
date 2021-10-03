@@ -1,3 +1,5 @@
+import 'package:wordpress/wordpress.dart';
+
 import '../defines.dart';
 
 class WPFile {
@@ -15,7 +17,7 @@ class WPFile {
     required this.type,
   });
 
-  factory WPFile.fromJson(Json data) {
+  factory WPFile.fromJson(MapStringDynamic data) {
     return WPFile(
       url: data['url'] ?? '',
       thumbnailUrl: data['thumbnail_url'] ?? '',
@@ -38,5 +40,19 @@ class WPFile {
   @override
   String toString() {
     return "WPFile( ${toMap()} )";
+  }
+
+  /// 파일 삭제
+  ///
+  ///
+  Future<WPFile> delete([dynamic postOrComment]) async {
+    final file = await FileApi.instance.delete(id);
+    if (postOrComment != null) {
+      int i = postOrComment.files.indexWhere((WPFile f) => f.id == id);
+      if (i > -1) {
+        postOrComment.files.removeAt(i);
+      }
+    }
+    return file;
   }
 }

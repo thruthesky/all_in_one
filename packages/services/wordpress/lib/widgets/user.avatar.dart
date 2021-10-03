@@ -13,7 +13,7 @@ class UserAvatar extends StatelessWidget {
       onTap: onTap,
       child: UserChange(
         loginBuilder: (WPUser user) => user.hasPhoto
-            ? Avatar(
+            ? _Avatar(
                 url: user.photoUrl,
                 size: size,
               )
@@ -30,8 +30,8 @@ class UserAvatar extends StatelessWidget {
   }
 }
 
-class Avatar extends StatelessWidget {
-  const Avatar({Key? key, required this.url, this.size = 80.0}) : super(key: key);
+class _Avatar extends StatelessWidget {
+  const _Avatar({Key? key, required this.url, this.size = 80.0}) : super(key: key);
 
   final String url;
   final double size;
