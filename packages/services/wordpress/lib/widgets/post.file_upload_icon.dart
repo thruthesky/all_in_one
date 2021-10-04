@@ -62,21 +62,21 @@ class FileUploadIcon extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   leading: new Icon(Icons.camera_alt),
-                  title: new Text('카메라로 사진 찍기'),
+                  title: Text('Take photo from Camera'),
                   onTap: () {
                     Navigator.pop(context, ImageSource.camera);
                   },
                 ),
                 ListTile(
                   leading: new Icon(Icons.photo),
-                  title: new Text('앨범에서 사진 가져오기'),
+                  title: Text('Get photo from Photo Gallery'),
                   onTap: () {
                     Navigator.pop(context, ImageSource.gallery);
                   },
                 ),
                 ListTile(
                   leading: new Icon(Icons.cancel),
-                  title: new Text('취소'),
+                  title: Text('Cancel'),
                   onTap: () {
                     Navigator.pop(context, null);
                   },

@@ -74,7 +74,7 @@ class WPComment {
       if (commentId > 0) 'comment_ID': commentId,
       if (commentParent > 0) 'comment_parent': commentParent,
       'content': commentContent,
-      'fileIdxes': files.map((WPFile file) => file.id).toSet().join(','),
+      'fileIds': files.map((WPFile file) => file.id).toSet().join(','),
     };
   }
 

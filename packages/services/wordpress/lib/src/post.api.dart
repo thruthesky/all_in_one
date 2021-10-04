@@ -37,7 +37,7 @@ class PostApi {
     int page = 1,
     int id = 0,
     bool hasPhoto = false,
-    bool withAutoP = true,
+    bool withAutoP = false,
     bool stripTags = false,
     bool minimize = false,
   }) async {

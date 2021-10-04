@@ -70,7 +70,10 @@ class PostListController {
       // 새 글을 작성했으면, 맨 위에 추가
       state.posts.insert(0, p..open = true);
     } else {
-      // 글 수정이면, call by reference 로 자동 수정 됨. 아무것도 안함
+      // 글 수정이면, 현재 위치에 변경.
+      int i = state.posts.indexWhere((element) => element.id == p.id);
+      state.posts[i] = p;
+      // What if category changed? Should the app list previous category or new category?
     }
 
     if (state.widget.edited != null) {

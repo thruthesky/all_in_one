@@ -5,6 +5,8 @@ import '../defines.dart';
 class WPFile {
   String url;
   String thumbnailUrl;
+  String mediumThumbnailUrl;
+  String largeThumbnailUrl;
   int id;
   String name;
   String type;
@@ -12,6 +14,8 @@ class WPFile {
   WPFile({
     required this.url,
     required this.thumbnailUrl,
+    required this.mediumThumbnailUrl,
+    required this.largeThumbnailUrl,
     required this.id,
     required this.name,
     required this.type,
@@ -21,6 +25,8 @@ class WPFile {
     return WPFile(
       url: data['url'] ?? '',
       thumbnailUrl: data['thumbnail_url'] ?? '',
+      mediumThumbnailUrl: data['medium_thumbnail_url'] ?? '',
+      largeThumbnailUrl: data['large_thumbnail_url'] ?? '',
       id: data['ID'] ?? '',
       name: data['name'] ?? '',
       type: data['type'] ?? '',
@@ -34,6 +40,8 @@ class WPFile {
       'type': type,
       'url': url,
       'thumbnailUrl': thumbnailUrl,
+      'mediumThumbnailUrl': mediumThumbnailUrl,
+      'largeThumbnailUrl': largeThumbnailUrl,
     };
   }
 
