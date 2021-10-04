@@ -17,7 +17,9 @@ class PostApi {
   /// [id] to get only one post.
   /// [page] is the page number.
   /// [postsPerPage] is the number of the posts to show in a page.
-  /// if [hasPhoto] is set true, then it will get posts that has featured image. If app uploads an image, the first image becomes featured image.
+  /// if [hasPhoto] is set true, then it will get posts that has featured image.
+  ///   - Note that, it only gets posts that has featured image. Not just any post that has images.
+  ///   - If app uploads an image, the first image becomes featured image.
   /// [withAutoP] is to add <p> tags or not.
   /// [stripTags] is to remove all the HTML tags in title, content.
   /// [minimize] is to retreive minimal post data.
@@ -47,12 +49,13 @@ class PostApi {
       'order': order,
       'orderby': orderBy,
       if (id > 0) 'p': id,
-      'meta_query': [
-        {
-          'key': '_thumbnail_id',
-          'compare': 'EXISTS',
-        }
-      ],
+      if (hasPhoto)
+        'meta_query': [
+          {
+            'key': '_thumbnail_id',
+            'compare': 'EXISTS',
+          }
+        ],
       'with_autop': withAutoP,
       'strip_tags': stripTags,
       'minimize': minimize,

@@ -20,10 +20,12 @@ class UserAvatar extends StatelessWidget {
             : Icon(
                 Icons.person,
                 size: size,
+                color: Colors.black87,
               ),
         logoutBuilder: (_) => Icon(
           Icons.person,
           size: size,
+          color: Colors.black87,
         ),
       ),
     );
