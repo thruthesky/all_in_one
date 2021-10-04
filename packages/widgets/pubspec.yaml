@@ -32,11 +32,7 @@ dependencies:
   flutter_svg: ^0.22.0
 
   responsive_grid: ^2.0.0
-
-  # publish_to: none 이어야 path 사용 가능.
-  x_flutter:
-    path: ../subtrees/x_flutter
-
+  
   utils:
     path: ../services/utils
 

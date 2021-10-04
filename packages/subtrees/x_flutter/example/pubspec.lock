@@ -16,7 +16,7 @@ packages:
     source: hosted
     version: "2.1.0"
   cached_network_image:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cached_network_image
       url: "https://pub.dartlang.org"
@@ -57,8 +57,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
-  dio:
+  cupertino_icons:
     dependency: "direct main"
+    description:
+      name: cupertino_icons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
+  dio:
+    dependency: transitive
     description:
       name: dio
       url: "https://pub.dartlang.org"
@@ -84,9 +91,9 @@ packages:
       name: file
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.2"
+    version: "6.1.1"
   firebase_core:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
@@ -107,7 +114,7 @@ packages:
     source: hosted
     version: "1.1.0"
   firebase_messaging:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: firebase_messaging
       url: "https://pub.dartlang.org"
@@ -133,7 +140,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_app_badger:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_app_badger
       url: "https://pub.dartlang.org"
@@ -154,7 +161,7 @@ packages:
     source: hosted
     version: "3.1.2"
   flutter_image_compress:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_image_compress
       url: "https://pub.dartlang.org"
@@ -184,6 +191,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.4"
+  get_storage:
+    dependency: "direct main"
+    description:
+      name: get_storage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   http:
     dependency: transitive
     description:
@@ -192,14 +206,14 @@ packages:
     source: hosted
     version: "0.13.3"
   http_parser:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.0"
   image_picker:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image_picker
       url: "https://pub.dartlang.org"
@@ -255,7 +269,7 @@ packages:
     source: hosted
     version: "1.8.0"
   path_provider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -318,14 +332,14 @@ packages:
     source: hosted
     version: "4.2.1"
   rxdart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.27.1"
   shared_preferences:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
@@ -462,6 +476,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
+  x_flutter:
+    dependency: "direct main"
+    description:
+      path: ".."
+      relative: true
+    source: path
+    version: "0.0.7"
   xdg_directories:
     dependency: transitive
     description:

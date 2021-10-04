@@ -1,7 +1,5 @@
-import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
-import 'package:widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
@@ -20,11 +18,11 @@ class LoginScreen extends StatelessWidget {
               '회원 로그인',
               style: TextStyle(fontSize: 20.0),
             ),
-            UserLoginForm(
-              success: (user) => service.openHome(),
-              error: service.error,
-              register: service.openRegister,
-            ),
+            // UserLoginForm(
+            //   success: (user) => service.openHome(),
+            //   error: service.error,
+            //   register: service.openRegister,
+            // ),
           ],
         ),
       ),

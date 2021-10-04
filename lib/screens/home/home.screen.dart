@@ -40,11 +40,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   Text('만능앱'),
                   Row(children: [
-                    UserName(
-                      suffixLogin: '님의',
-                      defaultName: '당신의',
-                      style: tsTitle,
-                    ),
+                    // UserName(
+                    //   suffixLogin: '님의',
+                    //   defaultName: '당신의',
+                    //   style: tsTitle,
+                    // ),
                     Text(
                       ' 일상을 책임지겠습니다.',
                       style: tsTitle,

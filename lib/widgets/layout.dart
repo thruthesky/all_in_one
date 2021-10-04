@@ -87,9 +87,12 @@ class _AppTitleBarState extends State<AppTitleBar> {
       backgroundColor: Colors.white,
       actions: [
         Center(
-            child: UserAvatar(
-                size: 36,
-                onTap: UserApi.instance.loggedIn ? service.openProfile : service.openLogin)),
+          child: Text('@TODO A'),
+          // UserAvatar(
+          //   size: 36,
+          //   onTap: UserApi.instance.loggedIn ? service.openProfile : service.openLogin,
+          // ),
+        ),
         if (widget.create != null)
           IconButton(
               onPressed: widget.create,
@@ -156,11 +159,11 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                UserAvatar(onTap: () => open(RouteNames.profile)),
+                // UserAvatar(onTap: () => open(RouteNames.profile)),
                 Spacer(),
                 Row(
                   children: [
-                    UserName(defaultName: '로그인을 해 주세요.', onTap: () => open(RouteNames.profile)),
+                    // UserName(defaultName: '로그인을 해 주세요.', onTap: () => open(RouteNames.profile)),
                     Spacer(),
                     UserChange(
                       loginBuilder: (user) => Row(

@@ -369,6 +369,14 @@
       "deviceId": "emulator-5554"
     },
     {
+      "name": "영자, Emulator, Android Pixel 3 - Sonub-backend - Local",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "SERVER_URL=http://169.254.70.91/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5554"
+    },
+    {
       "name": "Android Pixel emulator-5554",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
