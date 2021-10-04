@@ -1,7 +1,6 @@
 // import 'dart:async';
 
 import 'package:all_in_one/screens/voice_recorder/voce_recorder_player.screen.dart';
-import 'package:x_flutter/x_flutter.dart';
 import 'screens/voice_recorder/voice_recorder.screen.dart';
 import 'screens/about_phone/about_phone.screen.dart';
 import 'screens/beta/beta.screen.dart';
@@ -96,16 +95,16 @@ class _StudyAppState extends State<StudyApp> {
         const Locale('ko', 'KR'),
       ],
       locale: Locale(Get.deviceLocale!.languageCode),
-      translations: ApiTranslations(trans: {
-        'en': {
-          'app_name': 'Yo',
-          'apple': 'eat apple',
-        },
-        'ko': {
-          'app_name': '어이, 거기',
-          'apple': '사과먹어',
-        }
-      }),
+      // translations: ApiTranslations(trans: {
+      //   'en': {
+      //     'app_name': 'Yo',
+      //     'apple': 'eat apple',
+      //   },
+      //   'ko': {
+      //     'app_name': '어이, 거기',
+      //     'apple': '사과먹어',
+      //   }
+      // }),
       title: '만능앱',
       // defaultTransition: Transition.noTransition,
       theme: themeData,

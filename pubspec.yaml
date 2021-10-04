@@ -34,9 +34,6 @@ dependencies:
   utils:
     path: packages/services/utils
 
-  x_flutter:
-    path: packages/subtrees/x_flutter
-
   widgets:
     path: packages/widgets
 

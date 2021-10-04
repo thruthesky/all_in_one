@@ -4,7 +4,6 @@ import 'package:country_picker/country_picker.dart';
 import 'package:country_currency_pickers/country_currency_pickers.dart';
 import 'package:utils/utils.dart';
 import 'package:widgets/widgets.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 class ExchangeRateDisplay extends StatefulWidget {
   const ExchangeRateDisplay({Key? key}) : super(key: key);
@@ -78,8 +77,8 @@ class _ExchangeRateDisplayState extends State<ExchangeRateDisplay> {
     if (leftCountry == null || rightCountry == null) return;
 
     try {
-      currencies =
-          await CurrencyApi.instance.get(leftCountry!.currencyCode!, rightCountry!.currencyCode!);
+      // currencies =
+      //     await CurrencyApi.instance.get(leftCountry!.currencyCode!, rightCountry!.currencyCode!);
       print('reloadCurrency; $currencies');
 
       if (firstTimeLoadingCurrency) {

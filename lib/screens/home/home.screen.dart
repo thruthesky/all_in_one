@@ -15,7 +15,6 @@ import 'package:get/get.dart';
 import 'package:utils/utils.dart';
 import 'package:weather/weather.dart';
 import 'package:widgets/widgets.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -50,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: tsTitle,
                     ),
                   ]),
-                  NotLoggedIn(builder: (_) => Text('로그인 하기'), onTap: service.openLogin),
+                  // NotLoggedIn(builder: (_) => Text('로그인 하기'), onTap: service.openLogin),
                   spaceXl,
                   Text('위젯', style: tsSm),
                   Divider(),

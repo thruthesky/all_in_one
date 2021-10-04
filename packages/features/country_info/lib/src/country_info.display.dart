@@ -2,7 +2,6 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:utils/utils.dart';
 import 'package:widgets/widgets.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 class CountryInfoDisplay extends StatefulWidget {
   @override
@@ -10,13 +9,13 @@ class CountryInfoDisplay extends StatefulWidget {
 }
 
 class _CountryInfoDisplayState extends State<CountryInfoDisplay> {
-  CountryModel? country;
+  // CountryModel? country;
   String? dialCode;
 
   getCountry(CountryCode cc) async {
     try {
       dialCode = cc.dialCode;
-      country = await CountryApi.instance.get(countryCode: cc.code);
+      // country = await CountryApi.instance.get(countryCode: cc.code);
       setState(() {});
     } catch (e) {
       error(e);
@@ -50,7 +49,7 @@ class _CountryInfoDisplayState extends State<CountryInfoDisplay> {
           Divider(),
           spaceSm,
           if (dialCode != null) CenteredRow(left: Text('국가 전화 코드 : '), right: Text(dialCode!)),
-          if (country != null) CountryInfoDisplayDetails(country: country!)
+          // if (country != null) CountryInfoDisplayDetails(country: country!)
         ],
       ),
     );
@@ -63,7 +62,7 @@ class CountryInfoDisplayDetails extends StatelessWidget {
     required this.country,
   }) : super(key: key);
 
-  final CountryModel country;
+  final dynamic country;
 
   @override
   Widget build(BuildContext context) {

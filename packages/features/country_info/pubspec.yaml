@@ -17,9 +17,6 @@ dependencies:
   country_code_picker: ^2.0.2
 
 
-  x_flutter:
-    path: ../../subtrees/x_flutter
-
   utils:
     path: ../../services/utils
 

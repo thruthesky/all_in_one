@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 /// Layout
 ///
@@ -165,22 +164,22 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
                   children: [
                     // UserName(defaultName: '로그인을 해 주세요.', onTap: () => open(RouteNames.profile)),
                     Spacer(),
-                    UserChange(
-                      loginBuilder: (user) => Row(
-                        children: [
-                          TextButton(onPressed: () => open(RouteNames.profile), child: Text('프로필')),
-                          TextButton(
-                              onPressed: () => UserApi.instance.logout(), child: Text('로그아웃')),
-                        ],
-                      ),
-                      logoutBuilder: (_) => Row(
-                        children: [
-                          TextButton(onPressed: () => open(RouteNames.login), child: Text('로그인')),
-                          TextButton(
-                              onPressed: () => open(RouteNames.register), child: Text('회원가입')),
-                        ],
-                      ),
-                    ),
+                    // UserChange(
+                    //   loginBuilder: (user) => Row(
+                    //     children: [
+                    //       TextButton(onPressed: () => open(RouteNames.profile), child: Text('프로필')),
+                    //       TextButton(
+                    //           onPressed: () => UserApi.instance.logout(), child: Text('로그아웃')),
+                    //     ],
+                    //   ),
+                    //   logoutBuilder: (_) => Row(
+                    //     children: [
+                    //       TextButton(onPressed: () => open(RouteNames.login), child: Text('로그인')),
+                    //       TextButton(
+                    //           onPressed: () => open(RouteNames.register), child: Text('회원가입')),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
@@ -190,15 +189,15 @@ class _LayoutDrawerState extends State<LayoutDrawer> {
             title: Text('홈'),
             onTap: () => service.openHome(),
           ),
-          UserChange(
-            loginBuilder: (_) => SizedBox.shrink(),
-            logoutBuilder: (_) => Column(
-              children: [
-                ListTile(title: Text('회원 로그인'), onTap: () => open(RouteNames.login)),
-                ListTile(title: Text('회원 가입'), onTap: () => open(RouteNames.register)),
-              ],
-            ),
-          ),
+          // UserChange(
+          //   loginBuilder: (_) => SizedBox.shrink(),
+          //   logoutBuilder: (_) => Column(
+          //     children: [
+          //       ListTile(title: Text('회원 로그인'), onTap: () => open(RouteNames.login)),
+          //       ListTile(title: Text('회원 가입'), onTap: () => open(RouteNames.register)),
+          //     ],
+          //   ),
+          // ),
           ListTile(title: Text('QR 코드')),
           ListTile(
               leading: spaceXs,

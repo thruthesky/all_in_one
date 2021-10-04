@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/octicons_icons.dart';
 import 'package:widgets/widgets.dart';
-import 'package:x_flutter/x_flutter.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({Key? key}) : super(key: key);
@@ -38,7 +37,7 @@ class _AboutScreenState extends State<AboutScreen> {
           developerEmail: 'thruthesky@gmail.com',
           developerKakao: 'thruthesky2',
           matrixVersion: app.version,
-          matrixUrl: Api.instance.url,
+          matrixUrl: '@Todo Api.instance.url',
           bottom: Column(
             children: [
               ListTile(

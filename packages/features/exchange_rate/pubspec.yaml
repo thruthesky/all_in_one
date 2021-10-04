@@ -15,9 +15,6 @@ dependencies:
   flutter:
     sdk: flutter
     
-  x_flutter:
-    path: ../../subtrees/x_flutter
-
   utils:
     path: ../../services/utils
     
