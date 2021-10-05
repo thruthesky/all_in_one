@@ -83,7 +83,7 @@ class WPPost {
         authorProfilePhotoUrl: json["author_profile_photo_url"] ?? '',
         shortDateTime: json["short_date_time"] ?? '',
         comments: List<WPComment>.from((json["comments"] ?? []).map((x) => WPComment.fromJson(x))),
-        slug: json["category"] ?? '',
+        slug: json["slug"] ?? '',
         featuredImageUrl: json['featured_image_url'] ?? '',
         featuredImageId: toInt(json['featured_image_ID']),
         featuredImageThumbnailUrl: json['featured_image_default_thumbnail_url'] ?? '',
@@ -124,6 +124,10 @@ class WPPost {
     return toJson().toString();
   }
 
+  factory WPPost.copy(WPPost post) {
+    return WPPost.fromJson(post.toJson());
+  }
+
   /// 글 작성을 위한 데이터
   Map<String, dynamic> toEdit() {
     return {
@@ -131,7 +135,7 @@ class WPPost {
       if (slug != '') 'slug': slug,
       'post_title': title,
       'post_content': content,
-      'fileIdxes': files.map((file) => file.id).toSet().join(','),
+      'fileIds': files.map((file) => file.id).toSet().join(','),
     };
   }
 

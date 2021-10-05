@@ -5,7 +5,7 @@ import 'package:path/path.dart' as p;
 
 int toInt(dynamic text) {
   if (text == null) return 0;
-  if (text is num) return 0;
+  if (text is num) return text.toInt();
   return int.tryParse(text) ?? 0;
 }
 
