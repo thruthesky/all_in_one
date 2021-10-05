@@ -79,4 +79,14 @@ class PostApi {
     final res = await WordpressApi.instance.request('post.edit', data);
     return WPPost.fromJson(res);
   }
+
+  /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
+  Future<WPPost> vote({
+    required int ID,
+    required String Yn,
+  }) async {
+    final res = await WordpressApi.instance.request('post.vote', {'Yn': Yn});
+    print('vote; res; $res');
+    return WPPost.fromJson({});
+  }
 }
