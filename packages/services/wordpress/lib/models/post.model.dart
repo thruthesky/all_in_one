@@ -144,14 +144,9 @@ class WPPost {
     return PostApi.instance.edit(toEdit());
   }
 
-  Future vote({bool like = false}) async {
-    if (like) {
-      // TODO - post.like;
-      // await post.like();
-    } else {
-      // TODO - post.dislike
-      // await post.dislike();
-    }
+  Future vote({bool like = false, bool dislike = false}) async {
+    assert(like || dislike, 'Like or dislike must be true');
+    await PostApi.instance.vote(ID: id, Yn: like ? 'Y' : 'N');
   }
 
   Future report() async {

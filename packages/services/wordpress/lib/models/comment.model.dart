@@ -73,7 +73,7 @@ class WPComment {
     return {
       if (commentId > 0) 'comment_ID': commentId,
       if (commentParent > 0) 'comment_parent': commentParent,
-      'content': commentContent,
+      'comment_content': commentContent,
       'fileIds': files.map((WPFile file) => file.id).toSet().join(','),
     };
   }
