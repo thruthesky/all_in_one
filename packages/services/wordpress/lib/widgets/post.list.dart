@@ -227,7 +227,7 @@ class PostList extends StatefulWidget {
   final WidgetBuilder? separatorBuilder;
   final Function? fetch;
   final Function? edited;
-  final dynamic postIdxOnTop;
+  final int? postIdxOnTop;
   final WPPost? postOnTop;
   final Function error;
   final int postsPerPage;
