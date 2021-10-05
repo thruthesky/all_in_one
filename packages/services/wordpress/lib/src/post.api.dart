@@ -29,12 +29,12 @@ class PostApi {
   /// ```
   Future<List<WPPost>> posts({
     String? slug,
+    int page = 1,
     int postsPerPage = 10,
     String? searchKeyword,
     int? author,
     String order = 'DESC',
     String orderBy = 'ID',
-    int page = 1,
     int id = 0,
     bool hasPhoto = false,
     bool withAutoP = false,
@@ -42,6 +42,7 @@ class PostApi {
     bool minimize = false,
   }) async {
     final res = await WordpressApi.instance.request('post.posts', {
+      'paged': page,
       'posts_per_page': postsPerPage,
       if (slug != null) 'category_name': slug,
       if (searchKeyword != null) 's': searchKeyword,
