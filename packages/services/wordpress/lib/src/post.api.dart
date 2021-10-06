@@ -83,10 +83,12 @@ class PostApi {
 
   /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
   Future<WPPost> vote({
+    // ignore: non_constant_identifier_names
     required int ID,
+    // ignore: non_constant_identifier_names
     required String Yn,
   }) async {
-    final res = await WordpressApi.instance.request('post.vote', {'Yn': Yn});
+    final res = await WordpressApi.instance.request('post.vote', {'ID': ID, 'Yn': Yn});
     print('vote; res; $res');
     return WPPost.fromJson({});
   }

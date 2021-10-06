@@ -108,14 +108,9 @@ class WPComment {
     return comment;
   }
 
-  Future vote({bool like = false}) async {
-    if (like) {
-      // TODO - comment.like;
-      // await comment.like();
-    } else {
-      // TODO - comment.dislike
-      // await comment.dislike();
-    }
+  // ignore: non_constant_identifier_names
+  Future vote(String Yn) {
+    return CommentApi.instance.vote(ID: commentId, Yn: Yn);
   }
 
   Future report() async {
