@@ -17,4 +17,16 @@ class CommentApi {
     final res = await WordpressApi.instance.request('comment.edit', data);
     return WPComment.fromJson(res);
   }
+
+  /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
+  Future<WPComment> vote({
+    // ignore: non_constant_identifier_names
+    required int ID,
+    // ignore: non_constant_identifier_names
+    required String Yn,
+  }) async {
+    final res = await WordpressApi.instance.request('comment.vote', {'target_ID': ID, 'Yn': Yn});
+    print('vote; res; $res');
+    return WPComment.fromJson({});
+  }
 }

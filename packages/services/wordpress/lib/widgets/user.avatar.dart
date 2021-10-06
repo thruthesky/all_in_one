@@ -44,7 +44,7 @@ class _Avatar extends StatelessWidget {
     if (url.startsWith('http')) {
       image = CachedNetworkImage(
         imageUrl: url,
-        placeholder: (context, url) => CircularProgressIndicator(),
+        placeholder: (context, url) => CircularProgressIndicator.adaptive(),
         errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.cover,
       );

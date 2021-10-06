@@ -1,5 +1,3 @@
-import 'package:wordpress/models/file.model.dart';
-import 'package:wordpress/src/wordpress.lib.dart';
 import 'package:wordpress/wordpress.dart';
 
 class WPComment {
@@ -44,7 +42,7 @@ class WPComment {
         commentContent: json["comment_content"] ?? '',
         commentDate:
             json["comment_date"] != null ? DateTime.parse(json["comment_date"]) : DateTime.now(),
-        files: List<WPFile>.from((json["files"] ?? []).map((x) => x)),
+        files: List<WPFile>.from((json["files"] ?? []).map((x) => WPFile.fromJson(x))),
         commentAuthorPhotoUrl: json["comment_author_profile_photo_url"] ?? '',
         shortDateTime: json["short_date_time"] ?? '',
         depth: toInt(json["depth"]),
@@ -69,7 +67,7 @@ class WPComment {
       };
 
   /// 글 작성을 위한 데이터
-  Map<String, dynamic> toEdit() {
+  JSON toEdit() {
     return {
       if (commentId > 0) 'comment_ID': commentId,
       if (commentParent > 0) 'comment_parent': commentParent,
@@ -79,15 +77,22 @@ class WPComment {
   }
 
   /// 코멘트 작성 또는 수정
+  /// Comment edit(create or update)
+  ///
   Future<WPComment> edit(WPPost post) async {
-    WPComment comment = await CommentApi.instance.edit(toEdit());
+    JSON json = toEdit();
+    json[COMMENT_POST_ID] = post.id;
+
+    WPComment comment = await CommentApi.instance.edit(json);
 
     if (commentId == 0) {
       /// 새 코멘트 작성
-      if (comment.commentParent == post.id) {
+      /// Create new comment
+      if (comment.commentParent == 0 || comment.commentParent == post.id) {
         /// 글 바로 아래의 (최 상위, 레벨 1) 댓글. 그냥 맨 마지막에 추가.
         post.comments.add(comment);
       } else {
+        /// Update comment
         /// 코멘트의 코멘트를 작성하는 경우, 중간에 추가하고, depth 를 부모 보다 1 증가.
         int p = post.comments.indexWhere((WPComment c) => c.commentId == comment.commentParent);
         if (p > -1) {
@@ -103,14 +108,9 @@ class WPComment {
     return comment;
   }
 
-  Future vote({bool like = false}) async {
-    if (like) {
-      // TODO - comment.like;
-      // await comment.like();
-    } else {
-      // TODO - comment.dislike
-      // await comment.dislike();
-    }
+  // ignore: non_constant_identifier_names
+  Future vote(String Yn) {
+    return CommentApi.instance.vote(ID: commentId, Yn: Yn);
   }
 
   Future report() async {
