@@ -761,6 +761,7 @@ class _PostListState extends State<PostList> {
     );
   }
 
+  /// Edit comment by openning a dialog.
   /// 코멘트 수정 시, 새창을 띄워서 수정.
   ///
   /// 새창을 띄우는 이유는 위에 설명.
@@ -856,7 +857,7 @@ class _PostListState extends State<PostList> {
                           isDense: true,
                           contentPadding:
                               const EdgeInsets.only(top: 10, left: 10, bottom: 10, right: 40),
-                          hintText: "코멘트를 입력하세요.",
+                          hintText: "Input comment.",
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(3.0),
                             borderSide: BorderSide(
