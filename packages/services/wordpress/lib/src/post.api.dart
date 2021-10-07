@@ -1,3 +1,4 @@
+import 'package:wordpress/models/post.vote.model.dart';
 import 'package:wordpress/wordpress.dart';
 
 class PostApi {
@@ -46,7 +47,7 @@ class PostApi {
       'posts_per_page': postsPerPage,
       if (slug != null) 'category_name': slug,
       if (searchKeyword != null) 's': searchKeyword,
-      if (author != null) 'author': author,
+      if (author != null && author > 0) 'author': author,
       'order': order,
       'orderby': orderBy,
       if (id > 0) 'p': id,
@@ -82,7 +83,7 @@ class PostApi {
   }
 
   /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
-  Future<WPPost> vote({
+  Future<WPPostVote> vote({
     // ignore: non_constant_identifier_names
     required int ID,
     // ignore: non_constant_identifier_names
@@ -90,6 +91,6 @@ class PostApi {
   }) async {
     final res = await WordpressApi.instance.request('post.vote', {'ID': ID, 'Yn': Yn});
     print('vote; res; $res');
-    return WPPost.fromJson({});
+    return WPPostVote.fromJson(res);
   }
 }

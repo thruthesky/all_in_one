@@ -73,6 +73,7 @@ class WordpressApi {
       }
       if (res.data is String) {
         print(res);
+        _printDebugUrl(data);
         throw "Got response from backend. But the response data is wrong or corrupted. Check if you have proper backend url, or check if the backend produces error.";
       }
       if (res.data['code'] != '') {
