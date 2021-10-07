@@ -170,6 +170,6 @@ class WPPost {
 
   Future delete() async {
     // TODO - post.delete();
-    // await post.delete();
+    await post.delete();
   }
 }

@@ -6,8 +6,9 @@ import 'package:get/get.dart';
 /// Get.arguments 함수를 간단하게 쓰도록 도와주는 함수
 ///
 /// 예제) String a = getArg('a', 'apple'); // a 값이 없으면 apple 이 지정된다. 기본 값은 null.
-dynamic getArg(String name, [dynamic defaultValue]) {
-  return Get.arguments == null || Get.arguments[name] == null ? defaultValue : Get.arguments[name];
+T getArg<T>(String name, [dynamic defaultValue]) {
+  return (Get.arguments == null || Get.arguments[name] == null ? defaultValue : Get.arguments[name])
+      as T;
 }
 
 Future<bool> confirm(String title, String content) async {

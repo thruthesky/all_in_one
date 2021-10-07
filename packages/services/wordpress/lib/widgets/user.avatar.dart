@@ -24,8 +24,8 @@ class UserAvatar extends StatelessWidget {
                 color: Colors.black87,
               ),
         logoutBuilder: (_) => Icon(
-          Icons.person,
-          size: size,
+          Icons.account_circle_rounded,
+          size: iconSize ?? size,
           color: Colors.black87,
         ),
       ),
