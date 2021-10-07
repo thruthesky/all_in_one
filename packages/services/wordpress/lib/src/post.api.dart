@@ -64,6 +64,7 @@ class PostApi {
     });
     final List<WPPost> posts = [];
     for (final p in res) {
+      print('p[y]; ${p["Y"]}');
       posts.add(WPPost.fromJson(p));
     }
     return posts;
@@ -89,7 +90,7 @@ class PostApi {
     // ignore: non_constant_identifier_names
     required String Yn,
   }) async {
-    final res = await WordpressApi.instance.request('post.vote', {'ID': ID, 'Yn': Yn});
+    final res = await WordpressApi.instance.request('post.vote', {'target_ID': ID, 'Yn': Yn});
     print('vote; res; $res');
     return WPPostVote.fromJson(res);
   }

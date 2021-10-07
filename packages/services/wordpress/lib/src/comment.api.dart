@@ -1,3 +1,4 @@
+import 'package:wordpress/models/comment.vote.model.dart';
 import 'package:wordpress/wordpress.dart';
 
 class CommentApi {
@@ -19,14 +20,13 @@ class CommentApi {
   }
 
   /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
-  Future<WPComment> vote({
+  Future<WPCommentVote> vote({
     // ignore: non_constant_identifier_names
     required int ID,
     // ignore: non_constant_identifier_names
     required String Yn,
   }) async {
     final res = await WordpressApi.instance.request('comment.vote', {'target_ID': ID, 'Yn': Yn});
-    print('vote; res; $res');
-    return WPComment.fromJson({});
+    return WPCommentVote.fromJson(res);
   }
 }

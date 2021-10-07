@@ -56,8 +56,8 @@ class WPPost {
   final String featuredImageMediumThumbnailUrl;
   final String featuredImageLargeThumbnailUrl;
 
-  final int Y;
-  final int N;
+  int Y;
+  int N;
 
   /// Client options.
   bool get hasPhoto => featuredImageId > 0 && featuredImageUrl != '';
@@ -154,9 +154,13 @@ class WPPost {
     return PostApi.instance.edit(toEdit());
   }
 
-  Future<WPPostVote> vote({bool like = false, bool dislike = false}) {
-    assert(like || dislike, 'Like or dislike must be true');
-    return PostApi.instance.vote(ID: id, Yn: like ? 'Y' : 'N');
+  // ignore: non_constant_identifier_names
+  Future<WPPostVote> vote(String Yn) async {
+    final vote = await PostApi.instance.vote(ID: id, Yn: Yn);
+    print('vote; $vote');
+    this.Y = vote.Y;
+    this.N = vote.N;
+    return vote;
   }
 
   Future report() async {
