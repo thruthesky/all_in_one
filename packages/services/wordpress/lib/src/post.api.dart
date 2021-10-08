@@ -90,6 +90,11 @@ class PostApi {
     return toInt(res['ID']);
   }
 
+  Future<int> report(int id) async {
+    final res = await WordpressApi.instance.request('post.report', {'ID': id});
+    return toInt(res['ID']);
+  }
+
   /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
   Future<WPPostVote> vote({
     // ignore: non_constant_identifier_names
