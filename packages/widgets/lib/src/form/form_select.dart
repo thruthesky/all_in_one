@@ -5,6 +5,7 @@ import 'package:widgets/widgets.dart';
 ///
 /// It's like the selection box of HTML FORM.
 /// [defaultValue] is the default value when there is no selected value.
+///   For instance, options are A, B, C. but none of them are selected. The the value will be empty string.
 ///   It is empty string by default. So, if the options has empty value(key),
 ///   then it will produce an assertion of duplicated key.
 /// [defaultLabel] is the default label of default value.

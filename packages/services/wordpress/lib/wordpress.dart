@@ -1,5 +1,7 @@
 export './defines.dart';
 export 'src/wordpress.api.dart';
+
+export 'src/app.api.dart';
 export 'src/user.api.dart';
 export 'src/file.api.dart';
 export 'src/category.api.dart';
