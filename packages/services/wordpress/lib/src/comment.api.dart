@@ -19,6 +19,13 @@ class CommentApi {
     return WPComment.fromJson(res);
   }
 
+  /// This will make an Http request for deleting coment.
+  ///
+  Future<int> delete(int commentId) async {
+    final res = await WordpressApi.instance.request('comment.delete', {'comment_ID': commentId});
+    return toInt(res['comment_ID']);
+  }
+
   /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
   Future<WPCommentVote> vote({
     // ignore: non_constant_identifier_names

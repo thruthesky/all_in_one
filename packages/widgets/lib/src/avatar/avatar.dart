@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:widgets/widgets.dart';
 
 class Avatar extends StatelessWidget {
   const Avatar({Key? key, required this.url, this.size = 80.0}) : super(key: key);
