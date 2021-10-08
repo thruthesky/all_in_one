@@ -64,7 +64,7 @@ class PostApi {
     });
     final List<WPPost> posts = [];
     for (final p in res) {
-      print('p[y]; ${p["Y"]}');
+      // print('p[y]; ${p["Y"]}');
       posts.add(WPPost.fromJson(p));
     }
     return posts;
@@ -81,6 +81,13 @@ class PostApi {
   Future<WPPost> edit(MapStringDynamic data) async {
     final res = await WordpressApi.instance.request('post.edit', data);
     return WPPost.fromJson(res);
+  }
+
+  /// This will make an Http request for deleting post.
+  ///
+  Future<int> delete(int id) async {
+    final res = await WordpressApi.instance.request('post.delete', {'ID': id});
+    return toInt(res['ID']);
   }
 
   /// Note, it uses `post.vote` for post, and `comment.vote` for comment.

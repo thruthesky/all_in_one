@@ -168,8 +168,7 @@ class WPPost {
     // await post.report();
   }
 
-  Future delete() async {
-    // TODO - post.delete();
-    await post.delete();
+  Future<int> delete() async {
+    return await PostApi.instance.delete(id);
   }
 }
