@@ -134,8 +134,7 @@ class WPComment {
     // await commnet.report();
   }
 
-  Future delete() async {
-    // TODO - comment.delete();
-    // await commnet.delete();
+  Future<int> delete() async {
+    return await CommentApi.instance.delete(commentId);
   }
 }
