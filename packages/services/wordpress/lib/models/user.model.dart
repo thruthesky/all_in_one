@@ -23,11 +23,20 @@ class WPUser {
   String domain;
   String registered;
 
+  List<String> topics;
+
   bool get loggedIn => id > 0;
   bool get notLoggedIn => !loggedIn;
   bool get hasPhoneNo => phoneNo != '' && phoneNo.toString().length > 7;
   bool get hasDisplayName => displayName != '';
   bool get hasPhoto => photoUrl != '';
+
+  /// Returns true if the user has subscribed the topic.
+  /// If user subscribed the topic, that topic name will be saved into user meta in backend
+  /// And when user profile is loaded, the topics are saved into [topic]
+  bool hasTopic(String topic) {
+    return topics.contains(topic);
+  }
 
   WPUser({
     required this.id,
@@ -49,6 +58,7 @@ class WPUser {
     required this.lastName,
     required this.domain,
     required this.registered,
+    required this.topics,
   });
 
   factory WPUser.fromJson(MapStringDynamic json) {
@@ -72,6 +82,7 @@ class WPUser {
       lastName: json['last_name'] ?? '',
       domain: json['domain'] ?? '',
       registered: json['user_registered'] ?? '',
+      topics: json['topcis'] ?? [],
     );
   }
 
