@@ -8,31 +8,43 @@ import '../spinner/spinner.dart';
 ///
 /// 사진을 화면에 가득 채워 나타내려면, `width: double.infinity, height: null` 로 입력하면 된다.
 /// 참고, x_flutter 의 것은 외부에서 사용 불가. 대신, widgets 패키지의 것을 사용.
+///
+/// Example
+///
+/// ```dart
+/// CacheImage(
+///   post.authorProfilePhotoUrl,
+///   borderRadius: 52,
+///   width: 52,
+///  height: 52,
+///   errorIcon: Icon(Icons.account_circle_rounded, size: 52),
+/// ),
+/// ```
 class CacheImage extends StatelessWidget {
-  CacheImage(
-    this.url, {
-    this.width = double.infinity,
-    this.height,
-    this.onLoadComplete,
-    this.fit = BoxFit.cover,
-    this.borderRadius = 0,
-  });
+  CacheImage(this.url,
+      {this.width = double.infinity,
+      this.height,
+      this.onLoadComplete,
+      this.fit = BoxFit.cover,
+      this.borderRadius = 0,
+      this.errorIcon});
   final String url;
   final double width;
   final double? height;
   final Function? onLoadComplete;
   final BoxFit fit;
   final double borderRadius;
+  final Widget? errorIcon;
   @override
   Widget build(BuildContext context) {
     if (url == '') {
-      return Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Icon(
+      if (errorIcon != null)
+        return errorIcon!;
+      else
+        return Icon(
           Icons.error,
-          size: 64,
-        ),
-      );
+          size: width,
+        );
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(borderRadius),

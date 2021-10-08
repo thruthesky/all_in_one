@@ -2,19 +2,19 @@ import 'package:wordpress/wordpress.dart';
 
 import '../defines.dart';
 
-class WPPostVote {
-  int id;
+class WPCommentVote {
+  int commentId;
   int Y;
   int N;
-  WPPostVote({
-    required this.id,
+  WPCommentVote({
+    required this.commentId,
     required this.Y,
     required this.N,
   });
 
-  factory WPPostVote.fromJson(JSON json) {
-    return WPPostVote(
-      id: toInt(json['ID']),
+  factory WPCommentVote.fromJson(JSON json) {
+    return WPCommentVote(
+      commentId: toInt(json['comment_ID']),
       Y: toInt(json['Y']),
       N: toInt(json['N']),
     );

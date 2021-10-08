@@ -1,3 +1,4 @@
+import 'package:wordpress/models/comment.vote.model.dart';
 import 'package:wordpress/wordpress.dart';
 
 class WPComment {
@@ -13,6 +14,8 @@ class WPComment {
     required this.commentAuthorPhotoUrl,
     required this.shortDateTime,
     required this.depth,
+    required this.Y,
+    required this.N,
   });
 
   int commentId;
@@ -26,6 +29,9 @@ class WPComment {
   final String commentAuthorPhotoUrl;
   final String shortDateTime;
   int depth;
+
+  int Y;
+  int N;
 
   ///
   String mode = '';
@@ -46,6 +52,8 @@ class WPComment {
         commentAuthorPhotoUrl: json["comment_author_profile_photo_url"] ?? '',
         shortDateTime: json["short_date_time"] ?? '',
         depth: toInt(json["depth"]),
+        Y: toInt(json["Y"]),
+        N: toInt(json["N"]),
       );
 
   factory WPComment.empty() {
@@ -109,8 +117,16 @@ class WPComment {
   }
 
   // ignore: non_constant_identifier_names
-  Future vote(String Yn) {
-    return CommentApi.instance.vote(ID: commentId, Yn: Yn);
+  // Future vote(String Yn) {
+  //   return CommentApi.instance.vote(ID: commentId, Yn: Yn);
+  // }
+
+  // ignore: non_constant_identifier_names
+  Future<WPCommentVote> vote(String Yn) async {
+    final vote = await CommentApi.instance.vote(ID: commentId, Yn: Yn);
+    this.Y = vote.Y;
+    this.N = vote.N;
+    return vote;
   }
 
   Future report() async {
