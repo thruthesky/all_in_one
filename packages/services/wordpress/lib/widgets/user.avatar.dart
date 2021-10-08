@@ -4,8 +4,9 @@ import 'package:wordpress/wordpress.dart';
 import './user.change.dart';
 
 class UserAvatar extends StatelessWidget {
-  const UserAvatar({Key? key, this.size = 80.0, this.onTap}) : super(key: key);
+  const UserAvatar({Key? key, this.size = 80.0, this.iconSize, this.onTap}) : super(key: key);
   final double size;
+  final double? iconSize;
   final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
@@ -18,13 +19,13 @@ class UserAvatar extends StatelessWidget {
                 size: size,
               )
             : Icon(
-                Icons.person,
-                size: size,
+                Icons.account_circle_rounded,
+                size: iconSize ?? size,
                 color: Colors.black87,
               ),
         logoutBuilder: (_) => Icon(
-          Icons.person,
-          size: size,
+          Icons.account_circle_rounded,
+          size: iconSize ?? size,
           color: Colors.black87,
         ),
       ),

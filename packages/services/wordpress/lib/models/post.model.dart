@@ -1,5 +1,6 @@
 import 'package:wordpress/models/comment.model.dart';
 import 'package:wordpress/models/file.model.dart';
+import 'package:wordpress/models/post.vote.model.dart';
 import 'package:wordpress/src/wordpress.lib.dart';
 import 'package:wordpress/wordpress.dart';
 
@@ -27,6 +28,8 @@ class WPPost {
     required this.featuredImageThumbnailUrl,
     required this.featuredImageMediumThumbnailUrl,
     required this.featuredImageLargeThumbnailUrl,
+    required this.Y,
+    required this.N,
   });
 
   final int id;
@@ -52,6 +55,9 @@ class WPPost {
   final String featuredImageThumbnailUrl;
   final String featuredImageMediumThumbnailUrl;
   final String featuredImageLargeThumbnailUrl;
+
+  int Y;
+  int N;
 
   /// Client options.
   bool get hasPhoto => featuredImageId > 0 && featuredImageUrl != '';
@@ -89,6 +95,8 @@ class WPPost {
         featuredImageThumbnailUrl: json['featured_image_default_thumbnail_url'] ?? '',
         featuredImageMediumThumbnailUrl: json['featured_image_medium_thumbnail_url'] ?? '',
         featuredImageLargeThumbnailUrl: json['featured_image_large_thumbnail_url'] ?? '',
+        Y: toInt(json['Y']),
+        N: toInt(json['N']),
       );
 
   factory WPPost.empty() {
@@ -117,6 +125,8 @@ class WPPost {
         'featuredImageThumbnailUrl': featuredImageThumbnailUrl,
         'featuredImageMediumThumbnailUrl': 'featuredImageMediumThumbnailUrl',
         'featuredImageLargeThumbnailUrl': featuredImageLargeThumbnailUrl,
+        'Y': Y,
+        'N': N,
       };
 
   @override
@@ -144,9 +154,13 @@ class WPPost {
     return PostApi.instance.edit(toEdit());
   }
 
-  Future vote({bool like = false, bool dislike = false}) async {
-    assert(like || dislike, 'Like or dislike must be true');
-    await PostApi.instance.vote(ID: id, Yn: like ? 'Y' : 'N');
+  // ignore: non_constant_identifier_names
+  Future<WPPostVote> vote(String Yn) async {
+    final vote = await PostApi.instance.vote(ID: id, Yn: Yn);
+    print('vote; $vote');
+    this.Y = vote.Y;
+    this.N = vote.N;
+    return vote;
   }
 
   Future report() async {
@@ -156,6 +170,6 @@ class WPPost {
 
   Future delete() async {
     // TODO - post.delete();
-    // await post.delete();
+    await post.delete();
   }
 }
