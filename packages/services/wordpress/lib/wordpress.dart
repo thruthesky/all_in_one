@@ -7,6 +7,7 @@ export 'src/file.api.dart';
 export 'src/category.api.dart';
 export 'src/post.api.dart';
 export 'src/comment.api.dart';
+export 'src/messaging.api.dart';
 export 'src/wordpress.lib.dart';
 
 export 'models/user.model.dart';

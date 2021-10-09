@@ -1,5 +1,5 @@
 import '../controllers/app.controller.dart';
 import 'service.dart';
 
-AppController app = AppController();
+ApPostListController app = ApPostListController();
 Service service = Service.instance;

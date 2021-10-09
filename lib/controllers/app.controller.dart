@@ -3,7 +3,7 @@ import 'package:analytics/analytics.dart';
 import '../services/route_names.dart';
 import 'package:get/get.dart';
 
-class AppController extends GetxController {
+class ApPostListController extends GetxController {
   String version = '0.0.0';
   String time = '';
 
@@ -11,7 +11,7 @@ class AppController extends GetxController {
 
   @override
   onInit() {
-    // print('---> AppController::onInit()');
+    // print('---> ApPostListController::onInit()');
     super.onInit();
 
     /// 파이어베이스 애널리스틱. 앱 시작 할 때 로그.
