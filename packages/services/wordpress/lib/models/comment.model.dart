@@ -33,10 +33,14 @@ class WPComment {
   int Y;
   int N;
 
-  ///
+  /// If it is 'reply', then it will show a reply box.
+  /// If it is 'eidt', then it will show an edit box.
   String mode = '';
+  bool get inEditMode => mode == 'edit';
+  bool get inViewMode => mode == '';
+  bool get inReplyMode => mode == 'reply';
 
-  /// TODO - wordpress 에서도 글 삭제하면, deleted 로 표시되어져야 하나??
+  /// TODO - wordpress 에서도 글 삭제하면, deleted 로 표시되어져야 하나?? 그렇다. issue 가 만들어져 있다. 이것은 나중에 처리를 한다.
   bool deleted = false;
 
   factory WPComment.fromJson(Map<String, dynamic> json) => WPComment(
@@ -130,8 +134,7 @@ class WPComment {
   }
 
   Future report() async {
-    // TODO - comment.report();
-    // await commnet.report();
+    await CommentApi.instance.report(commentId);
   }
 
   Future<int> delete() async {

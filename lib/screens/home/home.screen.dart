@@ -25,7 +25,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AppController>(
+    return GetBuilder<ApPostListController>(
       builder: (_) => Layout(
         title: Config.appName,
         body: SingleChildScrollView(

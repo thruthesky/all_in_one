@@ -164,8 +164,7 @@ class WPPost {
   }
 
   Future report() async {
-    // TODO - post.report();
-    // await post.report();
+    await PostApi.instance.report(id);
   }
 
   Future<int> delete() async {

@@ -22,6 +22,9 @@ class UserApi {
   /// 회원 가입, 로그인, 로그아웃, 서버로 부터 프로필 읽기, 프로필 수정 등, 회원 정보 상태의 변경이 있으면 이벤트가 발생한다.
   BehaviorSubject<WPUser> changes = BehaviorSubject.seeded(WPUser.fromJson({}));
 
+  /// [userLogin] event is posted only on login.
+  BehaviorSubject<WPUser> userLogin = BehaviorSubject.seeded(WPUser.fromJson({}));
+
   /// Register a new user.
   ///
   Future<WPUser> register(MapStringDynamic data) async {
@@ -37,6 +40,7 @@ class UserApi {
     final res = await WordpressApi.instance.request('user.login', data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
+    userLogin.add(currentUser);
     return currentUser;
   }
 
