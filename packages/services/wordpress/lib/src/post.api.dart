@@ -41,6 +41,7 @@ class PostApi {
     bool withAutoP = false,
     bool stripTags = false,
     bool minimize = false,
+    bool log = false,
   }) async {
     final res = await WordpressApi.instance.request('post.posts', {
       'paged': page,
@@ -61,10 +62,10 @@ class PostApi {
       'with_autop': withAutoP,
       'strip_tags': stripTags,
       'minimize': minimize,
+      if (log) 'debug_log': true,
     });
     final List<WPPost> posts = [];
     for (final p in res) {
-      // print('p[y]; ${p["Y"]}');
       posts.add(WPPost.fromJson(p));
     }
     return posts;
@@ -73,6 +74,20 @@ class PostApi {
   Future<WPPost> get(int id) async {
     final res = await WordpressApi.instance.request('post.get', {'ID': id});
     return WPPost.fromJson(res);
+  }
+
+  Future<WPPost> getByCode(String code) async {
+    final res = await WordpressApi.instance.request('post.getByCode', {'code': code});
+    return WPPost.fromJson(res);
+  }
+
+  Future<List<WPPost>> getByCodes(List<String> codes) async {
+    final res = await WordpressApi.instance.request('post.getByCodes', {'codes': codes});
+    final List<WPPost> posts = [];
+    for (final p in res) {
+      posts.add(WPPost.fromJson(p));
+    }
+    return posts;
   }
 
   /// This will make an Http request for editting post.
