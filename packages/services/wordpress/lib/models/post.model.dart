@@ -90,11 +90,11 @@ class WPPost {
         shortDateTime: json["short_date_time"] ?? '',
         comments: List<WPComment>.from((json["comments"] ?? []).map((x) => WPComment.fromJson(x))),
         slug: json["slug"] ?? '',
-        featuredImageUrl: json['featured_image_url'] ?? '',
+        featuredImageUrl: toStr(json['featured_image_url']),
         featuredImageId: toInt(json['featured_image_ID']),
-        featuredImageThumbnailUrl: json['featured_image_default_thumbnail_url'] ?? '',
-        featuredImageMediumThumbnailUrl: json['featured_image_medium_thumbnail_url'] ?? '',
-        featuredImageLargeThumbnailUrl: json['featured_image_large_thumbnail_url'] ?? '',
+        featuredImageThumbnailUrl: toStr(json['featured_image_default_thumbnail_url']),
+        featuredImageMediumThumbnailUrl: toStr(json['featured_image_medium_thumbnail_url']),
+        featuredImageLargeThumbnailUrl: toStr(json['featured_image_large_thumbnail_url']),
         Y: toInt(json['Y']),
         N: toInt(json['N']),
       );
@@ -164,8 +164,7 @@ class WPPost {
   }
 
   Future report() async {
-    // TODO - post.report();
-    // await post.report();
+    await PostApi.instance.report(id);
   }
 
   Future<int> delete() async {
