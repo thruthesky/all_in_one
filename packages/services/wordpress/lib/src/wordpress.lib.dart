@@ -17,6 +17,12 @@ String toStr(dynamic thing) {
   return thing.toString();
 }
 
+bool toBool(dynamic thing) {
+  if (thing is bool) return thing;
+  if (thing is String && thing == 'true') return true;
+  return false;
+}
+
 /// Returns absolute file path from the relative path.
 /// [path] must include the file extension.
 /// @example
