@@ -9,6 +9,14 @@ int toInt(dynamic text) {
   return int.tryParse(text) ?? 0;
 }
 
+String toStr(dynamic thing) {
+  if (thing == null) return '';
+  if (thing is String) return thing;
+  if (thing is bool) return '';
+
+  return thing.toString();
+}
+
 /// Returns absolute file path from the relative path.
 /// [path] must include the file extension.
 /// @example
