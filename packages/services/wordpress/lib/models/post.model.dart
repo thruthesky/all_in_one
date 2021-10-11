@@ -30,6 +30,7 @@ class WPPost {
     required this.featuredImageLargeThumbnailUrl,
     required this.Y,
     required this.N,
+    required this.html,
   });
 
   final int id;
@@ -58,6 +59,8 @@ class WPPost {
 
   int Y;
   int N;
+
+  final bool html;
 
   /// Client options.
   bool get hasPhoto => featuredImageId > 0 && featuredImageUrl != '';
@@ -97,6 +100,7 @@ class WPPost {
         featuredImageLargeThumbnailUrl: toStr(json['featured_image_large_thumbnail_url']),
         Y: toInt(json['Y']),
         N: toInt(json['N']),
+        html: toBool(json['html']),
       );
 
   factory WPPost.empty() {
@@ -127,6 +131,7 @@ class WPPost {
         'featuredImageLargeThumbnailUrl': featuredImageLargeThumbnailUrl,
         'Y': Y,
         'N': N,
+        'html': html,
       };
 
   @override
