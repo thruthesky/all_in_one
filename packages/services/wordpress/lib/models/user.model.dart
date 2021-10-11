@@ -28,7 +28,7 @@ class WPUser {
   bool get loggedIn => id > 0;
   bool get notLoggedIn => !loggedIn;
   bool get hasPhoneNo => phoneNo != '' && phoneNo.toString().length > 7;
-  bool get hasDisplayName => displayName != '';
+  bool get hasDisplayName => displayName != '' && displayName != '_';
   bool get hasPhoto => photoUrl != '';
 
   /// Returns true if the user has subscribed the topic.
