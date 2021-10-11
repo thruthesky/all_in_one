@@ -74,6 +74,10 @@ class WPPost {
     noMorePosts = true;
   }
 
+  /// Return content without HTML tags.
+  String get plainText =>
+      content.replaceAll(RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true), '');
+
   factory WPPost.fromJson(Map<String, dynamic> json) => WPPost(
         id: toInt(json["ID"]),
         postAuthor: toInt(json["post_author"]),
