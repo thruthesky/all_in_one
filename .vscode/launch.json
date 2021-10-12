@@ -25,6 +25,15 @@
     },
 
     {
+      "name": "영자 - Sonub - Simulator - Remote",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "62C87ED8-8EC6-4CE7-A3DC-E7AAF8608CAE"
+    },
+
+    {
       "name": "영자 - Sonub - iPhone11 - Remote",
       "program": "projects/my/sonub/lib/main.dart",
       "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],

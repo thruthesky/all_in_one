@@ -25,6 +25,7 @@ export 'src/centered_row/centered_row.dart';
 export 'src/country_picker/country_picker.dart';
 export 'src/widget_collection/widget_collection.dart';
 export 'src/tabs/tabs.dart';
+export 'src/bottom/bottom.dart';
 
 export 'src/page_padding/page_padding.dart';
 export 'src/text_chip/text_chip.dart';
