@@ -51,24 +51,18 @@
       "flutterMode": "release"
     },
     {
-      "name": "영자, Emulator, Android Pixel 3",
+      "name": "영자, Emulator, Android Pixel 3 - Local",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": [
-        "--dart-define",
-        "APP_NAME=Sonub",
-        "--dart-define",
-        "SERVER_URL=https://main.sonub.com/index.php",
-        "--dart-define",
-        "TEST_MODE=firebase=on&in_app_purchase=off"
-      ],
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.2.1/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "emulator-5554"
     },
+
     {
-      "name": "영자, Emulator, Android Pixel 3 - Sonub-backend - Local",
+      "name": "영자, Emulator, Android Pixel 3 - Remote",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.2.1/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "emulator-5554"
@@ -173,7 +167,7 @@
       "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.0.126/api/api.php"],
       "request": "launch",
       "type": "dart",
-      "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86",
+      "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86"
     },
 
     {
@@ -193,6 +187,6 @@
       "type": "dart",
       "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86",
       "flutterMode": "profile"
-    },
+    }
   ]
 }
