@@ -23,7 +23,7 @@ class WPUser {
   String domain;
   String registered;
 
-  List<String> topics;
+  List<dynamic> subscriptions;
 
   bool get loggedIn => id > 0;
   bool get notLoggedIn => !loggedIn;
@@ -33,9 +33,9 @@ class WPUser {
 
   /// Returns true if the user has subscribed the topic.
   /// If user subscribed the topic, that topic name will be saved into user meta in backend
-  /// And when user profile is loaded, the topics are saved into [topic]
-  bool hasTopic(String topic) {
-    return topics.contains(topic);
+  /// And when user profile is loaded, the subscriptions are saved into [subscriptions]
+  bool hasSubscriptions(String topic) {
+    return subscriptions.contains(topic);
   }
 
   WPUser({
@@ -58,7 +58,7 @@ class WPUser {
     required this.lastName,
     required this.domain,
     required this.registered,
-    required this.topics,
+    required this.subscriptions,
   });
 
   factory WPUser.fromJson(MapStringDynamic json) {
@@ -82,7 +82,7 @@ class WPUser {
       lastName: json['last_name'] ?? '',
       domain: json['domain'] ?? '',
       registered: json['user_registered'] ?? '',
-      topics: json['topcis'] ?? [],
+      subscriptions: List<String>.from((json["subscriptions"] ?? []).map((x) => x)),
     );
   }
 
@@ -106,6 +106,7 @@ class WPUser {
       'lastName': lastName,
       'domain': domain,
       'registered': registered,
+      'subscriptions': subscriptions,
     };
   }
 

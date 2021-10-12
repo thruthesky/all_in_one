@@ -25,6 +25,15 @@
     },
 
     {
+      "name": "영자 - Sonub - Simulator - Remote",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "62C87ED8-8EC6-4CE7-A3DC-E7AAF8608CAE"
+    },
+
+    {
       "name": "영자 - Sonub - iPhone11 - Remote",
       "program": "projects/my/sonub/lib/main.dart",
       "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
@@ -104,6 +113,14 @@
       "deviceId": "9c59f12e"
     },
     {
+      "name": "MACBOOK 15 - IPhone 12 Pro Max Emulator",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.0.126/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "5C0CFE1E-FD17-4787-B097-E7117B7CB683"
+    },
+    {
       "name": "ASUS X00TDB J8AXB761J32888A",
       "program": "projects/my/sonub/lib/main.dart",
       "args": [
@@ -114,6 +131,22 @@
         "--dart-define",
         "TEST_MODE=firebase=on&in_app_purchase=off"
       ],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "J8AXB761J32888A"
+    },
+    {
+      "name": "Tenda WP ASUS X00TDB J8AXB761J32888A",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.0.146/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "J8AXB761J32888A"
+    },
+    {
+      "name": "Huawei WP ASUS X00TDB J8AXB761J32888A",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.100.17/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "J8AXB761J32888A"
@@ -132,6 +165,34 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86"
-    }
+    },
+
+    {
+      "name": "Debug WP Iphone7 096a885ba083f01af93963a8661720cf9e67cb86",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.0.126/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86",
+    },
+
+    {
+      "name": "Release WP Iphone7 096a885ba083f01af93963a8661720cf9e67cb86",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.0.126/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86",
+      "flutterMode": "release"
+    },
+    {
+      "name": "Profile WP Iphone7 096a885ba083f01af93963a8661720cf9e67cb86",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.0.126/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86",
+      "flutterMode": "profile"
+    },
   ]
 }
