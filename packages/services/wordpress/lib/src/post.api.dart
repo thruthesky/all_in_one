@@ -121,4 +121,11 @@ class PostApi {
     print('vote; res; $res');
     return WPPostVote.fromJson(res);
   }
+
+  Future<int> setFeaturedImage({required int id, required int imageId}) async {
+    final res = await WordpressApi.instance
+        .request('post.setFeaturedImage', {'ID': id, 'image_ID': imageId});
+    print('vote; res; $res');
+    return res['ID'];
+  }
 }
