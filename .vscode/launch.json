@@ -126,9 +126,17 @@
       "deviceId": "J8AXB761J32888A"
     },
     {
-      "name": "WP ASUS X00TDB J8AXB761J32888A",
+      "name": "Tenda WP ASUS X00TDB J8AXB761J32888A",
       "program": "projects/my/sonub/lib/main.dart",
       "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.0.146/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "J8AXB761J32888A"
+    },
+    {
+      "name": "Huawei WP ASUS X00TDB J8AXB761J32888A",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.100.17/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "J8AXB761J32888A"
