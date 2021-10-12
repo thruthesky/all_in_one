@@ -30,6 +30,7 @@ class WPPost {
     required this.featuredImageLargeThumbnailUrl,
     required this.Y,
     required this.N,
+    required this.html,
   });
 
   final int id;
@@ -40,7 +41,7 @@ class WPPost {
   final DateTime postModified;
   final int postParent;
   final String guid;
-  final String commentCount;
+  final int commentCount;
   final List<int> postCategory;
   final String url;
   List<WPFile> files;
@@ -51,13 +52,15 @@ class WPPost {
   String slug;
   final String featuredImageUrl;
 
-  final int featuredImageId;
+  int featuredImageId;
   final String featuredImageThumbnailUrl;
   final String featuredImageMediumThumbnailUrl;
   final String featuredImageLargeThumbnailUrl;
 
   int Y;
   int N;
+
+  final bool html;
 
   /// Client options.
   bool get hasPhoto => featuredImageId > 0 && featuredImageUrl != '';
@@ -71,6 +74,10 @@ class WPPost {
     noMorePosts = true;
   }
 
+  /// Return content without HTML tags.
+  String get plainText =>
+      content.replaceAll(RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true), '');
+
   factory WPPost.fromJson(Map<String, dynamic> json) => WPPost(
         id: toInt(json["ID"]),
         postAuthor: toInt(json["post_author"]),
@@ -81,7 +88,7 @@ class WPPost {
             json["post_modified"] == null ? DateTime.now() : DateTime.parse(json["post_modified"]),
         postParent: toInt(json["post_parent"]),
         guid: json["guid"] ?? '',
-        commentCount: json["comment_count"] ?? '',
+        commentCount: toInt(json["comment_count"]),
         postCategory: List<int>.from((json["post_category"] ?? []).map((x) => x)),
         url: json["url"] ?? '',
         files: List<WPFile>.from((json["files"] ?? []).map((x) => WPFile.fromJson(x))),
@@ -90,13 +97,14 @@ class WPPost {
         shortDateTime: json["short_date_time"] ?? '',
         comments: List<WPComment>.from((json["comments"] ?? []).map((x) => WPComment.fromJson(x))),
         slug: json["slug"] ?? '',
-        featuredImageUrl: json['featured_image_url'] ?? '',
+        featuredImageUrl: toStr(json['featured_image_url']),
         featuredImageId: toInt(json['featured_image_ID']),
-        featuredImageThumbnailUrl: json['featured_image_default_thumbnail_url'] ?? '',
-        featuredImageMediumThumbnailUrl: json['featured_image_medium_thumbnail_url'] ?? '',
-        featuredImageLargeThumbnailUrl: json['featured_image_large_thumbnail_url'] ?? '',
+        featuredImageThumbnailUrl: toStr(json['featured_image_default_thumbnail_url']),
+        featuredImageMediumThumbnailUrl: toStr(json['featured_image_medium_thumbnail_url']),
+        featuredImageLargeThumbnailUrl: toStr(json['featured_image_large_thumbnail_url']),
         Y: toInt(json['Y']),
         N: toInt(json['N']),
+        html: toBool(json['html']),
       );
 
   factory WPPost.empty() {
@@ -127,6 +135,7 @@ class WPPost {
         'featuredImageLargeThumbnailUrl': featuredImageLargeThumbnailUrl,
         'Y': Y,
         'N': N,
+        'html': html,
       };
 
   @override
@@ -146,6 +155,7 @@ class WPPost {
       'post_title': title,
       'post_content': content,
       'fileIds': files.map((file) => file.id).toSet().join(','),
+      if (id == 0) 'featured_image_ID': featuredImageId,
     };
   }
 
@@ -164,8 +174,7 @@ class WPPost {
   }
 
   Future report() async {
-    // TODO - post.report();
-    // await post.report();
+    await PostApi.instance.report(id);
   }
 
   Future<int> delete() async {

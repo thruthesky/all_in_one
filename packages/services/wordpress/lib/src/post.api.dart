@@ -41,6 +41,7 @@ class PostApi {
     bool withAutoP = false,
     bool stripTags = false,
     bool minimize = false,
+    bool log = false,
   }) async {
     final res = await WordpressApi.instance.request('post.posts', {
       'paged': page,
@@ -61,10 +62,10 @@ class PostApi {
       'with_autop': withAutoP,
       'strip_tags': stripTags,
       'minimize': minimize,
+      if (log) 'debug_log': true,
     });
     final List<WPPost> posts = [];
     for (final p in res) {
-      // print('p[y]; ${p["Y"]}');
       posts.add(WPPost.fromJson(p));
     }
     return posts;
@@ -73,6 +74,20 @@ class PostApi {
   Future<WPPost> get(int id) async {
     final res = await WordpressApi.instance.request('post.get', {'ID': id});
     return WPPost.fromJson(res);
+  }
+
+  Future<WPPost> getByCode(String code) async {
+    final res = await WordpressApi.instance.request('post.getByCode', {'code': code});
+    return WPPost.fromJson(res);
+  }
+
+  Future<List<WPPost>> getByCodes(List<String> codes) async {
+    final res = await WordpressApi.instance.request('post.getByCodes', {'codes': codes});
+    final List<WPPost> posts = [];
+    for (final p in res) {
+      posts.add(WPPost.fromJson(p));
+    }
+    return posts;
   }
 
   /// This will make an Http request for editting post.
@@ -90,6 +105,11 @@ class PostApi {
     return toInt(res['ID']);
   }
 
+  Future<int> report(int id) async {
+    final res = await WordpressApi.instance.request('post.report', {'ID': id});
+    return toInt(res['ID']);
+  }
+
   /// Note, it uses `post.vote` for post, and `comment.vote` for comment.
   Future<WPPostVote> vote({
     // ignore: non_constant_identifier_names
@@ -100,5 +120,12 @@ class PostApi {
     final res = await WordpressApi.instance.request('post.vote', {'target_ID': ID, 'Yn': Yn});
     print('vote; res; $res');
     return WPPostVote.fromJson(res);
+  }
+
+  Future<int> setFeaturedImage({required int id, required int imageId}) async {
+    final res = await WordpressApi.instance
+        .request('post.setFeaturedImage', {'ID': id, 'image_ID': imageId});
+    print('vote; res; $res');
+    return res['ID'];
   }
 }

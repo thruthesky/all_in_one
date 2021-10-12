@@ -6,13 +6,13 @@ import 'package:wordpress/wordpress.dart';
 /// 파일(사진) 업로드
 ///
 /// 글/코멘트 처럼 여러개의 파일을 업로드 할 때 사용하는 것으로 내부적으로 상태관리를 하지 않는다.
-/// 즉, 파일 업로드를 하면, [success] 콜백으로 알려주고, 에러가 있으면 [error] 콜백으로 알려준다.
+/// 즉, 파일 업로드를 하면, [uploaded] 콜백으로 알려주고, 에러가 있으면 [error] 콜백으로 알려준다.
 /// 파일 업로드 상태는 [progress] 로 알려주고, 사용자가 버튼을 클릭하면, [choiceBuilder] 로
 /// 카메라 또는 갤러리에서 사진을 가져올지 정한다.
 class FileUploadIcon extends StatelessWidget {
   const FileUploadIcon({
     Key? key,
-    required this.success,
+    required this.uploaded,
     required this.error,
     required this.progress,
     this.choiceBuilder,
@@ -21,7 +21,7 @@ class FileUploadIcon extends StatelessWidget {
     this.quality = 90,
   }) : super(key: key);
 
-  final Function success;
+  final Function uploaded;
   final Function error;
   final Function progress;
   final Function? choiceBuilder;
@@ -43,7 +43,7 @@ class FileUploadIcon extends StatelessWidget {
               progress: progress,
             );
             print('file upload: f: $f');
-            success(f);
+            uploaded(f);
           } catch (e) {
             error(e);
           }
