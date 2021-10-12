@@ -65,11 +65,6 @@ String convertYoutubeLinkToEmbedHTML(String str) {
       return """
       <video id="${match.group(0)}" src="${match.group(0)}"></video>
       """;
-      // return """
-      // <p>
-      // <iframe width="100%" height="160" src="${match.group(0)}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-      // </p>
-      // """;
     },
   );
 }
