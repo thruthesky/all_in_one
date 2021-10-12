@@ -41,7 +41,7 @@ class WPPost {
   final DateTime postModified;
   final int postParent;
   final String guid;
-  final String commentCount;
+  final int commentCount;
   final List<int> postCategory;
   final String url;
   List<WPFile> files;
@@ -88,7 +88,7 @@ class WPPost {
             json["post_modified"] == null ? DateTime.now() : DateTime.parse(json["post_modified"]),
         postParent: toInt(json["post_parent"]),
         guid: json["guid"] ?? '',
-        commentCount: json["comment_count"] ?? '',
+        commentCount: toInt(json["comment_count"]),
         postCategory: List<int>.from((json["post_category"] ?? []).map((x) => x)),
         url: json["url"] ?? '',
         files: List<WPFile>.from((json["files"] ?? []).map((x) => WPFile.fromJson(x))),
