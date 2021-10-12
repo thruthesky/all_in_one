@@ -203,38 +203,6 @@
 //     controller.state = _state;
 //   }
 
-<<<<<<< HEAD
-  final PostListController controller;
-  final String? slug;
-  final Map<String, String>? editableCategories;
-  final int? userId;
-  final WidgetBuilder? noMorePostBuilder;
-  final WidgetBuilder? deletedTitleBuilder;
-  final WidgetBuilder? loaderBuilder;
-  final WidgetWidgetIndexBuilder? decoratePostWidget;
-  final WidgetBuilder? listBuilder;
-  final PostWidgetBuilder? viewBuilder;
-  final PostWidgetBuilder? contentBuilder;
-  final PostWidgetBuilder? closedTitleBuilder;
-  final PostWidgetBuilder? openedTitleBuilder;
-  final PostWidgetBuilder? editBuilder;
-  final CommentWidgetBuilder? commentMetaBuilder;
-  final CommentWidgetBuilder? commentContentBuilder;
-  final CommentViewWidgetBuilder? commentViewBuilder;
-  final CommentEditBuilder? commentEditBuilder;
-  final WidgetBuilder? confirmDialogBuilder;
-  final ForumButtonBuilder? buttonBuilder;
-  final FileEditBuilder? fileEditBuilder;
-  final WidgetBuilder? separatorBuilder;
-  final Function? fetch;
-  final Function? edited;
-  final int? postIdxOnTop;
-  final WPPost? postOnTop;
-  final Function error;
-  final int postsPerPage;
-  final String? searchKey;
-  final bool showEditFormOnInit;
-=======
 //   final PostListController controller;
 //   final String? slug;
 //   final Map<String, String>? editableCategories;
@@ -265,7 +233,6 @@
 //   final int postsPerPage;
 //   final String? searchKey;
 //   final bool showEditFormOnInit;
->>>>>>> main
 
 //   final _PostListState _state = _PostListState();
 //   @override
