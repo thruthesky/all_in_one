@@ -52,7 +52,7 @@ class WPPost {
   String slug;
   final String featuredImageUrl;
 
-  final int featuredImageId;
+  int featuredImageId;
   final String featuredImageThumbnailUrl;
   final String featuredImageMediumThumbnailUrl;
   final String featuredImageLargeThumbnailUrl;
@@ -155,6 +155,7 @@ class WPPost {
       'post_title': title,
       'post_content': content,
       'fileIds': files.map((file) => file.id).toSet().join(','),
+      if (id == 0) 'featured_image_ID': featuredImageId,
     };
   }
 
