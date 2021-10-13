@@ -1,7 +1,3 @@
-import 'dart:async';
-
-import 'package:firebase_chat/firebase_chat.dart';
-import 'package:firebase_chat/src/models/chat.message.model.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +15,8 @@ class ChatRoom extends StatefulWidget {
 class _ChatRoomState extends State<ChatRoom> {
   final input = TextEditingController();
   late DatabaseReference _messagesRef;
-  late DatabaseReference _roomsRef;
-  late DatabaseReference _otherRoomRef;
+  late DatabaseReference _myRoomsRef;
+  late DatabaseReference _otherRoomsRef;
   bool _anchorToBottom = true;
 
   // List<ChatMessageModel> messages = [];
@@ -42,8 +38,8 @@ class _ChatRoomState extends State<ChatRoom> {
 
     ///
     _messagesRef = database.reference().child('chat').child('messages').child(widget.roomId);
-    _roomsRef = database.reference().child('chat').child('rooms').child(myUid);
-    _otherRoomRef = _roomsRef.child(otherUid);
+    _myRoomsRef = database.reference().child('chat').child('rooms').child(myUid);
+    _otherRoomsRef = database.reference().child('chat').child('rooms').child(otherUid);
   }
 
   @override
@@ -106,8 +102,18 @@ class _ChatRoomState extends State<ChatRoom> {
       });
     }).catchError(widget.onError);
 
-    /// Update other user room information. Not mine.
-    _otherRoomRef.set({
+    /// Update other user room information under my room list.
+    _myRoomsRef.child(otherUid).set({
+      'text': input.text, // last chat message,
+      'stamp': ServerValue.timestamp, // time of last chat message,
+    }).then((x) {
+      setState(() {
+        input.text = '';
+      });
+    }).catchError(widget.onError);
+
+    /// Update my room information under the other user's room list.
+    _otherRoomsRef.child(myUid).set({
       'text': input.text, // last chat message,
       'stamp': ServerValue.timestamp, // time of last chat message,
       'newMessages': ServerValue.increment(1),
