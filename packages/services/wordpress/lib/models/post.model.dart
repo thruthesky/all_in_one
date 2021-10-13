@@ -74,9 +74,12 @@ class WPPost {
     noMorePosts = true;
   }
 
-  /// Return content without HTML tags.
-  String get plainText =>
-      content.replaceAll(RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true), '');
+  /// Return content without HTML tags and multiple white spaces into a space with trim.
+  String get plainTextContent => content
+      .replaceAll(RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true), '')
+      .replaceAll('&nbsp;', ' ')
+      .replaceAll(RegExp(r'\s+'), ' ')
+      .trim();
 
   factory WPPost.fromJson(Map<String, dynamic> json) => WPPost(
         id: toInt(json["ID"]),

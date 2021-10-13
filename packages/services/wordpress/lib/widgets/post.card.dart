@@ -29,7 +29,11 @@ class PostCard extends StatelessWidget {
               width: double.infinity,
               height: 200,
             )),
-            Text(post.content),
+            Text(
+              post.plainTextContent,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 5,
+            ),
           ],
         ),
       ),
