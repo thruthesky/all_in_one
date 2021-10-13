@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ChatRoom extends StatelessWidget {
-  const ChatRoom({Key? key}) : super(key: key);
+  const ChatRoom({required this.roomId, Key? key}) : super(key: key);
+
+  final String roomId;
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +14,7 @@ class ChatRoom extends StatelessWidget {
             child: ListView.builder(
               itemCount: 100,
               itemBuilder: (c, i) {
-                return Text('$i');
+                return Text('Message No. $i, ...');
               },
             ),
           ),

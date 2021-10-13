@@ -49,7 +49,14 @@ class PostListTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(post.title),
-                  Text(post.content),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    post.plainTextContent,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                  ),
                 ],
               ),
             ),
