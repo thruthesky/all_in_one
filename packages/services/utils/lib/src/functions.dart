@@ -102,6 +102,12 @@ error(e) {
   }
 }
 
+/// Print Long String
+void printLongString(String text) {
+  final RegExp pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+  pattern.allMatches(text).forEach((RegExpMatch match) => print(match.group(0)));
+}
+
 class CurrencyModel {
   late String koreanName;
   late String alpha2;
