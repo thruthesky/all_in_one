@@ -1,0 +1,24 @@
+name: firebase_chat
+description: chat packages
+version: 0.0.1
+homepage: https://github.com/thruthesky/all_in_one
+repository: https://github.com/thruthesky/all_in_one
+
+publish_to: "none"
+
+environment:
+  sdk: ">=2.14.0 <3.0.0"
+  
+dependencies:
+  flutter:
+    sdk: flutter
+
+  firebase_core: ^1.7.0
+  firebase_database: ^8.0.0
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
