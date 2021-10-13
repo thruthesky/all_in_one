@@ -21,3 +21,13 @@
 
 - User can chat to himself
   - Like most of chat app, it allows to chat himself. When he has two phone, he can send message or photo from one device to another.
+
+
+
+# Database Structure
+
+- Chat message folder
+  - `/chat/messages/[roomId]/[auto-generated-key]/{... properties ...}`
+
+
+
