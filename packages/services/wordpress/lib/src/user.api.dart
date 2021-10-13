@@ -80,13 +80,20 @@ class UserApi {
     return currentUser;
   }
 
-  /// Get user profile.
+  /// Get login user profile.
   ///
   Future<WPUser> profile() async {
     final res = await WordpressApi.instance.request('user.profile');
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     return currentUser;
+  }
+
+  /// Get other user's profile.
+  ///
+  Future<WPUser> otherProfile(int userId) async {
+    final res = await WordpressApi.instance.request('user.otherProfile', {'user_ID': userId});
+    return WPUser.fromJson(res);
   }
 
   logout() async {
