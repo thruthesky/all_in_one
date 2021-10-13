@@ -21,13 +21,17 @@ import '../spinner/spinner.dart';
 /// ),
 /// ```
 class CacheImage extends StatelessWidget {
-  CacheImage(this.url,
-      {this.width = double.infinity,
-      this.height,
-      this.onLoadComplete,
-      this.fit = BoxFit.cover,
-      this.borderRadius = 0,
-      this.errorIcon});
+  CacheImage(
+    this.url, {
+    this.width = double.infinity,
+    this.height,
+    this.onLoadComplete,
+    this.fit = BoxFit.cover,
+    this.borderRadius = 0,
+    this.errorIcon,
+    this.placeholderPadding = const EdgeInsets.all(32.0),
+    this.heroTag,
+  });
   final String url;
   final double width;
   final double? height;
@@ -35,8 +39,11 @@ class CacheImage extends StatelessWidget {
   final BoxFit fit;
   final double borderRadius;
   final Widget? errorIcon;
+  final EdgeInsets placeholderPadding;
+  final String? heroTag;
   @override
   Widget build(BuildContext context) {
+    // print('cache_image url; $url');
     if (url == '') {
       if (errorIcon != null)
         return errorIcon!;
@@ -54,28 +61,34 @@ class CacheImage extends StatelessWidget {
           // print("Image has been loaded!");
           if (onLoadComplete != null) Timer(Duration(milliseconds: 100), () => onLoadComplete!());
           // Return the image that has built by hand.
-          return Image(image: provider, fit: fit);
+          return heroWrapper(Image(image: provider, fit: fit));
         },
         imageUrl: url,
-        placeholder: (context, url) => Spinner(),
+        placeholder: (context, url) => Spinner(padding: placeholderPadding),
         errorWidget: (context, url, error) => Icon(Icons.error),
         width: width,
         height: height,
       ),
     );
   }
+
+  heroWrapper(Widget image) {
+    if (heroTag == null) return image;
+    return Hero(tag: heroTag!, child: image);
+  }
 }
 
 /// CacheImage 를 Tap 할 수 있도록 해 주는 Wrapper 이다.
 class CacheImageTap extends StatelessWidget {
-  const CacheImageTap(this.url,
-      {this.width = double.infinity,
-      this.height,
-      this.onLoadComplete,
-      this.fit = BoxFit.cover,
-      required this.onTap,
-      Key? key})
-      : super(key: key);
+  const CacheImageTap(
+    this.url, {
+    this.width = double.infinity,
+    this.height,
+    this.onLoadComplete,
+    this.fit = BoxFit.cover,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
 
   final String url;
   final double width;
