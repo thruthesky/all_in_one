@@ -27,7 +27,7 @@
     {
       "name": "영자 - Sonub - Simulator - Remote",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "62C87ED8-8EC6-4CE7-A3DC-E7AAF8608CAE"
@@ -36,7 +36,7 @@
     {
       "name": "영자 - Sonub - iPhone11 - Remote",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "00008030-000904C80290802E"
@@ -44,7 +44,7 @@
     {
       "name": "영자 - Sonub - iPhone11 - Remote - Release Mode",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "00008030-000904C80290802E",
@@ -62,7 +62,7 @@
     {
       "name": "영자, Emulator, Android Pixel 3 - Remote",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "emulator-5554"
@@ -78,7 +78,7 @@
     {
       "name": "영자, Emulator, Android Pixel 3 - SB - Remote",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "emulator-5554"
@@ -109,7 +109,7 @@
     {
       "name": "Android RMX1991 (Ace's Device) - Remote Server",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "9c59f12e"
@@ -164,7 +164,7 @@
     {
       "name": "LIVE ASUS X00TDB J8AXB761J32888A",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "J8AXB761J32888A"
@@ -203,7 +203,7 @@
       "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86",
       "flutterMode": "release"
     },
-    
+
     {
       "name": "Profile WP Iphone7 096a885ba083f01af93963a8661720cf9e67cb86",
       "program": "projects/my/sonub/lib/main.dart",
