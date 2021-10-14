@@ -146,6 +146,14 @@
       "deviceId": "J8AXB761J32888A"
     },
     {
+      "name": "Huawei WP Android Pixel emulator-5554",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.100.17/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5554"
+    },
+    {
       "name": "LIVE ASUS X00TDB J8AXB761J32888A",
       "program": "projects/my/sonub/lib/main.dart",
       "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
