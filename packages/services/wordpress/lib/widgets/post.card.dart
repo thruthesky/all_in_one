@@ -15,7 +15,6 @@ class PostCard extends StatelessWidget {
   final bool hero;
   @override
   Widget build(BuildContext context) {
-    print('large; ${post.featuredImageLargeThumbnailUrl}');
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
@@ -23,12 +22,17 @@ class PostCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(post.title),
+            Text(
+              post.title,
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 4),
             wrapHero(CacheImage(
               post.featuredImageLargeThumbnailUrl,
               width: double.infinity,
               height: 200,
             )),
+            SizedBox(height: 4),
             Text(
               post.plainTextContent,
               overflow: TextOverflow.ellipsis,
