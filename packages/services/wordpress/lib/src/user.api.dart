@@ -100,4 +100,27 @@ class UserApi {
     currentUser = WPUser.fromJson({});
     changes.add(currentUser);
   }
+
+  /// Update user information.
+  ///
+  Future<WPUser> switchData(MapStringDynamic data) async {
+    final res = await WordpressApi.instance.request('user.switch', data);
+    currentUser = WPUser.fromJson(res);
+    changes.add(currentUser);
+    return currentUser;
+  }
+
+  Future<WPUser> switchOn(MapStringDynamic data) async {
+    final res = await WordpressApi.instance.request('user.switchOn', data);
+    currentUser = WPUser.fromJson(res);
+    changes.add(currentUser);
+    return currentUser;
+  }
+
+  Future<WPUser> switchOff(MapStringDynamic data) async {
+    final res = await WordpressApi.instance.request('user.switchOff', data);
+    currentUser = WPUser.fromJson(res);
+    changes.add(currentUser);
+    return currentUser;
+  }
 }
