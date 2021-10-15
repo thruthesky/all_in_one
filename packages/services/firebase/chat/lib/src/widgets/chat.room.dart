@@ -56,6 +56,12 @@ class _ChatRoomState extends State<ChatRoom> {
   String get roomId => getMessageCollectionId(myUid, widget.otherUid);
 
   @override
+  void initState() {
+    super.initState();
+    _myRoomDoc.set({'newMessages': 0}, SetOptions(merge: true));
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       child: Column(
@@ -146,6 +152,7 @@ class _ChatRoomState extends State<ChatRoom> {
       });
     });
 
+    /// When the login user send message, clear newMessage.
     data['newMessages'] = 0;
     _myRoomDoc.set(data);
 
