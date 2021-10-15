@@ -109,7 +109,7 @@
     {
       "name": "Android RMX1991 (Ace's Device) - Remote Server",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://wonderfulkorea.kr/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "9c59f12e"
