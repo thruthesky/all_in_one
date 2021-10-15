@@ -146,7 +146,10 @@ class _ChatRoomState extends State<ChatRoom> {
       });
     });
 
+    data['newMessages'] = 0;
     _myRoomDoc.set(data);
-    _otherRoomDoc.set(data);
+
+    data['newMessages'] = FieldValue.increment(1);
+    _otherRoomDoc.set(data, SetOptions(merge: true));
   }
 }
