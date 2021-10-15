@@ -19,6 +19,7 @@ class WPPost {
     required this.url,
     required this.files,
     required this.authorName,
+    required this.authorFirebaseUid,
     required this.authorProfilePhotoUrl,
     required this.shortDateTime,
     required this.comments,
@@ -46,6 +47,7 @@ class WPPost {
   final String url;
   List<WPFile> files;
   final String authorName;
+  final String authorFirebaseUid;
   final String authorProfilePhotoUrl;
   final String shortDateTime;
   final List<WPComment> comments;
@@ -96,6 +98,7 @@ class WPPost {
         url: json["url"] ?? '',
         files: List<WPFile>.from((json["files"] ?? []).map((x) => WPFile.fromJson(x))),
         authorName: json["author_name"] ?? '',
+        authorFirebaseUid: json['author_firebase_uid'] ?? '',
         authorProfilePhotoUrl: json["author_profile_photo_url"] ?? '',
         shortDateTime: json["short_date_time"] ?? '',
         comments: List<WPComment>.from((json["comments"] ?? []).map((x) => WPComment.fromJson(x))),
@@ -128,6 +131,7 @@ class WPPost {
         "url": url,
         "files": List<dynamic>.from(files.map((x) => x)),
         "author_name": authorName,
+        'authorFirebaseUid': authorFirebaseUid,
         "short_date_time": shortDateTime,
         "comments": List<dynamic>.from(comments.map((x) => x.toJson())),
         "slug": slug,

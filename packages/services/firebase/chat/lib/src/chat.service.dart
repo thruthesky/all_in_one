@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
 
 class ChatService {
@@ -17,6 +18,7 @@ class ChatService {
   /// Update current login user informatoin
   ///
   /// This method can be invoked many times to update user information lively.
+  /// [uid] must be Firebase UID
   updateUser({String uid = '', String name = '', String photoUrl = ''}) {
     user.uid = uid;
     user.name = name;
@@ -28,14 +30,20 @@ class ChatService {
   /// - Return chat room id of login user and the other user.
   /// - The location of chat room is at `/rooms/[ID]`.
   /// - Chat room ID is composited with login user UID and other user UID by alphabetic order.
-  ///   - If user.uid = 3 and otherUserUid = 4, then the result is "3-4".
-  ///   - If user.uid = 321 and otherUserUid = 1234, then the result is "1234-321"
-  String getRoomId(String otherUserUid) {
-    print('re: ${user.uid.compareTo(otherUserUid)}');
-    return user.uid.compareTo(otherUserUid) < 0
-        ? "${user.uid}_$otherUserUid"
-        : "${otherUserUid}_${user.uid}";
+  ///   - If user.uid = 3 and otherUserFirebaseUid = 4, then the result is "3-4".
+  ///   - If user.uid = 321 and otherUserFirebaseUid = 1234, then the result is "1234-321"
+  String getRoomId(String otherUserFirebaseUid) {
+    return getMessageCollectionId(user.uid, otherUserFirebaseUid);
   }
+
+  /// 내 방 목록(컬렉션)을 리턴한다.
+  ///
+  /// 참고, user.uid 가 설정된 후 이 함수가 호출되어야 한다.
+  /// ```
+  /// chat.roomsCol.orderBy('timestamp', descending: true);
+  /// ```
+  CollectionReference get roomsCol =>
+      FirebaseFirestore.instance.collection('chat/rooms/${user.uid}');
 
   /// Check if both of the user id(s) in chat room id belong to himself.
   /// If so, the user is trying to chat with himself.

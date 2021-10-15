@@ -8,17 +8,18 @@ publish_to: "none"
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
-  
+
 dependencies:
   flutter:
     sdk: flutter
 
   firebase_core: ^1.7.0
-  firebase_database: ^8.0.0
+  cloud_firestore: ^2.5.3
+  paginate_firestore: ^1.0.2
   
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 flutter:
-

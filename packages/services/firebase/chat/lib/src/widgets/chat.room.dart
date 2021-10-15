@@ -1,12 +1,23 @@
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_chat/firebase_chat.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:paginate_firestore/bloc/pagination_cubit.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 
 class ChatRoom extends StatefulWidget {
-  ChatRoom({required this.roomId, required this.onError, Key? key}) : super(key: key);
+  ChatRoom({
+    required this.myUid,
+    required this.otherUid,
+    required this.onError,
+    Key? key,
+  }) : super(key: key);
 
-  final String roomId;
   final Function onError;
+
+  /// Firebase user uid
+  final String myUid;
+  final String otherUid;
 
   @override
   State<ChatRoom> createState() => _ChatRoomState();
@@ -14,33 +25,31 @@ class ChatRoom extends StatefulWidget {
 
 class _ChatRoomState extends State<ChatRoom> {
   final input = TextEditingController();
-  late DatabaseReference _messagesRef;
-  late DatabaseReference _myRoomsRef;
-  late DatabaseReference _otherRoomsRef;
-  bool _anchorToBottom = true;
 
-  // List<ChatMessageModel> messages = [];
+  bool fetching = false;
+  final int fetchNum = 20;
+  bool noMore = false;
 
-  /// Get my uid from roomId.
-  /// If (only if) this widget is called before the user login, then `chat.user.uid` is empty.
-  /// This may happens only when testing by openning the chat room screen immediately on app booting.
-  late String myUid;
-  late String otherUid;
+  List<ChatDataModel> messages = [];
 
-  @override
-  void initState() {
-    super.initState();
+  // final scrollController = ScrollController();
 
-    myUid = widget.roomId.split('_').first;
-    otherUid = widget.roomId.split('_').last;
+  late CollectionReference _messagesCol =
+      FirebaseFirestore.instance.collection('chat/messages/$roomId');
+  late CollectionReference _myRoomCol =
+      FirebaseFirestore.instance.collection('chat/rooms/${widget.myUid}');
+  late CollectionReference _otherRoomCol =
+      FirebaseFirestore.instance.collection('chat/rooms/${widget.otherUid}');
 
-    final FirebaseDatabase database = FirebaseDatabase();
+  // /chat/rooms/[my-uid]/[other-uid]
+  DocumentReference get _myRoomDoc => _myRoomCol.doc(widget.otherUid);
 
-    ///
-    _messagesRef = database.reference().child('chat').child('messages').child(widget.roomId);
-    _myRoomsRef = database.reference().child('chat').child('rooms').child(myUid);
-    _otherRoomsRef = database.reference().child('chat').child('rooms').child(otherUid);
-  }
+  /// /chat/rooms/[other-uid]/[my-uid]
+  DocumentReference get _otherRoomDoc => _otherRoomCol.doc(widget.myUid);
+
+  int page = 0;
+
+  String get roomId => getMessageCollectionId(widget.myUid, widget.otherUid);
 
   @override
   Widget build(BuildContext context) {
@@ -48,26 +57,53 @@ class _ChatRoomState extends State<ChatRoom> {
       child: Column(
         children: [
           Expanded(
-            child: FirebaseAnimatedList(
-              key: ValueKey<bool>(_anchorToBottom),
-              query: _messagesRef,
-              sort: sortByKey,
-              reverse: _anchorToBottom,
-              itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                return SizeTransition(
-                  sizeFactor: animation,
-                  child: ListTile(
-                    trailing: IconButton(
-                      onPressed: () => _messagesRef.child(snapshot.key!).remove(),
-                      icon: const Icon(Icons.delete),
-                    ),
-                    title: Text(
-                      '$index: ${snapshot.value['text']}',
-                    ),
-                  ),
+            child: PaginateFirestore(
+              // Use SliverAppBar in header to make it sticky
+              // header: const SliverToBoxAdapter(child: Text('HEADER')),
+              footer: const SliverToBoxAdapter(child: SizedBox(height: 16)),
+
+              itemsPerPage: 20,
+
+              reverse: true,
+              //item builder type is compulsory.
+              itemBuilder: (index, context, documentSnapshot) {
+                final data = documentSnapshot.data() as Map?;
+                return ListTile(
+                  leading: CircleAvatar(child: Icon(Icons.person)),
+                  title: data == null ? Text('Error in data') : Text(data['text']),
+                  subtitle: Text(documentSnapshot.id),
                 );
               },
+              // orderBy is compulsory to enable pagination
+              query: _messagesCol.orderBy('timestamp', descending: true),
+              //Change types accordingly
+              itemBuilderType: PaginateBuilderType.listView,
+              // To update db data in real time.
+              isLive: true,
+
+              /// initialLoader 가 제대로 잘 동작하지 않는 것 같다.
+              // initialLoader: Row(
+              //   children: [Icon(Icons.local_dining), Text('맨 처음에 한번만 표시되는 로더...')],
+              // ),
+
+              /// 이것도 제대로 동작하지 않는 것 같다.
+              // bottomLoader: Row(
+              //   children: [Icon(Icons.timer), Text('스크롤 해서 더 많이 로드 할 때 표시되는 로더!!!')],
+              // ),
+
+              onLoaded: (PaginationLoaded loaded) {
+                // print('page loaded; reached to end?; ${loaded.hasReachedEnd}');
+              },
+              onReachedEnd: (PaginationLoaded loaded) {
+                // This is called only one time when it reaches to the end.
+                // print('Yes, Reached to end!!');
+              },
+              onPageChanged: (int no) {
+                /// onPageChanged works on [PaginateBuilderType.pageView] only.
+                // print('onPageChanged() => page no; $no');
+              },
+              emptyDisplay: Center(child: Text('No chats, yet. Please send some message.')),
+              separator: Divider(color: Colors.blue),
             ),
           ),
           SafeArea(
@@ -93,44 +129,19 @@ class _ChatRoomState extends State<ChatRoom> {
   }
 
   void onSubmitText() {
-    _messagesRef.push().set({
+    final data = {
       'text': input.text,
-      'stamp': ServerValue.timestamp,
-    }).then((x) {
+      'timestamp': FieldValue.serverTimestamp(),
+      'from': widget.myUid,
+      'to': widget.otherUid,
+    };
+    _messagesCol.add(data).then((value) {
       setState(() {
         input.text = '';
       });
-    }).catchError(widget.onError);
+    });
 
-    /// Update other user room information under my room list.
-    _myRoomsRef.child(otherUid).set({
-      'text': input.text, // last chat message,
-      'stamp': ServerValue.timestamp, // time of last chat message,
-    }).then((x) {
-      setState(() {
-        input.text = '';
-      });
-    }).catchError(widget.onError);
-
-    /// Update my room information under the other user's room list.
-    _otherRoomsRef.child(myUid).set({
-      'text': input.text, // last chat message,
-      'stamp': ServerValue.timestamp, // time of last chat message,
-      'newMessages': ServerValue.increment(1),
-    }).then((x) {
-      setState(() {
-        input.text = '';
-      });
-    }).catchError(widget.onError);
-  }
-
-  /// Sort by key desc
-  int sortByKey(DataSnapshot a, DataSnapshot b) {
-    int re = a.key!.compareTo(b.key!);
-    if (re == 0) {
-      return 0;
-    } else {
-      return re < 0 ? 1 : -1;
-    }
+    _myRoomDoc.set(data);
+    _otherRoomDoc.set(data);
   }
 }
