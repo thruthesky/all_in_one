@@ -72,10 +72,11 @@ class _ChatRoomState extends State<ChatRoom> {
               //item builder type is compulsory.
               itemBuilder: (index, context, documentSnapshot) {
                 final data = documentSnapshot.data() as Map?;
+                final message = ChatDataModel.fromJson(data!);
                 return ListTile(
                   leading: CircleAvatar(child: Icon(Icons.person)),
-                  title: data == null ? Text('Error in data') : Text(data['text']),
-                  subtitle: Text(documentSnapshot.id),
+                  title: Text(message.text),
+                  subtitle: Text(message.time),
                 );
               },
               // orderBy is compulsory to enable pagination
