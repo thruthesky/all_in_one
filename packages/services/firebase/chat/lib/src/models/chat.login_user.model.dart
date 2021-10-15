@@ -1,4 +1,5 @@
 class ChatLoginUser {
+  /// [uid] is base uid.
   String uid;
   String name;
   String photoUrl;

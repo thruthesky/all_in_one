@@ -89,11 +89,42 @@ class UserApi {
     return currentUser;
   }
 
+  /// Cache containers
+  Map<int, WPUser> othersById = {};
+  Map<String, WPUser> othersByFirebaseUid = {};
+
   /// Get other user's profile.
   ///
-  Future<WPUser> otherProfile(int userId) async {
-    final res = await WordpressApi.instance.request('user.otherProfile', {'user_ID': userId});
-    return WPUser.fromJson(res);
+  Future<WPUser> otherProfile({int? userId, String? firebaseUid}) async {
+    assert(userId != null || firebaseUid != null);
+    if (userId != null) {
+      if (othersById[userId] != null) {
+        print('other user profile is reused by id; $userId');
+        return othersById[userId]!;
+      }
+    } else if (firebaseUid != null) {
+      if (othersByFirebaseUid[firebaseUid] != null) {
+        print('other user profile is reused by firebase uid; $firebaseUid');
+        return othersByFirebaseUid[firebaseUid]!;
+      }
+    }
+
+    final res = await WordpressApi.instance.request('user.otherProfile', {
+      if (userId != null) 'user_ID': userId,
+      if (firebaseUid != null) 'firebaseUid': firebaseUid,
+    });
+
+    print('other user profile; $res');
+
+    if (userId != null) {
+      othersById[userId] = WPUser.fromJson(res);
+      return othersById[userId]!;
+    } else if (firebaseUid != null) {
+      othersByFirebaseUid[firebaseUid] = WPUser.fromJson(res);
+      return othersByFirebaseUid[firebaseUid]!;
+    } else {
+      throw ERROR_PROFILE_ID_MISSING;
+    }
   }
 
   logout() async {

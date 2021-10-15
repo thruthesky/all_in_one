@@ -8,6 +8,7 @@ class WPComment {
     required this.commentParent,
     required this.userId,
     required this.commentAuthor,
+    required this.commentAuthorFirebaseUid,
     required this.commentContent,
     required this.commentDate,
     required this.files,
@@ -23,6 +24,7 @@ class WPComment {
   int commentParent;
   final int userId;
   final String commentAuthor;
+  final String commentAuthorFirebaseUid;
   String commentContent;
   final DateTime commentDate;
   final List<WPFile> files;
@@ -49,6 +51,7 @@ class WPComment {
         commentParent: toInt(json["comment_parent"]),
         userId: toInt(json["user_id"]),
         commentAuthor: json["comment_author"] ?? '',
+        commentAuthorFirebaseUid: json["comment_author_firebase_uid"] ?? '',
         commentContent: json["comment_content"] ?? '',
         commentDate:
             json["comment_date"] != null ? DateTime.parse(json["comment_date"]) : DateTime.now(),
@@ -70,6 +73,7 @@ class WPComment {
         "comment_parent": commentParent,
         "user_id": userId,
         "comment_author": commentAuthor,
+        "commentAuthorFirebaseUid": commentAuthorFirebaseUid,
         "comment_content": commentContent,
         "comment_date": commentDate.toIso8601String(),
         "files": List<dynamic>.from(files.map((x) => x)),
