@@ -7,7 +7,7 @@ import 'package:paginate_firestore/paginate_firestore.dart';
 
 class ChatRoom extends StatefulWidget {
   ChatRoom({
-    required this.myUid,
+    // required this.myUid,
     required this.otherUid,
     required this.onError,
     Key? key,
@@ -16,7 +16,7 @@ class ChatRoom extends StatefulWidget {
   final Function onError;
 
   /// Firebase user uid
-  final String myUid;
+  // final String myUid;
   final String otherUid;
 
   @override
@@ -32,12 +32,15 @@ class _ChatRoomState extends State<ChatRoom> {
 
   List<ChatDataModel> messages = [];
 
-  // final scrollController = ScrollController();
+  String get myUid => chat.user.uid;
 
+  /// messages collection of chat user.
   late CollectionReference _messagesCol =
       FirebaseFirestore.instance.collection('chat/messages/$roomId');
-  late CollectionReference _myRoomCol =
-      FirebaseFirestore.instance.collection('chat/rooms/${widget.myUid}');
+
+  ///
+  late CollectionReference _myRoomCol = chat.roomsCol;
+  // FirebaseFirestore.instance.collection('chat/rooms/${widget.myUid}');
   late CollectionReference _otherRoomCol =
       FirebaseFirestore.instance.collection('chat/rooms/${widget.otherUid}');
 
@@ -45,11 +48,12 @@ class _ChatRoomState extends State<ChatRoom> {
   DocumentReference get _myRoomDoc => _myRoomCol.doc(widget.otherUid);
 
   /// /chat/rooms/[other-uid]/[my-uid]
-  DocumentReference get _otherRoomDoc => _otherRoomCol.doc(widget.myUid);
+  DocumentReference get _otherRoomDoc => _otherRoomCol.doc(myUid);
 
   int page = 0;
 
-  String get roomId => getMessageCollectionId(widget.myUid, widget.otherUid);
+  /// Get room id from login user and other user.
+  String get roomId => getMessageCollectionId(myUid, widget.otherUid);
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +136,7 @@ class _ChatRoomState extends State<ChatRoom> {
     final data = {
       'text': input.text,
       'timestamp': FieldValue.serverTimestamp(),
-      'from': widget.myUid,
+      'from': myUid,
       'to': widget.otherUid,
     };
     _messagesCol.add(data).then((value) {

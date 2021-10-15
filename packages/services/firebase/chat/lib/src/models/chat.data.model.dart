@@ -44,7 +44,7 @@ class ChatDataModel {
       to: json['to'] ?? '',
       from: json['from'] ?? '',
       text: json['text'] ?? '',
-      timestamp: json['timestamp'] ?? 0,
+      timestamp: json['timestamp'] ?? Timestamp.now(), // 이 부분에서 exception 이 발생한다.
       newMessages: json['newMessages'] ?? 0,
     );
   }
