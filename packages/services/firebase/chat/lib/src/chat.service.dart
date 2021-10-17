@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
+import 'package:rxdart/rxdart.dart';
 
 class ChatService {
   /// Singleton
@@ -8,8 +9,11 @@ class ChatService {
     if (_instance == null) {
       _instance = ChatService();
     }
+
     return _instance!;
   }
+
+  BehaviorSubject<bool> ready = BehaviorSubject.seeded(false);
 
   /// Login user information
   /// If uid is empty, the user is not logged in.
@@ -23,6 +27,9 @@ class ChatService {
     user.uid = uid;
     user.name = name;
     user.photoUrl = photoUrl;
+    if (user.uid != '') {
+      ready.add(true);
+    }
   }
 
   /// Chat room ID
@@ -44,6 +51,11 @@ class ChatService {
   /// ```
   CollectionReference get roomsCol =>
       FirebaseFirestore.instance.collection('chat/rooms/${user.uid}');
+
+  /// Returns other user's room list collection
+  CollectionReference otherUserRoomsCol(String otherUserUid) {
+    return FirebaseFirestore.instance.collection('chat/rooms/$otherUserUid');
+  }
 
   /// Check if both of the user id(s) in chat room id belong to himself.
   /// If so, the user is trying to chat with himself.
