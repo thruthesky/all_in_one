@@ -16,7 +16,7 @@ class ChatRoom extends StatefulWidget {
   }) : super(key: key);
 
   final Function onError;
-  final Function onSend;
+  final Function(String message) onSend;
   final Function onUpdateOtherRoom;
 
   /// Firebase user uid
@@ -154,7 +154,7 @@ class _ChatRoomState extends State<ChatRoom> {
       setState(() {
         input.text = '';
       });
-      widget.onSend();
+      widget.onSend(data['text'] as String);
     });
 
     /// When the login user send message, clear newMessage.

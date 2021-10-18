@@ -21,4 +21,29 @@ class MessagingApi {
       'topic': topic,
     });
   }
+
+  Future<dynamic> sendMessageToUsers({
+    String title: '',
+    String content: '',
+    List<int>? ids,
+    List<String>? emails,
+    String? clickUrl,
+    int? badge,
+    String? sound,
+    String? channel,
+    MapStringDynamic? data,
+  }) {
+    MapStringDynamic req = {
+      'title': title,
+      'body': content,
+      'users': ids,
+      'emails': emails,
+      'badge': badge,
+      'click_url': clickUrl,
+      'sound': sound,
+      'channel': channel,
+      'data': data
+    };
+    return WordpressApi.instance.request("push-notification.sendMessageToUsers", req);
+  }
 }
