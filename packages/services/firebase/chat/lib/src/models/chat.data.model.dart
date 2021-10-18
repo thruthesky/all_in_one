@@ -23,6 +23,7 @@ class ChatDataModel {
 
   /// 내가 보낸 메시지이면 true 를 리턴한다.
   bool get byMe => from == myUid;
+  bool get isMine => byMe;
 
   /// 상대방이 보낸 메시지면, true 를 리턴한다.
   bool get byOther => to == myUid;

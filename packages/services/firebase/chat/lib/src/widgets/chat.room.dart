@@ -83,10 +83,14 @@ class _ChatRoomState extends State<ChatRoom> {
               itemBuilder: (index, context, documentSnapshot) {
                 final data = documentSnapshot.data() as Map?;
                 final message = ChatDataModel.fromJson(data!);
-                return ListTile(
-                  leading: CircleAvatar(child: Icon(Icons.person)),
-                  title: Text(message.text),
-                  subtitle: Text(message.time),
+
+                return Container(
+                  color: message.isMine ? Colors.yellow : Colors.blue,
+                  child: ListTile(
+                    // leading: CircleAvatar(child: Icon(Icons.home)),
+                    title: Text(message.text),
+                    subtitle: Text(message.time),
+                  ),
                 );
               },
               // orderBy is compulsory to enable pagination
@@ -118,7 +122,7 @@ class _ChatRoomState extends State<ChatRoom> {
                 // print('onPageChanged() => page no; $no');
               },
               emptyDisplay: Center(child: Text('No chats, yet. Please send some message.')),
-              separator: Divider(color: Colors.blue),
+              // separator: Divider(color: Colors.blue),
             ),
           ),
           SafeArea(
