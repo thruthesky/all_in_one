@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
+import 'package:firebase_chat/src/chat.defines.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:paginate_firestore/bloc/pagination_cubit.dart';
@@ -11,13 +12,15 @@ class ChatRoom extends StatefulWidget {
     required this.otherUid,
     required this.onError,
     required this.onSend,
-    required this.onUpdateOtherRoom,
+    required this.onUpdateOtherUserRoomInformation,
+    required this.messageBuilder,
     Key? key,
   }) : super(key: key);
 
   final Function onError;
   final Function(String message) onSend;
-  final Function onUpdateOtherRoom;
+  final Function onUpdateOtherUserRoomInformation;
+  final MessageBuilder messageBuilder;
 
   /// Firebase user uid
   // final String myUid;
@@ -82,16 +85,19 @@ class _ChatRoomState extends State<ChatRoom> {
               //item builder type is compulsory.
               itemBuilder: (index, context, documentSnapshot) {
                 final data = documentSnapshot.data() as Map?;
-                final message = ChatDataModel.fromJson(data!);
+                final message = ChatDataModel.fromJson(data!, documentSnapshot.reference);
 
-                return Container(
-                  color: message.isMine ? Colors.yellow : Colors.blue,
-                  child: ListTile(
-                    // leading: CircleAvatar(child: Icon(Icons.home)),
-                    title: Text(message.text),
-                    subtitle: Text(message.time),
-                  ),
-                );
+                return widget.messageBuilder(message);
+
+                // return Container(
+                //   color: message.isMine ? Colors.yellow : Colors.blue,
+                //   child: ListTile(
+                //     // leading: CircleAvatar(child: Icon(Icons.home)),
+                //     title: Text(message.text),
+                //     subtitle: Text(message.time),
+                //     onTap: () {},
+                //   ),
+                // );
               },
               // orderBy is compulsory to enable pagination
               query: _messagesCol.orderBy('timestamp', descending: true),
@@ -166,6 +172,8 @@ class _ChatRoomState extends State<ChatRoom> {
     _myRoomDoc.set(data);
 
     data['newMessages'] = FieldValue.increment(1);
-    _otherRoomDoc.set(data, SetOptions(merge: true)).then((value) => widget.onUpdateOtherRoom());
+    _otherRoomDoc
+        .set(data, SetOptions(merge: true))
+        .then((value) => widget.onUpdateOtherUserRoomInformation());
   }
 }

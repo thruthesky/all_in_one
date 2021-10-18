@@ -32,7 +32,7 @@ class _ChatBadgeState extends State<ChatBadge> {
           .listen((QuerySnapshot snapshot) {
         newMessages = 0;
         snapshot.docs.forEach((doc) {
-          ChatDataModel room = ChatDataModel.fromJson(doc.data() as Map);
+          ChatDataModel room = ChatDataModel.fromJson(doc.data() as Map, null);
           newMessages += room.newMessages;
           print('doc; new ${room.newMessages}');
         });

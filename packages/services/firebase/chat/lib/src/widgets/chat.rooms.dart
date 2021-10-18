@@ -41,7 +41,7 @@ class _ChatRoomsState extends State<ChatRooms> {
       //item builder type is compulsory.
       itemBuilder: (index, context, documentSnapshot) {
         final data = documentSnapshot.data() as Map?;
-        final room = ChatDataModel.fromJson(data!);
+        final room = ChatDataModel.fromJson(data!, documentSnapshot.reference);
         return Container(
           key: ValueKey(room.otherUid),
           child: widget.itemBuilder(room),

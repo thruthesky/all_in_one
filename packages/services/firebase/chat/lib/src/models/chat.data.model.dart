@@ -30,7 +30,10 @@ class ChatDataModel {
 
   bool get hasNewMessage => newMessages > 0;
 
-  DocumentReference get ref => chat.roomsCol.doc(otherUid);
+  DocumentReference get otherUserRoomInMyRoomListRef => chat.roomsCol.doc(otherUid);
+
+  /// Reference of this document (chat model data)
+  DocumentReference? ref;
 
   ChatDataModel({
     required this.to,
@@ -38,15 +41,17 @@ class ChatDataModel {
     required this.text,
     required this.timestamp,
     required this.newMessages,
+    required this.ref,
   });
 
-  factory ChatDataModel.fromJson(Map<dynamic, dynamic> json) {
+  factory ChatDataModel.fromJson(Map<dynamic, dynamic> json, [DocumentReference? ref]) {
     return ChatDataModel(
       to: json['to'] ?? '',
       from: json['from'] ?? '',
       text: json['text'] ?? '',
       timestamp: json['timestamp'] ?? Timestamp.now(), // 이 부분에서 exception 이 발생한다.
       newMessages: json['newMessages'] ?? 0,
+      ref: ref,
     );
   }
 
@@ -65,7 +70,14 @@ class ChatDataModel {
     return """ChatDataModel(${toJson()})""";
   }
 
+  /// Deletes other user in my room list.
+  Future<void> deleteOtherUserRoom() {
+    return otherUserRoomInMyRoomListRef.delete();
+  }
+
+  /// Deletes current document.
+  /// It may be a chat message or room info.
   Future<void> delete() {
-    return ref.delete();
+    return ref!.delete();
   }
 }
