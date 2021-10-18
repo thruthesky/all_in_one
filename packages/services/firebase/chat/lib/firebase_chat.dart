@@ -3,6 +3,7 @@ export 'src/models/chat.login_user.model.dart';
 export 'src/chat.service.dart';
 export 'src/widgets/chat.rooms.dart';
 export 'src/widgets/chat.room.dart';
+export 'src/widgets/chat.badge.dart';
 export 'src/models/chat.data.model.dart';
 export 'src/chat.functions.dart';
 
