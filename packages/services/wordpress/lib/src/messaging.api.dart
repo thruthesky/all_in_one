@@ -32,6 +32,7 @@ class MessagingApi {
     String? sound,
     String? channel,
     MapStringDynamic? data,
+    String? subscription,
   }) {
     MapStringDynamic req = {
       'title': title,
@@ -42,7 +43,8 @@ class MessagingApi {
       'click_url': clickUrl,
       'sound': sound,
       'channel': channel,
-      'data': data
+      'data': data,
+      'subscription': subscription,
     };
     return WordpressApi.instance.request("push-notification.sendMessageToUsers", req);
   }
