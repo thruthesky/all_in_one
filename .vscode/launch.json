@@ -169,6 +169,15 @@
       "type": "dart",
       "deviceId": "J8AXB761J32888A"
     },
+    
+    {
+      "name": "LIVE emulator-5554",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "emulator-5554"
+    },
     {
       "name": "Iphone7 096a885ba083f01af93963a8661720cf9e67cb86",
       "program": "projects/my/sonub/lib/main.dart",
