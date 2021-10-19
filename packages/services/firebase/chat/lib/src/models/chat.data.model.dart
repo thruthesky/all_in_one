@@ -35,6 +35,15 @@ class ChatDataModel {
   /// Reference of this document (chat model data)
   DocumentReference? ref;
 
+  bool get isImage {
+    String t = text.toLowerCase();
+    if (t.endsWith('.jpg')) return true;
+    if (t.endsWith('.jpeg')) return true;
+    if (t.endsWith('.png')) return true;
+    if (t.endsWith('.gif')) return true;
+    return false;
+  }
+
   ChatDataModel({
     required this.to,
     required this.from,
@@ -79,5 +88,9 @@ class ChatDataModel {
   /// It may be a chat message or room info.
   Future<void> delete() {
     return ref!.delete();
+  }
+
+  Future<void> update(String text) {
+    return ref!.set({'text': text}, SetOptions(merge: true));
   }
 }

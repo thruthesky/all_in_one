@@ -11,16 +11,16 @@ class ChatRoom extends StatefulWidget {
     // required this.myUid,
     required this.otherUid,
     required this.onError,
-    required this.onSend,
     required this.onUpdateOtherUserRoomInformation,
     required this.messageBuilder,
+    required this.inputBuilder,
     Key? key,
   }) : super(key: key);
 
   final Function onError;
-  final Function(String message) onSend;
   final Function onUpdateOtherUserRoomInformation;
   final MessageBuilder messageBuilder;
+  final InputBuilder inputBuilder;
 
   /// Firebase user uid
   // final String myUid;
@@ -31,8 +31,6 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  final input = TextEditingController();
-
   bool fetching = false;
   final int fetchNum = 20;
   bool noMore = false;
@@ -86,18 +84,7 @@ class _ChatRoomState extends State<ChatRoom> {
               itemBuilder: (index, context, documentSnapshot) {
                 final data = documentSnapshot.data() as Map?;
                 final message = ChatDataModel.fromJson(data!, documentSnapshot.reference);
-
                 return widget.messageBuilder(message);
-
-                // return Container(
-                //   color: message.isMine ? Colors.yellow : Colors.blue,
-                //   child: ListTile(
-                //     // leading: CircleAvatar(child: Icon(Icons.home)),
-                //     title: Text(message.text),
-                //     subtitle: Text(message.time),
-                //     onTap: () {},
-                //   ),
-                // );
               },
               // orderBy is compulsory to enable pagination
               query: _messagesCol.orderBy('timestamp', descending: true),
@@ -131,49 +118,45 @@ class _ChatRoomState extends State<ChatRoom> {
               // separator: Divider(color: Colors.blue),
             ),
           ),
-          SafeArea(
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: input,
-                    decoration: InputDecoration(hintText: 'Input message'),
-                    onSubmitted: (x) => onSubmitText(),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: onSubmitText,
-                ),
-              ],
-            ),
-          ),
+          SafeArea(child: widget.inputBuilder(onSubmitText)),
+          // SafeArea(
+          //   child: Row(
+          //     children: [
+          //       Expanded(
+          //         child: TextField(
+          //           controller: input,
+          //           decoration: InputDecoration(hintText: 'Input message'),
+          //           onSubmitted: (x) => onSubmitText(),
+          //         ),
+          //       ),
+          //       IconButton(
+          //         icon: Icon(Icons.send),
+          //         onPressed: onSubmitText,
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
   }
 
-  void onSubmitText() {
+  void onSubmitText(String text) {
     final data = {
-      'text': input.text,
+      'text': text,
       'timestamp': FieldValue.serverTimestamp(),
       'from': myUid,
       'to': widget.otherUid,
     };
-    _messagesCol.add(data).then((value) {
-      setState(() {
-        input.text = '';
-      });
-      widget.onSend(data['text'] as String);
-    });
+    _messagesCol.add(data).then((value) {});
 
     /// When the login user send message, clear newMessage.
     data['newMessages'] = 0;
     _myRoomDoc.set(data);
 
     data['newMessages'] = FieldValue.increment(1);
-    _otherRoomDoc
-        .set(data, SetOptions(merge: true))
-        .then((value) => widget.onUpdateOtherUserRoomInformation());
+    _otherRoomDoc.set(data, SetOptions(merge: true)).then((value) {
+      widget.onUpdateOtherUserRoomInformation(data);
+    });
   }
 }

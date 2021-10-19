@@ -16,18 +16,18 @@ class FileUploadIcon extends StatelessWidget {
     required this.error,
     required this.progress,
     this.choiceBuilder,
-    this.taxonomy = 'posts',
     this.entity = 0,
     this.quality = 90,
+    this.postType = 'attachment',
   }) : super(key: key);
 
   final Function uploaded;
   final Function error;
   final Function progress;
   final Function? choiceBuilder;
-  final String taxonomy;
   final int entity;
   final int quality;
+  final String postType;
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +41,7 @@ class FileUploadIcon extends StatelessWidget {
               source: re,
               quality: quality,
               progress: progress,
+              postType: postType,
             );
             print('file upload: f: $f');
             uploaded(f);
