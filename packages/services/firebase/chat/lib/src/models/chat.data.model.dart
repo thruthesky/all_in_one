@@ -44,6 +44,18 @@ class ChatDataModel {
     return false;
   }
 
+  /// It may be a link of file upload on backend, or simply a text typed by user.
+  /// App should do 'canLunch', or 'url launch' to display the url.
+  bool get isUrl {
+    String t = text.toLowerCase();
+    return t.startsWith('http://') || t.startsWith('https://');
+  }
+
+  /// Return true if the message is not uploaded image or file, nor a url typed by user.
+  bool get isText {
+    return isImage == false && isUrl == false;
+  }
+
   ChatDataModel({
     required this.to,
     required this.from,
