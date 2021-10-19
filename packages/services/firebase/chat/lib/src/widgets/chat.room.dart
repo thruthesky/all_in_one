@@ -8,7 +8,6 @@ import 'package:paginate_firestore/paginate_firestore.dart';
 
 class ChatRoom extends StatefulWidget {
   ChatRoom({
-    // required this.myUid,
     required this.otherUid,
     required this.onError,
     required this.onUpdateOtherUserRoomInformation,
@@ -63,7 +62,14 @@ class _ChatRoomState extends State<ChatRoom> {
   @override
   void initState() {
     super.initState();
+    chat.otherUid = widget.otherUid;
     _myRoomDoc.set({'newMessages': 0}, SetOptions(merge: true));
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    chat.otherUid = '';
   }
 
   @override

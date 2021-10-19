@@ -13,6 +13,16 @@ class ChatService {
     return _instance!;
   }
 
+  /// The Firebase UID of the user in the currently opened chat room.
+  ///
+  /// [otherUid] is the other user's Firebase UID on the current chat room.
+  /// Note that, [user] is the login user's information and [otherUid] is the other user firebase uid on currently opened chat room.
+  /// App may use it to check who the login user is talking to.
+  /// For instance, if login use is talking to someone in current chat room, then the app can ignore push messages from the user.
+  String otherUid = '';
+
+  /// Post [ready] event when user information is set.
+  /// You may use it to know if app is ready to send chat message in a chat room.
   BehaviorSubject<bool> ready = BehaviorSubject.seeded(false);
 
   /// Login user information
