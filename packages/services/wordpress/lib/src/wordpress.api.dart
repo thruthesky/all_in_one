@@ -55,11 +55,15 @@ class WordpressApi {
   // final res = await Api.instance.request('app.version');
   // print('version: ${res['version']}');
   // ```
-  Future<dynamic> request(String route, [MapStringDynamic? data]) async {
+  Future<dynamic> request(String route, [MapStringDynamic? data, bool debugUrl = false]) async {
     if (url == '') throw 'Wordpress Api URL is not set.';
     if (data == null) data = {};
     data['route'] = route;
     if (sessionId != '') data['session_id'] = sessionId;
+
+    if (debugUrl) _printDebugUrl(data);
+
+    ///
     try {
       final res = await dio.post(
         url,

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 
 class ChatBadge extends StatefulWidget {
   const ChatBadge({Key? key}) : super(key: key);
@@ -37,6 +38,9 @@ class _ChatBadgeState extends State<ChatBadge> {
           newMessages += room.newMessages;
         });
         setState(() {});
+
+        // update the App icon badge.
+        FlutterAppBadger.updateBadgeCount(newMessages);
       });
     });
   }

@@ -46,6 +46,6 @@ class MessagingApi {
       'data': data,
       'subscription': subscription,
     };
-    return WordpressApi.instance.request("push-notification.sendMessageToUsers", req);
+    return WordpressApi.instance.request("push-notification.sendMessageToUsers", req, true);
   }
 }
