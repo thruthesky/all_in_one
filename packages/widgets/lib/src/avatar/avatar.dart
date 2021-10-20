@@ -19,10 +19,13 @@ class Avatar extends StatelessWidget {
       );
     } else {
       child = Container(
+        width: size,
+        height: size,
         decoration: BoxDecoration(color: Colors.grey[200]),
         child: Icon(
           Icons.person_rounded,
           color: Colors.grey[700],
+          size: size / 1.3,
         ),
       );
     }
