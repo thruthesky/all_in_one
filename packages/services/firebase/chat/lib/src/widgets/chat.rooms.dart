@@ -76,7 +76,7 @@ class _ChatRoomsState extends State<ChatRooms> {
         // print('onPageChanged() => page no; $no');
       },
       emptyDisplay: Center(child: Text('No friends, yet. Please send a message to some friends.')),
-      separator: Divider(color: Colors.blue),
+      // separator: Divider(color: Colors.blue),
     );
   }
 }
