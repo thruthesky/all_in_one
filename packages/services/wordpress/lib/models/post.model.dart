@@ -32,6 +32,7 @@ class WPPost {
     required this.Y,
     required this.N,
     required this.html,
+    required this.code,
   });
 
   final int id;
@@ -58,6 +59,8 @@ class WPPost {
   final String featuredImageThumbnailUrl;
   final String featuredImageMediumThumbnailUrl;
   final String featuredImageLargeThumbnailUrl;
+
+  final String code;
 
   int Y;
   int N;
@@ -111,6 +114,7 @@ class WPPost {
         Y: toInt(json['Y']),
         N: toInt(json['N']),
         html: toBool(json['html']),
+        code: toStr(json['code']),
       );
 
   factory WPPost.empty() {
@@ -143,6 +147,7 @@ class WPPost {
         'Y': Y,
         'N': N,
         'html': html,
+        'code': code,
       };
 
   @override

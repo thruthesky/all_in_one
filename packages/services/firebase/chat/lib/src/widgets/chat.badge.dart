@@ -13,7 +13,8 @@ class ChatBadge extends StatefulWidget {
 }
 
 class _ChatBadgeState extends State<ChatBadge> {
-  late StreamSubscription<QuerySnapshot> chatRoomSubscription;
+  // ignore: cancel_subscriptions
+  StreamSubscription<QuerySnapshot>? chatRoomSubscription;
   late StreamSubscription ready;
 
   int newMessages = 0;
@@ -34,7 +35,6 @@ class _ChatBadgeState extends State<ChatBadge> {
         snapshot.docs.forEach((doc) {
           ChatDataModel room = ChatDataModel.fromJson(doc.data() as Map, null);
           newMessages += room.newMessages;
-          print('doc; new ${room.newMessages}');
         });
         setState(() {});
       });
@@ -44,12 +44,15 @@ class _ChatBadgeState extends State<ChatBadge> {
   @override
   void dispose() {
     super.dispose();
-    chatRoomSubscription.cancel();
+    if (chatRoomSubscription != null) {
+      chatRoomSubscription!.cancel();
+    }
     ready.cancel();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (newMessages == 0) return SizedBox.shrink();
     return Badge(
       toAnimate: false,
       shape: BadgeShape.circle,
