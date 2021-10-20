@@ -134,6 +134,7 @@ class _ChatRoomState extends State<ChatRoom> {
               //   children: [Icon(Icons.timer), Text('스크롤 해서 더 많이 로드 할 때 표시되는 로더!!!')],
               // ),
 
+              /// This will be invoked whenever it displays a new message. (from the login user or the other user.)
               onLoaded: (PaginationLoaded loaded) {
                 // print('page loaded; reached to end?; ${loaded.hasReachedEnd}');
                 // print('######################################');
@@ -152,23 +153,6 @@ class _ChatRoomState extends State<ChatRoom> {
             ),
           ),
           SafeArea(child: widget.inputBuilder(onSubmitText)),
-          // SafeArea(
-          //   child: Row(
-          //     children: [
-          //       Expanded(
-          //         child: TextField(
-          //           controller: input,
-          //           decoration: InputDecoration(hintText: 'Input message'),
-          //           onSubmitted: (x) => onSubmitText(),
-          //         ),
-          //       ),
-          //       IconButton(
-          //         icon: Icon(Icons.send),
-          //         onPressed: onSubmitText,
-          //       ),
-          //     ],
-          //   ),
-          // ),
         ],
       ),
     );
