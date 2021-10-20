@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
 import 'package:firebase_chat/src/chat.defines.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:paginate_firestore/bloc/pagination_cubit.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
+import 'package:flutter_app_badger/flutter_app_badger.dart';
 
 class ChatRoom extends StatefulWidget {
   ChatRoom({
@@ -59,17 +62,42 @@ class _ChatRoomState extends State<ChatRoom> {
   /// Get room id from login user and other user.
   String get roomId => getMessageCollectionId(myUid, widget.otherUid);
 
+  // // ignore: cancel_subscriptions
+  // StreamSubscription<QuerySnapshot>? chatRoomSubscription;
+  // late StreamSubscription ready;
+
   @override
   void initState() {
     super.initState();
     chat.otherUid = widget.otherUid;
-    _myRoomDoc.set({'newMessages': 0}, SetOptions(merge: true));
+    // _myRoomDoc.set({'newMessages': 0}, SetOptions(merge: true));
+
+    /// update app icon if the user view some message.
+    // ready = chat.ready.listen((re) {
+    //   if (re == false) return;
+
+    //   chatRoomSubscription = chat.roomsCol
+    //       .where('newMessages', isGreaterThan: 0)
+    //       .snapshots()
+    //       .listen((QuerySnapshot snapshot) {
+    //     int newMessages = 0;
+    //     snapshot.docs.forEach((doc) {
+    //       ChatDataModel room = ChatDataModel.fromJson(doc.data() as Map, null);
+    //       newMessages += room.newMessages;
+    //     });
+    //     FlutterAppBadger.updateBadgeCount(newMessages);
+    //   });
+    // });
   }
 
   @override
   void dispose() {
     super.dispose();
     chat.otherUid = '';
+    // if (chatRoomSubscription != null) {
+    //   chatRoomSubscription!.cancel();
+    // }
+    // ready.cancel();
   }
 
   @override
@@ -111,6 +139,8 @@ class _ChatRoomState extends State<ChatRoom> {
 
               onLoaded: (PaginationLoaded loaded) {
                 // print('page loaded; reached to end?; ${loaded.hasReachedEnd}');
+                // print('######################################');
+                _myRoomDoc.set({'newMessages': 0}, SetOptions(merge: true));
               },
               onReachedEnd: (PaginationLoaded loaded) {
                 // This is called only one time when it reaches to the end.
