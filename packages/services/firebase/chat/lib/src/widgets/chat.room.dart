@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
 import 'package:firebase_chat/src/chat.defines.dart';
@@ -7,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:paginate_firestore/bloc/pagination_cubit.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 
 class ChatRoom extends StatefulWidget {
   ChatRoom({

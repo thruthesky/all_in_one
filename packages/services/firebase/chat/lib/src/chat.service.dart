@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
 import 'package:rxdart/rxdart.dart';
@@ -25,9 +27,49 @@ class ChatService {
   /// You may use it to know if app is ready to send chat message in a chat room.
   BehaviorSubject<bool> ready = BehaviorSubject.seeded(false);
 
+  /// Post [newMessages] event when there is a new message.
+  ///
+  /// Use this event to update the no of new chat messagges.
+  /// * The app should unsubscribe [newMessages] if it is not used for life time.
+  BehaviorSubject<int> newMessages = BehaviorSubject.seeded(0);
+
   /// Login user information
   /// If uid is empty, the user is not logged in.
   ChatLoginUser user = ChatLoginUser(uid: '', name: '', photoUrl: '');
+
+  // ignore: cancel_subscriptions
+  StreamSubscription? readySubscription;
+  // ignore: cancel_subscriptions
+  StreamSubscription? roomSubscription;
+
+  /// Counting new messages
+  ///
+  /// Call this method to count the number of new messages.
+  ///
+  /// ! Attention, the subcriptions in this method should be a life time subscription. So, you don't have to unsubscribe it.
+  ///
+  ///
+  countNewMessages() async {
+    print(' =====> ChatService::countNewMessages()');
+    if (readySubscription != null) readySubscription!.cancel();
+    if (roomSubscription != null) roomSubscription!.cancel();
+
+    readySubscription = ready.listen((re) {
+      if (re == false) return;
+
+      roomSubscription = roomsCol
+          .where('newMessages', isGreaterThan: 0)
+          .snapshots()
+          .listen((QuerySnapshot snapshot) {
+        int _newMessages = 0;
+        snapshot.docs.forEach((doc) {
+          ChatDataModel room = ChatDataModel.fromJson(doc.data() as Map, null);
+          _newMessages += room.newMessages;
+        });
+        newMessages.add(_newMessages);
+      });
+    });
+  }
 
   /// Update current login user informatoin
   ///
@@ -39,6 +81,7 @@ class ChatService {
     user.photoUrl = photoUrl;
     if (user.uid != '') {
       ready.add(true);
+      countNewMessages();
     }
   }
 
