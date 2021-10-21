@@ -68,9 +68,9 @@
       "deviceId": "emulator-5554"
     },
     {
-      "name": "영자, Galaxy Wide 2 - SB - Local",
+      "name": "영자, Galaxy Wide 2 - Remote",
       "program": "projects/my/sonub/lib/main.dart",
-      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.2.1/api/api.php"],
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
       "deviceId": "3300a275cab914b9"
@@ -185,7 +185,7 @@
       "type": "dart",
       "deviceId": "J8AXB761J32888A"
     },
-    
+
     {
       "name": "LIVE emulator-5554",
       "program": "projects/my/sonub/lib/main.dart",

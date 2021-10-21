@@ -42,29 +42,41 @@ class PostApi {
     bool stripTags = false,
     bool minimize = false,
     bool log = false,
-    Function? cache,
+    PostsCacheCallback? cacheCallback,
   }) async {
-    final res = await WordpressApi.instance.request('post.posts', data: {
-      'paged': page,
-      'posts_per_page': postsPerPage,
-      if (slug != null) 'category_name': slug,
-      if (searchKeyword != null) 's': searchKeyword,
-      if (author != null && author > 0) 'author': author,
-      'order': order,
-      'orderby': orderBy,
-      if (id > 0) 'p': id,
-      if (hasPhoto)
-        'meta_query': [
-          {
-            'key': '_thumbnail_id',
-            'compare': 'EXISTS',
-          }
-        ],
-      'with_autop': withAutoP,
-      'strip_tags': stripTags,
-      'minimize': minimize,
-      if (log) 'debug_log': true,
-    });
+    final res = await WordpressApi.instance.request(
+      'post.posts',
+      data: {
+        'paged': page,
+        'posts_per_page': postsPerPage,
+        if (slug != null) 'category_name': slug,
+        if (searchKeyword != null) 's': searchKeyword,
+        if (author != null && author > 0) 'author': author,
+        'order': order,
+        'orderby': orderBy,
+        if (id > 0) 'p': id,
+        if (hasPhoto)
+          'meta_query': [
+            {
+              'key': '_thumbnail_id',
+              'compare': 'EXISTS',
+            }
+          ],
+        'with_autop': withAutoP,
+        'strip_tags': stripTags,
+        'minimize': minimize,
+        if (log) 'debug_log': true,
+      },
+      cacheCallback: cacheCallback == null
+          ? null
+          : (res) {
+              final List<WPPost> posts = [];
+              for (final p in res) {
+                posts.add(WPPost.fromJson(p));
+              }
+              cacheCallback(posts);
+            },
+    );
     final List<WPPost> posts = [];
     for (final p in res) {
       posts.add(WPPost.fromJson(p));

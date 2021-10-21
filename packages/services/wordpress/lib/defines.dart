@@ -1,5 +1,9 @@
+import 'package:wordpress/models/post.model.dart';
+
 typedef MapStringDynamic = Map<String, dynamic>;
 typedef JSON = MapStringDynamic;
+
+typedef PostsCacheCallback = void Function(List<WPPost>);
 
 const PROFILE_PHOTO = 'profile_photo';
 const COMMENT_ATTACHMENT = 'comment_attachment';

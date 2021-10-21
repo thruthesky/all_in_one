@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'user.api.dart';
 import '../defines.dart';
 
@@ -46,6 +48,48 @@ class WordpressApi {
     this.onRegister = onRegister;
   }
 
+  /// [cacheKey] 가 주어졌으면, 그냥 [cacheKey] 만 사용한다.
+  /// [cacheKey] 가 주어지지 않았으면, [data] 값을 바탕으로 캐시 키 값을 만든다.
+  getCacheKey(MapStringDynamic data, String? cacheKey) {
+    if (cacheKey != null) {
+      return cacheKey;
+    }
+
+    List<String> primary = [];
+    for (final k in data.keys) {
+      if (k == 'session_id') continue;
+      if (data[k] is String || data[k] is int) primary.add('$k=${data[k]}');
+    }
+    cacheKey = primary.join('&');
+    return cacheKey;
+  }
+
+  loadCache(String key, Function callback) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      String? cacheData = prefs.getString(key);
+      if (cacheData == null) {
+        return;
+      } else {
+        dynamic decoded = json.decode(cacheData);
+        callback(decoded);
+      }
+    } catch (e) {
+      print("---> There is an error on loadCache(). Don't throw error. Slently ignore. $e");
+    }
+  }
+
+  saveCache(String key, dynamic data) async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final encoded = json.encode(data);
+      await prefs.setString(key, encoded);
+    } catch (e) {
+      print("---> There is an error on saveCache(). Don't throw error. Slently ignore.");
+    }
+  }
+
   // 백엔드에 요청
   //
   // [route] 와 [data] 에 요청 값을 넣고 백엔드로 요청
@@ -59,7 +103,8 @@ class WordpressApi {
     String route, {
     MapStringDynamic? data,
     bool debugUrl = false,
-    Function? cache,
+    Function? cacheCallback,
+    String? cacheKey,
   }) async {
     if (url == '') throw 'Wordpress Api URL is not set.';
     if (data == null) data = {};
@@ -68,13 +113,8 @@ class WordpressApi {
 
     if (debugUrl) _printDebugUrl(data);
 
-    try {
-      /// TODO 여기서 캐시를 하고, 있으면, 리턴한다.
-      if (cache != null) {
-        cache([]);
-      }
-    } catch (e) {
-      throw CACHE_DATA + e.toString();
+    if (cacheCallback != null) {
+      loadCache(getCacheKey(data, cacheKey), cacheCallback);
     }
 
     ///
@@ -99,7 +139,8 @@ class WordpressApi {
       } else if (res.data['response'] == null) {
         throw ("Data inside response object is NULL.");
       } else {
-        // 성공
+        // 성공. 결과 데이터만 리턴.
+        if (cacheCallback != null) saveCache(getCacheKey(data, cacheKey), res.data['response']);
         return res.data['response'];
       }
     } on DioError catch (e) {

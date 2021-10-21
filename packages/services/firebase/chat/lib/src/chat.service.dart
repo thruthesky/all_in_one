@@ -50,7 +50,7 @@ class ChatService {
   ///
   ///
   countNewMessages() async {
-    print(' =====> ChatService::countNewMessages()');
+    // print(' =====> ChatService::countNewMessages()');
     if (readySubscription != null) readySubscription!.cancel();
     if (roomSubscription != null) roomSubscription!.cancel();
 
