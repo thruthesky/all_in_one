@@ -55,14 +55,27 @@ class WordpressApi {
   // final res = await Api.instance.request('app.version');
   // print('version: ${res['version']}');
   // ```
-  Future<dynamic> request(String route,
-      {MapStringDynamic? data, bool debugUrl = false, Function? cache}) async {
+  Future<dynamic> request(
+    String route, {
+    MapStringDynamic? data,
+    bool debugUrl = false,
+    Function? cache,
+  }) async {
     if (url == '') throw 'Wordpress Api URL is not set.';
     if (data == null) data = {};
     data['route'] = route;
     if (sessionId != '') data['session_id'] = sessionId;
 
     if (debugUrl) _printDebugUrl(data);
+
+    try {
+      /// TODO 여기서 캐시를 하고, 있으면, 리턴한다.
+      if (cache != null) {
+        cache([]);
+      }
+    } catch (e) {
+      throw CACHE_DATA + e.toString();
+    }
 
     ///
     try {
