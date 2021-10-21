@@ -132,7 +132,7 @@ class FileApi {
   ///
   /// It returns deleted file record.
   Future<WPFile> delete(int id) async {
-    final res = await WordpressApi.instance.request('file.delete', {'ID': id});
+    final res = await WordpressApi.instance.request('file.delete', data: {'ID': id});
     print('res; $res');
     return WPFile.fromJson(res);
   }

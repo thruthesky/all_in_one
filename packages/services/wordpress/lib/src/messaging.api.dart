@@ -11,13 +11,13 @@ class MessagingApi {
   }
 
   Future<dynamic> updateToken(String token, {String topic: ""}) {
-    return WordpressApi.instance.request("push-notification.updateToken", {
+    return WordpressApi.instance.request("push-notification.updateToken", data: {
       'token': token,
     });
   }
 
   Future<dynamic> updateSubscription(String topic) {
-    return WordpressApi.instance.request("push-notification.updateSubscription", {
+    return WordpressApi.instance.request("push-notification.updateSubscription", data: {
       'topic': topic,
     });
   }
@@ -46,6 +46,7 @@ class MessagingApi {
       'data': data,
       'subscription': subscription,
     };
-    return WordpressApi.instance.request("push-notification.sendMessageToUsers", req, true);
+    return WordpressApi.instance
+        .request("push-notification.sendMessageToUsers", data: req, debugUrl: true);
   }
 }

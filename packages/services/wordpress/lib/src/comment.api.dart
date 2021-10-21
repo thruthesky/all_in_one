@@ -15,21 +15,23 @@ class CommentApi {
   ///
   /// Editting can either be creating or updating.
   Future<WPComment> edit(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('comment.edit', data);
+    final res = await WordpressApi.instance.request('comment.edit', data: data);
     return WPComment.fromJson(res);
   }
 
   /// This will make an Http request for deleting coment.
   ///
   Future<int> delete(int commentId) async {
-    final res = await WordpressApi.instance.request('comment.delete', {'comment_ID': commentId});
+    final res =
+        await WordpressApi.instance.request('comment.delete', data: {'comment_ID': commentId});
     return toInt(res['comment_ID']);
   }
 
   /// This will make an Http request for deleting coment.
   ///
   Future<int> report(int commentId) async {
-    final res = await WordpressApi.instance.request('comment.report', {'comment_ID': commentId});
+    final res =
+        await WordpressApi.instance.request('comment.report', data: {'comment_ID': commentId});
     return toInt(res['comment_ID']);
   }
 
@@ -40,7 +42,8 @@ class CommentApi {
     // ignore: non_constant_identifier_names
     required String Yn,
   }) async {
-    final res = await WordpressApi.instance.request('comment.vote', {'target_ID': ID, 'Yn': Yn});
+    final res =
+        await WordpressApi.instance.request('comment.vote', data: {'target_ID': ID, 'Yn': Yn});
     return WPCommentVote.fromJson(res);
   }
 }

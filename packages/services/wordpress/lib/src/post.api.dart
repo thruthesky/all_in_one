@@ -42,8 +42,9 @@ class PostApi {
     bool stripTags = false,
     bool minimize = false,
     bool log = false,
+    Function? cache,
   }) async {
-    final res = await WordpressApi.instance.request('post.posts', {
+    final res = await WordpressApi.instance.request('post.posts', data: {
       'paged': page,
       'posts_per_page': postsPerPage,
       if (slug != null) 'category_name': slug,
@@ -72,17 +73,17 @@ class PostApi {
   }
 
   Future<WPPost> get(int id) async {
-    final res = await WordpressApi.instance.request('post.get', {'ID': id});
+    final res = await WordpressApi.instance.request('post.get', data: {'ID': id});
     return WPPost.fromJson(res);
   }
 
   Future<WPPost> getByCode(String code) async {
-    final res = await WordpressApi.instance.request('post.getByCode', {'code': code});
+    final res = await WordpressApi.instance.request('post.getByCode', data: {'code': code});
     return WPPost.fromJson(res);
   }
 
   Future<List<WPPost>> getByCodes(List<String> codes) async {
-    final res = await WordpressApi.instance.request('post.getByCodes', {'codes': codes});
+    final res = await WordpressApi.instance.request('post.getByCodes', data: {'codes': codes});
     final List<WPPost> posts = [];
     for (final p in res) {
       posts.add(WPPost.fromJson(p));
@@ -94,19 +95,19 @@ class PostApi {
   ///
   /// Editting can either be creating or updating.
   Future<WPPost> edit(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('post.edit', data);
+    final res = await WordpressApi.instance.request('post.edit', data: data);
     return WPPost.fromJson(res);
   }
 
   /// This will make an Http request for deleting post.
   ///
   Future<int> delete(int id) async {
-    final res = await WordpressApi.instance.request('post.delete', {'ID': id});
+    final res = await WordpressApi.instance.request('post.delete', data: {'ID': id});
     return toInt(res['ID']);
   }
 
   Future<int> report(int id) async {
-    final res = await WordpressApi.instance.request('post.report', {'ID': id});
+    final res = await WordpressApi.instance.request('post.report', data: {'ID': id});
     return toInt(res['ID']);
   }
 
@@ -117,14 +118,14 @@ class PostApi {
     // ignore: non_constant_identifier_names
     required String Yn,
   }) async {
-    final res = await WordpressApi.instance.request('post.vote', {'target_ID': ID, 'Yn': Yn});
+    final res = await WordpressApi.instance.request('post.vote', data: {'target_ID': ID, 'Yn': Yn});
     print('vote; res; $res');
     return WPPostVote.fromJson(res);
   }
 
   Future<int> setFeaturedImage({required int id, required int imageId}) async {
     final res = await WordpressApi.instance
-        .request('post.setFeaturedImage', {'ID': id, 'image_ID': imageId});
+        .request('post.setFeaturedImage', data: {'ID': id, 'image_ID': imageId});
     print('vote; res; $res');
     return res['ID'];
   }
