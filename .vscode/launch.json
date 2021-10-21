@@ -162,6 +162,22 @@
       "deviceId": "emulator-5554"
     },
     {
+      "name": "Huawei WP CPH1803 4318f305",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.100.17/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "4318f305"
+    },
+    {
+      "name": "Huawei WP SM G925F 06157df6ad06503a",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=http://192.168.100.17/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "06157df6ad06503a"
+    },
+    {
       "name": "LIVE ASUS X00TDB J8AXB761J32888A",
       "program": "projects/my/sonub/lib/main.dart",
       "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
