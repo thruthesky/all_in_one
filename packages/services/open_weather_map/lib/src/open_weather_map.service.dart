@@ -32,7 +32,7 @@ class OpenWeatherMapService {
   late final int _updateInterval;
 
   /// 현재 사용자의 위치(좌표),
-  Position? _position;
+  Position? position;
 
   /// 새로운 날씨 데이터를 가져오면 [weatherChanges] 이벤트가 발생한다.
   /// 정확히는 Service 가 실행되면, Open Weather API 에서 (주기적으로) 날씨 정보를 가져온 후, weather 변수에 저장하고, Event 를 발생시킨다.
@@ -69,9 +69,9 @@ class OpenWeatherMapService {
   updateWithLastKnownPosition() {
     Geolocator.getLastKnownPosition().then((value) async {
       if (value == null) return;
-      _position = value;
-      // print('------> getLastKnownPosition; $_position');
-      weather = await _wf.currentWeatherByLocation(_position!.latitude, _position!.longitude);
+      position = value;
+      // print('------> getLastKnownPosition; $position');
+      weather = await _wf.currentWeatherByLocation(position!.latitude, position!.longitude);
       weatherChanges.add(weather);
     }).catchError((e) {
       /// 처음 앱 실행시, 퍼미션이 없는 경우나 퍼미션이 거절 된 경우 등, 에러 무시.
@@ -81,12 +81,12 @@ class OpenWeatherMapService {
 
   Future updateWeather() async {
     try {
-      await _currentLocation();
-      if (_position == null) {
+      await _updateCurrentPosition();
+      if (position == null) {
         print('----> updateWeather() - failed to get current location');
         return;
       }
-      weather = await _wf.currentWeatherByLocation(_position!.latitude, _position!.longitude);
+      weather = await _wf.currentWeatherByLocation(position!.latitude, position!.longitude);
       weatherChanges.add(weather);
     } catch (e) {
       print('-----> Exception on Open Weather Api::$e ------> [ IGNORED ]');
@@ -94,7 +94,7 @@ class OpenWeatherMapService {
   }
 
   /// Location 퍼미션을 묻고, 현재 위치를 [weather] 에 업데이트한다.
-  _currentLocation() async {
+  _updateCurrentPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -127,7 +127,7 @@ class OpenWeatherMapService {
     }
 
     try {
-      _position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     } catch (e) {
       print('--------> Error on Geolocator.getCurrentPosition(); $e');
 // 에러 무시

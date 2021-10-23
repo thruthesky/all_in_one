@@ -72,7 +72,6 @@ class WPPost {
   bool open = false;
   bool noMorePosts = false;
 
-  /// TODO - wordpress 에서도 글 삭제하면, deleted 로 표시되어져야 하나??
   bool deleted = false;
   bool close = false;
   setNoMorePosts() {
