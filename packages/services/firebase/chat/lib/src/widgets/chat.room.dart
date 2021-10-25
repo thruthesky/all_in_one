@@ -13,6 +13,7 @@ class ChatRoom extends StatefulWidget {
     required this.onUpdateOtherUserRoomInformation,
     required this.messageBuilder,
     required this.inputBuilder,
+    this.emptyDisplay,
     Key? key,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class ChatRoom extends StatefulWidget {
   final Function onUpdateOtherUserRoomInformation;
   final MessageBuilder messageBuilder;
   final InputBuilder inputBuilder;
+  final Widget? emptyDisplay;
 
   /// Firebase user uid
   // final String myUid;
@@ -148,7 +150,9 @@ class _ChatRoomState extends State<ChatRoom> {
                 /// onPageChanged works on [PaginateBuilderType.pageView] only.
                 // print('onPageChanged() => page no; $no');
               },
-              emptyDisplay: Center(child: Text('No chats, yet. Please send some message.')),
+              emptyDisplay: widget.emptyDisplay != null
+                  ? widget.emptyDisplay!
+                  : Center(child: Text('No chats, yet. Please send some message.')),
               // separator: Divider(color: Colors.blue),
             ),
           ),
