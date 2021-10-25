@@ -493,7 +493,7 @@ packages:
   utils:
     dependency: "direct main"
     description:
-      path: "../../services/utils"
+      path: "../utils"
       relative: true
     source: path
     version: "0.0.1"
