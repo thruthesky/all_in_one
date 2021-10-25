@@ -2,8 +2,8 @@ import 'package:currency_converter/src/currency.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:get/get.dart';
-import 'package:wordpress/wordpress.dart';
-import 'currency_data.dart';
+// import 'package:wordpress/wordpress.dart';
+// import 'currency_data.dart';
 
 class CurrencyConverterDisplay extends StatelessWidget {
   const CurrencyConverterDisplay({required this.onError, Key? key}) : super(key: key);
