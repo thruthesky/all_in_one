@@ -24,7 +24,7 @@ class CurrencyController extends GetxController {
       print('res; $res');
 
       convert[0] = res['USD_KRW'];
-      convert[1] = res['USD_KRW'];
+      convert[1] = res['KRW_USD'];
       values[1] = convert[0].toStringAsFixed(2);
       update();
     } catch (e) {
@@ -34,10 +34,16 @@ class CurrencyController extends GetxController {
 
   compute(int i) {
     print('update the amount; $i');
+    print('convert[0] amount; ${convert[0]}');
+    print('convert[1] amount; ${convert[1]}');
     if (i == 0) {
+      double v = double.tryParse(values[0]) ?? 0;
+      values[1] = (convert[0] * v).toStringAsFixed(2);
+    } else {
       double v = double.tryParse(values[1]) ?? 0;
-      values[1] = (convert[0] * v).toString();
+      values[0] = (convert[1] * v).toStringAsFixed(2);
     }
+
     update();
   }
 
