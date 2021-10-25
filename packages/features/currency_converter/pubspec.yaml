@@ -1,5 +1,5 @@
-name: open_weather_map
-description: Open weather map packages
+name: currency_converter
+description: currency_converter packages
 version: 0.0.1
 homepage: https://github.com/thruthesky/all_in_one
 repository: https://github.com/thruthesky/all_in_one
@@ -14,16 +14,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  weather: ^2.0.1
-  geolocator: ^7.7.0
+  get: ^4.3.8
+  currency_picker: ^2.0.5
 
-  rxdart: ^0.27.1
-
-  widgets:
-    path: ../../widgets
-
-  utils:
-    path: ../../services/utils
+  wordpress:
+    path: ../../services/wordpress
 
 dev_dependencies:
   flutter_test:
