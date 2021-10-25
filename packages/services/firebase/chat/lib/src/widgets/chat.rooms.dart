@@ -8,10 +8,12 @@ import 'package:paginate_firestore/paginate_firestore.dart';
 class ChatRooms extends StatefulWidget {
   const ChatRooms({
     required this.itemBuilder,
+    this.emptyDisplay,
     Key? key,
   }) : super(key: key);
 
   final FunctionRoomsItemBuilder itemBuilder;
+  final Widget? emptyDisplay;
 
   @override
   State<ChatRooms> createState() => _ChatRoomsState();
@@ -41,7 +43,7 @@ class _ChatRoomsState extends State<ChatRooms> {
       //item builder type is compulsory.
       itemBuilder: (index, context, documentSnapshot) {
         final data = documentSnapshot.data() as Map?;
-        final room = ChatDataModel.fromJson(data!);
+        final room = ChatDataModel.fromJson(data!, documentSnapshot.reference);
         return Container(
           key: ValueKey(room.otherUid),
           child: widget.itemBuilder(room),
@@ -75,8 +77,10 @@ class _ChatRoomsState extends State<ChatRooms> {
         /// onPageChanged works on [PaginateBuilderType.pageView] only.
         // print('onPageChanged() => page no; $no');
       },
-      emptyDisplay: Center(child: Text('No friends, yet. Please send a message to some friends.')),
-      separator: Divider(color: Colors.blue),
+      emptyDisplay: widget.emptyDisplay != null
+          ? widget.emptyDisplay!
+          : Center(child: Text('No friends, yet. Please send a message to some friends.')),
+      // separator: Divider(color: Colors.blue),
     );
   }
 }

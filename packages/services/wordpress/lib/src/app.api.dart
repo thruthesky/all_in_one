@@ -13,4 +13,8 @@ class AppApi {
   Future translations() {
     return WordpressApi.instance.request('app.translations');
   }
+
+  Future country([String ip = '']) {
+    return WordpressApi.instance.request('app.country', data: {'ip': ip});
+  }
 }

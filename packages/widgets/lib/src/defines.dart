@@ -8,6 +8,7 @@ final Color primaryColor = Colors.yellow[700]!;
 
 const Color white = Colors.white;
 final Color light = Colors.grey[200]!;
+final Color lighter = Colors.grey[100]!;
 final Color dark = Colors.grey[700]!;
 const Color blue = Colors.blue;
 const Color green = Colors.green;

@@ -32,6 +32,7 @@ class WPPost {
     required this.Y,
     required this.N,
     required this.html,
+    required this.code,
   });
 
   final int id;
@@ -59,6 +60,8 @@ class WPPost {
   final String featuredImageMediumThumbnailUrl;
   final String featuredImageLargeThumbnailUrl;
 
+  final String code;
+
   int Y;
   int N;
 
@@ -69,7 +72,6 @@ class WPPost {
   bool open = false;
   bool noMorePosts = false;
 
-  /// TODO - wordpress 에서도 글 삭제하면, deleted 로 표시되어져야 하나??
   bool deleted = false;
   bool close = false;
   setNoMorePosts() {
@@ -111,6 +113,7 @@ class WPPost {
         Y: toInt(json['Y']),
         N: toInt(json['N']),
         html: toBool(json['html']),
+        code: toStr(json['code']),
       );
 
   factory WPPost.empty() {
@@ -143,6 +146,7 @@ class WPPost {
         'Y': Y,
         'N': N,
         'html': html,
+        'code': code,
       };
 
   @override

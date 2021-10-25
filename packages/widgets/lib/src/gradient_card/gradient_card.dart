@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets/widgets.dart';
 
@@ -69,6 +68,8 @@ class GradientCard extends StatelessWidget {
     this.height,
     this.heroTag,
     this.children,
+    this.errorIcon,
+    this.errorIconSize = 24,
   }) : super(key: key);
 
   final String title;
@@ -83,6 +84,8 @@ class GradientCard extends StatelessWidget {
   final String? heroTag;
   final List<Positioned>? children;
   final BoxFit fit;
+  final Widget? errorIcon;
+  final double errorIconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +95,8 @@ class GradientCard extends StatelessWidget {
       height: height,
       fit: fit,
       heroTag: heroTag,
+      errorIcon: errorIcon,
+      errorIconSize: errorIconSize,
     );
 
     return GestureDetector(

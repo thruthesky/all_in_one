@@ -28,7 +28,7 @@ class UserApi {
   /// Register a new user.
   ///
   Future<WPUser> register(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('user.register', data);
+    final res = await WordpressApi.instance.request('user.register', data: data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     return currentUser;
@@ -37,7 +37,8 @@ class UserApi {
   /// Login a user.
   ///
   Future<WPUser> login(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('user.login', data);
+    final res = await WordpressApi.instance.request('user.login', data: data);
+    // print('res; $res');
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     userLogin.add(currentUser);
@@ -74,7 +75,7 @@ class UserApi {
   /// Update user information.
   ///
   Future<WPUser> update(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('user.update', data);
+    final res = await WordpressApi.instance.request('user.update', data: data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     return currentUser;
@@ -99,22 +100,22 @@ class UserApi {
     assert(userId != null || firebaseUid != null);
     if (userId != null) {
       if (othersById[userId] != null) {
-        print('other user profile is reused by id; $userId');
+        // print('other user profile is reused by id; $userId');
         return othersById[userId]!;
       }
     } else if (firebaseUid != null) {
       if (othersByFirebaseUid[firebaseUid] != null) {
-        print('other user profile is reused by firebase uid; $firebaseUid');
+        // print('other user profile is reused by firebase uid; $firebaseUid');
         return othersByFirebaseUid[firebaseUid]!;
       }
     }
 
-    final res = await WordpressApi.instance.request('user.otherProfile', {
+    final res = await WordpressApi.instance.request('user.otherProfile', data: {
       if (userId != null) 'user_ID': userId,
       if (firebaseUid != null) 'firebaseUid': firebaseUid,
     });
 
-    print('other user profile; $res');
+    // print('other user profile; $res');
 
     if (userId != null) {
       othersById[userId] = WPUser.fromJson(res);
@@ -135,21 +136,21 @@ class UserApi {
   /// Update user information.
   ///
   Future<WPUser> switchData(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('user.switch', data);
+    final res = await WordpressApi.instance.request('user.switch', data: data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     return currentUser;
   }
 
   Future<WPUser> switchOn(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('user.switchOn', data);
+    final res = await WordpressApi.instance.request('user.switchOn', data: data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     return currentUser;
   }
 
   Future<WPUser> switchOff(MapStringDynamic data) async {
-    final res = await WordpressApi.instance.request('user.switchOff', data);
+    final res = await WordpressApi.instance.request('user.switchOff', data: data);
     currentUser = WPUser.fromJson(res);
     changes.add(currentUser);
     return currentUser;

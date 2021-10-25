@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_chat/firebase_chat.dart';
+import 'package:firebase_chat/src/chat.defines.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:paginate_firestore/bloc/pagination_cubit.dart';
@@ -7,13 +8,18 @@ import 'package:paginate_firestore/paginate_firestore.dart';
 
 class ChatRoom extends StatefulWidget {
   ChatRoom({
-    // required this.myUid,
     required this.otherUid,
     required this.onError,
+    required this.onUpdateOtherUserRoomInformation,
+    required this.messageBuilder,
+    required this.inputBuilder,
     Key? key,
   }) : super(key: key);
 
   final Function onError;
+  final Function onUpdateOtherUserRoomInformation;
+  final MessageBuilder messageBuilder;
+  final InputBuilder inputBuilder;
 
   /// Firebase user uid
   // final String myUid;
@@ -24,8 +30,6 @@ class ChatRoom extends StatefulWidget {
 }
 
 class _ChatRoomState extends State<ChatRoom> {
-  final input = TextEditingController();
-
   bool fetching = false;
   final int fetchNum = 20;
   bool noMore = false;
@@ -55,6 +59,44 @@ class _ChatRoomState extends State<ChatRoom> {
   /// Get room id from login user and other user.
   String get roomId => getMessageCollectionId(myUid, widget.otherUid);
 
+  // // ignore: cancel_subscriptions
+  // StreamSubscription<QuerySnapshot>? chatRoomSubscription;
+  // late StreamSubscription ready;
+
+  @override
+  void initState() {
+    super.initState();
+    chat.otherUid = widget.otherUid;
+    // _myRoomDoc.set({'newMessages': 0}, SetOptions(merge: true));
+
+    /// update app icon if the user view some message.
+    // ready = chat.ready.listen((re) {
+    //   if (re == false) return;
+
+    //   chatRoomSubscription = chat.roomsCol
+    //       .where('newMessages', isGreaterThan: 0)
+    //       .snapshots()
+    //       .listen((QuerySnapshot snapshot) {
+    //     int newMessages = 0;
+    //     snapshot.docs.forEach((doc) {
+    //       ChatDataModel room = ChatDataModel.fromJson(doc.data() as Map, null);
+    //       newMessages += room.newMessages;
+    //     });
+    //     FlutterAppBadger.updateBadgeCount(newMessages);
+    //   });
+    // });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    chat.otherUid = '';
+    // if (chatRoomSubscription != null) {
+    //   chatRoomSubscription!.cancel();
+    // }
+    // ready.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -72,11 +114,8 @@ class _ChatRoomState extends State<ChatRoom> {
               //item builder type is compulsory.
               itemBuilder: (index, context, documentSnapshot) {
                 final data = documentSnapshot.data() as Map?;
-                return ListTile(
-                  leading: CircleAvatar(child: Icon(Icons.person)),
-                  title: data == null ? Text('Error in data') : Text(data['text']),
-                  subtitle: Text(documentSnapshot.id),
-                );
+                final message = ChatDataModel.fromJson(data!, documentSnapshot.reference);
+                return widget.messageBuilder(message);
               },
               // orderBy is compulsory to enable pagination
               query: _messagesCol.orderBy('timestamp', descending: true),
@@ -95,8 +134,11 @@ class _ChatRoomState extends State<ChatRoom> {
               //   children: [Icon(Icons.timer), Text('스크롤 해서 더 많이 로드 할 때 표시되는 로더!!!')],
               // ),
 
+              /// This will be invoked whenever it displays a new message. (from the login user or the other user.)
               onLoaded: (PaginationLoaded loaded) {
                 // print('page loaded; reached to end?; ${loaded.hasReachedEnd}');
+                // print('######################################');
+                _myRoomDoc.set({'newMessages': 0}, SetOptions(merge: true));
               },
               onReachedEnd: (PaginationLoaded loaded) {
                 // This is called only one time when it reaches to the end.
@@ -107,45 +149,31 @@ class _ChatRoomState extends State<ChatRoom> {
                 // print('onPageChanged() => page no; $no');
               },
               emptyDisplay: Center(child: Text('No chats, yet. Please send some message.')),
-              separator: Divider(color: Colors.blue),
+              // separator: Divider(color: Colors.blue),
             ),
           ),
-          SafeArea(
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: input,
-                    decoration: InputDecoration(hintText: 'Input message'),
-                    onSubmitted: (x) => onSubmitText(),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: onSubmitText,
-                ),
-              ],
-            ),
-          ),
+          SafeArea(child: widget.inputBuilder(onSubmitText)),
         ],
       ),
     );
   }
 
-  void onSubmitText() {
+  void onSubmitText(String text) {
     final data = {
-      'text': input.text,
+      'text': text,
       'timestamp': FieldValue.serverTimestamp(),
       'from': myUid,
       'to': widget.otherUid,
     };
-    _messagesCol.add(data).then((value) {
-      setState(() {
-        input.text = '';
-      });
-    });
+    _messagesCol.add(data).then((value) {});
 
+    /// When the login user send message, clear newMessage.
+    data['newMessages'] = 0;
     _myRoomDoc.set(data);
-    _otherRoomDoc.set(data);
+
+    data['newMessages'] = FieldValue.increment(1);
+    _otherRoomDoc.set(data, SetOptions(merge: true)).then((value) {
+      widget.onUpdateOtherUserRoomInformation(data);
+    });
   }
 }

@@ -1,5 +1,5 @@
 import 'package:all_in_one/widgets/layout.dart';
-import 'package:exchange_rate/exchange_rate.dart';
+// import 'package:exchange_rate/exchange_rate.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets/widgets.dart';
 
@@ -18,7 +18,7 @@ class ExchangeRateScreen extends StatelessWidget {
             spaceXl,
             Text('국가를 선택하신 후, 환율을 계산 할 수 있습니다.'),
             spaceSm,
-            ExchangeRateDisplay(),
+            // ExchangeRateDisplay(),
           ],
         ),
       ),

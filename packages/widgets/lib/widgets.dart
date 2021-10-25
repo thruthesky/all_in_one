@@ -42,3 +42,4 @@ export 'src/box/shadow_box.dart';
 export 'src/card/list_title_card.dart';
 
 export 'src/input/input.dart';
+export 'src/text_tap/text_tap.dart';

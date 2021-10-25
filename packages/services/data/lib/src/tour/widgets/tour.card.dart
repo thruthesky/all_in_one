@@ -16,29 +16,20 @@ class TourCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GradientCard(
       imageUrl: item.firstimage,
-      height: double.infinity,
+      height: 240,
       title: item.englishTitle,
       onTap: () => TourController.to.view(index),
       borderRadius: 10,
-      // TODO image load with shimmer outside this widget.
-      // imageLoader: Shimmer.fromColors(
-      //   baseColor: Colors.grey.shade50,
-      //   highlightColor: Colors.grey.shade200,
-      //   child: Container(
-      //     // height: index % 2 == 0 ? 125 : 100,
-      //     width: double.infinity,
-      //     decoration: BoxDecoration(
-      //       color: Colors.grey.shade50,
-      //       borderRadius: BorderRadius.circular(10),
-      //     ),
-      //   ),
-      // ),
-      // imageErrorWidget: Container(
-      //   height: index % 2 == 0 ? 125 : 100,
-      //   child: Center(
-      //     child: Icon(Icons.image_not_supported_outlined),
-      //   ),
-      // ),
+      errorIcon: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Icon(
+            Icons.error,
+            size: 128,
+          ),
+        ),
+      ),
+      errorIconSize: 128,
     );
   }
 }

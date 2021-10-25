@@ -29,6 +29,7 @@ class CacheImage extends StatelessWidget {
     this.fit = BoxFit.cover,
     this.borderRadius = 0,
     this.errorIcon,
+    this.errorIconSize = 24,
     this.placeholderPadding = const EdgeInsets.all(32.0),
     this.heroTag,
   });
@@ -39,6 +40,7 @@ class CacheImage extends StatelessWidget {
   final BoxFit fit;
   final double borderRadius;
   final Widget? errorIcon;
+  final double errorIconSize;
   final EdgeInsets placeholderPadding;
   final String? heroTag;
   @override
@@ -48,9 +50,11 @@ class CacheImage extends StatelessWidget {
       if (errorIcon != null)
         return errorIcon!;
       else
-        return Icon(
-          Icons.error,
-          size: width,
+        return Center(
+          child: Icon(
+            Icons.error,
+            size: errorIconSize,
+          ),
         );
     }
     return ClipRRect(

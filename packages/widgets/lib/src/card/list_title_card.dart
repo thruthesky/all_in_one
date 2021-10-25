@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// It is a card style widget copied from [ListTile] material widget.
+/// It is a card style widget that work like [ListTile] material widget.
 /// This widget gives more flexible options on leading sizes and margin, paddings.
 class ListTileCard extends StatelessWidget {
   const ListTileCard(

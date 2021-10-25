@@ -9,6 +9,7 @@ export 'src/post.api.dart';
 export 'src/comment.api.dart';
 export 'src/messaging.api.dart';
 export 'src/wordpress.lib.dart';
+export 'src/currency.api.dart';
 
 export 'models/user.model.dart';
 export 'models/file.model.dart';

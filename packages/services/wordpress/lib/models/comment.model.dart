@@ -42,7 +42,6 @@ class WPComment {
   bool get inViewMode => mode == '';
   bool get inReplyMode => mode == 'reply';
 
-  /// TODO - wordpress 에서도 글 삭제하면, deleted 로 표시되어져야 하나?? 그렇다. issue 가 만들어져 있다. 이것은 나중에 처리를 한다.
   bool deleted = false;
 
   factory WPComment.fromJson(Map<String, dynamic> json) => WPComment(

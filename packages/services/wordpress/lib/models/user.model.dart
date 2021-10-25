@@ -26,6 +26,8 @@ class WPUser {
   List<dynamic> subscriptions;
   String newCommentUserOption;
 
+  MapStringDynamic data;
+
   bool get loggedIn => id > 0;
   bool get notLoggedIn => !loggedIn;
   bool get hasPhoneNo => phoneNo != '' && phoneNo.toString().length > 7;
@@ -61,6 +63,7 @@ class WPUser {
     required this.registered,
     required this.subscriptions,
     required this.newCommentUserOption,
+    required this.data,
   });
 
   factory WPUser.fromJson(MapStringDynamic json) {
@@ -86,6 +89,7 @@ class WPUser {
       registered: json['user_registered'] ?? '',
       subscriptions: List<String>.from((json["subscriptions"] ?? []).map((x) => x)),
       newCommentUserOption: json['newCommentUserOption'] ?? '',
+      data: json,
     );
   }
 
@@ -111,6 +115,7 @@ class WPUser {
       'registered': registered,
       'subscriptions': subscriptions,
       'newCommentUserOption': newCommentUserOption,
+      'data': data
     };
   }
 

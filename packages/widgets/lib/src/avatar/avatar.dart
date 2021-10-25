@@ -19,10 +19,15 @@ class Avatar extends StatelessWidget {
       );
     } else {
       child = Container(
-        decoration: BoxDecoration(color: Colors.grey[200]),
-        child: Icon(
-          Icons.person_rounded,
-          color: Colors.grey[700],
+        width: size,
+        height: size,
+        color: Colors.grey[300],
+        child: Center(
+          child: Icon(
+            Icons.person_rounded,
+            color: Colors.grey[700],
+            size: size / 1.4,
+          ),
         ),
       );
     }
@@ -34,9 +39,9 @@ class Avatar extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(color: Colors.white, blurRadius: 1.0, spreadRadius: 1.0),
-        ],
+        // boxShadow: [
+        //   BoxShadow(color: Colors.white, blurRadius: 1.0, spreadRadius: 1.0),
+        // ],
       ),
     );
   }
