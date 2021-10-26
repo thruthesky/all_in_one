@@ -94,6 +94,7 @@ class PostApi {
     return WPPost.fromJson(res);
   }
 
+  @Deprecated("'code' is not used any more.")
   Future<List<WPPost>> getByCodes(List<String> codes) async {
     final res = await WordpressApi.instance.request('post.getByCodes', data: {'codes': codes});
     final List<WPPost> posts = [];

@@ -33,6 +33,7 @@ class WPPost {
     required this.N,
     required this.html,
     required this.code,
+    required this.tags,
   });
 
   final int id;
@@ -66,6 +67,8 @@ class WPPost {
   int N;
 
   final bool html;
+
+  final List<String> tags;
 
   /// Client options.
   bool get hasPhoto => featuredImageId > 0 && featuredImageUrl != '';
@@ -114,6 +117,7 @@ class WPPost {
         N: toInt(json['N']),
         html: toBool(json['html']),
         code: toStr(json['code']),
+        tags: List<String>.from((json['tags'] ?? []).map((x) => x.toString())),
       );
 
   factory WPPost.empty() {
@@ -147,6 +151,7 @@ class WPPost {
         'N': N,
         'html': html,
         'code': code,
+        'tags': tags,
       };
 
   @override
