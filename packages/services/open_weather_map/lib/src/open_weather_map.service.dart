@@ -7,6 +7,19 @@ import 'package:weather/weather.dart';
 /// Open Weather API 서비스
 ///
 /// 요약문서 참고: https://docs.google.com/document/d/11mfcHMalG7daf2Hm-kxMTHzdlz3Bo7NcUPjJoUoXwaw/edit#heading=h.p9y2ibbi02t1
+///
+// List<Placemark> placemarks = await placemarkFromCoordinates(52.2165157, 6.9437819);
+// List<Placemark> placemarks = await placemarkFromCoordinates(
+//     OpenWeatherMapService.instance.position!.latitude,
+//     OpenWeatherMapService.instance.position!.longitude);
+
+// print(
+//     "${placemarks[0].country}, ${placemarks[0].administrativeArea}, ${placemarks[0].locality}, ${placemarks[0].name}");
+
+// print('this.weather; $weather');
+// print(OpenWeatherMapService.instance.position);
+// print('${weather!.weatherIcon}');
+// print('${OpenWeatherMapService.instance.iconUrl}');
 class OpenWeatherMapService {
   /// Singleton
   static OpenWeatherMapService? _instance;
