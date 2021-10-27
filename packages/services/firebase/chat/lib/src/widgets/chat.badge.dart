@@ -11,14 +11,15 @@ class ChatBadge extends StatelessWidget {
       stream: chat.newMessages,
       builder: (c, snapshot) {
         if (snapshot.hasData == false) return SizedBox.shrink();
+        int no = int.tryParse((snapshot.data ?? '0').toString()) ?? 0;
         return Badge(
           toAnimate: false,
           shape: BadgeShape.circle,
-          badgeColor: Colors.red,
+          badgeColor: no == 0 ? Colors.grey : Colors.red,
           elevation: 0,
           padding: EdgeInsets.all(3.0),
           badgeContent: Text(
-            snapshot.data.toString(),
+            no.toString(),
             style: TextStyle(color: Colors.white, fontSize: 8),
           ),
         );
