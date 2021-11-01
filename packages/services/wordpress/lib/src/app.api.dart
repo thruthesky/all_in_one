@@ -1,3 +1,5 @@
+import 'package:wordpress/models/version.model.dart';
+
 import '../wordpress.dart';
 
 class AppApi {
@@ -16,5 +18,10 @@ class AppApi {
 
   Future country([String ip = '']) {
     return WordpressApi.instance.request('app.country', data: {'ip': ip});
+  }
+
+  Future<WPVersion> version() async {
+    final json = await WordpressApi.instance.request('app.version');
+    return WPVersion.fromJson(json);
   }
 }

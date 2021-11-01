@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,8 +12,13 @@ class WordpressApi {
 
   /// [url] 은 [init] 함수에서 초기화 되어야 한다.
   String url = '';
-
   String get sessionId => UserApi.instance.currentUser.sessionId;
+
+  /// [onServerError] 에 콜백 함수가 지정되면, 서버(백엔드) 자체에서 발생하는 에러를 throw 하지 않고,
+  /// 대신 이 콜백 함수로 에러를 전달하여 호출한다.
+  /// 클라이언트 앱에서는 이 에러를 받아서, 화면에 표시하지 않고, 무시하거나 Firebase Crashlytics 등에 기록 할 수 있다.
+  /// 실제로 에러 원인을 발견하기 어려운 상황이 발생하였는데, 에러 메시지가 화면에 떠서, iOS 에서 리젝되는 상황이 발생했다.
+  Function? onServerError;
 
   // @Deprecated('Use CurrencyApi.instance')
   // CurrencyApi currency = CurrencyApi();
@@ -40,12 +46,14 @@ class WordpressApi {
 
   init({
     required String url,
+    Function? onServerError,
     Function? onLogin,
     Function? onRegister,
   }) {
     this.url = url;
     this.onLogin = onLogin;
     this.onRegister = onRegister;
+    this.onServerError = onServerError;
   }
 
   /// [cacheKey] 가 주어졌으면, 그냥 [cacheKey] 만 사용한다.
@@ -135,6 +143,7 @@ class WordpressApi {
         throw "Got response from backend. But the response data is wrong or corrupted. Check if you have proper backend url, or check if the backend produces error.";
       }
       if (res.data['code'] != '') {
+        // ! 사용자 실수로 인해 발생하는 에러. 화면에 표시를 해야 한다.
         throw res.data['code'];
       } else if (res.data['response'] == null) {
         throw ("Data inside response object is NULL.");
@@ -144,6 +153,17 @@ class WordpressApi {
         return res.data['response'];
       }
     } on DioError catch (e) {
+      // Something happened in setting up or sending the request that triggered an Error
+      _printLongString(e.message);
+      print("Requested data;");
+      print(data);
+
+      // ! 여기에서 발생하는 에러는 대부분 서버 자체의 에러이다. 사용자가 실수를 해서, 발생하는 에러가 아니다. 그래서 화면에 표시를 하지 않는다.
+      if (onServerError != null) {
+        onServerError!(e);
+        throw ERROR_IGNORED;
+      }
+
       // 백엔드에서 에러 발생.
       //
       // 백엔드로 접속이 되었으나 2xx 또는 304 가 아닌 다른 응답 코드가 발생한 경우.
@@ -157,9 +177,6 @@ class WordpressApi {
         }
         throw data;
       } else {
-        // Something happened in setting up or sending the request that triggered an Error
-        print(e.message);
-
         // 백엔드 호스트 오류. 접속 불가.
         if (e.message.indexOf('Failed host lookup') > -1) {
           throw "App cannot connect to backend at '$url'. Check if the host is correct, and if the phone has internet.";
@@ -173,10 +190,21 @@ class WordpressApi {
         }
       }
     } catch (e) {
-      // 모든 에러를 캐치
       _printDebugUrl(data);
+      // ! 여기에서 발생하는 에러는 대부분 서버 자체의 에러이다. 사용자가 실수를 해서, 발생하는 에러가 아니다. 그래서 화면에 표시를 하지 않는다.
+      if (onServerError != null) {
+        onServerError!(e);
+        throw ERROR_IGNORED;
+      }
+
       rethrow;
     }
+  }
+
+  /// Print Long String
+  _printLongString(String text) {
+    final RegExp pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
+    pattern.allMatches(text).forEach((RegExpMatch match) => print(match.group(0)));
   }
 
   // 디버그 URL 출력

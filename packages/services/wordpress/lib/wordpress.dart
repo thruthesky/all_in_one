@@ -16,6 +16,7 @@ export 'models/file.model.dart';
 export 'models/category.model.dart';
 export 'models/post.model.dart';
 export 'models/comment.model.dart';
+export 'models/version.model.dart';
 
 export 'widgets/post.list.dart';
 export 'widgets/user.change.dart';
