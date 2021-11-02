@@ -232,7 +232,7 @@ class TourController extends GetxController {
   }
 
   view(int index) {
-    Get.toNamed(routeView, arguments: {'index': index});
+    Get.toNamed(routeView, arguments: {'item': items[index]});
   }
 
   Future<void> loadDetails(int index) async {

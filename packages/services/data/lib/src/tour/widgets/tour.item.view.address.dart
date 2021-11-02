@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:map_launcher/map_launcher.dart';
 
-@Deprecated('Use TourItemViewAddress')
-class TourViewAddress extends StatelessWidget {
-  TourViewAddress({Key? key}) : super(key: key);
-  final TourController _ = TourController.of;
+class TourItemViewAddress extends StatelessWidget {
+  TourItemViewAddress(this.item, this.detail, {Key? key}) : super(key: key);
+
+  final TourApiListItem item;
+  final TourApiListItem detail;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,7 @@ class TourViewAddress extends StatelessWidget {
             VerticalDivider(),
             Expanded(
               child: Text(
-                "${_.detail.addr1} ${_.detail.englishAddr2 != '' ? "" : _.detail.englishAddr2}",
+                "${detail.addr1} ${detail.englishAddr2 != '' ? "" : detail.englishAddr2}",
                 maxLines: 2,
               ),
             ),
@@ -29,8 +30,8 @@ class TourViewAddress extends StatelessWidget {
       behavior: HitTestBehavior.opaque,
       onTap: () async {
         try {
-          final coords = Coords(_.detail.mapy, _.detail.mapx);
-          final title = _.detail.englishTitle;
+          final coords = Coords(detail.mapy, detail.mapx);
+          final title = detail.englishTitle;
           final availableMaps = await MapLauncher.installedMaps;
 
           /// 설치된 지도앱이 없음
@@ -45,7 +46,7 @@ class TourViewAddress extends StatelessWidget {
               await availableMaps[0].showMarker(
                 coords: coords,
                 title: title,
-                zoom: _.detail.mlevel,
+                zoom: detail.mlevel,
               );
               return;
             } catch (e) {
@@ -67,7 +68,7 @@ class TourViewAddress extends StatelessWidget {
                             onTap: () => map.showMarker(
                               coords: coords,
                               title: title,
-                              zoom: _.detail.mlevel,
+                              zoom: detail.mlevel,
                             ),
                             title: Text(map.mapName),
                             leading: SvgPicture.asset(

@@ -1,27 +1,33 @@
 import 'package:data/data.dart';
-import 'package:data/src/tour/widgets/tour.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:widgets/widgets.dart';
 
-@Deprecated('Use TourItemViewThumbnailNav')
-class TourViewThumbnailNav extends StatelessWidget {
-  TourViewThumbnailNav(
-    this.index, {
+class TourItemViewThumbnailNav extends StatefulWidget {
+  const TourItemViewThumbnailNav(
+    this.item,
+    this.detail,
+    this.onTap, {
     Key? key,
   }) : super(key: key);
-  final int index;
 
-  final TourController _ = TourController.of;
+  final TourApiListItem item;
+  final TourApiListItem detail;
+  final VoidCallback onTap;
 
   @override
+  State<TourItemViewThumbnailNav> createState() => _TourItemViewThumbnailNavState();
+}
+
+class _TourItemViewThumbnailNavState extends State<TourItemViewThumbnailNav> {
+  @override
   Widget build(BuildContext context) {
-    if (_.detail.images.length == 0) return SizedBox(height: sm);
+    if (widget.detail.images.length == 0) return SizedBox(height: sm);
     return Padding(
       padding: pageInset,
       child: Wrap(
           spacing: xxs,
           runSpacing: xxs,
-          children: [for (final image in _.detail.images) displayThumbnail(image)]),
+          children: [for (final image in widget.detail.images) displayThumbnail(image)]),
     );
   }
 
@@ -33,13 +39,14 @@ class TourViewThumbnailNav extends StatelessWidget {
         width: 60,
         height: 60,
         onTap: () {
-          _.items[index].firstimage = image.originimgurl;
-          _.update();
+          widget.item.firstimage = image.originimgurl;
+          widget.onTap();
+          setState(() {});
         },
       ),
     );
 
-    if (_.items[index].firstimage == image.originimgurl)
+    if (widget.item.firstimage == image.originimgurl)
       return Container(
         decoration: BoxDecoration(
           border: Border.all(color: Colors.red[700]!, width: 1),

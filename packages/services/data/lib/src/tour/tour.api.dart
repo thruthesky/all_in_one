@@ -40,7 +40,7 @@ class TourApi {
 
   String _queryUrl({
     required String operation,
-    String? contentTypeId,
+    String contentTypeId = '',
     int? contentId,
     String? areaCode,
     String? sigunguCode,
@@ -56,7 +56,7 @@ class TourApi {
     else if (Platform.isIOS) os = 'IOS';
     String url =
         "http://api.visitkorea.or.kr/openapi/service/rest/EngService/$operation?ServiceKey=$_apiKey&MobileApp=$_appName&MobileOS=$os&_type=json";
-    if (contentTypeId != null) url += "&contentTypeId=$contentTypeId";
+    url += "&contentTypeId=$contentTypeId";
     if (contentId != null) url += "&contentId=$contentId";
     if (areaCode != null) url += "&areaCode=$areaCode";
     if (sigunguCode != null) url += "&sigunguCode=$sigunguCode";
@@ -86,16 +86,16 @@ class TourApi {
     return area;
   }
 
-  /// 만약, contentTypeId 가 선택되지 않았거나, 0,1,2 이면 전체 콘텐츠 타입을 가져온다.
+  /// 만약, contentTypeId 가 선택되지 않았거나, 0,1,2 이면 _queryUrl 에 빈 문자열을 전달해서, 전체 콘텐츠 타입을 가져온다.
   /// 참고, README ## 관광지 정보 검색 방법
   Future<TourApiListModel> search({
-    required String operation,
-    required int areaCode,
-    required int sigunguCode,
-    required int contentTypeId,
-    required int pageNo,
-    required int numOfRows,
-    required String keyword,
+    String operation = '',
+    int areaCode = 0,
+    int sigunguCode = 0,
+    int contentTypeId = 0,
+    int pageNo = 1,
+    int numOfRows = 10,
+    String keyword = '',
     String cat1 = '',
     String cat2 = '',
     String cat3 = '',

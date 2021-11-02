@@ -4,28 +4,27 @@ import 'package:flutter/material.dart';
 
 import 'package:widgets/widgets.dart';
 
-@Deprecated('Use TourItemViewHomepage')
-class TourViewHomepage extends StatelessWidget {
-  TourViewHomepage({Key? key}) : super(key: key);
+class TourItemViewHomepage extends StatelessWidget {
+  const TourItemViewHomepage(this.item, this.detail, {Key? key}) : super(key: key);
 
-  final TourController _ = TourController.of;
+  final TourApiListItem item;
+  final TourApiListItem detail;
 
   @override
   Widget build(BuildContext context) {
-    return _.detail.homepageUrl == ''
+    return detail.homepageUrl == ''
         ? SizedBox.shrink()
         : Column(
             children: [
               spaceSm,
               GestureDetector(
-                onTap: () => launchURL(_.detail.homepageUrl),
+                onTap: () => launchURL(detail.homepageUrl),
                 child: Container(
                   height: 30,
                   child: Row(children: [
                     Icon(Icons.language, size: 30, color: Colors.blueAccent),
                     VerticalDivider(),
-                    Expanded(
-                        child: Text('${_.detail.homepageUrl}', overflow: TextOverflow.ellipsis))
+                    Expanded(child: Text('${detail.homepageUrl}', overflow: TextOverflow.ellipsis))
                   ]),
                 ),
               ),

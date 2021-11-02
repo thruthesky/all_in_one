@@ -9,14 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
 
+@Deprecated('Use TourItemView')
 class TourView extends StatelessWidget {
   TourView(this.index, {Key? key}) : super(key: key) {
     TourController.to.loadDetails(index).then((x) {
       TourController.of.detail.images.insert(
         0,
         TourImage(
-            smallimageurl: TourController.of.detail.firstimage,
-            originimgurl: TourController.of.detail.firstimage),
+          smallimageurl: TourController.of.detail.firstimage,
+          originimgurl: TourController.of.detail.firstimage,
+        ),
       );
       TourController.of.update();
     });

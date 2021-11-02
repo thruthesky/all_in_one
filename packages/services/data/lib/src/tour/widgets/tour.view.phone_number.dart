@@ -12,20 +12,23 @@ class TourViewPhoneNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     return _.detail.tel == ''
         ? SizedBox.shrink()
-        : Column(children: [
-            spaceSm,
-            GestureDetector(
-              onTap: () => launchURL("tel:${_.detail.tel}"),
-              child: Container(
-                height: 30,
-                child: Row(children: [
-                  Icon(Icons.phone, size: 30, color: Colors.greenAccent),
-                  VerticalDivider(),
-                  Expanded(
-                      child: Text('${_.detail.tel}', maxLines: 2, overflow: TextOverflow.ellipsis))
-                ]),
+        : Column(
+            children: [
+              spaceSm,
+              GestureDetector(
+                onTap: () => launchURL("tel:${_.detail.tel}"),
+                child: Container(
+                  height: 30,
+                  child: Row(children: [
+                    Icon(Icons.phone, size: 30, color: Colors.greenAccent),
+                    VerticalDivider(),
+                    Expanded(
+                      child: Text('${_.detail.tel}', maxLines: 2, overflow: TextOverflow.ellipsis),
+                    )
+                  ]),
+                ),
               ),
-            ),
-          ]);
+            ],
+          );
   }
 }

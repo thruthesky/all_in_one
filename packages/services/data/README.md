@@ -35,6 +35,8 @@
 
 - 카테고리 대,중,소 만으로 검색하는 방법.
 
+- `search()` 를 호출 할 때, 필수 입력 값은 아무 것도 없다. 그냥 빈 파라메타로 호출해도 된다.
+
 ```dart
 try {
   final res = await TourApi.instance.search(

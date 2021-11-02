@@ -10,6 +10,8 @@ class TourApiListModel {
         response: TourApiListResponse.fromJson(json['response']),
       );
 
+  /// 쿼리 성공했는지 검사
+  bool get isSuccess => response.header.resultCode == '0000';
   addMoreImages(Json json) {
     final List<TourImage> images = [];
 
@@ -121,7 +123,7 @@ class Items {
     if (json['item'] == null) return Items(item: []);
 
     /// ! 검색 결과가 1개 뿐인 경우, json['item'] 이 배열이 아니라, 맵에 바로 데이터가 전달되어 온다.
-    /// ! 이 것을 첫번째 배열로 바꾸어 준다.
+    /// ! 이 것을 첫번째 배열로 바꾸어 준다. 에러가 안나도록 한다. 즉, 결과가 한개 뿐이라도 배열로 사용 할 수 있다.
     if (json['item'] is Map) {
       return Items(item: [TourApiListItem.fromJson(json['item'])]);
     }
