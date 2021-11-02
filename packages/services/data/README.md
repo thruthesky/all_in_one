@@ -1,5 +1,8 @@
 # 공공데이터 포털 API
 
+# 참고 문서
+
+[직접 요약한 Tour API 문서](https://docs.google.com/document/d/1ALTwzAyKGDBL7EhdEgCYg8LFfJHlI9vqUsj-4XSf7ns/edit#heading=h.9zg7jz1piaof) 참고
 
 # 개요
 
@@ -8,7 +11,7 @@
 
 # Tour API
 
-## 동작방식
+# 동작방식
 
 - 사용자가 선택 할 수 있는 메뉴를
   - Operation 과 Content Type ID 조합으로 했다.
@@ -20,12 +23,15 @@
 
 
 
-## 테스트 방법
+# 테스트 방법
 
 - 응답 데이터를 받아서, 모델링하는데 오류가 있을 있는데, 테스트하는 방법은 tour.api.test.dart 에서 해당(특정) 쿼리를 해서, 응답 코드를 모델링하는 것이다.
 
 
-## 관광지 정보 검색 방법
+# 관광지 정보 검색 방법
+
+- `operation` 은 `TourApiOperations` 중 하나의 값이어야 한다. 기본 값은 `TourApiOperations.areaBasedList` 이다.
+- contentTypeId 가 선택되지 않았거나, 0,1,2 이면 전체 콘텐츠 타입을 가져온다.
 
 - 카테고리 대,중,소 만으로 검색하는 방법.
 
@@ -50,4 +56,16 @@ try {
 } catch (e) {
   service.error(e);
 }
+```
+
+## 검색하는 방법
+
+
+- `operation` 이 `TourApiOperations.searchKeyword` 이어야 하고, 검색어를 `keyword` 에 지정하면 된다.
+
+- 그 외 추가로 `areaCode`, `sigunguCode`, `cat1,2,3`, `pageNo` 등을 모두 사용 할 수 있다.
+
+- 예)
+```dart
+
 ```

@@ -87,6 +87,7 @@ class TourApi {
   }
 
   /// 만약, contentTypeId 가 선택되지 않았거나, 0,1,2 이면 전체 콘텐츠 타입을 가져온다.
+  /// 참고, README ## 관광지 정보 검색 방법
   Future<TourApiListModel> search({
     required String operation,
     required int areaCode,
@@ -99,6 +100,11 @@ class TourApi {
     String cat2 = '',
     String cat3 = '',
   }) async {
+    assert(operation == TourApiOperations.areaBasedList ||
+        operation == TourApiOperations.locationBasedList ||
+        operation == TourApiOperations.searchFestival ||
+        operation == TourApiOperations.searchKeyword ||
+        operation == TourApiOperations.searchStay);
     final path = _queryUrl(
           operation: operation == '' ? TourApiOperations.areaBasedList : operation,
           contentTypeId: contentTypeId < 3 ? '' : contentTypeId.toString(),

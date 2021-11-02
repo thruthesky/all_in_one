@@ -140,13 +140,15 @@ class TourController extends GetxController {
     update();
   }
 
+  /// 지역 정보를 메뉴에 다시 설정 할 수 있도록 한다.
   loadArea() async {
     if (areaCode == 0) return;
     cities = await TourApi.instance.areaCode(areaCode: areaCode);
     update();
   }
 
-  /// Content Type Id 별로 관광지 정보를 가져온다.
+  /// 검색어, Content Type Id 별로 관광지 정보를 가져온다.
+  ///
   loadPage() async {
     // print('loading; $loading, noMoreData; $noMoreData');
     if (loading || noMoreData) {
