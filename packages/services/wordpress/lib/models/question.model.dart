@@ -20,13 +20,13 @@ class WPQuestion {
   factory WPQuestion.fromJson(MapStringDynamic data) {
     return WPQuestion(
       id: toInt(data['ID']),
-      question: data['question'],
-      a: data['a'],
-      b: data['b'],
-      c: data['c'],
-      d: data['d'],
-      e: data['e'],
-      answer: data['answer'],
+      question: data['question'] ?? '',
+      a: data['a'] ?? '',
+      b: data['b'] ?? '',
+      c: data['c'] ?? '',
+      d: data['d'] ?? '',
+      e: data['e'] ?? '',
+      answer: data['answer'] ?? '',
     );
   }
 

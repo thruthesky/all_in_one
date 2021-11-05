@@ -19,6 +19,7 @@ export 'models/post.model.dart';
 export 'models/comment.model.dart';
 export 'models/version.model.dart';
 export 'models/question.model.dart';
+export 'models/question.test_result.model.dart';
 
 export 'widgets/post.list.dart';
 export 'widgets/user.change.dart';
