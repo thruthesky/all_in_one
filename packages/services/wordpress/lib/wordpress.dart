@@ -10,6 +10,7 @@ export 'src/comment.api.dart';
 export 'src/messaging.api.dart';
 export 'src/wordpress.lib.dart';
 export 'src/currency.api.dart';
+export 'src/question.api.dart';
 
 export 'models/user.model.dart';
 export 'models/file.model.dart';
@@ -17,6 +18,7 @@ export 'models/category.model.dart';
 export 'models/post.model.dart';
 export 'models/comment.model.dart';
 export 'models/version.model.dart';
+export 'models/question.model.dart';
 
 export 'widgets/post.list.dart';
 export 'widgets/user.change.dart';

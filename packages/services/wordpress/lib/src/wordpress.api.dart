@@ -153,7 +153,8 @@ class WordpressApi {
         return res.data['response'];
       }
     } on DioError catch (e) {
-      // Something happened in setting up or sending the request that triggered an Error
+      // Something happened in setting up or sending the request to backend, and that triggered an Error
+      // Usually, this is an error of Dio itself or [5xx] internal error from server.
       _printLongString(e.message);
       print("Requested data;");
       print(data);
@@ -191,6 +192,11 @@ class WordpressApi {
       }
     } catch (e) {
       _printDebugUrl(data);
+
+      // Just rethrow for soft errors produced by users.
+      if (e is String && e.startsWith('ERROR_')) {
+        throw e;
+      }
       // ! 여기에서 발생하는 에러는 대부분 서버 자체의 에러이다. 사용자가 실수를 해서, 발생하는 에러가 아니다. 그래서 화면에 표시를 하지 않는다.
       if (onServerError != null) {
         onServerError!(e);
