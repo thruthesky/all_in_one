@@ -89,16 +89,16 @@ error(e) {
     } else {
       alert('Developer mistake.', "NoSuchMethodError; $e");
     }
-  } else if (e.code != null && e.message != null) {
+  } else if (e != null && e is Map && e['code'] != null && e['message'] != null) {
     /// 에러 객체에 code 오 message 가 있는 경우,
     /// 예를 들면, FirebaseAuthException 이 여기에 온다.
-    alert('Error', "${e.message} (${e.code})");
-  } else if (e?.message != null) {
-    if (e.message is String) {
-      alert('Assertion 에러 발생', e.message);
+    alert('Error', "${e['message']} (${e['code']})");
+  } else if (e != null && e is Map && e['message'] != null) {
+    if (e['message'] is String) {
+      alert('Assertion error', e['message']);
     }
   } else {
-    alert('Error', e);
+    alert('Error', e.toString());
   }
 }
 

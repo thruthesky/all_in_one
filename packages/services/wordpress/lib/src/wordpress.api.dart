@@ -44,6 +44,9 @@ class WordpressApi {
   /// 회원 가입을 하면, [onRegister] 콜백이 호출된다.
   Function? onRegister;
 
+  /// ERROR_IGNORE 가 발생 할 때, 마지막 에러 메시지.
+  String ignoredServerErrorMessage = '';
+
   init({
     required String url,
     Function? onServerError,
@@ -162,6 +165,7 @@ class WordpressApi {
       // ! 여기에서 발생하는 에러는 대부분 서버 자체의 에러이다. 사용자가 실수를 해서, 발생하는 에러가 아니다. 그래서 화면에 표시를 하지 않는다.
       if (onServerError != null) {
         onServerError!(e);
+        ignoredServerErrorMessage = e.message;
         throw ERROR_IGNORED;
       }
 
@@ -200,6 +204,7 @@ class WordpressApi {
       // ! 여기에서 발생하는 에러는 대부분 서버 자체의 에러이다. 사용자가 실수를 해서, 발생하는 에러가 아니다. 그래서 화면에 표시를 하지 않는다.
       if (onServerError != null) {
         onServerError!(e);
+        ignoredServerErrorMessage = e.toString();
         throw ERROR_IGNORED;
       }
 
