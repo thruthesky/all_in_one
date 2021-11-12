@@ -12,22 +12,16 @@ class CurrencyConverterDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CurrencyController>(
-        init: CurrencyController(onError: onError),
-        builder: (_) {
-          return Column(
-            children: [
-              CurrencySelect(0),
-              // ElevatedButton(onPressed: _.compute, child: Text('Exchange')),
-              CurrencySelect(1),
-              // Row(
-              //   children: [
-              //     Spacer(),
-              //     TextButton(onPressed: _.compute, child: Text('Compute')),
-              //   ],
-              // ),
-            ],
-          );
-        });
+      init: CurrencyController(onError: onError),
+      builder: (_) {
+        return Column(
+          children: [
+            CurrencySelect(0),
+            CurrencySelect(1),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -83,20 +77,21 @@ class CurrencySelect extends StatelessWidget {
         }),
         SizedBox(width: 16),
         GetBuilder<CurrencyController>(
-            id: "value$i",
-            builder: (_) {
-              return Expanded(
-                flex: 3,
-                child: TextField(
-                  controller: TextEditingController(text: _.values[i]),
-                  onChanged: (v) {
-                    _.values[i] = v;
-                    _.compute(i);
-                  },
-                  style: TextStyle(fontSize: 28),
-                ),
-              );
-            }),
+          id: "value$i",
+          builder: (_) {
+            return Expanded(
+              flex: 3,
+              child: TextField(
+                controller: TextEditingController(text: _.values[i]),
+                onChanged: (v) {
+                  _.values[i] = v;
+                  _.compute(i);
+                },
+                style: TextStyle(fontSize: 28),
+              ),
+            );
+          },
+        ),
       ],
     );
   }
