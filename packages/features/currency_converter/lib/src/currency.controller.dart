@@ -26,6 +26,7 @@ class CurrencyController extends GetxController {
   }
 
   loadCurrency() async {
+    print("###################### loadCurrency");
     try {
       final res = await CurrencyApi.instance.get(codes[0], codes[1]);
       print('res; $res');
