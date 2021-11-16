@@ -49,8 +49,7 @@ class CurrencySelect extends StatelessWidget {
                     print(currency.code);
                     _.setState(() {
                       _.codes[i] = currency.code;
-                      _.symbols[i] = currency.symbol;
-                      _.names[i] = currency.name;
+                      _.currencies[currency.code] = currency;
                     });
                     _.loadCurrency();
                   },
@@ -63,10 +62,11 @@ class CurrencySelect extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      _.codes[i],
+                      CurrencyUtils.currencyToEmoji(_.currencies[_.codes[i]]) + _.codes[i],
                       style: TextStyle(fontSize: 28),
                     ),
-                    Text('${_.symbols[i]} ${_.names[i]}', style: TextStyle(fontSize: 11)),
+                    Text('${_.currencies[_.codes[i]]!.symbol} ${_.currencies[_.codes[i]]!.name}',
+                        style: TextStyle(fontSize: 11)),
                   ],
                 ),
               ),
