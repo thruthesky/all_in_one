@@ -2,8 +2,6 @@ import 'package:currency_converter/src/currency.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:get/get.dart';
-// import 'package:wordpress/wordpress.dart';
-// import 'currency_data.dart';
 
 class CurrencyConverterDisplay extends StatelessWidget {
   const CurrencyConverterDisplay({required this.onError, Key? key}) : super(key: key);
@@ -12,22 +10,16 @@ class CurrencyConverterDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CurrencyController>(
-        init: CurrencyController(onError: onError),
-        builder: (_) {
-          return Column(
-            children: [
-              CurrencySelect(0),
-              // ElevatedButton(onPressed: _.compute, child: Text('Exchange')),
-              CurrencySelect(1),
-              // Row(
-              //   children: [
-              //     Spacer(),
-              //     TextButton(onPressed: _.compute, child: Text('Compute')),
-              //   ],
-              // ),
-            ],
-          );
-        });
+      init: CurrencyController(onError: onError),
+      builder: (_) {
+        return Column(
+          children: [
+            CurrencySelect(0),
+            CurrencySelect(1),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -57,8 +49,7 @@ class CurrencySelect extends StatelessWidget {
                     print(currency.code);
                     _.setState(() {
                       _.codes[i] = currency.code;
-                      _.symbols[i] = currency.symbol;
-                      _.names[i] = currency.name;
+                      _.currencies[currency.code] = currency;
                     });
                     _.loadCurrency();
                   },
@@ -71,10 +62,11 @@ class CurrencySelect extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      _.codes[i],
+                      CurrencyUtils.currencyToEmoji(_.currencies[_.codes[i]]) + _.codes[i],
                       style: TextStyle(fontSize: 28),
                     ),
-                    Text('${_.symbols[i]} ${_.names[i]}', style: TextStyle(fontSize: 11)),
+                    Text('${_.currencies[_.codes[i]]!.symbol} ${_.currencies[_.codes[i]]!.name}',
+                        style: TextStyle(fontSize: 11)),
                   ],
                 ),
               ),
@@ -83,20 +75,21 @@ class CurrencySelect extends StatelessWidget {
         }),
         SizedBox(width: 16),
         GetBuilder<CurrencyController>(
-            id: "value$i",
-            builder: (_) {
-              return Expanded(
-                flex: 3,
-                child: TextField(
-                  controller: TextEditingController(text: _.values[i]),
-                  onChanged: (v) {
-                    _.values[i] = v;
-                    _.compute(i);
-                  },
-                  style: TextStyle(fontSize: 28),
-                ),
-              );
-            }),
+          id: "value$i",
+          builder: (_) {
+            return Expanded(
+              flex: 3,
+              child: TextField(
+                controller: TextEditingController(text: _.values[i]),
+                onChanged: (v) {
+                  _.values[i] = v;
+                  _.compute(i);
+                },
+                style: TextStyle(fontSize: 28),
+              ),
+            );
+          },
+        ),
       ],
     );
   }
