@@ -125,7 +125,48 @@ void printLongString(String text) {
 ///   if it is `expiration: Duration(minutes: 500)`, then it will download again after 500 minutes. default is 365 days (a year)
 /// [onDownloadBegin], [onDownloadEnd], [onDownloadProgress] are the callback on downloda events. If the file has already downloaded and not expired, then the callbacks will be not called.
 /// [onDownloadProgress] will be called with -1 if the downloadable size is not known from the backend. onDownloadProgress has three params. first int is for percentage, second int is for how many bytes received, and the third int is for total. If the total is -1, then display the received bytes on screen.
-Future<List<int>> download(
+/// The progress percentage is mostly working with binary data download.
+///
+/// It returns the file path as String type.
+///
+/// You may wrap with try/catch to handle uncaught exceptions.
+///
+/// An example of getting text(or html) from web server.
+/// ```dart
+/// final path = await download(
+///   'https://philgo.com',
+///   filename: 'philgo-index.html',
+///   expiration: Duration(seconds: 10),
+///   onDownloadProgress: (int p, int received, int total) =>
+///     print('p: $p, recevied: $received, total: $total'),
+/// );
+/// print(json);
+/// ```
+///
+/// An example of getting json and decoding
+/// ```dart
+/// final path = await download(
+///   'https://simple-test-api.com/abc.json',
+///   filename: 'seoul_art_exhibition.json',
+///   expiration: Duration(minutes: 10),
+///   onDownloadProgress: (int p, int received, int total) =>
+///     print('p: $p, recevied: $received, total: $total'),
+/// );
+/// print( jsonDecode(json) );
+/// ```
+///
+/// Example of getting image from webserver and cache it for 5 days
+/// ```
+/// imagePath = await download(
+///   'https://file.philgo.com/data/upload/0/2292660',
+///    filename: 'seoul.jpg',
+///    expiration: Duration(days: 5),
+///    onDownloadProgress: (p, r, t) => print('p: $p'),
+/// );
+/// Image.asset(imagePath!),
+/// ```
+
+Future<String> download(
   String url, {
   Duration expiration = const Duration(days: 365),
   String? filename,
@@ -175,15 +216,17 @@ Future<List<int>> download(
         onDownloadProgress: onDownloadProgress);
   }
 
-  /// Read the file
-  file = File(pathToSave);
-  re = await file.exists();
-  if (re == false) {
-    throw ('ERROR_FAILED_TO_LOAD_TEMPORARY_FILE');
-  }
+  return pathToSave;
 
-  /// Return the content of the file.
-  return file.readAsBytesSync();
+  /// Read the file
+  // file = File(pathToSave);
+  // re = await file.exists();
+  // if (re == false) {
+  //   throw ('ERROR_FAILED_TO_LOAD_TEMPORARY_FILE');
+  // }
+
+  // /// Return the content of the file.
+  // return file.readAsBytesSync();
 }
 
 _downloadUrl(
