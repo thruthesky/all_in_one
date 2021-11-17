@@ -16,6 +16,11 @@ dependencies:
   path_provider: ^2.0.2
   get: ^4.1.4
 
+
+  # Dio
+  dio: ^4.0.3
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -38,7 +38,7 @@
       "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
       "request": "launch",
       "type": "dart",
-      "deviceId": "143A3105-7BFD-4E62-AF9E-9947BE2BF75B"
+      "deviceId": "73D8111E-D521-401E-A956-A9E687CD8679"
     },
 
     {

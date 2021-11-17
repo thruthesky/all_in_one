@@ -1,6 +1,13 @@
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+
 // import 'package:x_flutter/x_flutter.dart';
 
 /// Get.arguments 함수를 간단하게 쓰도록 도와주는 함수
@@ -106,4 +113,94 @@ error(e) {
 void printLongString(String text) {
   final RegExp pattern = RegExp('.{1,800}'); // 800 is the size of each chunk
   pattern.allMatches(text).forEach((RegExpMatch match) => print(match.group(0)));
+}
+
+/// download file or data
+///
+/// [url] is the url to download
+/// [filename] is the file name to save. If it is not set, then it will get the file name from url. The last 64 letters from the end of the url with escape.
+/// [dirPath] is the directory path to save the file. if it is not set, then the file will be saved in temporary folder
+/// [duration] is the time interval to download the file again
+/// [onDownloadBegin], [onDownloadEnd], [onDownload] are the callback on downloda events.
+Future<Uint8List> download(
+  String url, {
+  Duration? duration,
+  String? filename,
+  String? dirPath,
+  Function? onDownloadBegin,
+  Function? onDownloadEnd,
+  Function? onDownloadProegress,
+}) async {
+  Directory tempDir = await getTemporaryDirectory();
+  String tempPath = tempDir.path;
+  String pathToSave = tempPath + '/' + 'seoul_art_exhibition7.json';
+
+  File file = File(pathToSave);
+  bool re = file.existsSync();
+
+  if (re) {
+    print('yes, downloaded file exists');
+    // file exists, check if it's older than 5 days,
+    DateTime now = DateTime.now();
+    final Duration difference = now.difference(file.lastModifiedSync());
+
+    print('Diff in days: ${difference.inDays}');
+    if (difference.inDays > 5) {
+      print('yes, downloaded file is older than 5 days');
+      await _downloadUrl(url, pathToSave,
+          onDownloadBegin: onDownloadBegin,
+          onDownloadEnd: onDownloadEnd,
+          onDownloadProegress: onDownloadProegress);
+    }
+  } else {
+    await _downloadUrl(url, pathToSave,
+        onDownloadBegin: onDownloadBegin,
+        onDownloadEnd: onDownloadEnd,
+        onDownloadProegress: onDownloadProegress);
+  }
+
+  file = File(pathToSave);
+  re = await file.exists();
+
+  if (re == false) {
+    throw ('ERROR_FAILED_TO_LOAD_TEMPORARY_FILE');
+  }
+
+  return file.readAsBytesSync();
+}
+
+_downloadUrl(
+  String url,
+  String path, {
+  Function? onDownloadBegin,
+  Function? onDownloadEnd,
+  Function? onDownloadProegress,
+}) async {
+  if (onDownloadBegin != null) onDownloadBegin();
+  Dio dio = Dio();
+  final response = await dio.get(
+    url,
+    onReceiveProgress: (received, total) {
+      if (total != -1) {
+        int p = (received / total * 100).round();
+        print('download progress; $p');
+      } else {
+        print('download progress: total is -1');
+      }
+    },
+    // List<int> 로 받기 위해서, 이 옵션 필수.
+    // 이렇게 하지 않으면, writeFromSync() 에서 InternalLinkedHashMap<String, dynamic> is not a subtype of type List<int> 에러가 난다.
+    options: Options(
+      responseType: ResponseType.bytes,
+      followRedirects: false,
+    ),
+  );
+
+  File file = File(path);
+
+  final raf = file.openSync(mode: FileMode.write);
+  raf.writeFromSync(response.data);
+  raf.closeSync();
+
+  if (onDownloadEnd != null) onDownloadEnd();
 }
