@@ -243,8 +243,12 @@ _downloadUrl(
     url,
     onReceiveProgress: (received, total) {
       if (onDownloadProgress == null) return;
-      int p = (received / total * 100).round();
-      onDownloadProgress(p, received, total);
+      if (total == -1) {
+        onDownloadProgress(-1, received, -1);
+      } else {
+        int p = (received / total * 100).round();
+        onDownloadProgress(p, received, total);
+      }
     },
     // List<int> 로 받기 위해서, 이 옵션 필수.
     // 이렇게 하지 않으면, writeFromSync() 에서 InternalLinkedHashMap<String, dynamic> is not a subtype of type List<int> 에러가 난다.
