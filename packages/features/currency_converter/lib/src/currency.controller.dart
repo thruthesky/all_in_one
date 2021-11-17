@@ -47,6 +47,7 @@ class CurrencyController extends GetxController {
         values[1] = '1';
       }
       update();
+      update(['list']);
     } catch (e) {
       onError(e);
     }
@@ -56,7 +57,7 @@ class CurrencyController extends GetxController {
     if (i == 0) {
       double v = double.tryParse(values[0]) ?? 0;
       values[1] = (convert[0] * v).toStringAsFixed(2);
-      update(['value1']);
+      update(['value1', 'list']);
     } else {
       double v = double.tryParse(values[1]) ?? 0;
       values[0] = (convert[1] * v).toStringAsFixed(2);

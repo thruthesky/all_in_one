@@ -45,13 +45,15 @@ class _CurrencyPopularListState extends State<CurrencyPopularList> {
     return Column(
       children: [
         GetBuilder<CurrencyController>(
+          id: "list",
           builder: (_) {
             return ReorderableListView(
               shrinkWrap: true,
               children: [
                 for (int index = 0; index < _currencies.length; index++)
                   CurrencyTile(
-                    key: Key(_currencies[index]),
+                    key: Key(_.codes[0] + "_" + _currencies[index] + '_' + _.values[0]),
+                    value1: _.values[0],
                     code1: _.codes[0],
                     code2: _currencies[index],
                     onError: widget.onError,
@@ -71,7 +73,7 @@ class _CurrencyPopularListState extends State<CurrencyPopularList> {
                     },
                     showDeleteButton: showDeleteButton,
                     tileColor: index.isOdd ? oddItemColor : evenItemColor,
-                  ),
+                  )
               ],
               onReorder: (int oldIndex, int newIndex) {
                 if (mounted)
@@ -143,6 +145,7 @@ class _CurrencyPopularListState extends State<CurrencyPopularList> {
 
 class CurrencyTile extends StatefulWidget {
   const CurrencyTile({
+    required this.value1,
     required this.code1,
     required this.code2,
     required this.onError,
@@ -153,6 +156,7 @@ class CurrencyTile extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  final String value1;
   final String code1;
   final String code2;
   final Function onError;
@@ -197,13 +201,9 @@ class _CurrencyTileState extends State<CurrencyTile> {
       convert[0] = toDouble(res[codes[0] + '_' + codes[1]]);
       convert[1] = toDouble(res[codes[1] + '_' + codes[0]]);
 
-      if (convert[0] > convert[1]) {
-        values[0] = '1';
-        values[1] = convert[0].toStringAsFixed(2);
-      } else {
-        values[0] = convert[1].toStringAsFixed(2);
-        values[1] = '1';
-      }
+      double v = double.tryParse(widget.value1) ?? 0;
+      values[1] = (convert[0] * v).toStringAsFixed(2);
+
       if (mounted) setState(() {});
     } catch (e) {
       widget.onError(e);
