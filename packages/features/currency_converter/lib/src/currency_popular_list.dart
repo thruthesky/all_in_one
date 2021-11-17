@@ -24,6 +24,7 @@ class CurrencyPopularList extends StatefulWidget {
 
 class _CurrencyPopularListState extends State<CurrencyPopularList> {
   List<String> _currencies = [];
+
   bool showDeleteButton = false;
 
   @override
@@ -126,8 +127,8 @@ class _CurrencyPopularListState extends State<CurrencyPopularList> {
             TextButton(
               child: Row(
                 children: [
-                  Text('Show Remove'),
-                  Icon(Icons.remove_circle_outline),
+                  Text('Settings'),
+                  Icon(Icons.settings_suggest_outlined),
                 ],
               ),
               onPressed: () {
@@ -136,6 +137,35 @@ class _CurrencyPopularListState extends State<CurrencyPopularList> {
                 });
               },
             ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('Hint; '),
+            Row(
+              children: [
+                Icon(Icons.change_circle),
+                Text('Tap on the currency to change.'),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.delete_forever),
+                Text('Tap on the trash to delet.'),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(
+                  Icons.menu,
+                  color: Colors.black87,
+                ),
+                Text('Long press and drag to re-order.'),
+              ],
+            ),
+            Text('@TODO'),
+            Text('1) Display popup menu. change, delete'),
           ],
         )
       ],
@@ -213,6 +243,7 @@ class _CurrencyTileState extends State<CurrencyTile> {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 8),
       onTap: () {
         showCurrencyPicker(
           context: context,
@@ -238,7 +269,7 @@ class _CurrencyTileState extends State<CurrencyTile> {
               fontSize: 36,
             ),
           ),
-          SizedBox(width: 8),
+          SizedBox(width: 4),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -257,24 +288,49 @@ class _CurrencyTileState extends State<CurrencyTile> {
           if (!widget.showDeleteButton)
             Text(
               '${currencies[codes[1]]!.symbol} ${values[1]}',
-              style: TextStyle(fontSize: 22),
+              style: TextStyle(fontSize: 20),
             ),
           if (widget.showDeleteButton)
-            TextButton(
-              child: Icon(Icons.delete_forever),
-              onPressed: () {
-                widget.onDeleteCurrency(codes[1]);
-              },
+            Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.change_circle),
+                  onPressed: () {
+                    showCurrencyPicker(
+                      context: context,
+                      showFlag: true,
+                      showCurrencyName: true,
+                      showCurrencyCode: true,
+                      onSelect: (Currency currency) {
+                        final tempCode = codes[1];
+                        setState(() {
+                          codes[1] = currency.code;
+                        });
+                        loadCurrency();
+                        widget.onChangeCurrency(tempCode, currency.code);
+                      },
+                      favorite: ['USD', 'KRW'],
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.delete_forever),
+                  onPressed: () {
+                    widget.onDeleteCurrency(codes[1]);
+                  },
+                ),
+                IconButton(
+                  onPressed: () => {},
+                  icon: Icon(
+                    Icons.menu,
+                    color: Colors.black87,
+                  ),
+                ),
+              ],
             ),
         ],
       ),
-      trailing: IconButton(
-        onPressed: () => {},
-        icon: Icon(
-          Icons.menu,
-          color: Colors.black87,
-        ),
-      ),
+      // trailing:
       tileColor: widget.tileColor,
     );
   }
