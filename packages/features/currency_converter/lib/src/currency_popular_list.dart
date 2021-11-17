@@ -42,141 +42,143 @@ class _CurrencyPopularListState extends State<CurrencyPopularList> {
     final ColorScheme colorScheme = Theme.of(context).colorScheme;
     final Color oddItemColor = colorScheme.primary.withOpacity(0.05);
     final Color evenItemColor = colorScheme.primary.withOpacity(0.15);
+    // final _ = CurrencyController.of;
+    return GetBuilder<CurrencyController>(
+        id: 'currency',
+        builder: (_) {
+          return Column(
+            children: [
+              ReorderableListView(
+                shrinkWrap: true,
+                children: [
+                  for (int index = 0; index < _currencies.length; index++)
+                    CurrencyTile(
+                      key: Key('currency$index'),
+                      // value1: _.values[0],
+                      // code1: _.codes[0],
+                      code2: _currencies[index],
+                      i: index,
 
-    return Column(
-      children: [
-        GetBuilder<CurrencyController>(
-          id: "list",
-          builder: (_) {
-            return ReorderableListView(
-              shrinkWrap: true,
-              children: [
-                for (int index = 0; index < _currencies.length; index++)
-                  CurrencyTile(
-                    key: Key(_.codes[0] + "_" + _currencies[index] + '_' + _.values[0]),
-                    value1: _.values[0],
-                    code1: _.codes[0],
-                    code2: _currencies[index],
-                    onError: widget.onError,
-                    onChangeCurrency: (oldCode, newCode) {
-                      if (mounted)
-                        setState(() {
-                          _currencies[index] = newCode;
-                        });
-                      widget.onOrderChange(_currencies.join(','));
-                    },
-                    onDeleteCurrency: (code) {
-                      setState(() {
-                        final i = _currencies.indexOf(code);
-                        _currencies.removeAt(i);
-                      });
-                      widget.onOrderChange(_currencies.join(','));
-                    },
-                    showDeleteButton: showDeleteButton,
-                    tileColor: index.isOdd ? oddItemColor : evenItemColor,
-                  )
-              ],
-              onReorder: (int oldIndex, int newIndex) {
-                if (mounted)
-                  setState(() {
-                    if (oldIndex < newIndex) {
-                      newIndex -= 1;
-                    }
-                    final String item = _currencies.removeAt(oldIndex);
-                    _currencies.insert(newIndex, item);
-                  });
-                widget.onOrderChange(_currencies.join(','));
-              },
-            );
-          },
-        ),
-        Row(
-          children: [
-            if (_currencies.length < 10)
-              TextButton(
-                child: Row(
-                  children: [
-                    Text('Add'),
-                    Icon(
-                      Icons.add_circle_outline,
-                    ),
-                  ],
-                ),
-                onPressed: () {
-                  showCurrencyPicker(
-                    context: context,
-                    showFlag: true,
-                    showCurrencyName: true,
-                    showCurrencyCode: true,
-                    onSelect: (Currency currency) {
-                      if (_currencies.contains(currency.code)) {
-                        widget.onError('Currency already exist');
-                      } else {
+                      onError: widget.onError,
+                      onChangeCurrency: (oldCode, newCode) {
                         if (mounted)
                           setState(() {
-                            _currencies.add(currency.code);
+                            _currencies[index] = newCode;
                           });
-
                         widget.onOrderChange(_currencies.join(','));
+                      },
+                      onDeleteCurrency: (code) {
+                        setState(() {
+                          final i = _currencies.indexOf(code);
+                          _currencies.removeAt(i);
+                        });
+                        widget.onOrderChange(_currencies.join(','));
+                      },
+                      showDeleteButton: showDeleteButton,
+                      tileColor: index.isOdd ? oddItemColor : evenItemColor,
+                    )
+                ],
+                onReorder: (int oldIndex, int newIndex) {
+                  if (mounted)
+                    setState(() {
+                      if (oldIndex < newIndex) {
+                        newIndex -= 1;
                       }
-                    },
-                    favorite: ['USD', 'KRW'],
-                  );
+                      final String item = _currencies.removeAt(oldIndex);
+                      _currencies.insert(newIndex, item);
+                    });
+                  widget.onOrderChange(_currencies.join(','));
                 },
               ),
-            TextButton(
-              child: Row(
+              Row(
                 children: [
-                  Text('Settings'),
-                  Icon(Icons.settings_suggest_outlined),
+                  if (_currencies.length < 10)
+                    TextButton(
+                      child: Row(
+                        children: [
+                          Text('Add'),
+                          Icon(
+                            Icons.add_circle_outline,
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        showCurrencyPicker(
+                          context: context,
+                          showFlag: true,
+                          showCurrencyName: true,
+                          showCurrencyCode: true,
+                          onSelect: (Currency currency) {
+                            if (_currencies.contains(currency.code)) {
+                              widget.onError('Currency already exist');
+                            } else {
+                              if (mounted)
+                                setState(() {
+                                  _currencies.add(currency.code);
+                                });
+
+                              widget.onOrderChange(_currencies.join(','));
+                            }
+                          },
+                          favorite: ['USD', 'KRW'],
+                        );
+                      },
+                    ),
+                  TextButton(
+                    child: Row(
+                      children: [
+                        Text('Settings'),
+                        Icon(Icons.settings_suggest_outlined),
+                      ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        this.showDeleteButton = !this.showDeleteButton;
+                      });
+                    },
+                  ),
                 ],
               ),
-              onPressed: () {
-                setState(() {
-                  this.showDeleteButton = !this.showDeleteButton;
-                });
-              },
-            ),
-          ],
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text('Hint; '),
-            Row(
-              children: [
-                Icon(Icons.change_circle),
-                Text('Tap on the currency to change.'),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(Icons.delete_forever),
-                Text('Tap on the trash to delet.'),
-              ],
-            ),
-            Row(
-              children: [
-                Icon(
-                  Icons.menu,
-                  color: Colors.black87,
-                ),
-                Text('Long press and drag to re-order.'),
-              ],
-            ),
-            Text('@TODO'),
-            Text('1) Display popup menu. change, delete'),
-          ],
-        )
-      ],
-    );
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Hint; '),
+                  Row(
+                    children: [
+                      Icon(Icons.change_circle),
+                      Text('Tap on the currency to change.'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.delete_forever),
+                      Text('Tap on the trash to delet.'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.menu,
+                        color: Colors.black87,
+                      ),
+                      Text('Long press and drag to re-order.'),
+                    ],
+                  ),
+                  Text('@TODO'),
+                  Text('1) Display popup menu. change, delete'),
+                ],
+              )
+            ],
+          );
+        });
   }
 }
 
 class CurrencyTile extends StatefulWidget {
   const CurrencyTile({
-    required this.value1,
-    required this.code1,
+    required this.i,
+    // required this.value1,
+    // required this.code1,
     required this.code2,
     required this.onError,
     required this.onChangeCurrency,
@@ -186,8 +188,9 @@ class CurrencyTile extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
-  final String value1;
-  final String code1;
+  final int i;
+  // final String value1;
+  // final String code1;
   final String code2;
   final Function onError;
   final Function(String oldCode, String newCode) onChangeCurrency;
@@ -218,9 +221,13 @@ class _CurrencyTileState extends State<CurrencyTile> {
   @override
   void initState() {
     super.initState();
-    currencies[widget.code1] = CurrencyService().findByCode(widget.code1);
+
+    final _ = CurrencyController.of;
+    final code1 = _.codes[0];
+
+    currencies[code1] = CurrencyService().findByCode(code1);
     currencies[widget.code2] = CurrencyService().findByCode(widget.code2);
-    codes[0] = widget.code1;
+    codes[0] = code1;
     codes[1] = widget.code2;
     loadCurrency();
   }
@@ -228,11 +235,15 @@ class _CurrencyTileState extends State<CurrencyTile> {
   loadCurrency() async {
     try {
       final res = await CurrencyApi.instance.get(codes[0], codes[1]);
+
+      /// The value of currency conversion. The first element is the requested conversion.
       convert[0] = toDouble(res[codes[0] + '_' + codes[1]]);
       convert[1] = toDouble(res[codes[1] + '_' + codes[0]]);
 
-      double v = double.tryParse(widget.value1) ?? 0;
-      values[1] = (convert[0] * v).toStringAsFixed(2);
+      // double v = double.tryParse(CurrencyController.of.values[0]) ?? 0;
+      // values[1] = (convert[0] * v).toStringAsFixed(2);
+
+      values[1] = CurrencyController.of.topValueWith(convert[0]).toStringAsFixed(2);
 
       if (mounted) setState(() {});
     } catch (e) {
@@ -286,10 +297,15 @@ class _CurrencyTileState extends State<CurrencyTile> {
           ),
           Spacer(),
           if (!widget.showDeleteButton)
-            Text(
-              '${currencies[codes[1]]!.symbol} ${values[1]}',
-              style: TextStyle(fontSize: 20),
-            ),
+            GetBuilder<CurrencyController>(builder: (_) {
+              values[1] = CurrencyController.of.topValueWith(convert[0]).toStringAsFixed(2);
+              // values[1] = (convert[0] * CurrencyController.of.topValue).toStringAsFixed(2);
+              print(CurrencyController.of.codes);
+              return Text(
+                '${currencies[codes[1]]!.symbol} ${values[1]}',
+                style: TextStyle(fontSize: 20),
+              );
+            }),
           if (widget.showDeleteButton)
             Row(
               children: [
