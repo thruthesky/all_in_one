@@ -265,8 +265,15 @@ class _CurrencyTileState extends State<CurrencyTile> {
               onPressed: () {
                 widget.onDeleteCurrency(codes[1]);
               },
-            )
+            ),
         ],
+      ),
+      trailing: IconButton(
+        onPressed: () => {},
+        icon: Icon(
+          Icons.menu,
+          color: Colors.black87,
+        ),
       ),
       tileColor: widget.tileColor,
     );
