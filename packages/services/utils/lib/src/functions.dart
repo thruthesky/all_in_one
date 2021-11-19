@@ -118,9 +118,15 @@ void printLongString(String text) {
 
 /// Download file or data from the Internet and cache it locally.
 ///
-/// [url] is the url to download
-/// [filename] is the file name to save. If it is not set, then it will get the file name from url. The last 64 letters from the end of the url with escape.
-/// [dirPath] is the directory path to save the file. if it is not set, then the file will be saved in temporary folder
+/// It can be used in multiple places with same file name. One option is not to
+/// pass the file name, so the file name will be automatically set.
+///
+/// [url] is the url to download.
+/// [filename] is the file name to save.
+/// It is optional. If it is not set, then it will get the file name from url.
+/// I will take the last 64 letters from the end of the url and use it after escaping.
+/// [dirPath] is the directory path to save the file.
+/// if it is not set, then the file will be saved in temporary folder
 /// [expiration] is the time interval to download the file again.
 ///   if it is `expiration: Duration(minutes: 500)`, then it will download again after 500 minutes. default is 365 days (a year)
 /// [onDownloadBegin], [onDownloadEnd], [onDownloadProgress] are the callback on downloda events. If the file has already downloaded and not expired, then the callbacks will be not called.
