@@ -27,11 +27,11 @@ class PostCard extends StatelessWidget {
               style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 4),
-            wrapHero(CacheImage(
+            CacheImage(
               post.featuredImageLargeThumbnailUrl,
               width: double.infinity,
               height: 200,
-            )),
+            ),
             SizedBox(height: 4),
             Text(
               post.plainTextContent,
@@ -44,10 +44,10 @@ class PostCard extends StatelessWidget {
     );
   }
 
-  wrapHero(widget) {
-    if (hero)
-      return Hero(tag: post.files.first.url, child: widget, transitionOnUserGestures: true);
-    else
-      return widget;
-  }
+  // wrapHero(widget) {
+  //   if (hero)
+  //     return Hero(tag: post.files.first.url, child: widget, transitionOnUserGestures: true);
+  //   else
+  //     return widget;
+  // }
 }

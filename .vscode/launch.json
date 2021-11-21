@@ -245,6 +245,25 @@
       "type": "dart",
       "deviceId": "096a885ba083f01af93963a8661720cf9e67cb86",
       "flutterMode": "profile"
-    }
+    },
+
+
+    {
+      "name": "영자, 원격, 갤럭시와이드 3 ",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "5200960c4e1e5577"
+    },
+    {
+      "name": "영자, 원격, 갤럭시와이드 3, 릴리즈 모드",
+      "program": "projects/my/sonub/lib/main.dart",
+      "args": ["--dart-define", "WORDPRESS_API_URL=https://wonderfulkorea.kr/api/api.php"],
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "deviceId": "5200960c4e1e5577"
+    },
   ]
 }

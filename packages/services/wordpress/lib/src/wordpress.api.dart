@@ -7,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'user.api.dart';
 import '../defines.dart';
 
+/// 가능한 모든 에러는 하나의 service 함수에서 에러 메시지를 분석해서 UI 로 표시한다.
+/// 그래야, 통일된 에러 관련 코드를 작성 할 수 있다. 예를 들어 Google Analytics 나 에러 통계를
+/// 내려고 할 때, 쉽게 작업 할 수 있다.
 class WordpressApi {
   final dio = Dio();
 
@@ -14,11 +17,11 @@ class WordpressApi {
   String url = '';
   String get sessionId => UserApi.instance.currentUser.sessionId;
 
-  /// [onServerError] 에 콜백 함수가 지정되면, 서버(백엔드) 자체에서 발생하는 에러를 throw 하지 않고,
-  /// 대신 이 콜백 함수로 에러를 전달하여 호출한다.
-  /// 클라이언트 앱에서는 이 에러를 받아서, 화면에 표시하지 않고, 무시하거나 Firebase Crashlytics 등에 기록 할 수 있다.
-  /// 실제로 에러 원인을 발견하기 어려운 상황이 발생하였는데, 에러 메시지가 화면에 떠서, iOS 에서 리젝되는 상황이 발생했다.
-  Function? onServerError;
+  /// [hookServerError] 에 콜백 함수가 지정되면,
+  /// 서버(백엔드) 자체에서 발생하는 에러를 throw 하기 전에, 먼저 이 콜백 함수로 에러를 전달하여 호출한다.
+  /// 클라이언트 앱에서는 이 에러를 받아서, Firebase Crashlytics 등에 기록하는 등의 추가적인 작업을 할 수 있다.
+  /// 이 훅 함수에서, UI 에 표시되는 작업을 하지 않도록 한다.
+  // Function? hookServerError;
 
   // @Deprecated('Use CurrencyApi.instance')
   // CurrencyApi currency = CurrencyApi();
@@ -45,18 +48,18 @@ class WordpressApi {
   Function? onRegister;
 
   /// ERROR_IGNORE 가 발생 할 때, 마지막 에러 메시지.
-  String ignoredServerErrorMessage = '';
+  // String ignoredServerErrorMessage = '';
 
   init({
     required String url,
-    Function? onServerError,
+    // Function? hookServerError,
     Function? onLogin,
     Function? onRegister,
   }) {
     this.url = url;
     this.onLogin = onLogin;
     this.onRegister = onRegister;
-    this.onServerError = onServerError;
+    // this.hookServerError = hookServerError;
   }
 
   /// [cacheKey] 가 주어졌으면, 그냥 [cacheKey] 만 사용한다.
@@ -159,15 +162,7 @@ class WordpressApi {
       // Something happened in setting up or sending the request to backend, and that triggered an Error
       // Usually, this is an error of Dio itself or [5xx] internal error from server.
       _printLongString(e.message);
-      print("Requested data;");
-      print(data);
-
-      // ! 여기에서 발생하는 에러는 대부분 서버 자체의 에러이다. 사용자가 실수를 해서, 발생하는 에러가 아니다. 그래서 화면에 표시를 하지 않는다.
-      if (onServerError != null) {
-        onServerError!(e);
-        ignoredServerErrorMessage = e.message;
-        throw ERROR_IGNORED;
-      }
+      _printDebugUrl(data);
 
       // 백엔드에서 에러 발생.
       //
@@ -182,33 +177,8 @@ class WordpressApi {
         }
         throw data;
       } else {
-        // 백엔드 호스트 오류. 접속 불가.
-        if (e.message.indexOf('Failed host lookup') > -1) {
-          throw "App cannot connect to backend at '$url'. Check if the host is correct, and if the phone has internet.";
-        } else if (e.message.indexOf('CERTIFICATE_VERIFY_FAILED') > -1) {
-          throw "Certificate error. Check if the app uses correct url scheme. CERTIFICATE_VERIFY_FAILED: application verification failure.";
-        } else if (e.message.indexOf('Unexpected character') > -1) {
-          _printDebugUrl(data);
-          throw "PHP script in backend produced error at $url. Check PHP script.";
-        } else {
-          rethrow;
-        }
+        rethrow;
       }
-    } catch (e) {
-      _printDebugUrl(data);
-
-      // Just rethrow for soft errors produced by users.
-      if (e is String && e.startsWith('ERROR_')) {
-        throw e;
-      }
-      // ! 여기에서 발생하는 에러는 대부분 서버 자체의 에러이다. 사용자가 실수를 해서, 발생하는 에러가 아니다. 그래서 화면에 표시를 하지 않는다.
-      if (onServerError != null) {
-        onServerError!(e);
-        ignoredServerErrorMessage = e.toString();
-        throw ERROR_IGNORED;
-      }
-
-      rethrow;
     }
   }
 
@@ -237,4 +207,21 @@ class WordpressApi {
       print(data);
     }
   }
+
+  /// DioError 관련 에러인지 확인한다.
+  // String knownError(DioError e) {
+  //   // 백엔드 호스트 오류. 접속 불가.
+  //   if (e.message.indexOf('Failed host lookup') > -1) {
+  //     return ERROR_DIO_FAILED_HOST_LOOK_UP;
+  //     // return "App cannot connect to backend at '$url'. Check if the host is correct, and if the phone has internet.";
+  //   } else if (e.message.indexOf('CERTIFICATE_VERIFY_FAILED') > -1) {
+  //     return ERROR_DIO_CERTIFICATE_VERIFY_FAILED;
+  //     // return "Certificate error. Check if the app uses correct url scheme. CERTIFICATE_VERIFY_FAILED: application verification failure.";
+  //   } else if (e.message.indexOf('Unexpected character') > -1) {
+  //     return ERROR_DIO_NOT_JSON_RESPONSE;
+  //     // return "PHP script in backend produced error at $url. Check PHP script.";
+  //   } else {
+  //     return '';
+  //   }
+  // }
 }

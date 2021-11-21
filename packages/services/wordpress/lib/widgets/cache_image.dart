@@ -46,8 +46,15 @@ class CacheImage extends StatelessWidget {
         return Image(image: provider, fit: fit);
       },
       imageUrl: url,
-      placeholder: (context, url) =>
-          loaderWidget != null ? loaderWidget! : CircularProgressIndicator.adaptive(),
+      placeholder: (context, url) => loaderWidget != null
+          ? loaderWidget!
+          : Center(
+              child: SizedBox(
+                width: 32,
+                height: 32,
+                child: CircularProgressIndicator.adaptive(),
+              ),
+            ),
       errorWidget: (context, url, error) => errorWidget != null ? errorWidget! : Icon(Icons.error),
       width: width,
       height: height,
