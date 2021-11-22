@@ -3,25 +3,47 @@ import 'package:get/get.dart';
 import 'package:wordpress/wordpress.dart';
 
 class CurrencyController extends GetxController {
+  CurrencyController({
+    required this.onError,
+    required this.currenciesList,
+    required this.onOrderChange,
+  });
+
+  final Function onError;
+  final String? currenciesList;
+  final Function onOrderChange;
+
   static CurrencyController get of => Get.find<CurrencyController>();
+
   Map<String, Currency?> currencies = {};
 
-  // List<String> names = ['United States Dollar', 'Korea (South) Won'];
+  List<String> currenciesCodes = [];
+  Map<String, String> currencyValue = {};
+  Map<String, double> currencyConvert = {};
+
   List<String> codes = ['USD', 'KRW'];
   List<String> values = ['1', ''];
   List<double> convert = [0, 0];
-  // List<String> symbols = ['\$', '₩'];
 
   /// The value of the input box on the top of the currency form.
   double get topValue => double.tryParse(values[0]) ?? 0;
   double topValueWith(double n) => topValue * n;
 
-  final Function onError;
-  CurrencyController({required this.onError});
+  bool showSettingsButton = false;
 
   @override
   void onInit() {
     super.onInit();
+
+    if (currenciesList == null || currenciesList!.isEmpty) {
+      currenciesCodes = ["AUD", "GBP", "JPY", "CNY", "CAD"];
+    } else {
+      currenciesCodes = currenciesList!.split(',');
+    }
+
+    for (String c in currenciesCodes) {
+      currencies[c] = CurrencyService().findByCode(c);
+    }
 
     currencies[codes[0]] = CurrencyService().findByCode(codes[0]);
     currencies[codes[1]] = CurrencyService().findByCode(codes[1]);
@@ -52,9 +74,33 @@ class CurrencyController extends GetxController {
         values[0] = convert[1].toStringAsFixed(2);
         values[1] = '1';
       }
+      // loadCurrencyList();
+      if (currenciesCodes.isNotEmpty) {
+        for (String code in currenciesCodes) {
+          loadCurrencyList(code);
+        }
+      }
       update();
     } catch (e) {
       onError(e);
+    }
+  }
+
+  loadCurrencyList(String code) async {
+    try {
+      final res = await CurrencyApi.instance.get(codes[0], code);
+      currencyConvert[code] = toDouble(res[codes[0] + '_' + code]);
+      currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
+      update([code]);
+    } catch (e) {
+      onError(e);
+    }
+  }
+
+  computeCurrencyList() {
+    for (String code in currenciesCodes) {
+      currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
+      update([code]);
     }
   }
 
@@ -62,7 +108,8 @@ class CurrencyController extends GetxController {
     if (i == 0) {
       double v = double.tryParse(values[0]) ?? 0;
       values[1] = (convert[0] * v).toStringAsFixed(2);
-      update(['value1', 'list']);
+      update(['value1']);
+      computeCurrencyList();
     } else {
       double v = double.tryParse(values[1]) ?? 0;
       values[0] = (convert[1] * v).toStringAsFixed(2);
@@ -72,6 +119,53 @@ class CurrencyController extends GetxController {
 
   setState(Function ss) {
     ss();
+    update();
+  }
+
+  onCurrencyAdd(Currency currency) {
+    if (currenciesCodes.contains(currency.code)) {
+      onError('Currency already exist');
+    } else {
+      currencies[currency.code] = currency;
+      currenciesCodes.add(currency.code);
+      loadCurrencyList(currency.code);
+      onOrderChange(currenciesCodes.join(','));
+    }
+    update();
+  }
+
+  onChangeCurrencyList(String oldCode, Currency newCurrency) {
+    if (currenciesCodes.contains(newCurrency.code)) {
+      onError('Currency already exist');
+    } else {
+      currencies[newCurrency.code] = newCurrency;
+      final i = currenciesCodes.indexOf(oldCode);
+      currenciesCodes[i] = newCurrency.code;
+      loadCurrencyList(newCurrency.code);
+      onOrderChange(currenciesCodes.join(','));
+    }
+    update();
+  }
+
+  onCurrencyDelete(code) {
+    final i = currenciesCodes.indexOf(code);
+    currenciesCodes.removeAt(i);
+    onOrderChange(currenciesCodes.join(','));
+    update();
+  }
+
+  onReorder(int oldIndex, int newIndex) {
+    if (oldIndex < newIndex) {
+      newIndex -= 1;
+    }
+    final String item = currenciesCodes.removeAt(oldIndex);
+    currenciesCodes.insert(newIndex, item);
+    onOrderChange(currenciesCodes.join(','));
+    update();
+  }
+
+  onShowOptionSettings() {
+    showSettingsButton = !showSettingsButton;
     update();
   }
 }
