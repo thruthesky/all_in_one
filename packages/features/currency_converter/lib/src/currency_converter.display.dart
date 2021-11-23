@@ -1,21 +1,35 @@
+import 'package:currency_converter/currency_converter.dart';
 import 'package:currency_converter/src/currency.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:get/get.dart';
 
 class CurrencyConverterDisplay extends StatelessWidget {
-  const CurrencyConverterDisplay({required this.onError, Key? key}) : super(key: key);
+  const CurrencyConverterDisplay({
+    required this.onError,
+    required this.currenciesList,
+    required this.onOrderChange,
+    Key? key,
+  }) : super(key: key);
 
   final Function onError;
+  final String? currenciesList;
+  final Function onOrderChange;
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CurrencyController>(
-      init: CurrencyController(onError: onError),
+      init: CurrencyController(
+        currenciesList: currenciesList,
+        onOrderChange: onOrderChange,
+        onError: onError,
+      ),
       builder: (_) {
         return Column(
           children: [
             CurrencySelect(0),
             CurrencySelect(1),
+            SizedBox(height: 16),
+            CurrencyPopularList(),
           ],
         );
       },
@@ -45,8 +59,6 @@ class CurrencySelect extends StatelessWidget {
                   showCurrencyName: true,
                   showCurrencyCode: true,
                   onSelect: (Currency currency) {
-                    print('Select currency: ${currency.name}');
-                    print(currency.code);
                     _.setState(() {
                       _.codes[i] = currency.code;
                       _.currencies[currency.code] = currency;
