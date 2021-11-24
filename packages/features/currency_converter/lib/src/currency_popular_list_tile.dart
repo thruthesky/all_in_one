@@ -145,15 +145,15 @@ class CurrencyTile extends StatelessWidget {
                     }
                   },
                 ),
-                IconButton(
-                  onPressed: () => {},
-                  icon: Icon(
-                    Icons.menu,
-                    color: Colors.black87,
-                  ),
-                ),
               ],
             ),
+          IconButton(
+            onPressed: () => {},
+            icon: Icon(
+              Icons.menu,
+              color: Colors.black87,
+            ),
+          ),
         ],
       ),
       tileColor: tileColor,
