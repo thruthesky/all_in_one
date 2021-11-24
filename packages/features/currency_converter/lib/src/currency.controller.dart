@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:currency_picker/currency_picker.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wordpress/wordpress.dart';
 
@@ -20,10 +23,12 @@ class CurrencyController extends GetxController {
   List<String> currenciesCodes = [];
   Map<String, String> currencyValue = {};
   Map<String, double> currencyConvert = {};
+  Map<String, bool> loadingList = {};
 
   List<String> codes = ['USD', 'KRW'];
   List<String> values = ['1', ''];
   List<double> convert = [0, 0];
+  List<bool> loader = [true, true];
 
   /// The value of the input box on the top of the currency form.
   double get topValue => double.tryParse(values[0]) ?? 0;
@@ -35,6 +40,9 @@ class CurrencyController extends GetxController {
   void onInit() {
     super.onInit();
 
+    currencies[codes[0]] = CurrencyService().findByCode(codes[0]);
+    currencies[codes[1]] = CurrencyService().findByCode(codes[1]);
+
     if (currenciesList == null || currenciesList!.isEmpty) {
       currenciesCodes = ["AUD", "GBP", "JPY", "CNY", "CAD"];
     } else {
@@ -45,8 +53,15 @@ class CurrencyController extends GetxController {
       currencies[c] = CurrencyService().findByCode(c);
     }
 
-    currencies[codes[0]] = CurrencyService().findByCode(codes[0]);
-    currencies[codes[1]] = CurrencyService().findByCode(codes[1]);
+    // //// test block
+    // List<Currency> allCurrencies = CurrencyService().getAll();
+    // // List<Currency> allCurrencies = CurrencyService().findCurrenciesByCode(['BI']);
+    // // print(allCurrencies);
+    // for (int i = 0; i < allCurrencies.length; i++) {
+    //   currenciesCodes.add(allCurrencies[i].code);
+    //   currencies[allCurrencies[i].code] = allCurrencies[i];
+    // }
+    // //// end test block
 
     loadCurrency();
   }
@@ -59,41 +74,48 @@ class CurrencyController extends GetxController {
   }
 
   /// This is being called when user change the Currency (of the country).
-  loadCurrency() async {
+  loadCurrency({int codeIndex = 0}) async {
     try {
       final res = await CurrencyApi.instance.get(codes[0], codes[1]);
       print('res; $res');
-
       convert[0] = toDouble(res[codes[0] + '_' + codes[1]]);
       convert[1] = toDouble(res[codes[1] + '_' + codes[0]]);
-
-      if (convert[0] > convert[1]) {
-        values[0] = '1';
-        values[1] = convert[0].toStringAsFixed(2);
-      } else {
-        values[0] = convert[1].toStringAsFixed(2);
-        values[1] = '1';
-      }
-      // loadCurrencyList();
-      if (currenciesCodes.isNotEmpty) {
-        for (String code in currenciesCodes) {
-          loadCurrencyList(code);
-        }
-      }
+      loader[0] = false;
+      loader[1] = false;
+      compute(codeIndex);
+      loadList();
       update();
     } catch (e) {
       onError(e);
     }
   }
 
+  loadList() {
+    if (currenciesCodes.isNotEmpty) {
+      for (String code in currenciesCodes) {
+        loadCurrencyList(code);
+      }
+    }
+  }
+
   loadCurrencyList(String code) async {
+    loadingList[code] = true;
     try {
       final res = await CurrencyApi.instance.get(codes[0], code);
-      currencyConvert[code] = toDouble(res[codes[0] + '_' + code]);
-      currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
+      print('loadCurrencyList: ' + code);
+      print(res);
+      if (res[codes[0] + '_' + code] != null) {
+        currencyConvert[code] = toDouble(res[codes[0] + '_' + code]);
+        currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
+      } else {
+        currencyConvert[code] = 0.00;
+        currencyValue[code] = '0.00';
+      }
+      loadingList[code] = false;
       update([code]);
     } catch (e) {
       onError(e);
+      loadingList[code] = false;
     }
   }
 
@@ -104,17 +126,18 @@ class CurrencyController extends GetxController {
     }
   }
 
-  compute(int i) {
+  compute(int i, {bool reloadList = false}) {
     if (i == 0) {
       double v = double.tryParse(values[0]) ?? 0;
       values[1] = (convert[0] * v).toStringAsFixed(2);
       update(['value1']);
-      computeCurrencyList();
     } else {
       double v = double.tryParse(values[1]) ?? 0;
       values[0] = (convert[1] * v).toStringAsFixed(2);
       update(['value0']);
     }
+
+    if (reloadList) computeCurrencyList();
   }
 
   setState(Function ss) {
@@ -124,7 +147,22 @@ class CurrencyController extends GetxController {
 
   onCurrencyAdd(Currency currency) {
     if (currenciesCodes.contains(currency.code)) {
-      onError('Currency already exist');
+      Future.delayed(Duration(milliseconds: 500), () {
+        Get.dialog(
+          AlertDialog(
+            title: Text('Currency already exist.'),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  child: Text('Close'),
+                  onPressed: () => Get.back(),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
     } else {
       currencies[currency.code] = currency;
       currenciesCodes.add(currency.code);
@@ -136,7 +174,23 @@ class CurrencyController extends GetxController {
 
   onChangeCurrencyList(String oldCode, Currency newCurrency) {
     if (currenciesCodes.contains(newCurrency.code)) {
-      onError('Currency already exist');
+      print('Currency already exist?');
+      Timer(Duration(milliseconds: 500), () {
+        Get.dialog(
+          AlertDialog(
+            title: Text('Currency already exist.'),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  child: Text('Close'),
+                  onPressed: () => Get.back(),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
     } else {
       currencies[newCurrency.code] = newCurrency;
       final i = currenciesCodes.indexOf(oldCode);
@@ -167,5 +221,9 @@ class CurrencyController extends GetxController {
   onShowOptionSettings() {
     showSettingsButton = !showSettingsButton;
     update();
+  }
+
+  findCurrencyConvert(code) {
+    return currencyConvert[code];
   }
 }
