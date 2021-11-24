@@ -20,6 +20,8 @@ dependencies:
   wordpress:
     path: ../../services/wordpress
 
+  widgets:
+    path: ../../widgets
 
 dev_dependencies:
   flutter_test:
