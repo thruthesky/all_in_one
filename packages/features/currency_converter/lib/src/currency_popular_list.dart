@@ -59,15 +59,16 @@ class CurrencyPopularList extends StatelessWidget {
                   TextButton(
                     child: Row(
                       children: [
-                        Text('Settings'),
+                        Text(_.showSettingsButton ? 'Show Settings' : "Hide Settings"),
                         Icon(Icons.settings_suggest_outlined),
                       ],
                     ),
                     onPressed: _.onShowOptionSettings,
                   ),
+                  Spacer(),
                   TextButton(
                     child: Row(
-                      children: [Text('Hint'), Icon(Icons.info_outline)],
+                      children: [Text('Help'), Icon(Icons.info_outline)],
                     ),
                     onPressed: () {
                       Get.dialog(
