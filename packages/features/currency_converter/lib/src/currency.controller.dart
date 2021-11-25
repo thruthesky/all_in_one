@@ -24,11 +24,13 @@ class CurrencyController extends GetxController {
   Map<String, String> currencyValue = {};
   Map<String, double> currencyConvert = {};
   Map<String, bool> loadingList = {};
+  Map<String, bool> currencyError = {};
 
   List<String> codes = ['USD', 'KRW'];
   List<String> values = ['1', ''];
   List<double> convert = [0, 0];
   List<bool> loader = [true, true];
+  bool isCurrencyError = false;
 
   /// The value of the input box on the top of the currency form.
   double get topValue => double.tryParse(values[0]) ?? 0;
@@ -44,7 +46,7 @@ class CurrencyController extends GetxController {
     currencies[codes[1]] = CurrencyService().findByCode(codes[1]);
 
     if (currenciesList == null || currenciesList!.isEmpty) {
-      currenciesCodes = ["AUD", "GBP", "JPY", "CNY", "CAD"];
+      currenciesCodes = ["BI", "AUD", "GBP", "JPY", "CNY", "CAD"];
     } else {
       currenciesCodes = currenciesList!.split(',');
     }
@@ -75,15 +77,27 @@ class CurrencyController extends GetxController {
 
   /// This is being called when user change the Currency (of the country).
   loadCurrency({int codeIndex = 0}) async {
+    loader[0] = true;
+    loader[1] = true;
+    isCurrencyError = false;
+    update();
     try {
       final res = await CurrencyApi.instance.get(codes[0], codes[1]);
       print('res; $res');
-      convert[0] = toDouble(res[codes[0] + '_' + codes[1]]);
-      convert[1] = toDouble(res[codes[1] + '_' + codes[0]]);
-      loader[0] = false;
-      loader[1] = false;
+      if (res[codes[0] + '_' + codes[1]] != null) {
+        convert[0] = toDouble(res[codes[0] + '_' + codes[1]]);
+        convert[1] = toDouble(res[codes[1] + '_' + codes[0]]);
+        isCurrencyError = false;
+      } else {
+        convert[0] = 0.00;
+        convert[1] = 0.00;
+        isCurrencyError = true;
+      }
+
       compute(codeIndex);
       loadList();
+      loader[0] = false;
+      loader[1] = false;
       update();
     } catch (e) {
       onError(e);
@@ -100,6 +114,8 @@ class CurrencyController extends GetxController {
 
   loadCurrencyList(String code) async {
     loadingList[code] = true;
+    currencyError[code] = false;
+    update([code]);
     try {
       final res = await CurrencyApi.instance.get(codes[0], code);
       print('loadCurrencyList: ' + code);
@@ -107,9 +123,11 @@ class CurrencyController extends GetxController {
       if (res[codes[0] + '_' + code] != null) {
         currencyConvert[code] = toDouble(res[codes[0] + '_' + code]);
         currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
+        currencyError[code] = false;
       } else {
         currencyConvert[code] = 0.00;
         currencyValue[code] = '0.00';
+        currencyError[code] = true;
       }
       loadingList[code] = false;
       update([code]);

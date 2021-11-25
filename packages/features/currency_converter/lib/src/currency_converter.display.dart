@@ -65,12 +65,9 @@ class CurrencySelect extends StatelessWidget {
                       _.currencies[currency.code] = currency;
                       if (i == 0) {
                         _.loader[1] = true;
-                        // _.loadCurrency(codeIndex: 1);
                       } else {
                         _.loader[0] = true;
-                        // _.loadCurrency(codeIndex: 0);
                       }
-
                       _.loadCurrency(codeIndex: i);
                     });
                   },
@@ -105,14 +102,21 @@ class CurrencySelect extends StatelessWidget {
               flex: 3,
               child: (_.loader[i])
                   ? Spinner()
-                  : TextField(
-                      controller: TextEditingController(text: _.values[i]),
-                      onChanged: (v) {
-                        _.values[i] = v;
-                        _.compute(i, reloadList: true);
-                      },
-                      style: TextStyle(fontSize: 28),
-                    ),
+                  : (_.isCurrencyError)
+                      ? TextField(
+                          controller: TextEditingController(text: 'Error. Tap to Reload'),
+                          readOnly: true,
+                          onTap: () => _.loadCurrency(),
+                          style: TextStyle(fontSize: 24),
+                        )
+                      : TextField(
+                          controller: TextEditingController(text: _.values[i]),
+                          onChanged: (v) {
+                            _.values[i] = v;
+                            _.compute(i, reloadList: true);
+                          },
+                          style: TextStyle(fontSize: 28),
+                        ),
             );
           },
         ),
