@@ -23,18 +23,6 @@ class CurrencyTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 8),
-      // onTap: () {
-      //   showCurrencyPicker(
-      //     context: context,
-      //     showFlag: true,
-      //     showCurrencyName: true,
-      //     showCurrencyCode: true,
-      //     onSelect: (Currency currency) {
-      //       _.onChangeCurrencyList(code2, currency);
-      //     },
-      //     favorite: ['USD', 'KRW'],
-      //   );
-      // },
       title: Row(
         children: [
           Text(
@@ -54,14 +42,44 @@ class CurrencyTile extends StatelessWidget {
                     return Row(
                       children: [
                         if (_.loadingList[code2] != null && _.loadingList[code2] == false)
-                          Text(
-                            '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]}' +
-                                " = " +
-                                '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                          Row(
+                            children: [
+                              Text(
+                                '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]}' +
+                                    " = ",
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              if (_.currencyError[code2] == null || _.currencyError[code2] == false)
+                                Text(
+                                  '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        if (_.currencyError[code2] != null && _.currencyError[code2] == true)
+                          GestureDetector(
+                            child: Row(
+                              children: [
+                                Text(
+                                  'Error. Tap to Reload',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Icon(
+                                  Icons.restart_alt,
+                                  size: 16,
+                                ),
+                              ],
                             ),
+                            onTap: () => _.loadCurrencyList(code2),
                           ),
                         if (_.loadingList[code2] == null || _.loadingList[code2] == true)
                           Spinner(
@@ -75,7 +93,7 @@ class CurrencyTile extends StatelessWidget {
               Text(
                 '${_.currencies[code2]!.name}',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -129,6 +147,7 @@ class CurrencyTile extends StatelessWidget {
                               ElevatedButton(
                                   child: Text('Yes'),
                                   onPressed: () {
+                                    Get.back();
                                     _.onCurrencyDelete(code2);
                                   }),
                               SizedBox(

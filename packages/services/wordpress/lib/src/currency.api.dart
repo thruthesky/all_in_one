@@ -11,7 +11,8 @@ class CurrencyApi {
   }
 
   Future<Map<String, dynamic>> get(String code1, String code2) async {
-    return await WordpressApi.instance.request('currency.get', data: {'currency': '$code1,$code2'});
+    return await WordpressApi.instance
+        .request('currency.get', data: {'currency': '$code1,$code2'}, debugUrl: true);
   }
 
   Future<Map<String, dynamic>> getMyCurrencyAgainst(String currencyCode, String defaultCode) async {

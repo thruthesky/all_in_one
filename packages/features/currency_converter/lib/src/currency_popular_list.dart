@@ -59,7 +59,7 @@ class CurrencyPopularList extends StatelessWidget {
                   TextButton(
                     child: Row(
                       children: [
-                        Text('Settings'),
+                        Text(_.showSettingsButton ? "Hide Settings" : 'Show Settings'),
                         Icon(Icons.settings_suggest_outlined),
                       ],
                     ),
@@ -67,7 +67,7 @@ class CurrencyPopularList extends StatelessWidget {
                   ),
                   TextButton(
                     child: Row(
-                      children: [Text('Hint'), Icon(Icons.info_outline)],
+                      children: [Text('Help'), Icon(Icons.info_outline)],
                     ),
                     onPressed: () {
                       Get.dialog(
@@ -76,7 +76,7 @@ class CurrencyPopularList extends StatelessWidget {
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text('Hint; '),
+                              Text('Hint'),
                               Row(
                                 children: [
                                   Icon(Icons.change_circle),
