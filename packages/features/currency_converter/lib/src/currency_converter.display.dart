@@ -101,7 +101,9 @@ class CurrencySelect extends StatelessWidget {
             return Expanded(
               flex: 3,
               child: (_.loader[i])
-                  ? Spinner()
+                  ? Spinner(
+                      valueColor: Colors.black87,
+                    )
                   : (_.isCurrencyError)
                       ? TextField(
                           controller: TextEditingController(text: 'Error. Tap to Reload'),
