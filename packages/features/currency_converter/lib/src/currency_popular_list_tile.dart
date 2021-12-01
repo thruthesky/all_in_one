@@ -45,7 +45,7 @@ class CurrencyTile extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]}' +
+                                '${_.currencies[_.codes[0]]!.symbol} ${_.values[0].isNum ? _.values[0] : 0} ${_.codes[0]}' +
                                     " = ",
                                 style: TextStyle(
                                   fontSize: 14,
