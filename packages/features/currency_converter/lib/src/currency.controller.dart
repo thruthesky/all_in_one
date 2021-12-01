@@ -46,7 +46,8 @@ class CurrencyController extends GetxController {
     currencies[codes[1]] = CurrencyService().findByCode(codes[1]);
 
     if (currenciesList == null || currenciesList!.isEmpty) {
-      currenciesCodes = ["BI", "AUD", "GBP", "JPY", "CNY", "CAD"];
+      // currenciesCodes = ["BI", "AUD", "GBP", "JPY", "CNY", "CAD"];
+      currenciesCodes = ["AUD", "GBP", "JPY", "CNY", "CAD"];
     } else {
       currenciesCodes = currenciesList!.split(',');
     }

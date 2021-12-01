@@ -76,17 +76,24 @@ class CurrencyPopularList extends StatelessWidget {
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text('Hint'),
+                              Text('Hint', style: TextStyle(fontSize: 24, color: Colors.black)),
+                              SizedBox(height: 16),
                               Row(
                                 children: [
-                                  Icon(Icons.change_circle),
-                                  Text('Tap on the currency to change.', softWrap: true),
+                                  Icon(
+                                    Icons.add_circle_outline,
+                                    color: Colors.black87,
+                                  ),
+                                  Text('Tap to add new currency. (10 max)'),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.delete_forever),
-                                  Text('Tap on the trash to delet.'),
+                                  Icon(
+                                    Icons.settings_suggest_outlined,
+                                    color: Colors.black87,
+                                  ),
+                                  Text('Tap to show more options.'),
                                 ],
                               ),
                               Row(
@@ -96,6 +103,18 @@ class CurrencyPopularList extends StatelessWidget {
                                     color: Colors.black87,
                                   ),
                                   Text('Long press and drag to re-order.'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.change_circle),
+                                  Text('Tap on the currency to change.', softWrap: true),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.delete_forever),
+                                  Text('Tap on the trash to remove.'),
                                 ],
                               ),
                             ],
