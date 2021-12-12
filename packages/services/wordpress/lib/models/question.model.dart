@@ -1,7 +1,5 @@
 import 'package:wordpress/wordpress.dart';
 
-import '../defines.dart';
-
 class WPQuestion {
   int id;
   String question, a, b, c, d, e, answer;

@@ -1,5 +1,4 @@
 import 'package:data/data.dart';
-import 'package:data/src/tour/widgets/tour.controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

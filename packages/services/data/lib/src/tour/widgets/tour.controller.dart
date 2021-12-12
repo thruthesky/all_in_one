@@ -1,5 +1,4 @@
 import 'package:data/data.functions.dart';
-import 'package:data/src/tour/tour.api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:data/data.dart';

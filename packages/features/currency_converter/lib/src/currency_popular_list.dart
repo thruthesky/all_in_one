@@ -2,7 +2,6 @@ import 'package:currency_converter/src/currency.controller.dart';
 import 'package:currency_converter/src/currency_popular_list_tile.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 class CurrencyPopularList extends StatelessWidget {

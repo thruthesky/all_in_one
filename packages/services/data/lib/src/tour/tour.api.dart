@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:data/data.dart';
 import 'package:data/src/tour/models/tour.api.area_code.model.dart';
-import 'package:data/src/tour/models/tour.api.list.model.dart';
 import 'package:dio/dio.dart';
 
 class TourApi {

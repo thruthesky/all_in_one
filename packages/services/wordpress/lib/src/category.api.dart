@@ -1,4 +1,3 @@
-import 'package:wordpress/models/category.model.dart';
 import 'package:wordpress/wordpress.dart';
 
 class CategoryApi {
