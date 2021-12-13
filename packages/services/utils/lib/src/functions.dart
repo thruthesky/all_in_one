@@ -68,7 +68,7 @@ Future<void> alert(String title, dynamic content) async {
 /// 모든 종류의 에러를 다 핸들링한다.
 /// 따라서, 이 함수를 호출하기 전에 미리 에러가 어떤 종류의 에러인지 전처리할 필요 없이, 그냥 이 함수에 에러를 전달하면 된다.
 error(e) {
-  print('service.dart > 에러 발생: $e');
+  print('functions.dart > 에러 발생: $e');
   if (e is String) {
     // 사진 업로드에서, 사용자가 사진을 선택하지 않은 경우, 에러 표시하지 않음.
     if (e == 'error_image_not_selected') {

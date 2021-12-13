@@ -159,18 +159,22 @@ class TourController extends GetxController {
     print('loading pageNo: $pageNo');
 
     /// geoIp 기반 목록 또는 searchKeyword 이 아니면, 모두 areaBasedList
+    try {
+      listModel = await TourApi.instance.search(
+        operation: operation,
+        areaCode: areaCode,
+        sigunguCode: sigunguCode,
 
-    listModel = await TourApi.instance.search(
-      operation: operation,
-      areaCode: areaCode,
-      sigunguCode: sigunguCode,
-
-      /// operationType 이 2 보다 크면, 실제 contentTypeId 이다.
-      contentTypeId: contentTypeId,
-      pageNo: pageNo,
-      numOfRows: numOfRows,
-      keyword: keyword,
-    );
+        /// operationType 이 2 보다 크면, 실제 contentTypeId 이다.
+        contentTypeId: contentTypeId,
+        pageNo: pageNo,
+        numOfRows: numOfRows,
+        keyword: keyword,
+      );
+    } catch (e) {
+      error(e);
+      return;
+    }
     if (toInt(listModel.response.header.resultCode) != 0) {
       error(listModel.response.header.resultMsg);
       setLoading(false);
