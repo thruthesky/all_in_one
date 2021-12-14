@@ -34,61 +34,59 @@ class CurrencyTile extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (!_.showSettingsButton)
-                GetBuilder<CurrencyController>(
-                  id: "$code2",
-                  builder: (_) {
-                    return Row(
-                      children: [
-                        if (_.loadingList[code2] != null && _.loadingList[code2] == false)
-                          Row(
-                            children: [
+              GetBuilder<CurrencyController>(
+                id: "$code2",
+                builder: (_) {
+                  return Row(
+                    children: [
+                      if (_.loadingList[code2] != null && _.loadingList[code2] == false)
+                        Row(
+                          children: [
+                            Text(
+                              '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]} = ',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            if (_.currencyError[code2] == null || _.currencyError[code2] == false)
                               Text(
-                                '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]}' +
-                                    " = ",
+                                '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              if (_.currencyError[code2] == null || _.currencyError[code2] == false)
-                                Text(
-                                  '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
+                          ],
+                        ),
+                      if (_.currencyError[code2] != null && _.currencyError[code2] == true)
+                        GestureDetector(
+                          child: Row(
+                            children: [
+                              Text(
+                                'Error. Tap to Reload',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
                                 ),
+                              ),
+                              Icon(
+                                Icons.restart_alt,
+                                size: 16,
+                              ),
                             ],
                           ),
-                        if (_.currencyError[code2] != null && _.currencyError[code2] == true)
-                          GestureDetector(
-                            child: Row(
-                              children: [
-                                Text(
-                                  'Error. Tap to Reload',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.restart_alt,
-                                  size: 16,
-                                ),
-                              ],
-                            ),
-                            onTap: () => _.loadCurrencyList(code2),
-                          ),
-                        if (_.loadingList[code2] == null || _.loadingList[code2] == true)
-                          Spinner(
-                            size: 16,
-                            valueColor: Colors.black87,
-                          ),
-                      ],
-                    );
-                  },
-                ),
+                          onTap: () => _.loadCurrencyList(code2),
+                        ),
+                      if (_.loadingList[code2] == null || _.loadingList[code2] == true)
+                        Spinner(
+                          size: 16,
+                          valueColor: Colors.black87,
+                        ),
+                    ],
+                  );
+                },
+              ),
               Text(
                 '${_.currencies[code2]!.name}',
                 style: TextStyle(
@@ -99,78 +97,45 @@ class CurrencyTile extends StatelessWidget {
             ],
           ),
           Spacer(),
-          if (_.showSettingsButton)
-            Row(
-              children: [
-                PopupMenuButton(
-                  icon: Icon(Icons.settings_suggest_outlined),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      child: Row(
-                        children: [
-                          Icon(Icons.change_circle),
-                          Text("Change"),
-                        ],
-                      ),
-                      value: 'change',
-                    ),
-                    PopupMenuItem(
-                      child: Row(
-                        children: [
-                          Icon(Icons.delete_forever),
-                          Text("Delete"),
-                        ],
-                      ),
-                      value: 'delete',
-                    )
-                  ],
-                  onSelected: (value) {
-                    if (value == 'change') {
-                      showCurrencyPicker(
-                        context: context,
-                        showFlag: true,
-                        showCurrencyName: true,
-                        showCurrencyCode: true,
-                        onSelect: (Currency currency) {
-                          _.onChangeCurrencyList(code2, currency);
-                        },
-                        favorite: ['USD', 'KRW'],
-                      );
-                    } else if (value == 'delete') {
-                      Get.dialog(
-                        AlertDialog(
-                          title: Text('Are you sure you want to delete this currency?'),
-                          content: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              ElevatedButton(
-                                  child: Text('Yes'),
-                                  onPressed: () {
-                                    Get.back();
-                                    _.onCurrencyDelete(code2);
-                                  }),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              ElevatedButton(
-                                child: Text('No'),
-                                onPressed: () => Get.back(),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
           IconButton(
             onPressed: () => {},
             icon: Icon(
               Icons.menu,
               color: Colors.black87,
             ),
+          ),
+          IconButton(
+            icon: Icon(
+              Icons.remove_circle_outline,
+              color: Colors.black87,
+            ),
+            onPressed: () => {
+              Get.dialog(
+                AlertDialog(
+                  title: Text('Are you sure you want to delete this currency?'),
+                  content: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                          child: Text('Yes'),
+                          onPressed: () {
+                            Get.back();
+                            _.onCurrencyDelete(code2);
+                          }),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(Colors.redAccent)),
+                        child: Text('No'),
+                        onPressed: () => Get.back(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            },
           ),
         ],
       ),

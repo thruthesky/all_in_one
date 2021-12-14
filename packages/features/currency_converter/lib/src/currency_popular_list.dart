@@ -57,15 +57,6 @@ class CurrencyPopularList extends StatelessWidget {
                     ),
                   TextButton(
                     child: Row(
-                      children: [
-                        Text(_.showSettingsButton ? "Hide Settings" : 'Show Settings'),
-                        Icon(Icons.settings_suggest_outlined),
-                      ],
-                    ),
-                    onPressed: _.onShowOptionSettings,
-                  ),
-                  TextButton(
-                    child: Row(
                       children: [Text('Help'), Icon(Icons.info_outline)],
                     ),
                     onPressed: () {
@@ -89,15 +80,6 @@ class CurrencyPopularList extends StatelessWidget {
                               Row(
                                 children: [
                                   Icon(
-                                    Icons.settings_suggest_outlined,
-                                    color: Colors.black87,
-                                  ),
-                                  Text('Tap to show more options.'),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Icon(
                                     Icons.menu,
                                     color: Colors.black87,
                                   ),
@@ -106,14 +88,8 @@ class CurrencyPopularList extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  Icon(Icons.change_circle),
-                                  Text('Tap on the currency to change.', softWrap: true),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.delete_forever),
-                                  Text('Tap on the trash to remove.'),
+                                  Icon(Icons.remove_circle_outline),
+                                  Text('Tap to remove currency.'),
                                 ],
                               ),
                             ],

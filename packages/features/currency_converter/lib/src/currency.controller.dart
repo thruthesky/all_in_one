@@ -36,8 +36,6 @@ class CurrencyController extends GetxController {
   double get topValue => double.tryParse(values[0]) ?? 0;
   double topValueWith(double n) => topValue * n;
 
-  bool showSettingsButton = false;
-
   @override
   void onInit() {
     super.onInit();
@@ -234,11 +232,6 @@ class CurrencyController extends GetxController {
     final String item = currenciesCodes.removeAt(oldIndex);
     currenciesCodes.insert(newIndex, item);
     onOrderChange(currenciesCodes.join(','));
-    update();
-  }
-
-  onShowOptionSettings() {
-    showSettingsButton = !showSettingsButton;
     update();
   }
 
