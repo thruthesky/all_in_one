@@ -57,15 +57,6 @@ class CurrencyPopularList extends StatelessWidget {
                     ),
                   TextButton(
                     child: Row(
-                      children: [
-                        Text(_.showSettingsButton ? "Hide Settings" : 'Show Settings'),
-                        Icon(Icons.settings_suggest_outlined),
-                      ],
-                    ),
-                    onPressed: _.onShowOptionSettings,
-                  ),
-                  TextButton(
-                    child: Row(
                       children: [Text('Help'), Icon(Icons.info_outline)],
                     ),
                     onPressed: () {
@@ -75,17 +66,15 @@ class CurrencyPopularList extends StatelessWidget {
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Text('Hint'),
+                              Text('Hint', style: TextStyle(fontSize: 24, color: Colors.black)),
+                              SizedBox(height: 16),
                               Row(
                                 children: [
-                                  Icon(Icons.change_circle),
-                                  Text('Tap on the currency to change.', softWrap: true),
-                                ],
-                              ),
-                              Row(
-                                children: [
-                                  Icon(Icons.delete_forever),
-                                  Text('Tap on the trash to delet.'),
+                                  Icon(
+                                    Icons.add_circle_outline,
+                                    color: Colors.black87,
+                                  ),
+                                  Text('Tap to add new currency. (10 max)'),
                                 ],
                               ),
                               Row(
@@ -95,6 +84,12 @@ class CurrencyPopularList extends StatelessWidget {
                                     color: Colors.black87,
                                   ),
                                   Text('Long press and drag to re-order.'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Icon(Icons.remove_circle_outline),
+                                  Text('Tap to remove currency.'),
                                 ],
                               ),
                             ],

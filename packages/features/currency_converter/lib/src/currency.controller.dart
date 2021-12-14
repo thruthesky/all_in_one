@@ -36,8 +36,6 @@ class CurrencyController extends GetxController {
   double get topValue => double.tryParse(values[0]) ?? 0;
   double topValueWith(double n) => topValue * n;
 
-  bool showSettingsButton = false;
-
   @override
   void onInit() {
     super.onInit();
@@ -46,7 +44,8 @@ class CurrencyController extends GetxController {
     currencies[codes[1]] = CurrencyService().findByCode(codes[1]);
 
     if (currenciesList == null || currenciesList!.isEmpty) {
-      currenciesCodes = ["BI", "AUD", "GBP", "JPY", "CNY", "CAD"];
+      // currenciesCodes = ["BI", "AUD", "GBP", "JPY", "CNY", "CAD"];
+      currenciesCodes = ["AUD", "GBP", "JPY", "CNY", "CAD"];
     } else {
       currenciesCodes = currenciesList!.split(',');
     }
@@ -77,13 +76,19 @@ class CurrencyController extends GetxController {
 
   /// This is being called when user change the Currency (of the country).
   loadCurrency({int codeIndex = 0}) async {
-    loader[0] = true;
-    loader[1] = true;
-    isCurrencyError = false;
+    if (isCurrencyError) {
+      loader[0] = true;
+      loader[1] = true;
+      isCurrencyError = false;
+    } else if (codeIndex == 0) {
+      loader[1] = true;
+    } else if (codeIndex == 1) {
+      loader[0] = true;
+    }
+
     update();
     try {
       final res = await CurrencyApi.instance.get(codes[0], codes[1]);
-      print('res; $res');
       if (res[codes[0] + '_' + codes[1]] != null) {
         convert[0] = toDouble(res[codes[0] + '_' + codes[1]]);
         convert[1] = toDouble(res[codes[1] + '_' + codes[0]]);
@@ -96,12 +101,13 @@ class CurrencyController extends GetxController {
 
       compute(codeIndex);
       loadList();
-      loader[0] = false;
-      loader[1] = false;
-      update();
     } catch (e) {
       onError(e);
     }
+
+    loader[0] = false;
+    loader[1] = false;
+    update();
   }
 
   loadList() {
@@ -118,8 +124,6 @@ class CurrencyController extends GetxController {
     update([code]);
     try {
       final res = await CurrencyApi.instance.get(codes[0], code);
-      print('loadCurrencyList: ' + code);
-      print(res);
       if (res[codes[0] + '_' + code] != null) {
         currencyConvert[code] = toDouble(res[codes[0] + '_' + code]);
         currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
@@ -129,16 +133,18 @@ class CurrencyController extends GetxController {
         currencyValue[code] = '0.00';
         currencyError[code] = true;
       }
-      loadingList[code] = false;
-      update([code]);
     } catch (e) {
+      currencyError[code] = true;
       onError(e);
-      loadingList[code] = false;
     }
+
+    loadingList[code] = false;
+    update([code]);
   }
 
   computeCurrencyList() {
     for (String code in currenciesCodes) {
+      if (currencyConvert[code] == null) continue;
       currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
       update([code]);
     }
@@ -233,11 +239,6 @@ class CurrencyController extends GetxController {
     final String item = currenciesCodes.removeAt(oldIndex);
     currenciesCodes.insert(newIndex, item);
     onOrderChange(currenciesCodes.join(','));
-    update();
-  }
-
-  onShowOptionSettings() {
-    showSettingsButton = !showSettingsButton;
     update();
   }
 
