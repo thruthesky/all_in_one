@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wordpress/models/user.model.dart';
 import 'package:wordpress/wordpress.dart';
 
 typedef UserChangeBuilder = Widget Function(WPUser);

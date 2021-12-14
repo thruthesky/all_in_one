@@ -1,7 +1,5 @@
 import 'package:wordpress/wordpress.dart';
 
-import '../defines.dart';
-
 class WPVersion {
   String version;
   String date;

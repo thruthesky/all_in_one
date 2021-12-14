@@ -1,6 +1,4 @@
 import 'package:data/data.dart';
-import 'package:data/src/tour/widgets/tour.controller.dart';
-import 'package:data/src/tour/widgets/tour.list.menu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';

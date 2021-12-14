@@ -1,5 +1,3 @@
-import 'package:wordpress/models/version.model.dart';
-
 import '../wordpress.dart';
 
 class AppApi {

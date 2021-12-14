@@ -1,6 +1,5 @@
 import 'package:all_in_one/services/globals.dart';
 import 'package:all_in_one/services/route_names.dart';
-import 'package:flutter/foundation.dart';
 import 'package:all_in_one/widgets/layout.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code/qr_code.dart';

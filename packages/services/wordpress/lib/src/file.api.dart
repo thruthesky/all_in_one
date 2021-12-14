@@ -4,10 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:wordpress/models/file.model.dart';
-import 'package:wordpress/src/wordpress.lib.dart';
 import 'package:wordpress/wordpress.dart';
-import '../defines.dart';
 
 class FileApi {
   /// Singleton

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:wordpress/models/file.model.dart';
 import 'package:wordpress/wordpress.dart';
 
 /// 파일(사진) 업로드

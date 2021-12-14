@@ -1,4 +1,3 @@
-import 'package:country_currency_pickers/country.dart';
 import 'package:country_currency_pickers/currency_picker_cupertino.dart';
 import 'package:country_currency_pickers/currency_picker_dialog.dart';
 import 'package:country_currency_pickers/currency_picker_dropdown.dart';
