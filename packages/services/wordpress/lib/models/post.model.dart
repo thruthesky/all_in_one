@@ -1,7 +1,4 @@
-import 'package:wordpress/models/comment.model.dart';
-import 'package:wordpress/models/file.model.dart';
 import 'package:wordpress/models/post.vote.model.dart';
-import 'package:wordpress/src/wordpress.lib.dart';
 import 'package:wordpress/wordpress.dart';
 
 class WPPost {

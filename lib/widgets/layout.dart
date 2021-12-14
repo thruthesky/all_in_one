@@ -4,7 +4,6 @@ import '../services/config.dart';
 import '../services/globals.dart';
 import '../services/route_names.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:widgets/widgets.dart';
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:wordpress/wordpress.dart';
-import './user.change.dart';
 
 /// [size] is the user photo image size, and [iconSize] is the default icon size.
 class UserAvatar extends StatelessWidget {

@@ -36,8 +36,6 @@ class CurrencyController extends GetxController {
   double get topValue => double.tryParse(values[0]) ?? 0;
   double topValueWith(double n) => topValue * n;
 
-  bool showSettingsButton = false;
-
   @override
   void onInit() {
     super.onInit();
@@ -146,6 +144,7 @@ class CurrencyController extends GetxController {
 
   computeCurrencyList() {
     for (String code in currenciesCodes) {
+      if (currencyConvert[code] == null) continue;
       currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
       update([code]);
     }
@@ -243,8 +242,7 @@ class CurrencyController extends GetxController {
     update();
   }
 
-  onShowOptionSettings() {
-    showSettingsButton = !showSettingsButton;
-    update();
+  findCurrencyConvert(code) {
+    return currencyConvert[code];
   }
 }
