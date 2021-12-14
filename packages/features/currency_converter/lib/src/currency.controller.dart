@@ -138,6 +138,7 @@ class CurrencyController extends GetxController {
 
   computeCurrencyList() {
     for (String code in currenciesCodes) {
+      if (currencyConvert[code] == null) continue;
       currencyValue[code] = topValueWith(currencyConvert[code]!).toStringAsFixed(2);
       update([code]);
     }

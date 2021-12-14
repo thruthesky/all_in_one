@@ -20,9 +20,11 @@ class CurrencyTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 8),
-      title: Row(
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      color: tileColor,
+      child: Flex(
+        direction: Axis.horizontal,
         children: [
           Text(
             CurrencyUtils.currencyToEmoji(_.currencies[code2]),
@@ -38,26 +40,30 @@ class CurrencyTile extends StatelessWidget {
                 id: "$code2",
                 builder: (_) {
                   return Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       if (_.loadingList[code2] != null && _.loadingList[code2] == false)
-                        Row(
-                          children: [
-                            Text(
-                              '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]} = ',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            if (_.currencyError[code2] == null || _.currencyError[code2] == false)
+                        Flexible(
+                          fit: FlexFit.loose,
+                          child: Wrap(
+                            children: [
                               Text(
-                                '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2',
+                                '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]} = ',
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                          ],
+                              if (_.currencyError[code2] == null || _.currencyError[code2] == false)
+                                Text(
+                                  '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                            ],
+                          ),
                         ),
                       if (_.currencyError[code2] != null && _.currencyError[code2] == true)
                         GestureDetector(
@@ -139,7 +145,6 @@ class CurrencyTile extends StatelessWidget {
           ),
         ],
       ),
-      tileColor: tileColor,
     );
   }
 }
