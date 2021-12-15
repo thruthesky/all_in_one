@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:currency_converter/src/currency.controller.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class CurrencyTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8),
+      padding: EdgeInsets.only(left: 8),
       color: tileColor,
       child: Flex(
         direction: Axis.horizontal,
@@ -33,76 +34,62 @@ class CurrencyTile extends StatelessWidget {
             ),
           ),
           SizedBox(width: 4),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GetBuilder<CurrencyController>(
-                id: "$code2",
-                builder: (_) {
-                  return Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (_.loadingList[code2] != null && _.loadingList[code2] == false)
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: Wrap(
-                            children: [
-                              Text(
-                                '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]} = ',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              if (_.currencyError[code2] == null || _.currencyError[code2] == false)
-                                Text(
-                                  '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                            ],
-                          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                GetBuilder<CurrencyController>(
+                  id: "$code2",
+                  builder: (_) {
+                    if (_.loadingList[code2] != null && _.loadingList[code2] == false)
+                      return AutoSizeText(
+                        '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]} = ' +
+                            ((_.currencyError[code2] == null || _.currencyError[code2] == false)
+                                ? '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2'
+                                : ''),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
                         ),
-                      if (_.currencyError[code2] != null && _.currencyError[code2] == true)
-                        GestureDetector(
-                          child: Row(
-                            children: [
-                              Text(
-                                'Error. Tap to Reload',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                        maxLines: 1,
+                      );
+                    if (_.currencyError[code2] != null && _.currencyError[code2] == true)
+                      return GestureDetector(
+                        child: Row(
+                          children: [
+                            Text(
+                              'Error. Tap to Reload',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
                               ),
-                              Icon(
-                                Icons.restart_alt,
-                                size: 16,
-                              ),
-                            ],
-                          ),
-                          onTap: () => _.loadCurrencyList(code2),
+                            ),
+                            Icon(
+                              Icons.restart_alt,
+                              size: 16,
+                            ),
+                          ],
                         ),
-                      if (_.loadingList[code2] == null || _.loadingList[code2] == true)
-                        Spinner(
-                          size: 16,
-                          valueColor: Colors.black87,
-                        ),
-                    ],
-                  );
-                },
-              ),
-              Text(
-                '${_.currencies[code2]!.name}',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+                        onTap: () => _.loadCurrencyList(code2),
+                      );
+                    if (_.loadingList[code2] == null || _.loadingList[code2] == true)
+                      return Spinner(
+                        size: 16,
+                        valueColor: Colors.black87,
+                      );
+                    return SizedBox();
+                  },
                 ),
-              ),
-            ],
+                Text(
+                  '${_.currencies[code2]!.name}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
           ),
-          Spacer(),
           IconButton(
             onPressed: () => {},
             icon: Icon(

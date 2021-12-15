@@ -16,7 +16,8 @@ dependencies:
 
   get: ^4.3.8
   currency_picker: ^2.0.5
-  
+
+  auto_size_text: ^3.0.0
 
   wordpress:
     path: ../../services/wordpress
