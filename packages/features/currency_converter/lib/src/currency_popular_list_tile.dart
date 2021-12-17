@@ -1,4 +1,4 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:auto_size_text/auto_size_text.dart' as at;
 import 'package:currency_converter/src/currency.controller.dart';
 import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,7 @@ class CurrencyTile extends StatelessWidget {
                   id: "$code2",
                   builder: (_) {
                     if (_.loadingList[code2] != null && _.loadingList[code2] == false)
-                      return AutoSizeText(
+                      return at.AutoSizeText(
                         '${_.currencies[_.codes[0]]!.symbol} ${_.values[0]} ${_.codes[0]} = ' +
                             ((_.currencyError[code2] == null || _.currencyError[code2] == false)
                                 ? '${_.currencies[code2]!.symbol} ${_.currencyValue[code2]} $code2'
