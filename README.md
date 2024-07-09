@@ -1,16 +1,35 @@
-# all_in_one
+# 플러터 만능앱 개발
 
-A new Flutter project.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## 개요
 
-A few resources to get you started if this is your first Flutter project:
+- 누구나 참여할 수 있습니다.
+- 라이센스는 MIT 이며, 누구든지 어떤 목적으로든 사용 할 수 있습니다.
+- 지원하는 플랫폼은 ANDROID, IOS, MACOS, LINUX, WEB, WINDOWS 입니다.
+- 백엔드는 파이어베이스 함수를 사용합니다. 가능한 많은 것을 플러터에서 하되, 벡엔드가 꼭 필요하면 파이어베이스 내에서 모든 처리를 하기 위해서 파이어베이스 함수를 사용합니다.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+### 짧은 설명
+
+어떤 앱이든 공통적으로 들어가는 기능들이 있습니다. 본 프로젝트는 그러한 기능들을 개별 패키지로 만들고 pub.dev 에 배포하여 누구든지 자신의 앱에 쉽게 추가하여 개발 할 수 있도록 하는 것입니다.
+
+요점은 각 기능 별 패키지들이 같이 쓸 수도 있고, 독립적으로 완전히 분리되어 필요한 패키지 하나만 쓸 수 있도록 하는 것입니다.
+
+예를 들어, 여러분들이 개발하는 앱에 채팅 패키지만 추가해서 쉽게 채팅 기능을 만드는 것입니다.
+
+채팅 기능 패키지 분만아니라, 회원 관리, 게시판, 친구 관리, 소셜 기능 등 여러가지 패키지들이 있습니다. 또한 얼마든지 원하는 패키지를 추가 할 수 있습니다.
+
+
+## 참여
+
+- 누구든지 참여 가능하며, 오픈 소스로 개발합니다.
+  - Fork 한 다음 PR 하시면 됩니다.
+
+- 세미나를 통해서 배우며 같이 할 수 있습니다.
+  - GIT, 문서화 등의 기본적인 것 부터 시작하며
+  - Unit Test, Widget Test 가 익숙하지 않다면 배울 수 있는 좋은 기회가 될 것입니다.
+
+- 개발에 참여하고 싶으신 분들은 [플러터 만능앱 단톡방](https://open.kakao.com/o/gNs8gvid) 으로 접속하시면 됩니다.
+
