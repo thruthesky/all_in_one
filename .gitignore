@@ -1,15 +1,16 @@
+######################
 
 .metadata
 .idea
 
 
+# remove firebase config
 .firebase/
 **/.firebase/
 
-# firebase cloud funcions key
+# remove keys
 key.ts
 **/key.ts
-
 key.dart
 keys.dart
 **/key.dart
@@ -24,6 +25,7 @@ apps/
 example/**/firebase_options.dart
 
 
+# example
 example/android/
 example/ios/
 example/web/
@@ -37,8 +39,7 @@ example/.pub/
 example/.flutter-plugins
 example/.flutter-plugins-dependencies
 
-
-
+# remove plaforms
 android/
 ios/
 web/
@@ -55,6 +56,8 @@ build/
 
 # mkdocs
 venv/
+
+######################
 
 
 # Miscellaneous
