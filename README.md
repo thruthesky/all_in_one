@@ -33,3 +33,26 @@
 
 - 개발에 참여하고 싶으신 분들은 [플러터 만능앱 단톡방](https://open.kakao.com/o/gNs8gvid) 으로 접속하시면 됩니다.
 
+
+
+## 코딩 방법
+
+- 2024년 07월 현재 Macros 기능 사용을 위해서 master channel 을 씁니다. 2024년 말, Macros 가 베타 또는 정식 버전이 되면, master channel 대신 베타 또는 정식 channel 을 쓰겠습니다.
+
+- `pubspec.yaml` 의 패키지를 추가할 때, `flutter pub add` 명령으로 해 주세요. 그래야 패키지가 abc 순서로 정렬이 쉽게 됩니다.
+
+- 앱 코드는
+  - `./lib/apps/[xxx]` 폴더에 저장해 주세요. 여러분 만의 main 파일을 이곳에 기록하면 됩니다. 예제는 `./lib/apps/simple/simple.main.dart` 를 참고하세요.
+
+- 라우팅은 `go_router` 를 권장합니다.
+
+- 상태 관리는 `riverpod` 를 권장합니다.
+
+
+
+
+
+
+
+
+

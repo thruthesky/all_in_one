@@ -19,8 +19,7 @@ keys.dart
 
 tmp/
 
-# apps
-apps/
+
 **/firebase_options.dart
 example/**/firebase_options.dart
 
